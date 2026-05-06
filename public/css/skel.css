@@ -1,4 +1,68 @@
 @font-face {
+  font-family: 'Satoshi';
+  src: url('/Fonts/Satoshi/Satoshi-Light.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/Fonts/Satoshi/Satoshi-Light.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/Fonts/Satoshi/Satoshi-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/Fonts/Satoshi/Satoshi-Medium.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/Fonts/Satoshi/Satoshi-Medium.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/Fonts/Satoshi/Satoshi-Bold.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/Fonts/Satoshi/Satoshi-Black.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/Fonts/Satoshi/Satoshi-Black.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'NewBlack';
   src: url('/Fonts/Newblack/WOFF%26WOFF2/NewBlackTypeface-Regular.woff2') format('woff2');
   font-style: normal;
@@ -25,7 +89,7 @@ html {
 }
 
 body {
-  font-family: 'Satoshi', sans-serif;
+  font-family: 'Satoshi', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: #ffffff;
   color: #1a1a1a;
   width: 100%;
