@@ -91,7 +91,7 @@
       let isDragging = false;
       let startX = 0;
       let startScrollLeft = 0;
-      const initialScrollOffset = 167.65;
+      const initialScrollOffset = window.matchMedia('(max-width: 768px)').matches ? 0 : 167.65;
 
       const stopDragging = () => {
         isDragging = false;
@@ -117,6 +117,94 @@
         if (!isDragging) return;
         e.preventDefault();
         container.scrollLeft = startScrollLeft - (e.pageX - startX);
+      });
+    });
+  };
+
+  /* ─── Retailer Carousel Controls ─────────────────────── */
+  const initRetailerCarouselSlider = () => {
+    document.querySelectorAll('.carousel-slider').forEach((slider) => {
+      const section = slider.closest('.retailers-section');
+      const container = section?.querySelector('.carousel-container');
+      const cards = container ? Array.from(container.querySelectorAll('.retailer-card')) : [];
+      const prevButton = slider.querySelector('[data-carousel-prev]');
+      const nextButton = slider.querySelector('[data-carousel-next]');
+      const dots = Array.from(slider.querySelectorAll('[data-carousel-dot]'));
+      const defaultIndex = Number.parseInt(container?.dataset.carouselDefaultIndex ?? '0', 10) || 0;
+
+      if (!container || !cards.length || !prevButton || !nextButton || !dots.length) return;
+
+      const getTargetScrollLeft = (card) => {
+        const centeredOffset = card.offsetLeft - ((container.clientWidth - card.clientWidth) / 2);
+        return Math.max(0, centeredOffset);
+      };
+
+      const getActiveIndex = () => {
+        let closestIndex = 0;
+        let smallestDistance = Number.POSITIVE_INFINITY;
+
+        cards.forEach((card, index) => {
+          const distance = Math.abs(container.scrollLeft - getTargetScrollLeft(card));
+          if (distance < smallestDistance) {
+            smallestDistance = distance;
+            closestIndex = index;
+          }
+        });
+
+        return closestIndex;
+      };
+
+      const setActiveState = (index) => {
+        dots.forEach((dot, dotIndex) => {
+          const isActive = dotIndex === index;
+          dot.classList.toggle('is-active', isActive);
+          dot.setAttribute('aria-current', String(isActive));
+        });
+
+        prevButton.disabled = index === 0;
+        nextButton.disabled = index === cards.length - 1;
+      };
+
+      const scrollToIndex = (index, behavior = 'smooth') => {
+        const clampedIndex = Math.max(0, Math.min(index, cards.length - 1));
+        container.scrollTo({
+          left: getTargetScrollLeft(cards[clampedIndex]),
+          behavior,
+        });
+        setActiveState(clampedIndex);
+      };
+
+      prevButton.addEventListener('click', () => {
+        scrollToIndex(getActiveIndex() - 1);
+      });
+
+      nextButton.addEventListener('click', () => {
+        scrollToIndex(getActiveIndex() + 1);
+      });
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          scrollToIndex(index);
+        });
+      });
+
+      let ticking = false;
+      container.addEventListener('scroll', () => {
+        if (ticking) return;
+
+        ticking = true;
+        window.requestAnimationFrame(() => {
+          setActiveState(getActiveIndex());
+          ticking = false;
+        });
+      }, { passive: true });
+
+      window.addEventListener('resize', () => {
+        setActiveState(getActiveIndex());
+      });
+
+      window.requestAnimationFrame(() => {
+        scrollToIndex(defaultIndex, 'auto');
       });
     });
   };
@@ -870,6 +958,7 @@ const renderStepState = (state, amount) => {
   onReady(() => {
     initFaqAccordion();
     initDragScroll();
+    initRetailerCarouselSlider();
     initMobileNav();
     initNewsArticleActions();
     initPricingCardTilt();

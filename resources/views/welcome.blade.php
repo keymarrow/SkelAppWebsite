@@ -39,9 +39,14 @@
     <button class="btn-try">Book a call</button>
   </div>
   <button class="mobile-menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
-    <span></span>
-    <span></span>
-    <span></span>
+    <img
+      src="{{ asset('assets/Vector.svg') }}"
+      alt=""
+      aria-hidden="true"
+      class="mobile-menu-icon"
+      width="17"
+      height="17"
+    />
   </button>
   <div class="mobile-menu-container" aria-label="Mobile navigation">
     <ul class="mobile-only">
@@ -91,11 +96,14 @@
     <div class="showcase-card">
       <div class="showcase-header">
         <h2 class="showcase-title">POS, But 1% Better</h2>
-        <p class="showcase-subtitle">
+        <p class="showcase-subtitle showcase-subtitle-primary">
           SkelApp helps you manage sales, inventory, purchases, and expenses in one powerful POS platform
         </p>
         <p class="showcase-subtitle showcase-subtitle-secondary">
           Built for retail businesses of any size.
+        </p>
+        <p class="showcase-subtitle showcase-subtitle-mobile">
+          SkelApp helps you manage sales, inventory, purchases, and expenses for retail businesses of any size.
         </p>
 
         <div class="app-buttons">
@@ -190,7 +198,7 @@
       ];
     @endphp
 
-    <div class="carousel-container" data-drag-scroll>
+    <div class="carousel-container" data-drag-scroll data-carousel-default-index="1">
       <div class="carousel-track">
         @foreach ($retailerCards as $card)
           <div class="retailer-card">
@@ -204,6 +212,33 @@
           </div>
         @endforeach
       </div>
+    </div>
+
+    <div class="carousel-slider" aria-label="Retailer carousel controls">
+      <button class="carousel-slider-button" type="button" data-carousel-prev aria-label="Previous retailer">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M14.5 5.5 8 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+
+      <div class="carousel-slider-dots" role="tablist" aria-label="Retailer slides">
+        @foreach ($retailerCards as $card)
+          <button
+            class="carousel-slider-dot{{ $loop->index === 1 ? ' is-active' : '' }}"
+            type="button"
+            role="tab"
+            data-carousel-dot="{{ $loop->index }}"
+            aria-label="Go to {{ $card['title'] }}"
+            aria-current="{{ $loop->index === 1 ? 'true' : 'false' }}"
+          ></button>
+        @endforeach
+      </div>
+
+      <button class="carousel-slider-button" type="button" data-carousel-next aria-label="Next retailer">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M9.5 5.5 16 12l-6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
     </div>
 
     <div class="cta-container">

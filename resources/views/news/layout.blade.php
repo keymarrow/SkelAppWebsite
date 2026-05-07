@@ -53,9 +53,14 @@
     </div>
 
     <button class="mobile-menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
-      <span></span>
-      <span></span>
-      <span></span>
+      <img
+        src="{{ asset('assets/Vector.svg') }}"
+        alt=""
+        aria-hidden="true"
+        class="mobile-menu-icon"
+        width="17"
+        height="17"
+      />
     </button>
 
     <div class="mobile-menu-container" aria-label="Mobile navigation">
