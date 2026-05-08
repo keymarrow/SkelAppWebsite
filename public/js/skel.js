@@ -367,6 +367,7 @@ const renderStepState = (state, amount) => {
       const scrollDistance = () => Math.max(window.innerHeight * 1.2, 960);
       let secondTrigger = 0.5;
       let thirdTrigger = 0.9;
+      let sectionEntryTrigger = 0.3;
       const revealWindow = 0.12;
       let trigger = null;
 
@@ -374,12 +375,19 @@ const renderStepState = (state, amount) => {
         scrollShell.style.setProperty('--how-it-works-stage-height', `${stage.offsetHeight}px`);
         scrollShell.style.setProperty('--how-it-works-progress-space', `${scrollDistance()}px`);
         const lineMetrics = syncLinePosition();
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+        const triggerDistance = Math.max(section.offsetHeight, 1);
         secondTrigger = clamp01(lineMetrics.secondRatio);
         thirdTrigger = clamp01(lineMetrics.thirdRatio);
+        sectionEntryTrigger = clamp01(viewportHeight / triggerDistance);
       };
 
       const applyDesktopProgress = (progressValue) => {
-        const scrollProgress = clamp01(progressValue);
+        const rawProgress = clamp01(progressValue);
+        const safeEntryTrigger = Math.min(0.95, Math.max(sectionEntryTrigger, 0.0001));
+        const scrollProgress = rawProgress <= safeEntryTrigger
+          ? clamp01((rawProgress / safeEntryTrigger) * secondTrigger)
+          : clamp01(secondTrigger + (((rawProgress - safeEntryTrigger) / Math.max(1 - safeEntryTrigger, 0.0001)) * (1 - secondTrigger)));
         const secondReveal = clamp01((scrollProgress - secondTrigger) / revealWindow);
         const thirdReveal = clamp01((scrollProgress - (thirdTrigger - revealWindow)) / revealWindow);
 
@@ -411,7 +419,7 @@ const renderStepState = (state, amount) => {
 
       trigger = ScrollTrigger.create({
         trigger: section,
-        start: 'top top',
+        start: 'top bottom',
         end: 'bottom bottom',
         scrub: 0.45,
         invalidateOnRefresh: true,

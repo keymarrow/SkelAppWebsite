@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SkelApp – For Businesses That Think Bigger.</title>
+<title>SkelApp – The Best POS in Tanzania.</title>
 <link rel="icon" href="{{ asset('assets/skel.svg') }}" type="image/x-icon" />
 <link rel="preload" as="image" href="{{ asset('assets/HeroImage.webp') }}" media="(min-width: 901px)" fetchpriority="high" />
 <link rel="preload" as="image" href="{{ asset('assets/HeroImage.jpg') }}" media="(max-width: 900px)" fetchpriority="high" />
@@ -276,7 +276,7 @@
       <div class="feature-card feature-rectangle feature-green feature-rectangle-pos">
         <div class="feature-content-left">
           <h2>Mobile Application<br>Ready for Both Apple & Android</h2>
-          <p>High-quality POS hardware with free, built-in software and touch screen functionality.<br>Designed for small businesses in any setting.</p>
+          <p>High-quality POS hardware with free, built-in software and touch screen functionality. Designed for small businesses in any setting.</p>
         </div>
         <div class="feature-content-right">
           <img src="{{ asset('assets/PosSystem.webp') }}" alt="SkelApp POS system" loading="lazy" decoding="async">
@@ -384,11 +384,15 @@
   <div class="container how-it-works-scroll">
     <div class="how-it-works-stage">
       <div class="section-headerr">
-        <h2>You handle the business.<br>
-We handle the numbers.</h2>
+        <div class="section-headerr-copy">
+          <h2>Get Started with SkelApp</h2>
+          <p>You're 1 minute away to automate your business.</p>
+        </div>
+        <div class="section-headerr-action"><a href="#" class="btn-download">Download Now</a></div>
       </div>
 
       <div class="steps-wrapper">
+
         <div class="steps-line-container" aria-hidden="true">
           <div class="steps-line-progress"></div>
         </div>
