@@ -1,18 +1,24 @@
+@php
+  $brandName = config('app.name');
+  if (blank($brandName) || $brandName === 'Laravel') {
+      $brandName = 'SkelApp';
+  }
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>404 | {{ config('app.name', 'SkelApp') }}</title>
+  <title>404 | {{ $brandName }}</title>
   <link rel="icon" href="{{ asset('assets/skel.png') }}" type="image/x-icon" />
   <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body class="error-404-page">
   <main class="error-404-shell">
-    <a href="{{ url('/') }}" class="error-404-brand" aria-label="{{ config('app.name', 'SkelApp') }} home">
+    <a href="{{ url('/') }}" class="error-404-brand" aria-label="{{ $brandName }} home">
       <img
         src="{{ asset('assets/SkelAppLogo-green.svg') }}"
-        alt="{{ config('app.name', 'SkelApp') }} logo"
+        alt="{{ $brandName }} logo"
         width="240"
         height="74"
         loading="eager"
