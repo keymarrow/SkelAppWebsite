@@ -142,7 +142,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Terms of Service | SkelApp</title>
 <link rel="icon" href="{{ asset('assets/skel.png') }}" type="image/x-icon" />
-<link href="{{ asset('css/skel.css') }}" rel="stylesheet" />
+<link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body class="terms-page">
 <nav>
@@ -321,6 +321,6 @@
   </div>
 </footer>
 
-<script src="{{ asset('js/skel.js') }}" defer></script>
+  <script src="{{ asset('js/skel.js') }}?v={{ @filemtime(public_path('js/skel.js')) }}" defer></script>
 </body>
 </html>

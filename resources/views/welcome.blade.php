@@ -7,7 +7,7 @@
 <link rel="icon" href="{{ asset('assets/skel.svg') }}" type="image/x-icon" />
 <link rel="preload" as="image" href="{{ asset('assets/HeroImage.webp') }}" media="(min-width: 901px)" fetchpriority="high" />
 <link rel="preload" as="image" href="{{ asset('assets/HeroImage.jpg') }}" media="(max-width: 900px)" fetchpriority="high" />
-<link href="{{ asset('css/skel.css') }}" rel="stylesheet" />
+<link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body>
 <nav>
@@ -849,6 +849,6 @@
 
 
 
-<script src="{{ asset('js/skel.js') }}" defer></script>
+<script src="{{ asset('js/skel.js') }}?v={{ @filemtime(public_path('js/skel.js')) }}" defer></script>
 </body>
 </html>
