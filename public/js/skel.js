@@ -551,18 +551,34 @@ const renderStepState = (state, amount) => {
         src.endsWith('card.webp')
       );
 
+    const updatePreviewAspect = () => {
+      const src = preview.currentSrc || preview.getAttribute('src') || '';
+      const isPortraitMedia =
+        !isSubscriptionSrc(src) &&
+        preview.naturalWidth > 0 &&
+        preview.naturalHeight > preview.naturalWidth;
+
+      card?.classList.toggle('is-portrait-preview', isPortraitMedia);
+      wrap?.classList.toggle('is-portrait-preview', isPortraitMedia);
+    };
+
     const updatePreviewMode = (src) => {
       const isSubscription = isSubscriptionSrc(src);
       card?.classList.toggle('is-subscription-preview', isSubscription);
       card?.classList.toggle('is-media-preview', !isSubscription);
+      card?.classList.toggle('is-portrait-preview', false);
       wrap?.classList.toggle('is-subscription-preview', isSubscription);
       wrap?.classList.toggle('is-media-preview', !isSubscription);
+      wrap?.classList.toggle('is-portrait-preview', false);
       if (!isSubscription) {
         preview.style.transform = 'none';
       }
     };
 
+    preview.addEventListener('load', updatePreviewAspect);
+
     updatePreviewMode(preview.getAttribute('src') || '');
+    updatePreviewAspect();
 
     thumbnails.forEach((thumb) => {
       thumb.addEventListener('click', () => {
