@@ -323,7 +323,7 @@
     </div>
 
     <div class="footer-credit">
-      <p>A Solution By Flashnet Technologies, An ISO 27001:2015 Certified Managed IT Service Provider Company.</p>
+      <p>A Solution By <a href="https://flashnet.co.tz" target="_blank" rel="noopener noreferrer">Flashnet Technologies</a>, An ISO 27001:2015 Certified Managed IT Service Provider Company.</p>
     </div>
   </div>
 </footer>
