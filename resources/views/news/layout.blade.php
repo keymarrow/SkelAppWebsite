@@ -127,8 +127,11 @@
           <div class="footer-nav-group footer-nav-group-touch">
             <h4 class="footer-nav-title">Get in Touch</h4>
             <div class="footer-contact-stack">
+              <p>5th Floor, PPF Tower</p>
+              <p>Ohio Street, Garden Avenue</p>
               <p>Dar Es Salaam, Tanzania</p>
               <a href="mailto:pos@skelapp.tz">pos@skelapp.tz</a>
+              <a href="tel:+255658962000">+255 658 962 000</a>
             </div>
           </div>
         </div>

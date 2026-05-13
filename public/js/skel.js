@@ -90,11 +90,15 @@
     document.querySelectorAll('[data-drag-scroll]').forEach((container) => {
       let isDragging = false;
       let startX = 0;
+      let startY = 0;
       let startScrollLeft = 0;
-      const initialScrollOffset = window.matchMedia('(max-width: 768px)').matches ? 0 : 167.65;
+      let touchAxisLock = null;
+      const initialScrollOffset = window.matchMedia('(max-width: 768px), (width: 820px)').matches ? 0 : 167.65;
+      const touchLockThreshold = 8;
 
       const stopDragging = () => {
         isDragging = false;
+        touchAxisLock = null;
         container.classList.remove('is-dragging');
       };
 
@@ -118,6 +122,46 @@
         e.preventDefault();
         container.scrollLeft = startScrollLeft - (e.pageX - startX);
       });
+
+      container.addEventListener('touchstart', (e) => {
+        const touch = e.touches[0];
+        if (!touch) return;
+
+        isDragging = true;
+        touchAxisLock = null;
+        startX = touch.clientX;
+        startY = touch.clientY;
+        startScrollLeft = container.scrollLeft;
+      }, { passive: true });
+
+      container.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+
+        const touch = e.touches[0];
+        if (!touch) return;
+
+        const deltaX = touch.clientX - startX;
+        const deltaY = touch.clientY - startY;
+
+        if (!touchAxisLock) {
+          if (Math.abs(deltaX) < touchLockThreshold && Math.abs(deltaY) < touchLockThreshold) {
+            return;
+          }
+
+          touchAxisLock = Math.abs(deltaX) > Math.abs(deltaY) ? 'x' : 'y';
+          if (touchAxisLock === 'x') {
+            container.classList.add('is-dragging');
+          }
+        }
+
+        if (touchAxisLock !== 'x') return;
+
+        e.preventDefault();
+        container.scrollLeft = startScrollLeft - deltaX;
+      }, { passive: false });
+
+      container.addEventListener('touchend', stopDragging, { passive: true });
+      container.addEventListener('touchcancel', stopDragging, { passive: true });
     });
   };
 
@@ -130,7 +174,8 @@
       const prevButton = slider.querySelector('[data-carousel-prev]');
       const nextButton = slider.querySelector('[data-carousel-next]');
       const dots = Array.from(slider.querySelectorAll('[data-carousel-dot]'));
-      const defaultIndex = Number.parseInt(container?.dataset.carouselDefaultIndex ?? '0', 10) || 0;
+      const configuredDefaultIndex = Number.parseInt(container?.dataset.carouselDefaultIndex ?? '0', 10) || 0;
+      const defaultIndex = window.matchMedia('(width: 768px), (width: 820px)').matches ? 0 : configuredDefaultIndex;
 
       if (!container || !cards.length || !prevButton || !nextButton || !dots.length) return;
 
@@ -270,30 +315,15 @@
     const line     = section?.querySelector('.steps-line-container');
     const progress = section?.querySelector('.steps-line-progress');
     const lineWrapper = line?.parentElement;
+    const stepImages = stepMeta.map(({ image }) => image).filter(Boolean);
 
     if (!section || !scrollShell || !stage || stepMeta.length !== 3) return;
 
     const revealStates = stepMeta.map(({ frame, image, marker, content }) => [frame, image, marker, content].filter(Boolean));
     revealStates.flat().forEach((el) => { el.style.willChange = 'opacity, transform, clip-path, filter'; });
 
-    if (!window.gsap || !window.ScrollTrigger) {
-      stepMeta.forEach(({ frame, image, marker, content }) => {
-        [frame, image, marker, content].filter(Boolean).forEach((el) => {
-          el.style.opacity = '1';
-          el.style.visibility = 'inherit';
-          el.style.transform = 'none';
-          el.style.clipPath = 'none';
-          el.style.filter = 'none';
-        });
-      });
-      return;
-    }
-
-    const { gsap, ScrollTrigger } = window;
-    gsap.registerPlugin(ScrollTrigger);
-    const mm = gsap.matchMedia();
-
-    const clamp01 = gsap.utils.clamp(0, 1);
+    const clamp01 = (value) => Math.min(1, Math.max(0, value));
+    const isCompactHowItWorksLine = () => window.matchMedia('(max-width: 743px), (width: 820px)').matches;
 
     const syncLinePosition = () => {
       if (!line || !lineWrapper || markers.length < 2) {
@@ -304,20 +334,120 @@
       const firstRect = markers[0].getBoundingClientRect();
       const secondRect = markers[1].getBoundingClientRect();
       const lastRect = markers[markers.length - 1].getBoundingClientRect();
+      const isMobileLine = isCompactHowItWorksLine();
+
+      if (isMobileLine) {
+        const lineWidth = line.offsetWidth || 2;
+        const firstCenterX = firstRect.left + (firstRect.width / 2);
+        const firstCenterY = firstRect.top + (firstRect.height / 2);
+        const secondCenterY = secondRect.top + (secondRect.height / 2);
+        const lastCenterY = lastRect.top + (lastRect.height / 2);
+        const travel = Math.max(1, lastCenterY - firstCenterY);
+
+        line.style.left = `${firstCenterX - wrapperRect.left - (lineWidth / 2)}px`;
+        line.style.top = `${firstCenterY - wrapperRect.top}px`;
+        line.style.width = `${lineWidth}px`;
+        line.style.height = `${travel}px`;
+
+        return {
+          secondRatio: clamp01((secondCenterY - firstCenterY) / travel),
+          thirdRatio: 1,
+        };
+      }
+
       const lineHeight = line.offsetHeight || 2;
-      const viewportWidth = window.innerWidth || document.documentElement.clientWidth || wrapperRect.width;
+      const firstCenterX = firstRect.left + (firstRect.width / 2);
       const secondCenterX = secondRect.left + (secondRect.width / 2);
       const lastCenterX = lastRect.left + (lastRect.width / 2);
       const markerCenterY = firstRect.top + (firstRect.height / 2);
-      const secondRatio = clamp01(secondCenterX / Math.max(1, viewportWidth));
-      const thirdRatio = clamp01(lastCenterX / Math.max(1, viewportWidth));
+      const travel = Math.max(1, lastCenterX - firstCenterX);
 
-      line.style.left = `${-wrapperRect.left}px`;
+      line.style.left = `${firstCenterX - wrapperRect.left}px`;
       line.style.top = `${markerCenterY - wrapperRect.top - (lineHeight / 2)}px`;
-      line.style.width = `${viewportWidth}px`;
+      line.style.width = `${travel}px`;
+      line.style.height = `${lineHeight}px`;
 
-      return { secondRatio, thirdRatio };
+      return {
+        secondRatio: clamp01((secondCenterX - firstCenterX) / travel),
+        thirdRatio: 1,
+      };
     };
+
+    const bindLineResync = (handler) => {
+      let rafId = null;
+
+      const schedule = () => {
+        if (rafId) cancelAnimationFrame(rafId);
+
+        rafId = requestAnimationFrame(() => {
+          rafId = requestAnimationFrame(() => {
+            rafId = null;
+            handler();
+          });
+        });
+      };
+
+      const pendingImages = stepImages.filter((image) => !image.complete);
+      pendingImages.forEach((image) => {
+        image.addEventListener('load', schedule);
+        image.addEventListener('error', schedule);
+      });
+
+      window.addEventListener('load', schedule);
+
+      let observer = null;
+      if ('ResizeObserver' in window && lineWrapper) {
+        observer = new ResizeObserver(schedule);
+        observer.observe(lineWrapper);
+      }
+
+      return () => {
+        if (rafId) cancelAnimationFrame(rafId);
+        pendingImages.forEach((image) => {
+          image.removeEventListener('load', schedule);
+          image.removeEventListener('error', schedule);
+        });
+        window.removeEventListener('load', schedule);
+        observer?.disconnect();
+      };
+    };
+
+    if (!window.gsap || !window.ScrollTrigger) {
+      const syncStaticLine = () => {
+        const isMobileLine = isCompactHowItWorksLine();
+
+        syncLinePosition();
+
+        if (line) {
+          line.style.opacity = '1';
+          line.style.visibility = 'visible';
+        }
+
+        if (progress) {
+          progress.style.transformOrigin = isMobileLine ? 'top center' : 'left center';
+          progress.style.transform = isMobileLine ? 'scaleY(1)' : 'scaleX(1)';
+        }
+      };
+
+      stepMeta.forEach(({ frame, image, marker, content }) => {
+        [frame, image, marker, content].filter(Boolean).forEach((el) => {
+          el.style.opacity = '1';
+          el.style.visibility = 'inherit';
+          el.style.transform = 'none';
+          el.style.clipPath = 'none';
+          el.style.filter = 'none';
+        });
+      });
+
+      syncStaticLine();
+      bindLineResync(syncStaticLine);
+      window.addEventListener('resize', syncStaticLine);
+      return;
+    }
+
+    const { gsap, ScrollTrigger } = window;
+    gsap.registerPlugin(ScrollTrigger);
+    const mm = gsap.matchMedia();
 
 const renderStepState = (state, amount) => {
   const p = clamp01(amount);
@@ -370,6 +500,7 @@ const renderStepState = (state, amount) => {
       let sectionEntryTrigger = 0.3;
       const revealWindow = 0.12;
       let trigger = null;
+      const unbindLineResync = bindLineResync(() => ScrollTrigger.refresh());
 
       const syncDesktopMetrics = () => {
         scrollShell.style.setProperty('--how-it-works-stage-height', `${stage.offsetHeight}px`);
@@ -433,6 +564,7 @@ const renderStepState = (state, amount) => {
 
       return () => {
         trigger.kill();
+        unbindLineResync();
         ScrollTrigger.removeEventListener('refreshInit', handleRefresh);
         scrollShell.style.removeProperty('--how-it-works-stage-height');
         scrollShell.style.removeProperty('--how-it-works-progress-space');
@@ -440,12 +572,39 @@ const renderStepState = (state, amount) => {
       };
     });
 
-    /* ── Tablet & Mobile (≤1200 px) ── */
-    mm.add('(max-width: 1200px) and (prefers-reduced-motion: no-preference)', () => {
-      // Initialize steps
+    /* ── Tablet (744 px – 1200 px) ── */
+    mm.add('(min-width: 744px) and (max-width: 1200px) and (prefers-reduced-motion: no-preference)', () => {
+      const syncTabletMetrics = () => {
+        showAllSteps();
+        syncLinePosition();
+      };
+      const unbindLineResync = bindLineResync(syncTabletMetrics);
+
+      syncTabletMetrics();
+      window.addEventListener('resize', syncTabletMetrics);
+
+      return () => {
+        unbindLineResync();
+        window.removeEventListener('resize', syncTabletMetrics);
+        scrollShell.style.removeProperty('--how-it-works-stage-height');
+        scrollShell.style.removeProperty('--how-it-works-progress-space');
+        gsap.set([...revealStates.flat(), line, progress].filter(Boolean), { clearProps: 'all' });
+      };
+    });
+
+    /* ── Mobile (≤743 px) ── */
+    mm.add('(max-width: 743px) and (prefers-reduced-motion: no-preference)', () => {
+      const syncMobileMetrics = () => {
+        syncLinePosition();
+      };
+      const unbindLineResync = bindLineResync(syncMobileMetrics);
+
       stepMeta.forEach((state) => renderStepState(state, 0));
       if (progress) gsap.set(progress, { scaleY: 0, transformOrigin: 'top center' });
       if (line) gsap.set(line, { autoAlpha: 1 });
+      syncMobileMetrics();
+
+      window.addEventListener('resize', syncMobileMetrics);
 
       const trigger = ScrollTrigger.create({
         trigger: section,
@@ -455,8 +614,7 @@ const renderStepState = (state, amount) => {
         onUpdate: (self) => {
           const p = self.progress;
           if (progress) gsap.set(progress, { scaleY: p });
-          
-          // Reveal steps based on progress
+
           renderStepState(stepMeta[0], clamp01(p * 3));
           renderStepState(stepMeta[1], clamp01((p - 0.33) * 3));
           renderStepState(stepMeta[2], clamp01((p - 0.66) * 3));
@@ -465,6 +623,8 @@ const renderStepState = (state, amount) => {
 
       return () => {
         trigger.kill();
+        unbindLineResync();
+        window.removeEventListener('resize', syncMobileMetrics);
         scrollShell.style.removeProperty('--how-it-works-stage-height');
         scrollShell.style.removeProperty('--how-it-works-progress-space');
         gsap.set([...revealStates.flat(), line, progress].filter(Boolean), { clearProps: 'all' });
