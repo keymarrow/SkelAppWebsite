@@ -11,67 +11,7 @@
   @php
     $homeUrl = url('/');
   @endphp
-  <nav>
-    <a href="{{ url('/') }}" class="nav-logo" aria-label="{{ config('app.name', 'SkelApp') }} - Home">
-      <img
-        src="{{ asset('assets/SkelAppLogo-green.svg') }}"
-        alt="{{ config('app.name', 'SkelApp') }} logo"
-        width="240"
-        height="74"
-        loading="eager"
-        decoding="async"
-      />
-    </a>
-
-    <ul class="nav-links">
-      <li><a href="{{ url('/#overview') }}">Overview</a></li>
-      <li><a href="{{ url('/#retailers') }}">Retailers</a></li>
-      <li><a href="{{ url('/#features') }}">Features</a></li>
-      <li><a href="{{ url('/#howitworks') }}">How it Works</a></li>
-      <div class="nav-divider"></div>
-      <li><a href="{{ url('/#pos') }}">POS Machine</a></li>
-      <li><a href="{{ url('/#pricing') }}">Pricing</a></li>
-      <li><a href="{{ route('news.index') }}">News</a></li>
-    </ul>
-
-    <div class="nav-actions">
-      <button class="btn-login" type="button">
-        <img src="{{ asset('assets/call.svg') }}" alt="" aria-hidden="true">
-        +255 658 962 000
-      </button>
-      <button class="btn-try" type="button">Book a call</button>
-    </div>
-
-    <button class="mobile-menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
-      <img
-        src="{{ asset('assets/Vector.svg') }}"
-        alt=""
-        aria-hidden="true"
-        class="mobile-menu-icon"
-        width="17"
-        height="17"
-      />
-    </button>
-
-    <div class="mobile-menu-container" aria-label="Mobile navigation">
-      <ul class="mobile-only">
-        <li><a href="{{ url('/#overview') }}">Overview</a></li>
-        <li><a href="{{ url('/#retailers') }}">Retailers</a></li>
-        <li><a href="{{ url('/#features') }}">Features</a></li>
-        <li><a href="{{ url('/#howitworks') }}">How it Works</a></li>
-        <li><a href="{{ url('/#pos') }}">POS Machine</a></li>
-        <li><a href="{{ url('/#pricing') }}">Pricing</a></li>
-        <li><a href="{{ route('news.index') }}">News</a></li>
-      </ul>
-      <div class="nav-actions mobile-only">
-        <button class="btn-login" type="button">
-          <img src="{{ asset('assets/call.svg') }}" alt="" aria-hidden="true">
-          +255 658 962 000
-        </button>
-        <button class="btn-try" type="button">Book a call</button>
-      </div>
-    </div>
-  </nav>
+  @include('partials.site-nav')
 
   @yield('content')
 
@@ -113,7 +53,7 @@
               <li><a href="{{ $homeUrl }}#features">Features</a></li>
               <li><a href="{{ $homeUrl }}#pricing">Pricing</a></li>
               <li><a href="{{ $homeUrl }}#pos">POS Machine</a></li>
-              <li><a href="{{ $homeUrl }}#faq">FAQ</a></li>
+              <li><a href="{{ route('faq.show') }}">FAQ</a></li>
             </ul>
           </div>
 

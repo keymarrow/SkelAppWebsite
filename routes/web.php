@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -8,6 +9,40 @@ Route::get('/', function () {
 });
 
 Route::view('/terms-of-service', 'terms')->name('terms.show');
+Route::view('/faq', 'faq')->name('faq.show');
+
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact.show');
+
+Route::post('/contact', function (Request $request) {
+    $data = $request->validate([
+        'first_name' => ['required', 'string', 'max:100'],
+        'last_name'  => ['required', 'string', 'max:100'],
+        'email'      => ['required', 'email', 'max:255'],
+        'phone'      => ['required', 'string', 'max:30'],
+        'company'    => ['required', 'string', 'max:200'],
+    ]);
+
+    $body = implode("\n", [
+        "New demo request from the SkelApp website.",
+        "",
+        "Name:     {$data['first_name']} {$data['last_name']}",
+        "Email:    {$data['email']}",
+        "Phone:    {$data['phone']}",
+        "Company:  {$data['company']}",
+    ]);
+
+    Mail::raw($body, function ($message) use ($data) {
+        $message
+            ->to('pos@skelapp.tz')
+            ->replyTo($data['email'], "{$data['first_name']} {$data['last_name']}")
+            ->subject("Demo Request – {$data['first_name']} {$data['last_name']} ({$data['company']})");
+    });
+
+    return redirect()->route('contact.show')
+        ->with('success', "Thank you, {$data['first_name']}! We've received your request and will be in touch shortly.");
+})->name('contact.send');
 
 Route::get('/news', function (Request $request) {
     $articles = collect(config('news.articles', []));

@@ -1,24 +1,5 @@
 @php
   $homeUrl = url('/');
-  $navLinks = [
-    ['href' => $homeUrl . '#overview', 'label' => 'Overview'],
-    ['href' => $homeUrl . '#retailers', 'label' => 'Retailers'],
-    ['href' => $homeUrl . '#features', 'label' => 'Features'],
-    ['href' => $homeUrl . '#howitworks', 'label' => 'How it Work'],
-    ['href' => $homeUrl . '#pos', 'label' => 'POS Machine'],
-    ['href' => $homeUrl . '#pricing', 'label' => 'Pricing'],
-  ];
-
-  $mobileNavLinks = [
-    ['href' => $homeUrl . '#overview', 'label' => 'Overview'],
-    ['href' => $homeUrl . '#retailers', 'label' => 'Retailers'],
-    ['href' => $homeUrl . '#features', 'label' => 'Features'],
-    ['href' => $homeUrl . '#howitworks', 'label' => 'How it Works'],
-    ['href' => $homeUrl . '#pos', 'label' => 'POS Machine'],
-    ['href' => $homeUrl . '#pricing', 'label' => 'Pricing'],
-    ['href' => $homeUrl . '#faq', 'label' => 'FAQ'],
-  ];
-
   $sections = [
     [
       'title' => '1. Definitions',
@@ -134,58 +115,7 @@
 <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body class="terms-page">
-<nav>
- <a href="{{ url('/') }}" class="nav-logo" aria-label="{{ config('app.name', 'SkelApp') }} - Home">
-  <img
-    src="{{ asset('assets/SkelAppLogo-green.svg') }}"
-    alt="{{ config('app.name', 'SkelApp') }} logo"
-    width="240"
-    height="74"
-    loading="eager"
-    decoding="async"
-  />
-</a>
-
-  <ul class="nav-links">
-    @foreach ($navLinks as $index => $link)
-      <li><a href="{{ $link['href'] }}">{{ $link['label'] }}</a></li>
-      @if ($index === 3)
-        <div class="nav-divider"></div>
-      @endif
-    @endforeach
-  </ul>
-  <div class="nav-actions">
-    <a href="tel:+255658962000" class="btn-login">
-      <img src="{{ asset('assets/call.svg') }}" alt="" aria-hidden="true">
-      +255 658 962 000
-    </a>
-    <a href="mailto:pos@skelapp.tz" class="btn-try">Book a call</a>
-  </div>
-  <button class="mobile-menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
-    <img
-      src="{{ asset('assets/Vector.svg') }}"
-      alt=""
-      aria-hidden="true"
-      class="mobile-menu-icon"
-      width="17"
-      height="17"
-    />
-  </button>
-  <div class="mobile-menu-container" aria-label="Mobile navigation">
-    <ul class="mobile-only">
-      @foreach ($mobileNavLinks as $link)
-        <li><a href="{{ $link['href'] }}">{{ $link['label'] }}</a></li>
-      @endforeach
-    </ul>
-    <div class="nav-actions mobile-only">
-      <a href="tel:+255658962000" class="btn-login">
-        <img src="{{ asset('assets/call.svg') }}" alt="" aria-hidden="true">
-        +255 658 962 000
-      </a>
-      <a href="mailto:pos@skelapp.tz" class="btn-try">Book a call</a>
-    </div>
-  </div>
-</nav>
+@include('partials.site-nav')
 
 <main class="terms-main">
   <section class="terms-hero">
@@ -250,7 +180,7 @@
           <h4 class="footer-nav-title">Company</h4>
           <ul class="footer-nav-list">
             <li><a href="{{ url('/') }}">Home</a></li>
-            <li><a href="tel:+255658962000">Contact Us</a></li>
+            <li><a href="{{ route('contact.show') }}">Contact Us</a></li>
             <li><a href="{{ route('news.index') }}">News</a></li>
           </ul>
         </div>
@@ -261,7 +191,7 @@
             <li><a href="{{ $homeUrl }}#features">Features</a></li>
             <li><a href="{{ $homeUrl }}#pricing">Pricing</a></li>
             <li><a href="{{ $homeUrl }}#pos">POS Machine</a></li>
-            <li><a href="{{ $homeUrl }}#faq">FAQ</a></li>
+            <li><a href="{{ route('faq.show') }}">FAQ</a></li>
           </ul>
         </div>
 

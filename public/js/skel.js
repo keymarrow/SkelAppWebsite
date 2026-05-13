@@ -43,19 +43,41 @@
     return promise;
   };
 
+  const loadFirstAvailableScript = async (sources) => {
+    let lastError = null;
+
+    for (const src of sources) {
+      try {
+        await loadScript(src);
+        return true;
+      } catch (error) {
+        lastError = error;
+      }
+    }
+
+    if (lastError) throw lastError;
+    return false;
+  };
+
   const shouldLoadScrollLibraries = () => {
     const hasScrollStory = document.querySelector('.allfeatures, .how-it-works-section');
     if (!hasScrollStory) return false;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
-    return window.matchMedia('(min-width: 901px)').matches;
+    return true;
   };
 
   const loadScrollLibraries = async () => {
     if (window.gsap && window.ScrollTrigger) return true;
 
     try {
-      await loadScript('https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js');
-      await loadScript('https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js');
+      await loadFirstAvailableScript([
+        '/vendor/gsap/gsap.min.js',
+        'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js',
+      ]);
+      await loadFirstAvailableScript([
+        '/vendor/gsap/ScrollTrigger.min.js',
+        'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js',
+      ]);
       return Boolean(window.gsap && window.ScrollTrigger);
     } catch {
       return false;
@@ -65,24 +87,104 @@
   /* ─── FAQ Accordion ───────────────────────────────────── */
   const initFaqAccordion = () => {
     const faqItems = Array.from(document.querySelectorAll('.faq-item'));
+    const animateFaqItem = (item, shouldExpand) => {
+      const question = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      if (!question || !answer) return;
+
+      const currentHeight = answer.getBoundingClientRect().height;
+      answer.style.height = `${currentHeight}px`;
+      answer.offsetHeight;
+
+      item.classList.toggle('active', shouldExpand);
+      question.setAttribute('aria-expanded', String(shouldExpand));
+
+      if (shouldExpand) {
+        answer.style.height = `${answer.scrollHeight}px`;
+        return;
+      }
+
+      answer.style.height = '0px';
+    };
 
     faqItems.forEach((item) => {
       const question = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
       if (!question) return;
+
+      question.setAttribute('aria-expanded', String(item.classList.contains('active')));
+      if (answer) {
+        answer.style.height = item.classList.contains('active') ? 'auto' : '0px';
+
+        answer.addEventListener('transitionend', (event) => {
+          if (event.propertyName !== 'height') return;
+          answer.style.height = item.classList.contains('active') ? 'auto' : '0px';
+        });
+      }
 
       question.addEventListener('click', () => {
         const isActive = item.classList.contains('active');
+        const scope = item.closest('[data-faq-accordion-group]') || document;
+        const scopedItems = Array.from(scope.querySelectorAll('.faq-item'));
 
-        faqItems.forEach((other) => {
+        scopedItems.forEach((other) => {
           if (other === item) return;
-          other.classList.remove('active');
-          other.querySelector('.faq-question')?.setAttribute('aria-expanded', 'false');
+          animateFaqItem(other, false);
         });
 
-        item.classList.toggle('active', !isActive);
-        question.setAttribute('aria-expanded', String(!isActive));
+        animateFaqItem(item, !isActive);
       });
     });
+  };
+
+  /* ─── FAQ Page Navigation ─────────────────────────────── */
+  const initFaqPageNavigation = () => {
+    const faqPage = document.querySelector('.faq-page');
+    if (!faqPage) return;
+
+    const links = Array.from(faqPage.querySelectorAll('[data-faq-nav-link]'));
+    const sections = Array.from(faqPage.querySelectorAll('[data-faq-page-section]'));
+    if (!links.length || !sections.length) return;
+
+    const setActiveLink = (targetId) => {
+      links.forEach((link) => {
+        const linkTargetId = link.getAttribute('href')?.replace('#', '');
+        const isActive = linkTargetId === targetId;
+        link.classList.toggle('is-active', isActive);
+        link.setAttribute('aria-current', isActive ? 'location' : 'false');
+      });
+    };
+
+    links.forEach((link) => {
+      link.addEventListener('click', () => {
+        const targetId = link.getAttribute('href')?.replace('#', '');
+        if (targetId) {
+          setActiveLink(targetId);
+        }
+      });
+    });
+
+    const initialSection = sections.find((section) => section.id === window.location.hash.slice(1)) || sections[0];
+    if (initialSection?.id) {
+      setActiveLink(initialSection.id);
+    }
+
+    if (!('IntersectionObserver' in window)) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      const visibleEntries = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((first, second) => second.intersectionRatio - first.intersectionRatio);
+
+      if (visibleEntries[0]?.target?.id) {
+        setActiveLink(visibleEntries[0].target.id);
+      }
+    }, {
+      rootMargin: '-22% 0px -52% 0px',
+      threshold: [0.2, 0.45, 0.7],
+    });
+
+    sections.forEach((section) => observer.observe(section));
   };
 
   /* ─── Drag-Scroll Carousel ────────────────────────────── */
@@ -285,58 +387,87 @@
     });
   };
 
-  /* ─── How It Works ────────────────────────────────────────
-   *
-   * Desktop behavior:
-   * - Step 1 is visible as soon as the section enters.
-   * - The section pins while scroll progress advances the green line.
-   * - When progress reaches step 2, step 2 reveals.
-   * - When progress reaches step 3, step 3 reveals.
-   * - After the final reveal, normal page scrolling continues.
-   *
-   * Tablet/mobile behavior:
-   * - No pinning.
-   * - All steps stay visible in the regular stacked/grid layout.
-   *
-   * ─────────────────────────────────────────────────────── */
+  /* ─── How It Works ──────────────────────────────────────── */
   const initHowItWorksScrollStory = () => {
     const section = document.querySelector('.how-it-works-section');
     const scrollShell = section?.querySelector('.how-it-works-scroll');
-    const steps   = section ? Array.from(section.querySelectorAll('.step-item')) : [];
-    const stage   = section?.querySelector('.how-it-works-stage');
-    const markers = steps.map((step) => step.querySelector('.step-number-box')).filter(Boolean);
+    const stage = section?.querySelector('.how-it-works-stage');
+    const line = section?.querySelector('.steps-line-container');
+    const progress = section?.querySelector('.steps-line-progress');
+    const lineWrapper = line?.parentElement;
+    const steps = section ? Array.from(section.querySelectorAll('.step-item')) : [];
+
+    if (!section || !scrollShell || !stage || !line || !progress || !lineWrapper || steps.length !== 3) return;
+
     const stepMeta = steps.map((step) => ({
-      step,
       frame: step.querySelector('.step-image'),
       image: step.querySelector('.step-image img'),
       marker: step.querySelector('.step-marker'),
+      number: step.querySelector('.step-number-box'),
       content: step.querySelector('.step-content'),
     }));
-    const line     = section?.querySelector('.steps-line-container');
-    const progress = section?.querySelector('.steps-line-progress');
-    const lineWrapper = line?.parentElement;
     const stepImages = stepMeta.map(({ image }) => image).filter(Boolean);
 
-    if (!section || !scrollShell || !stage || stepMeta.length !== 3) return;
-
-    const revealStates = stepMeta.map(({ frame, image, marker, content }) => [frame, image, marker, content].filter(Boolean));
-    revealStates.flat().forEach((el) => { el.style.willChange = 'opacity, transform, clip-path, filter'; });
-
     const clamp01 = (value) => Math.min(1, Math.max(0, value));
-    const isCompactHowItWorksLine = () => window.matchMedia('(max-width: 743px), (width: 820px)').matches;
+    const isCompactLayout = () => window.matchMedia('(max-width: 743px), (width: 820px)').matches;
+    const isDesktopLayout = () => window.matchMedia('(min-width: 901px)').matches;
+    const desktopScrollDistance = () => Math.max(window.innerHeight * 1.2, 960);
 
-    const syncLinePosition = () => {
-      if (!line || !lineWrapper || markers.length < 2) {
+    let rafId = null;
+    let resizeObserver = null;
+
+    const setDesktopShell = () => {
+      scrollShell.style.setProperty('--how-it-works-stage-height', `${stage.offsetHeight}px`);
+      scrollShell.style.setProperty('--how-it-works-progress-space', `${desktopScrollDistance()}px`);
+    };
+
+    const clearDesktopShell = () => {
+      scrollShell.style.removeProperty('--how-it-works-stage-height');
+      scrollShell.style.removeProperty('--how-it-works-progress-space');
+    };
+
+    const setStepState = (state, amount) => {
+      const p = clamp01(amount);
+      const frameY = -120 * (1 - p);
+      const frameBlur = 14 * (1 - p);
+      const contentY = 42 * (1 - p);
+
+      if (state.frame) {
+        state.frame.style.opacity = String(p);
+        state.frame.style.visibility = p > 0 ? 'visible' : 'hidden';
+        state.frame.style.transform = `translate3d(0, ${frameY}px, 0)`;
+        state.frame.style.clipPath = 'none';
+        state.frame.style.filter = `blur(${frameBlur}px)`;
+      }
+
+      if (state.image) {
+        state.image.style.transform = 'translate3d(0, 0, 0) scale(1)';
+        state.image.style.filter = 'none';
+      }
+
+      [state.marker, state.content].filter(Boolean).forEach((el) => {
+        el.style.opacity = String(p);
+        el.style.visibility = p > 0 ? 'visible' : 'hidden';
+        el.style.transform = `translate3d(0, ${contentY}px, 0)`;
+      });
+    };
+
+    const setAllStepsVisible = () => {
+      stepMeta.forEach((state) => setStepState(state, 1));
+    };
+
+    const getLineMetrics = () => {
+      const numbers = stepMeta.map(({ number }) => number).filter(Boolean);
+      if (numbers.length < 2) {
         return { secondRatio: 0.5, thirdRatio: 1 };
       }
 
       const wrapperRect = lineWrapper.getBoundingClientRect();
-      const firstRect = markers[0].getBoundingClientRect();
-      const secondRect = markers[1].getBoundingClientRect();
-      const lastRect = markers[markers.length - 1].getBoundingClientRect();
-      const isMobileLine = isCompactHowItWorksLine();
+      const firstRect = numbers[0].getBoundingClientRect();
+      const secondRect = numbers[1].getBoundingClientRect();
+      const lastRect = numbers[numbers.length - 1].getBoundingClientRect();
 
-      if (isMobileLine) {
+      if (isCompactLayout()) {
         const lineWidth = line.offsetWidth || 2;
         const firstCenterX = firstRect.left + (firstRect.width / 2);
         const firstCenterY = firstRect.top + (firstRect.height / 2);
@@ -356,10 +487,27 @@
       }
 
       const lineHeight = line.offsetHeight || 2;
+      const markerCenterY = firstRect.top + (firstRect.height / 2);
+
+      if (isDesktopLayout()) {
+        const viewportWidth = window.innerWidth || document.documentElement.clientWidth || wrapperRect.width;
+        const secondCenterX = secondRect.left + (secondRect.width / 2);
+        const lastCenterX = lastRect.left + (lastRect.width / 2);
+
+        line.style.left = `${-wrapperRect.left}px`;
+        line.style.top = `${markerCenterY - wrapperRect.top - (lineHeight / 2)}px`;
+        line.style.width = `${viewportWidth}px`;
+        line.style.height = `${lineHeight}px`;
+
+        return {
+          secondRatio: clamp01(secondCenterX / Math.max(1, viewportWidth)),
+          thirdRatio: clamp01(lastCenterX / Math.max(1, viewportWidth)),
+        };
+      }
+
       const firstCenterX = firstRect.left + (firstRect.width / 2);
       const secondCenterX = secondRect.left + (secondRect.width / 2);
       const lastCenterX = lastRect.left + (lastRect.width / 2);
-      const markerCenterY = firstRect.top + (firstRect.height / 2);
       const travel = Math.max(1, lastCenterX - firstCenterX);
 
       line.style.left = `${firstCenterX - wrapperRect.left}px`;
@@ -373,274 +521,85 @@
       };
     };
 
-    const bindLineResync = (handler) => {
-      let rafId = null;
-
-      const schedule = () => {
-        if (rafId) cancelAnimationFrame(rafId);
-
-        rafId = requestAnimationFrame(() => {
-          rafId = requestAnimationFrame(() => {
-            rafId = null;
-            handler();
-          });
-        });
-      };
-
-      const pendingImages = stepImages.filter((image) => !image.complete);
-      pendingImages.forEach((image) => {
-        image.addEventListener('load', schedule);
-        image.addEventListener('error', schedule);
-      });
-
-      window.addEventListener('load', schedule);
-
-      let observer = null;
-      if ('ResizeObserver' in window && lineWrapper) {
-        observer = new ResizeObserver(schedule);
-        observer.observe(lineWrapper);
-      }
-
-      return () => {
-        if (rafId) cancelAnimationFrame(rafId);
-        pendingImages.forEach((image) => {
-          image.removeEventListener('load', schedule);
-          image.removeEventListener('error', schedule);
-        });
-        window.removeEventListener('load', schedule);
-        observer?.disconnect();
-      };
+    const setLineVisible = (axis, progressValue = 1) => {
+      line.style.opacity = '1';
+      line.style.visibility = 'visible';
+      progress.style.transformOrigin = axis === 'y' ? 'top center' : 'left center';
+      progress.style.transform = axis === 'y'
+        ? `scaleY(${progressValue})`
+        : `scaleX(${progressValue})`;
     };
 
-    if (!window.gsap || !window.ScrollTrigger) {
-      const syncStaticLine = () => {
-        const isMobileLine = isCompactHowItWorksLine();
+    const applyDesktopState = () => {
+      setDesktopShell();
 
-        syncLinePosition();
+      const lineMetrics = getLineMetrics();
+      const sectionRect = section.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+      const sectionProgress = clamp01((viewportHeight - sectionRect.top) / Math.max(sectionRect.height, 1));
+      const revealWindow = 0.14;
+      const secondReveal = clamp01((sectionProgress - lineMetrics.secondRatio) / revealWindow);
+      const thirdStart = clamp01(Math.max(lineMetrics.secondRatio + revealWindow + 0.02, lineMetrics.thirdRatio - revealWindow));
+      const thirdReveal = clamp01((sectionProgress - thirdStart) / revealWindow);
 
-        if (line) {
-          line.style.opacity = '1';
-          line.style.visibility = 'visible';
-        }
+      setLineVisible('x', sectionProgress);
+      setStepState(stepMeta[0], 1);
+      setStepState(stepMeta[1], secondReveal);
+      setStepState(stepMeta[2], thirdReveal);
+    };
 
-        if (progress) {
-          progress.style.transformOrigin = isMobileLine ? 'top center' : 'left center';
-          progress.style.transform = isMobileLine ? 'scaleY(1)' : 'scaleX(1)';
-        }
-      };
+    const applyTabletState = () => {
+      clearDesktopShell();
+      getLineMetrics();
+      setLineVisible('x', 1);
+      setAllStepsVisible();
+    };
 
-      stepMeta.forEach(({ frame, image, marker, content }) => {
-        [frame, image, marker, content].filter(Boolean).forEach((el) => {
-          el.style.opacity = '1';
-          el.style.visibility = 'inherit';
-          el.style.transform = 'none';
-          el.style.clipPath = 'none';
-          el.style.filter = 'none';
-        });
+    const applyCompactState = () => {
+      clearDesktopShell();
+      getLineMetrics();
+      setLineVisible('y', 1);
+      setAllStepsVisible();
+    };
+
+    const applyCurrentState = () => {
+      if (isDesktopLayout()) {
+        applyDesktopState();
+        return;
+      }
+
+      if (isCompactLayout()) {
+        applyCompactState();
+        return;
+      }
+
+      applyTabletState();
+    };
+
+    const scheduleSync = () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        applyCurrentState();
       });
+    };
 
-      syncStaticLine();
-      bindLineResync(syncStaticLine);
-      window.addEventListener('resize', syncStaticLine);
-      return;
+    stepImages.filter((image) => !image.complete).forEach((image) => {
+      image.addEventListener('load', scheduleSync);
+      image.addEventListener('error', scheduleSync);
+    });
+
+    window.addEventListener('load', scheduleSync);
+    window.addEventListener('resize', scheduleSync);
+    window.addEventListener('scroll', scheduleSync, { passive: true });
+
+    if ('ResizeObserver' in window) {
+      resizeObserver = new ResizeObserver(scheduleSync);
+      resizeObserver.observe(lineWrapper);
+      resizeObserver.observe(stage);
     }
 
-    const { gsap, ScrollTrigger } = window;
-    gsap.registerPlugin(ScrollTrigger);
-    const mm = gsap.matchMedia();
-
-const renderStepState = (state, amount) => {
-  const p = clamp01(amount);
-
-  // Image card: starts 80px ABOVE its final position, falls down to 0
-  const frameY = -80 * (1 - p);
-
-  // Image inner: subtle scale for depth feel
-  const imageScale = 1.06 - (0.06 * p);
-
-  // Content (number badge + text): starts 48px BELOW, rises up to 0
-  const contentY = 48 * (1 - p);
-
-  if (state.frame) {
-    gsap.set(state.frame, {
-      autoAlpha: p,
-      y: frameY,
-      // NO clipPath — card physically moves, not masked
-    });
-  }
-
-  if (state.image) {
-    gsap.set(state.image, {
-      scale: imageScale,
-      filter: 'none',
-      yPercent: 0,
-    });
-  }
-
-  [state.marker, state.content].filter(Boolean).forEach((el) => {
-    gsap.set(el, {
-      autoAlpha: p,
-      y: contentY,
-    });
-  });
-};
-    const showAllSteps = () => {
-      stepMeta.forEach((state) => renderStepState(state, 1));
-      if (line && progress) {
-        gsap.set(line, { autoAlpha: 1 });
-        gsap.set(progress, { scaleX: 1, transformOrigin: 'left center' });
-      }
-    };
-
-    /* ── Desktop (≥1201 px) ── */
-    mm.add('(min-width: 1201px) and (prefers-reduced-motion: no-preference)', () => {
-      const scrollDistance = () => Math.max(window.innerHeight * 1.2, 960);
-      let secondTrigger = 0.5;
-      let thirdTrigger = 0.9;
-      let sectionEntryTrigger = 0.3;
-      const revealWindow = 0.12;
-      let trigger = null;
-      const unbindLineResync = bindLineResync(() => ScrollTrigger.refresh());
-
-      const syncDesktopMetrics = () => {
-        scrollShell.style.setProperty('--how-it-works-stage-height', `${stage.offsetHeight}px`);
-        scrollShell.style.setProperty('--how-it-works-progress-space', `${scrollDistance()}px`);
-        const lineMetrics = syncLinePosition();
-        const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
-        const triggerDistance = Math.max(section.offsetHeight, 1);
-        secondTrigger = clamp01(lineMetrics.secondRatio);
-        thirdTrigger = clamp01(lineMetrics.thirdRatio);
-        sectionEntryTrigger = clamp01(viewportHeight / triggerDistance);
-      };
-
-      const applyDesktopProgress = (progressValue) => {
-        const rawProgress = clamp01(progressValue);
-        const safeEntryTrigger = Math.min(0.95, Math.max(sectionEntryTrigger, 0.0001));
-        const scrollProgress = rawProgress <= safeEntryTrigger
-          ? clamp01((rawProgress / safeEntryTrigger) * secondTrigger)
-          : clamp01(secondTrigger + (((rawProgress - safeEntryTrigger) / Math.max(1 - safeEntryTrigger, 0.0001)) * (1 - secondTrigger)));
-        const secondReveal = clamp01((scrollProgress - secondTrigger) / revealWindow);
-        const thirdReveal = clamp01((scrollProgress - (thirdTrigger - revealWindow)) / revealWindow);
-
-        if (progress) {
-          gsap.set(progress, { scaleX: scrollProgress });
-        }
-
-        renderStepState(stepMeta[0], 1);
-        renderStepState(stepMeta[1], secondReveal);
-        renderStepState(stepMeta[2], thirdReveal);
-      };
-
-      renderStepState(stepMeta[0], 1);
-      renderStepState(stepMeta[1], 0);
-      renderStepState(stepMeta[2], 0);
-
-      if (line && progress) {
-        gsap.set(line, { autoAlpha: 1 });
-        gsap.set(progress, { scaleX: 0, transformOrigin: 'left center' });
-      }
-
-      const handleRefresh = () => {
-        syncDesktopMetrics();
-        applyDesktopProgress(trigger ? trigger.progress : 0);
-      };
-
-      syncDesktopMetrics();
-      ScrollTrigger.addEventListener('refreshInit', handleRefresh);
-
-      trigger = ScrollTrigger.create({
-        trigger: section,
-        start: 'top bottom',
-        end: 'bottom bottom',
-        scrub: 0.45,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => applyDesktopProgress(self.progress),
-        onLeave: () => applyDesktopProgress(1),
-        onLeaveBack: () => applyDesktopProgress(0),
-        onRefresh: (self) => applyDesktopProgress(self.progress),
-      });
-
-      applyDesktopProgress(trigger.progress);
-
-      return () => {
-        trigger.kill();
-        unbindLineResync();
-        ScrollTrigger.removeEventListener('refreshInit', handleRefresh);
-        scrollShell.style.removeProperty('--how-it-works-stage-height');
-        scrollShell.style.removeProperty('--how-it-works-progress-space');
-        gsap.set([...revealStates.flat(), line, progress].filter(Boolean), { clearProps: 'all' });
-      };
-    });
-
-    /* ── Tablet (744 px – 1200 px) ── */
-    mm.add('(min-width: 744px) and (max-width: 1200px) and (prefers-reduced-motion: no-preference)', () => {
-      const syncTabletMetrics = () => {
-        showAllSteps();
-        syncLinePosition();
-      };
-      const unbindLineResync = bindLineResync(syncTabletMetrics);
-
-      syncTabletMetrics();
-      window.addEventListener('resize', syncTabletMetrics);
-
-      return () => {
-        unbindLineResync();
-        window.removeEventListener('resize', syncTabletMetrics);
-        scrollShell.style.removeProperty('--how-it-works-stage-height');
-        scrollShell.style.removeProperty('--how-it-works-progress-space');
-        gsap.set([...revealStates.flat(), line, progress].filter(Boolean), { clearProps: 'all' });
-      };
-    });
-
-    /* ── Mobile (≤743 px) ── */
-    mm.add('(max-width: 743px) and (prefers-reduced-motion: no-preference)', () => {
-      const syncMobileMetrics = () => {
-        syncLinePosition();
-      };
-      const unbindLineResync = bindLineResync(syncMobileMetrics);
-
-      stepMeta.forEach((state) => renderStepState(state, 0));
-      if (progress) gsap.set(progress, { scaleY: 0, transformOrigin: 'top center' });
-      if (line) gsap.set(line, { autoAlpha: 1 });
-      syncMobileMetrics();
-
-      window.addEventListener('resize', syncMobileMetrics);
-
-      const trigger = ScrollTrigger.create({
-        trigger: section,
-        start: 'top 75%',
-        end: 'bottom 25%',
-        scrub: 0.45,
-        onUpdate: (self) => {
-          const p = self.progress;
-          if (progress) gsap.set(progress, { scaleY: p });
-
-          renderStepState(stepMeta[0], clamp01(p * 3));
-          renderStepState(stepMeta[1], clamp01((p - 0.33) * 3));
-          renderStepState(stepMeta[2], clamp01((p - 0.66) * 3));
-        }
-      });
-
-      return () => {
-        trigger.kill();
-        unbindLineResync();
-        window.removeEventListener('resize', syncMobileMetrics);
-        scrollShell.style.removeProperty('--how-it-works-stage-height');
-        scrollShell.style.removeProperty('--how-it-works-progress-space');
-        gsap.set([...revealStates.flat(), line, progress].filter(Boolean), { clearProps: 'all' });
-      };
-    });
-
-    /* ── Reduced motion: just show everything ── */
-    mm.add('(prefers-reduced-motion: reduce)', () => {
-      showAllSteps();
-
-      return () => {
-        scrollShell.style.removeProperty('--how-it-works-stage-height');
-        scrollShell.style.removeProperty('--how-it-works-progress-space');
-        gsap.set([...revealStates.flat(), line, progress].filter(Boolean), { clearProps: 'all' });
-      };
-    });
+    applyCurrentState();
   };
 
   /* ─── All Features Cards ──────────────────────────────── */
@@ -1141,6 +1100,7 @@ const renderStepState = (state, amount) => {
   /* ─── Boot ────────────────────────────────────────────── */
   onReady(() => {
     initFaqAccordion();
+    initFaqPageNavigation();
     initDragScroll();
     initRetailerCarouselSlider();
     initMobileNav();

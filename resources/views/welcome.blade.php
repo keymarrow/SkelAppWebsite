@@ -10,63 +10,7 @@
 <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body>
-<nav>
- <a href="{{ url('/') }}" class="nav-logo" aria-label="{{ config('app.name', 'SkelApp') }} - Home">
-  <img
-    src="{{ asset('assets/SkelAppLogo-green.svg') }}"
-    alt="{{ config('app.name', 'SkelApp') }} logo"
-    width="240"
-    height="74"
-    loading="eager"
-    decoding="async"
-  />
-</a>
-
-  <ul class="nav-links">
-    <li><a href="#overview">Overview</a></li>
-    <li><a href="#retailers">Retailers</a></li>
-    <li><a href="#features">Features</a></li>
-    <li><a href="#howitworks">How it Work</a></li>
-    <div class="nav-divider"></div>
-    <li><a href="#pos">POS Machine</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-  </ul>
-  <div class="nav-actions">
-    <button class="btn-login">
-      <img src="{{ asset('assets/call.svg') }}" alt="" aria-hidden="true">
-      +255 658 962 000
-    </button>
-    <button class="btn-try">Book a call</button>
-  </div>
-  <button class="mobile-menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
-    <img
-      src="{{ asset('assets/Vector.svg') }}"
-      alt=""
-      aria-hidden="true"
-      class="mobile-menu-icon"
-      width="17"
-      height="17"
-    />
-  </button>
-  <div class="mobile-menu-container" aria-label="Mobile navigation">
-    <ul class="mobile-only">
-      <li><a href="#overview">Overview</a></li>
-      <li><a href="#retailers">Retailers</a></li>
-      <li><a href="#features">Features</a></li>
-      <li><a href="#howitworks">How it Works</a></li>
-      <li><a href="#pos">POS Machine</a></li>
-      <li><a href="#pricing">Pricing</a></li>
-      <li><a href="#faq">FAQ</a></li>
-    </ul>
-    <div class="nav-actions mobile-only">
-      <button class="btn-login" type="button">
-        <img src="{{ asset('assets/call.svg') }}" alt="" aria-hidden="true">
-        +255 658 962 000
-      </button>
-      <button class="btn-try" type="button">Book a call</button>
-    </div>
-  </div>
-</nav>
+@include('partials.site-nav', ['isHome' => true])
 <section class="hero" id="overview">
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
@@ -585,6 +529,7 @@
   <div class="faq-container">
     <div class="faq-header">
       <h2>Frequently Asked Questions</h2>
+      <a href="{{ route('faq.show') }}" class="faq-read-more">Read more</a>
     </div>
     <div class="faq-layout">
       <p class="faq-subtitle">How it works</p>
@@ -709,7 +654,7 @@
           <h4 class="footer-nav-title">Company</h4>
           <ul class="footer-nav-list">
             <li><a href="{{ url('/') }}">Home</a></li>
-            <li><a href="tel:+255658962000">Contact Us</a></li>
+            <li><a href="{{ route('contact.show') }}">Contact Us</a></li>
             <li><a href="{{ route('news.index') }}">News</a></li>
           </ul>
         </div>
@@ -720,7 +665,7 @@
             <li><a href="#features">Features</a></li>
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="#pos">POS Machine</a></li>
-            <li><a href="#faq">FAQ</a></li>
+            <li><a href="{{ route('faq.show') }}">FAQ</a></li>
           </ul>
         </div>
 
@@ -816,7 +761,7 @@
             <h4 class="footer-nav-title">Company</h4>
             <ul class="footer-nav-list">
               <li><a href="{{ url('/') }}">Home</a></li>
-              <li><a href="tel:+255658962000">Contact Us</a></li>
+              <li><a href="{{ route('contact.show') }}">Contact Us</a></li>
               <li><a href="{{ route('news.index') }}">News</a></li>
             </ul>
           </div>
@@ -827,7 +772,7 @@
               <li><a href="#features">Features</a></li>
               <li><a href="#pricing">Pricing</a></li>
               <li><a href="#pos">POS Machine</a></li>
-              <li><a href="#faq">FAQ</a></li>
+              <li><a href="{{ route('faq.show') }}">FAQ</a></li>
             </ul>
           </div>
 
