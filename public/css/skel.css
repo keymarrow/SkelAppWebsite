@@ -6493,7 +6493,7 @@ body.error-404-page::before {
   }
 }
 
-@media (width: 768px), (width: 820px) {
+@media (min-width: 744px) and (max-width: 900px) {
   nav {
     width: 713px;
     max-width: calc(100% - 55px);
@@ -6745,101 +6745,6 @@ body.error-404-page::before {
     width: 320px;
     max-width: none;
     max-height: none;
-  }
-
-}
-
-@media (width: 820px) {
-  .how-it-works-section {
-    padding: 40px 20px 40px;
-  }
-
-  .section-headerr {
-    margin-left: 0;
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  .section-headerr-action {
-    display: block;
-  }
-
-  .section-headerr-copy p {
-    font-size: 16px;
-  }
-
-  .steps-line-container {
-    display: block;
-    position: absolute;
-    left: calc((29.97px / 2) - 1px);
-    top: 0;
-    width: 2px;
-    height: 100%;
-    z-index: 1;
-    opacity: 1;
-  }
-
-  .steps-line-progress {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(180deg, #4AAD77 0%, #B3E6C5 90%, #FFFFFF 100%);
-    transform-origin: top center;
-    transform: scaleY(1);
-  }
-
-  .steps-container {
-    grid-template-columns: 1fr;
-    gap: 5px;
-  }
-
-  .step-item {
-    max-width: none;
-    padding-left: 56px;
-    align-items: flex-start;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-  }
-
-  .step-item:last-child {
-    grid-column: auto;
-  }
-
-  .step-image {
-    width: 100%;
-    margin-top: 24px;
-    margin-bottom: 29px;
-    border-radius: 24px;
-    order: 3;
-  }
-
-  .step-marker {
-    position: absolute;
-    left: 0;
-    top: 0;
-    margin-bottom: 0;
-  }
-
-  .step-number-box {
-    width: 29.97px;
-    height: 29.97px;
-    border-radius: 2px;
-    font-size: 0.875rem;
-  }
-
-  .step-content {
-    order: 2;
-    gap: 22px;
-    width: 100%;
-  }
-
-  .step-content h3 {
-    font-size: clamp(1.8rem, 6vw, 30px);
-  }
-
-  .step-content p {
-    max-width: 30ch;
   }
 }
 
@@ -7384,51 +7289,90 @@ body.error-404-page::before {
 
 @media (max-width: 1120px) {
   .faq-page {
-    padding: 132px 28px 96px;
+    padding: 132px 28px 48px;
   }
 
   .faq-page-shell {
-    grid-template-columns: 1fr;
-    gap: 52px;
+    display: block;
+    gap: 0;
   }
 
   .faq-page-sidebar {
-    position: static;
+    position: sticky;
+    top: 104px;
+    z-index: 20;
+    background: #ffffff;
+    margin: 0 -28px 36px;
+    padding: 18px 28px 0;
+    box-shadow: 0 6px 18px -16px rgba(15, 23, 19, 0.18);
   }
 
   .faq-page-categories {
-    margin-top: 0;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px 26px;
+    margin-top: 22px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 0;
+    border-bottom: 1px solid #dce2dd;
+    scrollbar-width: none;
+  }
+
+  .faq-page-categories::-webkit-scrollbar {
+    display: none;
+  }
+
+  .faq-page-category-link {
+    flex: 0 0 auto;
+    padding: 10px 20px 12px;
+    padding-left: 0;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    font-size: 13px;
+  }
+
+  .faq-page-category-link + .faq-page-category-link {
+    padding-left: 20px;
+  }
+
+  .faq-page-category-link::before {
+    display: none;
+  }
+
+  .faq-page-category-link.is-active {
+    color: #151515;
+    border-bottom-color: #151515;
+    font-weight: 500;
+  }
+
+  .faq-page-section {
+    scroll-margin-top: 240px;
   }
 }
 
 @media (max-width: 768px) {
   .faq-page {
-    padding: 112px 20px 76px;
+    padding: 112px 20px 40px;
   }
 
-  .faq-page-shell {
-    gap: 42px;
+  .faq-page-sidebar {
+    top: 88px;
+    margin: 0 -20px 16px;
+    padding: 14px 20px 0;
   }
 
   .faq-page-title {
-    font-size: clamp(3rem, 15vw, 4rem);
+    font-size: clamp(2.4rem, 9vw, 3.4rem);
   }
 
   .faq-page-categories {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .faq-page-category-link {
-    padding: 12px 0 12px 38px;
-    border-bottom: 1px solid #edf2ee;
+    margin-top: 16px;
   }
 
   .faq-page-section {
     padding: 8px 0 58px;
-    scroll-margin-top: 104px;
+    scroll-margin-top: 200px;
   }
 
   .faq-page-section-header {
@@ -7462,5 +7406,300 @@ body.error-404-page::before {
 
   .faq-page .faq-answer p {
     font-size: 15px;
+  }
+}
+
+/* Sticky-footer pattern for sub-pages: pushes the footer to the bottom of
+   the viewport when page content is short, eliminating the empty gap. */
+.faq-page-body,
+body.news-page,
+body.terms-page,
+body.contact-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.faq-page-body > main,
+body.news-page > main,
+body.terms-page > main,
+body.contact-page > main {
+  flex: 1 0 auto;
+}
+
+.faq-page-body > .site-footer,
+body.news-page > .site-footer,
+body.terms-page > .site-footer,
+body.contact-page > .site-footer {
+  flex-shrink: 0;
+  margin-top: 0;
+  content-visibility: visible;
+  contain-intrinsic-size: none;
+}
+
+@media (max-width: 1024px) {
+  .faq-page-body > .site-footer,
+  body.news-page > .site-footer,
+  body.terms-page > .site-footer,
+  body.contact-page > .site-footer {
+    padding-top: 36px;
+  }
+
+  .faq-page-body > .site-footer .footer-nav,
+  body.news-page > .site-footer .footer-nav,
+  body.terms-page > .site-footer .footer-nav,
+  body.contact-page > .site-footer .footer-nav {
+    margin-bottom: 24px;
+  }
+
+  .faq-page-body > .site-footer .footer-bottom,
+  body.news-page > .site-footer .footer-bottom,
+  body.terms-page > .site-footer .footer-bottom,
+  body.contact-page > .site-footer .footer-bottom {
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .faq-page-body > .site-footer,
+  body.news-page > .site-footer,
+  body.terms-page > .site-footer,
+  body.contact-page > .site-footer {
+    padding-top: 24px;
+  }
+
+  .faq-page-body > main,
+  body.news-page > main,
+  body.terms-page > main,
+  body.contact-page > main {
+    padding-bottom: 0;
+  }
+
+  body.terms-page .terms-main,
+  body.news-page .news-shell {
+    padding-bottom: 24px;
+  }
+
+  .faq-page {
+    padding-bottom: 24px !important;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────
+   FLUID NAV — single source of truth for nav sizing.
+   Scales smoothly between a small-mobile size (~360px viewport)
+   and a large-desktop size (~1440px viewport) using clamp().
+   Lives at the end of the file so source order overrides every
+   earlier fixed-size breakpoint rule. The layout switch (desktop
+   menu ↔ hamburger) is still handled by the existing display
+   rules at lines ~155-194 and ~1267.
+   ─────────────────────────────────────────────────────────────── */
+nav {
+  top: clamp(10px, 1vw + 5px, 20px);
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  width: min(1400px, calc(100% - clamp(20px, 4vw + 10px, 80px)));
+  height: clamp(50px, 2.29vw + 39px, 72px);
+  padding: 0 7px 0 7px;
+  border-radius: clamp(25px, 1.15vw + 19.5px, 36px);
+}
+
+.nav-logo img {
+  width: clamp(130px, 8.54vw + 89px, 212px);
+  height: auto;
+}
+
+.nav-links {
+  gap: clamp(14px, 1.39vw + 9px, 29px);
+}
+
+.nav-links a,
+.btn-login,
+.btn-try {
+  font-size: clamp(13px, 0.28vw + 12px, 16px);
+}
+
+.btn-login {
+  gap: clamp(8px, 0.37vw + 7px, 12px);
+}
+
+.btn-login img {
+  width: clamp(15px, 0.28vw + 14px, 18px);
+  height: clamp(15px, 0.28vw + 14px, 18px);
+}
+
+.btn-try {
+  padding: 0 clamp(18px, 0.93vw + 15px, 28px);
+  height: clamp(40px, 1.48vw + 35px, 56px);
+  border-radius: clamp(20px, 0.74vw + 17px, 28px);
+}
+
+.nav-actions {
+  gap: clamp(14px, 1.76vw + 8px, 33px);
+}
+
+.mobile-menu-toggle {
+  width: clamp(22px, 0.74vw + 19px, 30px);
+  height: clamp(22px, 0.74vw + 19px, 30px);
+  flex: 0 0 clamp(22px, 0.74vw + 19px, 30px);
+}
+
+/* Extra breathing room between the hamburger icon and the right edge
+   of the nav pill (only applies in mobile mode where hamburger shows). */
+@media (max-width: 1024px) {
+  nav {
+    padding-right: 15px;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────
+   FLUID HERO — smooth scaling across all viewport widths.
+   The hero has two distinct layouts:
+     • column (mobile + tablet portrait, ≤ 899px)
+     • row    (desktop, ≥ 900px)
+   Each regime gets its own clamp() ranges so resizing within a
+   regime is fully smooth. The 900px layout change is the only
+   hard break (unavoidable — row vs column needs a breakpoint).
+   This block lives at the end so source order overrides every
+   earlier fixed-size hero rule.
+   ─────────────────────────────────────────────────────────────── */
+
+/* COLUMN LAYOUT — mobile + tablet portrait */
+@media (max-width: 899px) {
+  .hero {
+    height: auto;
+    min-height: clamp(600px, 63vw + 373px, 940px);
+    padding: clamp(72px, 5vw + 44px, 110px) clamp(20px, 2.4vw + 11px, 32px) clamp(32px, 3vw + 12px, 56px);
+    border-radius: 0 0 16px 16px;
+  }
+
+  .hero-content {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: clamp(20px, 2vw + 12px, 36px);
+  }
+
+  .hero-left {
+    width: 100%;
+    align-items: flex-start;
+    text-align: left;
+    gap: clamp(8px, 0.7vw + 5px, 14px);
+  }
+
+  .hero-left h1 {
+    font-size: clamp(22px, 4.1vw + 7.2px, 44px);
+    font-weight: 500;
+    line-height: 1.08;
+  }
+
+  .hero-left p {
+    font-size: clamp(14px, 1.5vw + 8.6px, 22px);
+    line-height: 1.4;
+  }
+
+  .hero-right {
+    width: 100%;
+  }
+
+  .hero .btn-download {
+    width: 100%;
+    height: clamp(48px, 3.7vw + 34.7px, 68px);
+    padding: 0 clamp(20px, 1.5vw + 14.6px, 28px);
+    border-radius: clamp(8px, 0.7vw + 5.5px, 12px);
+    font-size: clamp(15px, 0.7vw + 12.5px, 19px);
+    font-weight: 400;
+  }
+
+  .testimonial-card {
+    width: 100%;
+    height: auto;
+    padding: clamp(16px, 2.2vw + 8px, 28px) clamp(18px, 2.2vw + 10px, 30px);
+    border-radius: clamp(12px, 0.7vw + 9.5px, 16px);
+  }
+
+  .testimonial-card .stars {
+    margin-bottom: clamp(8px, 0.7vw + 5.5px, 12px);
+  }
+
+  .testimonial-card .stars img {
+    width: clamp(96px, 5.9vw + 75px, 128px);
+    height: auto;
+  }
+
+  .testimonial-card blockquote {
+    margin-bottom: clamp(10px, 1.5vw + 4.6px, 18px);
+    font-size: clamp(14px, 0.7vw + 11.5px, 18px);
+    line-height: 1.45;
+  }
+
+  .testimonial-card cite {
+    font-size: clamp(13px, 0.55vw + 11px, 16px);
+  }
+}
+
+/* ROW LAYOUT — desktop */
+@media (min-width: 900px) {
+  .hero {
+    height: auto;
+    min-height: clamp(720px, 16vw + 576px, 934px);
+    padding: 0 clamp(40px, 3.7vw + 6.7px, 60px) clamp(40px, 3.7vw + 6.7px, 60px);
+    border-radius: 0 0 20px 20px;
+  }
+
+  .hero-content {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: clamp(24px, 1.9vw + 6.7px, 40px);
+  }
+
+  .hero-left {
+    align-items: flex-start;
+    text-align: left;
+    gap: clamp(8px, 0.4vw + 5px, 12px);
+  }
+
+  .hero-left h1 {
+    font-size: clamp(24px, 0.7vw + 17.7px, 32px);
+    font-weight: 400;
+    line-height: 1.08;
+  }
+
+  .hero-left p {
+    font-size: clamp(15px, 0.4vw + 11.4px, 18px);
+    line-height: 1.35;
+  }
+
+  .hero .btn-download {
+    width: auto;
+    height: clamp(52px, 0.74vw + 45.3px, 60px);
+    padding: 0 clamp(24px, 0.4vw + 20.4px, 28px);
+    border-radius: clamp(8px, 0.4vw + 4.4px, 10px);
+    font-size: clamp(15px, 0.15vw + 13.7px, 16px);
+    font-weight: 700;
+  }
+
+  .testimonial-card {
+    width: clamp(380px, 18vw + 218px, 564px);
+    height: auto;
+    min-height: clamp(140px, 1vw + 131px, 160px);
+    padding: clamp(16px, 0.6vw + 10.6px, 22px) clamp(18px, 0.6vw + 12.6px, 24px);
+    border-radius: clamp(12px, 0.4vw + 8.4px, 16px);
+  }
+
+  .testimonial-card .stars img {
+    width: clamp(96px, 0.4vw + 92.4px, 104px);
+    height: auto;
+  }
+
+  .testimonial-card blockquote {
+    font-size: clamp(14px, 0.2vw + 12.2px, 16px);
+    line-height: 1.4;
+  }
+
+  .testimonial-card cite {
+    font-size: clamp(13px, 0.2vw + 11.2px, 15px);
   }
 }

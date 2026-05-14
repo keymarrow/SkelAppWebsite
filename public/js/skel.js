@@ -409,7 +409,7 @@
     const stepImages = stepMeta.map(({ image }) => image).filter(Boolean);
 
     const clamp01 = (value) => Math.min(1, Math.max(0, value));
-    const isCompactLayout = () => window.matchMedia('(max-width: 743px), (width: 820px)').matches;
+    const isCompactLayout = () => window.matchMedia('(max-width: 743px)').matches;
     const isDesktopLayout = () => window.matchMedia('(min-width: 901px)').matches;
     const desktopScrollDistance = () => Math.max(window.innerHeight * 1.2, 960);
 
