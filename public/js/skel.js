@@ -940,16 +940,18 @@
     };
 
     const articleSections = Array.from(articleBody?.querySelectorAll('.news-copy-block') ?? []);
-    const articleChunks = articleSections.flatMap((section) => {
-      const heading = normalizeNarrationText(section.querySelector('h2')?.textContent);
-      const paragraphs = Array.from(section.querySelectorAll('p'))
-        .map((paragraph) => normalizeNarrationText(paragraph.textContent))
-        .filter(Boolean)
-        .join(' ');
+    const articleChunks = articleSections.length > 0
+      ? articleSections.flatMap((section) => {
+        const heading = normalizeNarrationText(section.querySelector('h2')?.textContent);
+        const paragraphs = Array.from(section.querySelectorAll('p'))
+          .map((paragraph) => normalizeNarrationText(paragraph.textContent))
+          .filter(Boolean)
+          .join(' ');
 
-      const sectionText = [heading ? `${heading}.` : '', paragraphs].filter(Boolean).join(' ');
-      return splitNarrationChunks(sectionText, 420);
-    });
+        const sectionText = [heading ? `${heading}.` : '', paragraphs].filter(Boolean).join(' ');
+        return splitNarrationChunks(sectionText, 420);
+      })
+      : splitNarrationChunks(normalizeNarrationText(articleBody?.innerText), 420);
 
     if (!supportsSpeech || articleChunks.length === 0) {
       audioButton.disabled = true;

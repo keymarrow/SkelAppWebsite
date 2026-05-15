@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\Auth\AdminAuthenticatedSessionController;
+use App\Http\Controllers\Admin\NewsPostController as AdminNewsPostController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -18,15 +23,15 @@ Route::get('/contact', function () {
 Route::post('/contact', function (Request $request) {
     $data = $request->validate([
         'first_name' => ['required', 'string', 'max:100'],
-        'last_name'  => ['required', 'string', 'max:100'],
-        'email'      => ['required', 'email', 'max:255'],
-        'phone'      => ['required', 'string', 'max:30'],
-        'company'    => ['required', 'string', 'max:200'],
+        'last_name' => ['required', 'string', 'max:100'],
+        'email' => ['required', 'email', 'max:255'],
+        'phone' => ['required', 'string', 'max:30'],
+        'company' => ['required', 'string', 'max:200'],
     ]);
 
     $body = implode("\n", [
-        "New demo request from the SkelApp website.",
-        "",
+        'New demo request from the SkelApp website.',
+        '',
         "Name:     {$data['first_name']} {$data['last_name']}",
         "Email:    {$data['email']}",
         "Phone:    {$data['phone']}",
@@ -44,101 +49,29 @@ Route::post('/contact', function (Request $request) {
         ->with('success', "Thank you, {$data['first_name']}! We've received your request and will be in touch shortly.");
 })->name('contact.send');
 
-Route::get('/news', function (Request $request) {
-    $articles = collect(config('news.articles', []));
+Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
+Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 
-    $availableCategories = $articles
-        ->flatMap(fn (array $article) => $article['categories'])
-        ->unique()
-        ->values();
+$registerAdminRoutes = function (): void {
+    Route::middleware('guest:admin')->group(function () {
+        Route::get('/login', [AdminAuthenticatedSessionController::class, 'create'])->name('login');
+        Route::post('/login', [AdminAuthenticatedSessionController::class, 'store'])->name('login.store');
+    });
 
-    $categoryOrder = collect([
-        'Product',
-        'Company',
-        'Operations',
-        'Growth',
-        'Retail Guide',
-    ]);
+    Route::middleware('auth:admin')->group(function () {
+        Route::get('/', AdminDashboardController::class)->name('dashboard');
+        Route::post('/logout', [AdminAuthenticatedSessionController::class, 'destroy'])->name('logout');
+        Route::resource('/posts', AdminNewsPostController::class)->except(['show']);
+    });
+};
 
-    $categories = $categoryOrder
-        ->filter(fn (string $category) => $availableCategories->contains($category))
-        ->merge(
-            $availableCategories->reject(fn (string $category) => $categoryOrder->contains($category))
-        )
-        ->push('All')
-        ->values()
-        ->all();
+$adminGroup = Route::as('admin.');
+$configuredAdminHost = config('cms.admin_host');
 
-    $years = $articles
-        ->map(fn (array $article) => substr($article['date'], 0, 4))
-        ->unique()
-        ->sortDesc()
-        ->values()
-        ->all();
-
-    $selectedCategory = $request->string('category')->trim()->toString();
-    if ($selectedCategory === '' || ! in_array($selectedCategory, $categories, true)) {
-        $selectedCategory = 'All';
-    }
-
-    $selectedYear = $request->string('year')->trim()->toString();
-    if ($selectedYear === '' || ! in_array($selectedYear, $years, true)) {
-        $selectedYear = null;
-    }
-
-    if ($selectedCategory !== 'All') {
-        $articles = $articles->filter(
-            fn (array $article) => in_array($selectedCategory, $article['categories'], true)
-        );
-    }
-
-    if ($selectedYear !== null) {
-        $articles = $articles->filter(
-            fn (array $article) => str_starts_with($article['date'], $selectedYear)
-        );
-    }
-
-    $sortOrder = $request->string('sort')->trim()->toString();
-    if (! in_array($sortOrder, ['latest', 'oldest', 'title'], true)) {
-        $sortOrder = 'latest';
-    }
-
-    $articles = (match ($sortOrder) {
-        'oldest' => $articles->sortBy('date'),
-        'title' => $articles->sortBy('title', SORT_NATURAL | SORT_FLAG_CASE),
-        default => $articles->sortByDesc('date'),
-    })->values();
-
-    $viewMode = $request->string('view')->trim()->toString();
-    if (! in_array($viewMode, ['grid', 'list'], true)) {
-        $viewMode = 'grid';
-    }
-
-    return view('news.index', [
-        'articles' => $articles,
-        'categories' => $categories,
-        'years' => $years,
-        'selectedCategory' => $selectedCategory,
-        'selectedYear' => $selectedYear,
-        'sortOrder' => $sortOrder,
-        'viewMode' => $viewMode,
-    ]);
-})->name('news.index');
-
-Route::get('/news/{slug}', function (string $slug) {
-    $articles = collect(config('news.articles', []));
-    $article = $articles->firstWhere('slug', $slug);
-
-    abort_unless($article, 404);
-
-    $related = $articles
-        ->reject(fn (array $item) => $item['slug'] === $slug)
-        ->sortByDesc('date')
-        ->take(3)
-        ->values();
-
-    return view('news.show', [
-        'article' => $article,
-        'related' => $related,
-    ]);
-})->name('news.show');
+if (filled($configuredAdminHost)) {
+    $adminGroup->domain($configuredAdminHost)->group($registerAdminRoutes);
+} else {
+    $adminPrefix = trim((string) config('cms.admin_prefix', 'admin'), '/');
+    $adminGroup->prefix($adminPrefix)->group($registerAdminRoutes);
+}

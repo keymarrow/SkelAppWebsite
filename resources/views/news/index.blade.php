@@ -1,6 +1,7 @@
 @php
   $title = 'SkelApp News';
   $bodyClass = 'news-index-page';
+  $metaDescription = $metaDescription ?? 'Latest SkelApp news, product updates, retail guides, and company articles.';
 @endphp
 
 @extends('news.layout')

@@ -1,6 +1,7 @@
 @php
-  $title = $article['title'] . ' | SkelApp News';
+  $title = ($article['meta_title'] ?? $article['title']) . ' | SkelApp News';
   $bodyClass = 'news-article-page';
+  $metaDescription = $metaDescription ?? ($article['meta_description'] ?? $article['summary']);
 @endphp
 
 @extends('news.layout')
@@ -43,17 +44,21 @@
       </div>
 
       <div class="news-article-body" id="article-body">
-        @foreach ($article['sections'] as $section)
-          <section class="news-copy-block">
-            @if (!empty($section['heading']))
-              <h2>{{ $section['heading'] }}</h2>
-            @endif
+        @if (!empty($article['body_html']))
+          {!! $article['body_html'] !!}
+        @else
+          @foreach ($article['sections'] as $section)
+            <section class="news-copy-block">
+              @if (!empty($section['heading']))
+                <h2>{{ $section['heading'] }}</h2>
+              @endif
 
-            @foreach ($section['paragraphs'] as $paragraph)
-              <p>{{ $paragraph }}</p>
-            @endforeach
-          </section>
-        @endforeach
+              @foreach ($section['paragraphs'] as $paragraph)
+                <p>{{ $paragraph }}</p>
+              @endforeach
+            </section>
+          @endforeach
+        @endif
       </div>
     </article>
 
