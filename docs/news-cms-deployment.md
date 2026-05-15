@@ -68,6 +68,19 @@ sudo systemctl reload nginx
 
 This adds a new admin subdomain config only. It does not require touching the current `skelapp.tz` frontend server block.
 
+Important: the admin Nginx site should allow larger request bodies for image uploads. The example config now includes:
+
+```nginx
+client_max_body_size 10M;
+```
+
+If the live server was configured before that change, add it manually to the `admin.skelapp.tz` server block, then run:
+
+```bash
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
 ## 6. SSL for all subdomains
 
 Issue or expand certificates with Certbot:
