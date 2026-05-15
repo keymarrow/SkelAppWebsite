@@ -125,6 +125,50 @@ class NewsCmsTest extends TestCase
         Storage::disk('public')->assertExists(Str::after($response->json('url'), '/storage/'));
     }
 
+    public function test_admin_can_browse_library_and_reuse_previous_images(): void
+    {
+        Storage::fake('public');
+        Storage::disk('public')->put('news/covers/existing-cover.jpg', 'cover');
+        Storage::disk('public')->put('news/body/existing-inline.png', 'body');
+
+        $admin = Admin::query()->create([
+            'name' => 'CMS Owner',
+            'email' => 'owner@example.com',
+            'password' => 'StrongPassword!2026',
+        ]);
+
+        $this->actingAs($admin, 'admin')
+            ->getJson('/admin/media/images')
+            ->assertOk()
+            ->assertJsonFragment([
+                'url' => '/storage/news/covers/existing-cover.jpg',
+            ])
+            ->assertJsonFragment([
+                'url' => '/storage/news/body/existing-inline.png',
+            ]);
+
+        $this->actingAs($admin, 'admin')
+            ->post('/admin/posts', [
+                'title' => 'Reuse Existing Cover',
+                'slug' => 'reuse-existing-cover',
+                'summary' => 'Summary for reusable cover.',
+                'featured_image_existing' => '/storage/news/covers/existing-cover.jpg',
+                'body_markdown' => 'Body copy for reusable cover.',
+                'categories' => 'Product, Growth',
+                'card_label' => 'News',
+                'card_color_start' => '#eaf7ff',
+                'card_color_mid' => '#7fc8ff',
+                'card_color_end' => '#6e82ff',
+                'is_published' => '1',
+                'published_at' => now()->toDateTimeString(),
+            ])
+            ->assertRedirect();
+
+        $post = NewsPost::query()->where('slug', 'reuse-existing-cover')->firstOrFail();
+
+        $this->assertSame('/storage/news/covers/existing-cover.jpg', $post->featured_image_url);
+    }
+
     public function test_admin_routes_are_private_and_admin_can_sign_in(): void
     {
         $this->get('/admin')->assertRedirect('/admin/login');

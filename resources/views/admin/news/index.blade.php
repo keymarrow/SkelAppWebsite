@@ -30,9 +30,13 @@
           <tbody>
             @forelse ($posts as $post)
               <tr>
-                <td>{{ $post->title }}</td>
+                <td><a href="{{ route('admin.posts.edit', $post) }}">{{ $post->title }}</a></td>
                 <td><code>{{ $post->slug }}</code></td>
-                <td>{{ $post->is_published ? 'Published' : 'Draft' }}</td>
+                <td>
+                  <span class="admin-status {{ $post->is_published ? 'admin-status--published' : 'admin-status--draft' }}">
+                    {{ $post->is_published ? 'Published' : 'Draft' }}
+                  </span>
+                </td>
                 <td>{{ optional($post->published_at)->format('M j, Y H:i') ?? 'Not scheduled' }}</td>
                 <td>{{ $post->updated_at?->format('M j, Y H:i') }}</td>
                 <td class="admin-row-actions">
@@ -42,7 +46,7 @@
               </tr>
             @empty
               <tr>
-                <td colspan="6">No posts yet.</td>
+                <td colspan="6" class="admin-table-empty">No posts yet. Create your first one to get started.</td>
               </tr>
             @endforelse
           </tbody>

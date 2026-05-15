@@ -30,7 +30,7 @@
     <section class="admin-panel">
       <div class="admin-panel-heading">
         <h2>Recent updates</h2>
-        <a href="{{ route('admin.posts.index') }}">Manage all</a>
+        <a href="{{ route('admin.posts.index') }}">Manage all →</a>
       </div>
 
       <div class="admin-table-wrap">
@@ -47,13 +47,17 @@
             @forelse ($recentPosts as $post)
               <tr>
                 <td><a href="{{ route('admin.posts.edit', $post) }}">{{ $post->title }}</a></td>
-                <td>{{ $post->is_published ? 'Published' : 'Draft' }}</td>
+                <td>
+                  <span class="admin-status {{ $post->is_published ? 'admin-status--published' : 'admin-status--draft' }}">
+                    {{ $post->is_published ? 'Published' : 'Draft' }}
+                  </span>
+                </td>
                 <td>{{ optional($post->published_at)->format('M j, Y H:i') ?? 'Not scheduled' }}</td>
                 <td>{{ $post->updated_at?->diffForHumans() }}</td>
               </tr>
             @empty
               <tr>
-                <td colspan="4">No posts yet.</td>
+                <td colspan="4" class="admin-table-empty">No posts yet.</td>
               </tr>
             @endforelse
           </tbody>

@@ -32,6 +32,7 @@ class NewsPostRequest extends FormRequest
             ],
             'summary' => ['required', 'string', 'max:500'],
             'featured_image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif', 'max:5120'],
+            'featured_image_existing' => ['nullable', 'string', 'max:2048'],
             'remove_featured_image' => ['nullable', 'boolean'],
             'body_markdown' => ['required', 'string'],
             'categories' => ['required', 'string', 'max:500'],

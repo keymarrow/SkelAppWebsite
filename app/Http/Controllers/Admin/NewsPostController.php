@@ -42,7 +42,7 @@ class NewsPostController extends Controller
     public function store(NewsPostRequest $request): RedirectResponse
     {
         $payload = $request->payload();
-        $payload['featured_image_url'] = $this->storeUploadedImage($request->file('featured_image'), 'news/covers');
+        $payload['featured_image_url'] = $this->resolveFeaturedImageUrl($request);
 
         if ($payload['is_published'] && blank($payload['published_at'])) {
             $payload['published_at'] = now();
@@ -68,19 +68,7 @@ class NewsPostController extends Controller
     {
         $originalSlug = $post->slug;
         $payload = $request->payload();
-        $nextFeaturedImageUrl = $post->featured_image_url;
-
-        if ($request->boolean('remove_featured_image')) {
-            $this->deleteManagedImage($post->featured_image_url);
-            $nextFeaturedImageUrl = null;
-        }
-
-        if ($request->hasFile('featured_image')) {
-            $this->deleteManagedImage($post->featured_image_url);
-            $nextFeaturedImageUrl = $this->storeUploadedImage($request->file('featured_image'), 'news/covers');
-        }
-
-        $payload['featured_image_url'] = $nextFeaturedImageUrl;
+        $payload['featured_image_url'] = $this->resolveFeaturedImageUrl($request, $post->featured_image_url);
 
         if ($payload['is_published'] && blank($payload['published_at'])) {
             $payload['published_at'] = now();
@@ -108,12 +96,38 @@ class NewsPostController extends Controller
 
     public function destroy(NewsPost $post): RedirectResponse
     {
-        $this->deleteManagedImage($post->featured_image_url);
         $post->delete();
 
         return redirect()
             ->route('admin.posts.index')
             ->with('status', 'Post deleted.');
+    }
+
+    public function mediaLibrary(): JsonResponse
+    {
+        $disk = Storage::disk('public');
+
+        $images = collect($disk->allFiles('news'))
+            ->filter(function (string $path): bool {
+                return preg_match('/\.(jpe?g|png|webp|gif)$/i', $path) === 1;
+            })
+            ->map(function (string $path) use ($disk): array {
+                $filename = basename($path);
+
+                return [
+                    'name' => $filename,
+                    'alt' => $this->humanizeImageName($filename),
+                    'url' => $this->publicStorageUrl($path),
+                    'section' => Str::startsWith($path, 'news/covers/') ? 'covers' : 'body',
+                    'last_modified' => $disk->lastModified($path),
+                ];
+            })
+            ->sortByDesc('last_modified')
+            ->values();
+
+        return response()->json([
+            'images' => $images,
+        ]);
     }
 
     public function uploadContentImage(Request $request): JsonResponse
@@ -148,21 +162,58 @@ class NewsPostController extends Controller
         $filename = now()->format('YmdHis').'-'.Str::random(20).'.'.$extension;
         $path = $image->storeAs($directory, $filename, 'public');
 
-        return '/storage/'.$path;
+        return $this->publicStorageUrl($path);
     }
 
-    private function deleteManagedImage(?string $publicPath): void
+    private function resolveFeaturedImageUrl(Request $request, ?string $fallback = null): ?string
     {
-        if (blank($publicPath)) {
-            return;
+        if ($request->boolean('remove_featured_image')) {
+            return null;
         }
 
-        $normalizedPath = ltrim((string) $publicPath, '/');
+        if ($request->hasFile('featured_image')) {
+            return $this->storeUploadedImage($request->file('featured_image'), 'news/covers');
+        }
+
+        $existingImageUrl = $this->selectedExistingImageUrl($request->input('featured_image_existing'));
+
+        return $existingImageUrl ?? $fallback;
+    }
+
+    private function selectedExistingImageUrl(?string $candidate): ?string
+    {
+        if (blank($candidate)) {
+            return null;
+        }
+
+        $candidate = (string) $candidate;
+        $normalizedPath = ltrim((string) parse_url($candidate, PHP_URL_PATH) ?: $candidate, '/');
 
         if (! Str::startsWith($normalizedPath, 'storage/news/')) {
-            return;
+            return null;
         }
 
-        Storage::disk('public')->delete(Str::after($normalizedPath, 'storage/'));
+        $diskPath = Str::after($normalizedPath, 'storage/');
+
+        if (blank($diskPath) || ! Storage::disk('public')->exists($diskPath)) {
+            return null;
+        }
+
+        return '/'.$normalizedPath;
+    }
+
+    private function humanizeImageName(string $filename): string
+    {
+        return Str::of($filename)
+            ->beforeLast('.')
+            ->replace(['-', '_'], ' ')
+            ->trim()
+            ->title()
+            ->toString();
+    }
+
+    private function publicStorageUrl(string $path): string
+    {
+        return '/storage/'.ltrim($path, '/');
     }
 }

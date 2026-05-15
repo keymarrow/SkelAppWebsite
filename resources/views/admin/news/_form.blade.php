@@ -1,6 +1,7 @@
 @php
   $isEditing = $post->exists;
   $publicUrl = $post->exists ? route('news.show', $post->slug) : null;
+  $currentCardImage = old('featured_image_existing', $post->featured_image_url);
 @endphp
 
 <div class="admin-form-grid">
@@ -35,28 +36,38 @@
             <small>Optional. Used on news cards only. Add article images from the body toolbar.</small>
           </div>
 
-          @if ($post->featured_image_url)
-            <figure class="admin-image-preview">
-              <img src="{{ $post->featured_image_url }}" alt="{{ $post->title ?: 'Cover image preview' }}">
-            </figure>
-          @endif
+          <figure class="admin-image-preview" data-cover-preview @if (!$currentCardImage) hidden @endif>
+            <img
+              src="{{ $currentCardImage ?? '' }}"
+              alt="{{ $post->title ?: 'Card image preview' }}"
+              data-cover-preview-image
+              data-initial-src="{{ $currentCardImage ?? '' }}"
+            >
+          </figure>
 
-          <label class="admin-file-picker">
-            <span>Choose an image</span>
-            <input type="file" name="featured_image" accept=".jpg,.jpeg,.png,.webp,.gif,image/jpeg,image/png,image/webp,image/gif">
-          </label>
+          <input type="hidden" name="featured_image_existing" value="{{ old('featured_image_existing') }}" data-cover-existing-input>
+
+          <div class="admin-upload-actions">
+            <label class="admin-file-picker">
+              <span>Choose an image</span>
+              <input type="file" name="featured_image" accept=".jpg,.jpeg,.png,.webp,.gif,image/jpeg,image/png,image/webp,image/gif" data-cover-file-input>
+            </label>
+
+            <button type="button" class="admin-secondary-link" data-media-open="cover">Choose existing</button>
+          </div>
           @error('featured_image')<small>{{ $message }}</small>@enderror
+          @error('featured_image_existing')<small>{{ $message }}</small>@enderror
 
           @if ($post->featured_image_url)
             <label class="admin-checkbox">
-              <input type="checkbox" name="remove_featured_image" value="1">
+              <input type="checkbox" name="remove_featured_image" value="1" data-cover-remove-input>
               <span>Remove current cover image</span>
             </label>
           @endif
         </section>
       </div>
 
-      <label class="admin-editor-field">
+      <div class="admin-editor-field">
         <span>Body (Markdown)</span>
         <div class="admin-editor" data-body-editor data-upload-url="{{ route('admin.posts.content-images.store') }}">
           <div class="admin-editor-toolbar" aria-label="Body formatting tools">
@@ -74,7 +85,8 @@
               <summary class="admin-editor-button admin-editor-button--menu" aria-label="More options">+</summary>
               <div class="admin-editor-menu-panel">
                 <button type="button" data-editor-action="code-block">Code Block</button>
-                <button type="button" data-editor-action="image">Image</button>
+                <button type="button" data-editor-action="image">Upload Image</button>
+                <button type="button" data-editor-action="existing-image">Choose Existing</button>
               </div>
             </details>
           </div>
@@ -90,7 +102,7 @@
         <p class="admin-upload-feedback" data-inline-image-feedback hidden></p>
         <small>Use the toolbar to format text, insert code blocks, and upload body images.</small>
         @error('body_markdown')<small>{{ $message }}</small>@enderror
-      </label>
+      </div>
     </div>
   </section>
 
@@ -205,6 +217,31 @@
   @endif
 </div>
 
+<div class="admin-media-modal" data-media-modal data-library-url="{{ route('admin.media.images.index') }}" hidden>
+  <div class="admin-media-dialog" role="dialog" aria-modal="true" aria-labelledby="admin-media-title">
+    <div class="admin-media-header">
+      <div>
+        <h3 id="admin-media-title">Image library</h3>
+        <p>Select a previously uploaded image.</p>
+      </div>
+      <button type="button" class="admin-media-close" data-media-close aria-label="Close image library">×</button>
+    </div>
+
+    <div class="admin-media-toolbar">
+      <input type="search" class="admin-media-search" placeholder="Search images..." data-media-search>
+    </div>
+
+    <p class="admin-upload-feedback" data-media-feedback hidden></p>
+    <p class="admin-media-empty" data-media-empty hidden>No uploaded images found yet.</p>
+    <div class="admin-media-grid" data-media-grid></div>
+
+    <div class="admin-media-actions">
+      <button type="button" class="admin-secondary-link" data-media-close>Cancel</button>
+      <button type="button" class="admin-primary-button" data-media-choose disabled>Choose selected</button>
+    </div>
+  </div>
+</div>
+
 <script>
   (() => {
     const titleInput = document.querySelector('[data-slug-source]');
@@ -237,13 +274,53 @@
     const csrfToken = document.querySelector('input[name="_token"]');
     const actionButtons = document.querySelectorAll('[data-editor-action]');
     const menu = document.querySelector('.admin-editor-menu');
+    const mediaModal = document.querySelector('[data-media-modal]');
+    const mediaGrid = document.querySelector('[data-media-grid]');
+    const mediaSearch = document.querySelector('[data-media-search]');
+    const mediaEmpty = document.querySelector('[data-media-empty]');
+    const mediaFeedback = document.querySelector('[data-media-feedback]');
+    const mediaChooseButton = document.querySelector('[data-media-choose]');
+    const mediaCloseButtons = document.querySelectorAll('[data-media-close]');
+    const mediaOpenButtons = document.querySelectorAll('[data-media-open]');
+    const coverExistingInput = document.querySelector('[data-cover-existing-input]');
+    const coverFileInput = document.querySelector('[data-cover-file-input]');
+    const coverPreview = document.querySelector('[data-cover-preview]');
+    const coverPreviewImage = document.querySelector('[data-cover-preview-image]');
+    const coverRemoveInput = document.querySelector('[data-cover-remove-input]');
 
     if (!editor || !imageInput || !feedback || !bodyInput || !csrfToken) return;
+
+    let mediaMode = null;
+    let mediaImages = [];
+    let selectedMediaImage = null;
+    let mediaLoaded = false;
 
     const showFeedback = (message, isError = false) => {
       feedback.hidden = false;
       feedback.textContent = message;
       feedback.dataset.state = isError ? 'error' : 'success';
+    };
+
+    const showMediaFeedback = (message, isError = false) => {
+      if (!mediaFeedback) return;
+
+      mediaFeedback.hidden = false;
+      mediaFeedback.textContent = message;
+      mediaFeedback.dataset.state = isError ? 'error' : 'success';
+    };
+
+    const updateCoverPreview = (src = '', alt = 'Card image preview') => {
+      if (!coverPreview || !coverPreviewImage) return;
+
+      if (!src) {
+        coverPreview.hidden = true;
+        coverPreviewImage.removeAttribute('src');
+        return;
+      }
+
+      coverPreview.hidden = false;
+      coverPreviewImage.src = src;
+      coverPreviewImage.alt = alt;
     };
 
     const replaceSelection = (replacement, selectionStartOffset = replacement.length, selectionEndOffset = replacement.length) => {
@@ -286,6 +363,123 @@
       replaceSelection(replacement, prefix.length, prefix.length + content.length);
     };
 
+    const renderMediaGrid = () => {
+      if (!mediaGrid || !mediaEmpty || !mediaChooseButton) return;
+
+      const query = (mediaSearch?.value || '').trim().toLowerCase();
+      const filteredImages = mediaImages.filter((image) => {
+        return image.name.toLowerCase().includes(query) || image.alt.toLowerCase().includes(query);
+      });
+
+      mediaGrid.innerHTML = '';
+
+      if (filteredImages.length === 0) {
+        mediaEmpty.hidden = false;
+        mediaChooseButton.disabled = true;
+        return;
+      }
+
+      mediaEmpty.hidden = true;
+
+      filteredImages.forEach((image) => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'admin-media-card';
+        card.dataset.selected = selectedMediaImage?.url === image.url ? 'true' : 'false';
+
+        const preview = document.createElement('div');
+        preview.className = 'admin-media-card-preview';
+
+        const img = document.createElement('img');
+        img.src = image.url;
+        img.alt = image.alt;
+        preview.appendChild(img);
+
+        const meta = document.createElement('div');
+        meta.className = 'admin-media-card-meta';
+
+        const title = document.createElement('strong');
+        title.textContent = image.name;
+
+        const section = document.createElement('span');
+        section.textContent = image.section === 'covers' ? 'Card image' : 'Body image';
+
+        meta.append(title, section);
+        card.append(preview, meta);
+
+        card.addEventListener('click', () => {
+          selectedMediaImage = image;
+          mediaChooseButton.disabled = false;
+          renderMediaGrid();
+        });
+
+        mediaGrid.appendChild(card);
+      });
+
+      if (!filteredImages.some((image) => image.url === selectedMediaImage?.url)) {
+        selectedMediaImage = null;
+        mediaChooseButton.disabled = true;
+      }
+    };
+
+    const loadMediaLibrary = async () => {
+      if (mediaLoaded || !mediaModal) {
+        renderMediaGrid();
+        return;
+      }
+
+      showMediaFeedback('Loading images...');
+
+      try {
+        const response = await fetch(mediaModal.dataset.libraryUrl, {
+          headers: {
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+        });
+
+        const payload = await response.json();
+
+        if (!response.ok || !Array.isArray(payload.images)) {
+          throw new Error(payload.message || 'Failed to load image library.');
+        }
+
+        mediaImages = payload.images;
+        mediaLoaded = true;
+        mediaFeedback.hidden = true;
+        renderMediaGrid();
+      } catch (error) {
+        showMediaFeedback(error instanceof Error ? error.message : 'Failed to load image library.', true);
+      }
+    };
+
+    const closeMediaModal = () => {
+      if (!mediaModal) return;
+
+      mediaModal.hidden = true;
+      selectedMediaImage = null;
+      mediaMode = null;
+      if (mediaChooseButton) {
+        mediaChooseButton.disabled = true;
+      }
+      renderMediaGrid();
+    };
+
+    const openMediaModal = async (mode) => {
+      if (!mediaModal) return;
+
+      mediaMode = mode;
+      mediaModal.hidden = false;
+      selectedMediaImage = null;
+      if (mediaSearch) {
+        mediaSearch.value = '';
+      }
+      if (mediaChooseButton) {
+        mediaChooseButton.disabled = true;
+      }
+      await loadMediaLibrary();
+    };
+
     const uploadSelectedImage = async () => {
       const selectedFile = imageInput.files?.[0];
 
@@ -317,6 +511,7 @@
 
         insertBlock(`![${payload.alt || 'News image'}](${payload.url})`);
         imageInput.value = '';
+        mediaLoaded = false;
         showFeedback('Image uploaded and inserted into the article.');
       } catch (error) {
         showFeedback(error instanceof Error ? error.message : 'Upload failed.', true);
@@ -369,6 +564,9 @@
           case 'image':
             imageInput.click();
             break;
+          case 'existing-image':
+            void openMediaModal('body');
+            break;
           default:
             break;
         }
@@ -383,9 +581,104 @@
       void uploadSelectedImage();
     });
 
+    coverFileInput?.addEventListener('change', () => {
+      if (!coverFileInput.files?.[0]) {
+        return;
+      }
+
+      if (coverExistingInput) {
+        coverExistingInput.value = '';
+      }
+
+      if (coverRemoveInput) {
+        coverRemoveInput.checked = false;
+      }
+
+      const reader = new FileReader();
+      const file = coverFileInput.files[0];
+
+      reader.addEventListener('load', () => {
+        updateCoverPreview(typeof reader.result === 'string' ? reader.result : '', file.name);
+      });
+
+      reader.readAsDataURL(file);
+    });
+
+    coverRemoveInput?.addEventListener('change', () => {
+      if (coverRemoveInput.checked) {
+        if (coverExistingInput) {
+          coverExistingInput.value = '';
+        }
+        updateCoverPreview('');
+        return;
+      }
+
+      updateCoverPreview(coverPreviewImage?.dataset.initialSrc || '');
+    });
+
+    mediaOpenButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        void openMediaModal(button.dataset.mediaOpen);
+      });
+    });
+
+    mediaSearch?.addEventListener('input', renderMediaGrid);
+
+    mediaChooseButton?.addEventListener('click', () => {
+      if (!selectedMediaImage) {
+        return;
+      }
+
+      if (mediaMode === 'cover') {
+        if (coverExistingInput) {
+          coverExistingInput.value = selectedMediaImage.url;
+        }
+
+        if (coverFileInput) {
+          coverFileInput.value = '';
+        }
+
+        if (coverRemoveInput) {
+          coverRemoveInput.checked = false;
+        }
+
+        if (coverPreviewImage) {
+          coverPreviewImage.dataset.initialSrc = selectedMediaImage.url;
+        }
+
+        updateCoverPreview(selectedMediaImage.url, selectedMediaImage.alt);
+      }
+
+      if (mediaMode === 'body') {
+        insertBlock(`![${selectedMediaImage.alt || 'News image'}](${selectedMediaImage.url})`);
+        showFeedback('Existing image inserted into the article.');
+      }
+
+      closeMediaModal();
+    });
+
+    mediaCloseButtons.forEach((button) => {
+      button.addEventListener('click', closeMediaModal);
+    });
+
     document.addEventListener('click', (event) => {
       if (menu && menu.open && !menu.contains(event.target)) {
         menu.removeAttribute('open');
+      }
+
+      if (mediaModal && !mediaModal.hidden) {
+        const dialog = mediaModal.querySelector('.admin-media-dialog');
+        // Don't close the modal when the click came from any button
+        // that just opened it (cover "Choose existing" with
+        // [data-media-open], or the body menu "Choose Existing" with
+        // [data-editor-action="existing-image"]). Without the second
+        // selector, the body Choose Existing button would open the
+        // modal and the bubbling click on document would close it
+        // again on the same tick.
+        const triggerSelector = '[data-media-open], [data-editor-action="existing-image"]';
+        if (event.target === mediaModal || (dialog && !dialog.contains(event.target) && !event.target.closest(triggerSelector))) {
+          closeMediaModal();
+        }
       }
     });
   })();
