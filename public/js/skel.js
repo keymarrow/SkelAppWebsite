@@ -417,8 +417,9 @@
 
     const clamp01 = (value) => Math.min(1, Math.max(0, value));
     const isCompactLayout = () => window.matchMedia('(max-width: 743px)').matches;
-    const isDesktopLayout = () => window.matchMedia('(min-width: 901px)').matches;
+    const isDesktopLayout = () => window.matchMedia('(min-width: 1201px)').matches;
     const desktopScrollDistance = () => Math.max(window.innerHeight * 1.2, 960);
+    const timelineThickness = 2;
 
     let rafId = null;
     let resizeObserver = null;
@@ -475,17 +476,27 @@
       const lastRect = numbers[numbers.length - 1].getBoundingClientRect();
 
       if (isCompactLayout()) {
-        const lineWidth = line.offsetWidth || 2;
+        const lineWidth = timelineThickness;
         const firstCenterX = firstRect.left + (firstRect.width / 2);
         const firstCenterY = firstRect.top + (firstRect.height / 2);
         const secondCenterY = secondRect.top + (secondRect.height / 2);
         const lastCenterY = lastRect.top + (lastRect.height / 2);
         const travel = Math.max(1, lastCenterY - firstCenterY);
 
+        // Extend the line from the first marker center to the BOTTOM
+        // of the last step (past its image), not just to the last
+        // marker center — otherwise the line "breaks" after the
+        // last marker and doesn't run through step 3's image area.
+        const lastStep = steps[steps.length - 1];
+        const lastStepBottom = lastStep
+          ? lastStep.getBoundingClientRect().bottom
+          : lastCenterY;
+        const fullHeight = Math.max(travel, lastStepBottom - firstCenterY);
+
         line.style.left = `${firstCenterX - wrapperRect.left - (lineWidth / 2)}px`;
         line.style.top = `${firstCenterY - wrapperRect.top}px`;
         line.style.width = `${lineWidth}px`;
-        line.style.height = `${travel}px`;
+        line.style.height = `${fullHeight}px`;
 
         return {
           secondRatio: clamp01((secondCenterY - firstCenterY) / travel),
@@ -493,7 +504,7 @@
         };
       }
 
-      const lineHeight = line.offsetHeight || 2;
+      const lineHeight = timelineThickness;
       const markerCenterY = firstRect.top + (firstRect.height / 2);
 
       if (isDesktopLayout()) {

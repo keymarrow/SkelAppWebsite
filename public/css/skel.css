@@ -2417,7 +2417,7 @@ footer nav a:hover { color: var(--white); }
   will-change: auto;
 }
 
-@media (min-width: 901px) {
+@media (min-width: 1201px) {
   .how-it-works-scroll {
     min-height: calc(var(--how-it-works-stage-height, 0px) + var(--how-it-works-progress-space, 0px));
   }
@@ -2437,7 +2437,7 @@ footer nav a:hover { color: var(--white); }
   margin-bottom: 80px;
 }
 
-@media (min-width: 901px) {
+@media (min-width: 1201px) {
   .section-headerr {
     margin-left: max(0px, calc((100% - 1079.4px - var(--how-it-works-step-gap) - var(--how-it-works-step-gap)) / 6));
   }
@@ -2593,64 +2593,182 @@ footer nav a:hover { color: var(--white); }
   line-height: 1.7;
 }
 
-@media (max-width: 1200px) {
+/* MOBILE ONLY — stacked vertical steps with left-aligned timeline.
+   At ≥744px the horizontal layout takes over. */
+@media (max-width: 743px) {
   .how-it-works-section { padding: 96px 32px 108px; }
   .steps-container {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 48px 32px;
+    grid-template-columns: 1fr;
+    gap: 28px;
   }
-  .step-item:last-child { grid-column: 1 / -1; }
-  
+  .step-item:last-child {
+    grid-column: auto;
+    max-width: none;
+    justify-self: stretch;
+  }
+
   .steps-wrapper {
     padding-left: 0;
   }
-  
+
   .steps-line-container {
     display: block;
     position: absolute;
     left: calc((29.97px / 2) - 1px);
     top: 0;
     width: 2px;
+    min-width: 2px;
+    max-width: 2px;
     height: 100%;
     z-index: 1;
     opacity: 1;
   }
-  
+
   .steps-line-progress {
     width: 100%;
     height: 100%;
     background: linear-gradient(180deg, #4AAD77 0%, #B3E6C5 90%, #FFFFFF 100%);
     transform-origin: top center;
-    transform: scaleY(1); /* Default visible for now */
+    transform: scaleY(1);
   }
 
   .step-item {
     padding-left: 56px;
-    align-items: flex-start;
+    align-items: stretch;
     display: flex;
     flex-direction: column;
     position: relative;
+    max-width: none;
+    width: 100%;
+    min-width: 0;
+    justify-self: stretch;
   }
-  
+
   .step-marker {
     position: absolute;
     left: 0;
     top: 0;
     margin-bottom: 0;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+
+  /* Force ALL three step images to share the exact same dimensions
+     and reset any lingering inline transforms/filters/opacity from
+     the desktop GSAP animation state. Without these resets, step 3
+     can stay shrunk/translated if the viewport was previously in
+     desktop mode and the JS state didn't fully reset. */
+  .step-image {
+    width: 100% !important;
+    max-width: none !important;
+    aspect-ratio: 359.8 / 202.2 !important;
+    margin-top: 24px;
+    margin-bottom: 29px;
+    order: 3;
+    flex: 0 0 auto;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    filter: none !important;
+    clip-path: none !important;
+  }
+
+  .step-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  .step-content {
+    order: 2;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+}
+
+/* TABLET (744 – 1200) — horizontal 3-column static layout. Same
+   visual structure as desktop but the step animation is disabled
+   in JS (isDesktopLayout returns false below 1201). The line
+   container stays horizontal across the row, all three steps are
+   the same width, and step 3 no longer overflows. */
+@media (min-width: 744px) and (max-width: 1200px) {
+  .how-it-works-section { padding: 72px 32px 80px; }
+
+  .steps-container {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(20px, 2.5vw, 36px);
+  }
+
+  .step-item {
+    max-width: none;
+    padding-left: 0;
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .step-item:last-child {
+    grid-column: auto;
+    max-width: none;
+    justify-self: stretch;
   }
 
   .step-image {
     width: 100%;
-    margin-top: 24px;
-    order: 3;
+    margin-top: 0;
+    margin-bottom: 24px;
+    order: 0;
   }
-  
+
+  .step-marker {
+    position: relative;
+    left: auto;
+    top: auto;
+    margin-bottom: 24px;
+    display: flex;
+  }
+
   .step-content {
-    order: 2;
+    order: 0;
+    gap: 14px;
+  }
+
+  .step-content h3 {
+    font-size: clamp(20px, 2.2vw, 26px);
+    line-height: 1.18;
+  }
+
+  .step-content p {
+    font-size: clamp(14px, 1.4vw, 16px);
+    line-height: 1.5;
+  }
+
+  .steps-line-container {
+    display: block;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    opacity: 1;
+  }
+
+  .steps-line-progress {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #4AAD77 0%, #B3E6C5 90%, #FFFFFF 100%);
+    transform-origin: left center;
+    transform: scaleX(1);
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 743px) {
   .how-it-works-section { padding: 40px 20px 40px; }
   .section-headerr {
     margin-left: 0;
@@ -2660,8 +2778,8 @@ footer nav a:hover { color: var(--white); }
   }
   .section-headerr-action { display: block; }
   .section-headerr-copy p { font-size: 16px; }
-  .steps-container { grid-template-columns: 1fr; gap: 5px; }
-  .step-item { max-width: none; }
+  .steps-container { grid-template-columns: 1fr; gap: 28px; }
+  .step-item { max-width: none; justify-self: stretch; }
   .step-item:last-child { grid-column: auto; }
   .step-content { gap: 22px; }
   .step-content h3 { font-size: clamp(1.8rem, 6vw, 30px); }
@@ -7323,7 +7441,8 @@ main.contact-page {
 
 @media (max-width: 1120px) {
   .faq-page {
-    padding: 132px 28px 48px;
+    --faq-sticky-nav-offset: calc(clamp(10px, 1vw + 5px, 20px) + clamp(50px, 2.29vw + 39px, 72px) + 6px);
+    padding: var(--faq-sticky-nav-offset) 28px 48px;
   }
 
   .faq-page-shell {
@@ -7333,7 +7452,7 @@ main.contact-page {
 
   .faq-page-sidebar {
     position: sticky;
-    top: 104px;
+    top: var(--faq-sticky-nav-offset);
     z-index: 20;
     background: #ffffff;
     margin: 0 -28px 36px;
@@ -7387,11 +7506,11 @@ main.contact-page {
 
 @media (max-width: 768px) {
   .faq-page {
-    padding: 112px 20px 40px;
+    padding: var(--faq-sticky-nav-offset) 20px 40px;
   }
 
   .faq-page-sidebar {
-    top: 88px;
+    top: var(--faq-sticky-nav-offset);
     margin: 0 -20px 16px;
     padding: 14px 20px 0;
   }
@@ -7905,6 +8024,81 @@ nav {
   margin: 0 auto 58px;
 }
 
+/* Bulletproof carousel-slider styles at mobile/tablet (≤968px).
+   Higher-specificity selectors scoped to `.retailer-controls`
+   guarantee the pill-shaped buttons and dots-pill keep their
+   styling regardless of source-order conflicts with the 744-1200
+   block (which only sets width/height and was clearing the visual
+   styling of the buttons). */
+@media (max-width: 968px) {
+  .retailer-controls .carousel-slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 0 auto 32px;
+  }
+
+  .retailer-controls .carousel-slider-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border: none;
+    border-radius: 50%;
+    background: #f1f1ed;
+    color: #686868;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+  }
+
+  .retailer-controls .carousel-slider-button:hover:not(:disabled) {
+    background: #e8e8e2;
+    color: #151515;
+  }
+
+  .retailer-controls .carousel-slider-button:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+
+  .retailer-controls .carousel-slider-button svg {
+    display: block;
+    width: 22px;
+    height: 22px;
+  }
+
+  .retailer-controls .carousel-slider-dots {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-width: 132px;
+    height: 56px;
+    padding: 0 22px;
+    border-radius: 999px;
+    background: #f1f1ed;
+  }
+
+  .retailer-controls .carousel-slider-dot {
+    width: 9px;
+    height: 9px;
+    border: none;
+    border-radius: 50%;
+    background: #b9b9b9;
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .retailer-controls .carousel-slider-dot.is-active {
+    background: #111111;
+    transform: scale(1.05);
+  }
+}
+
 @media (min-width: 969px) {
   .retailer-controls {
     display: flex;
@@ -7962,5 +8156,293 @@ nav {
     justify-content: flex-start;
     margin: 0;
     padding: 0;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────
+   FEATURES SECTION — extend the tablet 2-equal-col grid up to
+   1399px (so 1201-1399 doesn't fall back to the base desktop grid
+   and squeeze the cards). Card layout, flex-direction column for
+   rectangles, etc. all stay the same as the 744-1200 block.
+   ─────────────────────────────────────────────────────────────── */
+@media (min-width: 1201px) and (max-width: 1399px) {
+  .features-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  .feature-square,
+  .feature-rectangle,
+  .feature-rectangle-pos,
+  .feature-rectangle-handheld {
+    width: 100%;
+    max-width: none;
+    height: 480px;
+    min-height: 480px;
+    border-radius: 24px;
+    justify-self: stretch;
+  }
+
+  .feature-rectangle {
+    flex-direction: column;
+  }
+
+  .feature-rectangle-pos,
+  .feature-rectangle-handheld {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feature-rectangle-pos .feature-content-left,
+  .feature-rectangle-handheld .feature-content-left {
+    padding: 34px 30px 0;
+    flex: 0 0 auto;
+    max-width: none;
+  }
+
+  .feature-rectangle-pos .feature-content-right,
+  .feature-rectangle-handheld .feature-content-right {
+    position: absolute;
+    inset: auto 0 0 0;
+    min-height: auto;
+    padding: 0 24px 24px;
+    display: flex;
+    align-items: flex-end;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .feature-square .feature-content-top {
+    padding: 34px 30px 20px;
+  }
+
+  .feature-square .feature-content-bottom {
+    padding: 0 24px 24px;
+    align-items: flex-end;
+  }
+
+  .feature-square-catalogue .feature-content-bottom {
+    padding: 0 18px 0;
+  }
+
+  .feature-square-reporting .feature-content-bottom {
+    position: absolute;
+    inset: auto 0 0 0;
+    min-height: auto;
+    padding: 0 24px 24px;
+    pointer-events: none;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .feature-square .feature-content-top h2,
+  .feature-rectangle .feature-content-left h2 {
+    font-size: 26px;
+    line-height: 1.22;
+    margin-bottom: 12px;
+  }
+
+  .feature-square .feature-content-top p,
+  .feature-rectangle .feature-content-left p {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────
+   FEATURES SECTION — IMAGE POSITIONING for 901-1399.
+   Position matches 744-900 (overlay for F2, centered for F3, etc.)
+   Sizes grow smoothly with viewport using clamp() so the image at
+   901 matches the 744-900 size, and at 1399 it's proportionally
+   ~50% larger to balance the wider tablet-landscape cards.
+   ─────────────────────────────────────────────────────────────── */
+@media (min-width: 901px) and (max-width: 1399px) {
+  /* F2 POS terminal — absolute overlay anchored to bottom-right.
+     width grows from 320 (at 901) → 480 (at 1399). */
+  .feature-rectangle-pos .feature-content-right {
+    position: absolute;
+    inset: 0;
+    padding: 0;
+    display: block;
+    overflow: hidden;
+    pointer-events: none;
+    justify-content: initial;
+    align-items: initial;
+  }
+
+  .feature-rectangle-pos .feature-content-right img {
+    position: absolute;
+    top: auto;
+    right: 0;
+    bottom: -22px;
+    left: auto;
+    width: clamp(320px, 32.13vw + 30.5px, 480px);
+    height: auto;
+    max-width: none;
+    max-height: none;
+  }
+
+  /* F3 handheld — bottom-center of card.
+     max-width: 285 → 430, max-height: 188 → 280. */
+  .feature-rectangle-handheld .feature-content-right {
+    padding: 0 20px 24px;
+  }
+
+  .feature-rectangle-handheld .feature-content-right .feature-handheld-pos {
+    position: static;
+    width: 100%;
+    max-width: clamp(285px, 29.12vw + 22.6px, 430px);
+    max-height: clamp(188px, 18.47vw + 21.6px, 280px);
+    height: auto;
+    left: auto;
+    right: auto;
+    top: auto;
+  }
+
+  /* F1 tab-mockup — at bottom of card.
+     max-width: 314 → 470, max-height: 220 → 330. */
+  .feature-square-catalogue .feature-content-bottom .feature-tab-mockup {
+    width: 100%;
+    max-width: clamp(314px, 31.33vw + 31.7px, 470px);
+    max-height: clamp(220px, 22.09vw + 21px, 330px);
+    height: auto;
+  }
+
+  /* F4 reporting — width: 280 → 420. */
+  .feature-square-reporting .feature-content-bottom .feature-reporting-mockup {
+    position: static;
+    width: min(100%, clamp(280px, 28.11vw + 26.7px, 420px));
+    height: auto;
+    transform: none;
+  }
+
+  /* General square image height cap: 220 → 330. */
+  .feature-square .feature-content-bottom img {
+    max-height: clamp(220px, 22.09vw + 21px, 330px);
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────
+   FEATURES SECTION — 441 → 743 (single-column "line-grid" view).
+   Same layout, image positioning, and overall visual as the 391-440
+   block — but every dimension (card, image, text, paddings) grows
+   smoothly with viewport using clamp(). At 441 the values match the
+   391-440 block exactly; at 743 each value has grown ~40% larger.
+   ─────────────────────────────────────────────────────────────── */
+@media (min-width: 441px) and (max-width: 743px) {
+  /* All four cards share the same width and height so squares and
+     rectangles look uniform — copies 391-440 sizes at 441, then
+     grows smoothly to 550×615 at 743. */
+  .feature-square,
+  .feature-rectangle,
+  .feature-rectangle-pos,
+  .feature-rectangle-handheld {
+    width: 100%;
+    max-width: clamp(393.04px, 52.1vw + 163.28px, 550px);
+    height: clamp(438.97px, 58.1vw + 182.55px, 615px);
+    min-height: clamp(438.97px, 58.1vw + 182.55px, 615px);
+    margin-inline: auto;
+    justify-self: center;
+    aspect-ratio: auto;
+  }
+
+  /* Text padding scales the same for both rectangle (.content-left)
+     and square (.content-top) so all four cards have identical text
+     spacing. */
+  .feature-rectangle .feature-content-left,
+  .feature-square .feature-content-top {
+    padding: clamp(31.59px, 3.55vw + 15.92px, 44px)
+             clamp(27.08px, 3.05vw + 13.62px, 38px)
+             clamp(15.79px, 1.78vw + 7.94px, 22px);
+  }
+
+  /* Same h2 size and styling on rectangles AND squares */
+  .feature-rectangle .feature-content-left h2,
+  .feature-square .feature-content-top h2 {
+    font-size: clamp(24.82px, 3.29vw + 10.31px, 34.75px);
+    line-height: 1.15;
+    margin-bottom: clamp(11.28px, 1.27vw + 5.68px, 15.79px);
+  }
+
+  /* Same paragraph size on rectangles AND squares */
+  .feature-rectangle .feature-content-left p,
+  .feature-square .feature-content-top p {
+    font-size: clamp(13.54px, 1.79vw + 5.65px, 18.96px);
+    line-height: 1.45;
+    max-width: none;
+  }
+
+  /* F1 catalogue tab-mockup + F4 reporting mockup at bottom of card.
+     Sizes enlarged again (~1.44× the original 391-440 values).
+     `width: 100%` overrides the base `width: 337.95px` so the image
+     actually grows with viewport instead of being pinned. */
+  .feature-square-catalogue .feature-content-bottom .feature-tab-mockup {
+    width: 100%;
+    max-width: clamp(510px, 67.5vw + 212.32px, 714px);
+    max-height: clamp(356px, 47.4vw + 146.97px, 499px);
+    height: auto;
+  }
+
+  .feature-square-reporting .feature-content-bottom .feature-reporting-mockup {
+    width: 100%;
+    max-width: clamp(510px, 67.5vw + 212.32px, 714px);
+    max-height: clamp(356px, 47.4vw + 146.97px, 499px);
+    height: auto;
+    position: static;
+    transform: none;
+  }
+
+  /* F3 handheld + base content-right layout (same as 391-440) */
+  .feature-rectangle-pos .feature-content-right,
+  .feature-rectangle-handheld .feature-content-right {
+    min-height: 0;
+    padding: 0 clamp(22.56px, 2.54vw + 11.36px, 31.58px)
+              clamp(27.08px, 3.05vw + 13.62px, 38px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex: 1 1 auto;
+    pointer-events: none;
+    position: relative;
+    inset: auto;
+  }
+
+  .feature-rectangle-pos .feature-content-right img,
+  .feature-rectangle-handheld .feature-content-right .feature-handheld-pos {
+    width: 100%;
+    max-width: clamp(282.05px, 37.4vw + 117.12px, 395px);
+    max-height: clamp(186.36px, 24.7vw + 77.43px, 261px);
+    height: auto;
+  }
+
+  .feature-rectangle-handheld .feature-content-right .feature-handheld-pos {
+    max-width: clamp(321.54px, 42.6vw + 133.67px, 450px);
+    max-height: clamp(211.86px, 28.1vw + 87.94px, 297px);
+  }
+
+  /* F2 POS — overrides content-right back to absolute overlay
+     anchored to bottom-right. Image overflows past card bottom. */
+  .feature-rectangle-pos .feature-content-right {
+    position: absolute;
+    inset: 0;
+    padding: 0;
+    display: block;
+    overflow: hidden;
+    min-height: 0;
+    pointer-events: none;
+    flex: none;
+  }
+
+  .feature-rectangle-pos .feature-content-right img {
+    position: absolute;
+    top: auto;
+    right: -1.13px;
+    bottom: clamp(-39.5px, -3.74vw - 11.99px, -28.21px);
+    left: auto;
+    width: clamp(393.69px, 52.2vw + 163.49px, 551px);
+    height: auto;
+    max-width: none;
+    max-height: none;
   }
 }
