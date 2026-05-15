@@ -23,6 +23,19 @@
         </div>
 
         <h1>{{ $article['title'] }}</h1>
+
+        @if (!empty($article['featured_image_url']))
+          <figure class="news-hero-media">
+            <img
+              src="{{ $article['featured_image_url'] }}"
+              alt="{{ $article['title'] }}"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            >
+          </figure>
+        @endif
+
         <p class="news-hero-summary">{{ $article['summary'] }}</p>
       </header>
 
@@ -73,11 +86,23 @@
           <article class="news-related-card">
             <a href="{{ route('news.show', $relatedArticle['slug']) }}">
               <div
-                class="news-card-art"
+                class="news-card-art{{ !empty($relatedArticle['featured_image_url']) ? ' has-image' : '' }}"
                 style="--news-start: {{ $relatedArticle['card_colors'][0] }}; --news-mid: {{ $relatedArticle['card_colors'][1] }}; --news-end: {{ $relatedArticle['card_colors'][2] }};"
               >
+                @if (!empty($relatedArticle['featured_image_url']))
+                  <img
+                    src="{{ $relatedArticle['featured_image_url'] }}"
+                    alt="{{ $relatedArticle['title'] }}"
+                    class="news-card-art-image"
+                    loading="lazy"
+                    decoding="async"
+                  >
+                  <div class="news-card-image-overlay"></div>
+                @endif
                 <span class="news-card-badge">{{ $relatedArticle['card_label'] }}</span>
-                <div class="news-card-glow"></div>
+                @if (empty($relatedArticle['featured_image_url']))
+                  <div class="news-card-glow"></div>
+                @endif
               </div>
               <div class="news-card-copy">
                 <div class="news-card-meta">

@@ -31,6 +31,8 @@ class NewsPostRequest extends FormRequest
                 Rule::unique('news_posts', 'slug')->ignore($post?->id),
             ],
             'summary' => ['required', 'string', 'max:500'],
+            'featured_image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif', 'max:5120'],
+            'remove_featured_image' => ['nullable', 'boolean'],
             'body_markdown' => ['required', 'string'],
             'categories' => ['required', 'string', 'max:500'],
             'card_label' => ['required', 'string', 'max:50'],

@@ -28,9 +28,67 @@
         @error('summary')<small>{{ $message }}</small>@enderror
       </label>
 
-      <label>
+      <div class="admin-upload-stack">
+        <section class="admin-upload-card">
+          <div class="admin-upload-card-heading">
+            <span class="admin-field-label">Cover image</span>
+            <small>Optional. Used on the news card and at the top of the article page.</small>
+          </div>
+
+          @if ($post->featured_image_url)
+            <figure class="admin-image-preview">
+              <img src="{{ $post->featured_image_url }}" alt="{{ $post->title ?: 'Cover image preview' }}">
+            </figure>
+          @endif
+
+          <label class="admin-file-picker">
+            <span>Choose an image</span>
+            <input type="file" name="featured_image" accept=".jpg,.jpeg,.png,.webp,.gif,image/jpeg,image/png,image/webp,image/gif">
+          </label>
+          @error('featured_image')<small>{{ $message }}</small>@enderror
+
+          @if ($post->featured_image_url)
+            <label class="admin-checkbox">
+              <input type="checkbox" name="remove_featured_image" value="1">
+              <span>Remove current cover image</span>
+            </label>
+          @endif
+        </section>
+      </div>
+
+      <label class="admin-editor-field">
         <span>Body (Markdown)</span>
-        <textarea name="body_markdown" rows="18" required>{{ old('body_markdown', $post->body_markdown) }}</textarea>
+        <div class="admin-editor" data-body-editor data-upload-url="{{ route('admin.posts.content-images.store') }}">
+          <div class="admin-editor-toolbar" aria-label="Body formatting tools">
+            <button type="button" class="admin-editor-button" data-editor-action="bold" aria-label="Bold"><strong>B</strong></button>
+            <button type="button" class="admin-editor-button admin-editor-button--italic" data-editor-action="italic" aria-label="Italic"><em>I</em></button>
+            <button type="button" class="admin-editor-button" data-editor-action="strike" aria-label="Strikethrough"><span>S</span></button>
+            <button type="button" class="admin-editor-button" data-editor-action="inline-code" aria-label="Inline code">&lt;/&gt;</button>
+            <button type="button" class="admin-editor-button" data-editor-action="link" aria-label="Insert link">↗</button>
+            <button type="button" class="admin-editor-button" data-editor-action="heading" aria-label="Heading">H</button>
+            <button type="button" class="admin-editor-button" data-editor-action="quote" aria-label="Quote">❝</button>
+            <button type="button" class="admin-editor-button" data-editor-action="bullet-list" aria-label="Bullet list">•≡</button>
+            <button type="button" class="admin-editor-button" data-editor-action="numbered-list" aria-label="Numbered list">1≡</button>
+
+            <details class="admin-editor-menu">
+              <summary class="admin-editor-button admin-editor-button--menu" aria-label="More options">+</summary>
+              <div class="admin-editor-menu-panel">
+                <button type="button" data-editor-action="code-block">Code Block</button>
+                <button type="button" data-editor-action="image">Image</button>
+              </div>
+            </details>
+          </div>
+
+          <textarea name="body_markdown" rows="18" required data-body-markdown>{{ old('body_markdown', $post->body_markdown) }}</textarea>
+          <input
+            type="file"
+            accept=".jpg,.jpeg,.png,.webp,.gif,image/jpeg,image/png,image/webp,image/gif"
+            data-inline-image-input
+            hidden
+          >
+        </div>
+        <p class="admin-upload-feedback" data-inline-image-feedback hidden></p>
+        <small>Use the toolbar to format text, insert code blocks, and upload body images.</small>
         @error('body_markdown')<small>{{ $message }}</small>@enderror
       </label>
     </div>
@@ -168,6 +226,167 @@
     titleInput.addEventListener('input', () => {
       if (manualSlugEdit) return;
       slugInput.value = slugify(titleInput.value);
+    });
+  })();
+
+  (() => {
+    const editor = document.querySelector('[data-body-editor]');
+    const imageInput = document.querySelector('[data-inline-image-input]');
+    const feedback = document.querySelector('[data-inline-image-feedback]');
+    const bodyInput = document.querySelector('[data-body-markdown]');
+    const csrfToken = document.querySelector('input[name="_token"]');
+    const actionButtons = document.querySelectorAll('[data-editor-action]');
+    const menu = document.querySelector('.admin-editor-menu');
+
+    if (!editor || !imageInput || !feedback || !bodyInput || !csrfToken) return;
+
+    const showFeedback = (message, isError = false) => {
+      feedback.hidden = false;
+      feedback.textContent = message;
+      feedback.dataset.state = isError ? 'error' : 'success';
+    };
+
+    const replaceSelection = (replacement, selectionStartOffset = replacement.length, selectionEndOffset = replacement.length) => {
+      const start = bodyInput.selectionStart ?? bodyInput.value.length;
+      const end = bodyInput.selectionEnd ?? bodyInput.value.length;
+      bodyInput.value = `${bodyInput.value.slice(0, start)}${replacement}${bodyInput.value.slice(end)}`;
+      bodyInput.focus();
+      bodyInput.setSelectionRange(start + selectionStartOffset, start + selectionEndOffset);
+    };
+
+    const wrapSelection = (prefix, suffix, placeholder) => {
+      const start = bodyInput.selectionStart ?? bodyInput.value.length;
+      const end = bodyInput.selectionEnd ?? bodyInput.value.length;
+      const selectedText = bodyInput.value.slice(start, end);
+      const content = selectedText || placeholder;
+      const replacement = `${prefix}${content}${suffix}`;
+
+      replaceSelection(replacement, prefix.length, prefix.length + content.length);
+    };
+
+    const prefixLines = (prefix, placeholder, numbered = false) => {
+      const start = bodyInput.selectionStart ?? bodyInput.value.length;
+      const end = bodyInput.selectionEnd ?? bodyInput.value.length;
+      const selectedText = bodyInput.value.slice(start, end) || placeholder;
+      const lines = selectedText.split('\n');
+      const replacement = lines
+        .map((line, index) => `${numbered ? `${index + 1}. ` : prefix}${line || placeholder}`)
+        .join('\n');
+
+      replaceSelection(replacement, 0, replacement.length);
+    };
+
+    const insertBlock = (content) => {
+      const start = bodyInput.selectionStart ?? bodyInput.value.length;
+      const end = bodyInput.selectionEnd ?? bodyInput.value.length;
+      const prefix = start > 0 && !bodyInput.value.slice(0, start).endsWith('\n\n') ? '\n\n' : '';
+      const suffix = end < bodyInput.value.length && !bodyInput.value.slice(end).startsWith('\n\n') ? '\n\n' : '';
+      const replacement = `${prefix}${content}${suffix}`;
+
+      replaceSelection(replacement, prefix.length, prefix.length + content.length);
+    };
+
+    const uploadSelectedImage = async () => {
+      const selectedFile = imageInput.files?.[0];
+
+      if (!selectedFile) {
+        return;
+      }
+
+      showFeedback('Uploading image...');
+
+      try {
+        const formData = new FormData();
+        formData.append('image', selectedFile);
+
+        const response = await fetch(editor.dataset.uploadUrl, {
+          method: 'POST',
+          headers: {
+            'X-CSRF-TOKEN': csrfToken.value,
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+          body: formData,
+        });
+
+        const payload = await response.json();
+
+        if (!response.ok || !payload.url) {
+          throw new Error(payload.message || 'Upload failed.');
+        }
+
+        insertBlock(`![${payload.alt || 'News image'}](${payload.url})`);
+        imageInput.value = '';
+        showFeedback('Image uploaded and inserted into the article.');
+      } catch (error) {
+        showFeedback(error instanceof Error ? error.message : 'Upload failed.', true);
+      }
+    };
+
+    actionButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        switch (button.dataset.editorAction) {
+          case 'bold':
+            wrapSelection('**', '**', 'Bold text');
+            break;
+          case 'italic':
+            wrapSelection('*', '*', 'Italic text');
+            break;
+          case 'strike':
+            wrapSelection('~~', '~~', 'Strikethrough text');
+            break;
+          case 'inline-code':
+            wrapSelection('`', '`', 'inline code');
+            break;
+          case 'link': {
+            const start = bodyInput.selectionStart ?? bodyInput.value.length;
+            const end = bodyInput.selectionEnd ?? bodyInput.value.length;
+            const selectedText = bodyInput.value.slice(start, end) || 'Link text';
+            const replacement = `[${selectedText}](https://)`;
+            const urlStart = replacement.indexOf('https://');
+            replaceSelection(replacement, urlStart, urlStart + 'https://'.length);
+            break;
+          }
+          case 'heading':
+            insertBlock(`## ${bodyInput.value.slice(bodyInput.selectionStart ?? 0, bodyInput.selectionEnd ?? 0) || 'Heading'}`);
+            break;
+          case 'quote':
+            prefixLines('> ', 'Quote');
+            break;
+          case 'bullet-list':
+            prefixLines('- ', 'List item');
+            break;
+          case 'numbered-list':
+            prefixLines('', 'List item', true);
+            break;
+          case 'code-block': {
+            const start = bodyInput.selectionStart ?? bodyInput.value.length;
+            const end = bodyInput.selectionEnd ?? bodyInput.value.length;
+            const selectedText = bodyInput.value.slice(start, end) || "Code block";
+            insertBlock(`\`\`\`\n${selectedText}\n\`\`\``);
+            break;
+          }
+          case 'image':
+            imageInput.click();
+            break;
+          default:
+            break;
+        }
+
+        if (menu?.open) {
+          menu.removeAttribute('open');
+        }
+      });
+    });
+
+    imageInput.addEventListener('change', () => {
+      void uploadSelectedImage();
+    });
+
+    document.addEventListener('click', (event) => {
+      if (menu && menu.open && !menu.contains(event.target)) {
+        menu.removeAttribute('open');
+      }
     });
   })();
 </script>

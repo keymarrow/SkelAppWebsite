@@ -6,7 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\NewsPostRequest;
 use App\Models\NewsPost;
 use App\Models\NewsPostSlugRedirect;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class NewsPostController extends Controller
@@ -37,6 +42,7 @@ class NewsPostController extends Controller
     public function store(NewsPostRequest $request): RedirectResponse
     {
         $payload = $request->payload();
+        $payload['featured_image_url'] = $this->storeUploadedImage($request->file('featured_image'), 'news/covers');
 
         if ($payload['is_published'] && blank($payload['published_at'])) {
             $payload['published_at'] = now();
@@ -62,6 +68,19 @@ class NewsPostController extends Controller
     {
         $originalSlug = $post->slug;
         $payload = $request->payload();
+        $nextFeaturedImageUrl = $post->featured_image_url;
+
+        if ($request->boolean('remove_featured_image')) {
+            $this->deleteManagedImage($post->featured_image_url);
+            $nextFeaturedImageUrl = null;
+        }
+
+        if ($request->hasFile('featured_image')) {
+            $this->deleteManagedImage($post->featured_image_url);
+            $nextFeaturedImageUrl = $this->storeUploadedImage($request->file('featured_image'), 'news/covers');
+        }
+
+        $payload['featured_image_url'] = $nextFeaturedImageUrl;
 
         if ($payload['is_published'] && blank($payload['published_at'])) {
             $payload['published_at'] = now();
@@ -89,10 +108,61 @@ class NewsPostController extends Controller
 
     public function destroy(NewsPost $post): RedirectResponse
     {
+        $this->deleteManagedImage($post->featured_image_url);
         $post->delete();
 
         return redirect()
             ->route('admin.posts.index')
             ->with('status', 'Post deleted.');
+    }
+
+    public function uploadContentImage(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'image' => ['required', 'file', 'mimes:jpg,jpeg,png,webp,gif', 'max:5120'],
+        ]);
+
+        /** @var UploadedFile $image */
+        $image = $validated['image'];
+        $url = $this->storeUploadedImage($image, 'news/body');
+        $alt = Str::of($image->getClientOriginalName())
+            ->beforeLast('.')
+            ->replace(['-', '_'], ' ')
+            ->trim()
+            ->title()
+            ->toString();
+
+        return response()->json([
+            'url' => $url,
+            'alt' => $alt !== '' ? $alt : 'News image',
+        ]);
+    }
+
+    private function storeUploadedImage(?UploadedFile $image, string $directory): ?string
+    {
+        if (! $image) {
+            return null;
+        }
+
+        $extension = strtolower($image->getClientOriginalExtension() ?: 'jpg');
+        $filename = now()->format('YmdHis').'-'.Str::random(20).'.'.$extension;
+        $path = $image->storeAs($directory, $filename, 'public');
+
+        return '/storage/'.$path;
+    }
+
+    private function deleteManagedImage(?string $publicPath): void
+    {
+        if (blank($publicPath)) {
+            return;
+        }
+
+        $normalizedPath = ltrim((string) $publicPath, '/');
+
+        if (! Str::startsWith($normalizedPath, 'storage/news/')) {
+            return;
+        }
+
+        Storage::disk('public')->delete(Str::after($normalizedPath, 'storage/'));
     }
 }

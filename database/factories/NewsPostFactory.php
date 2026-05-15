@@ -18,6 +18,7 @@ class NewsPostFactory extends Factory
             'title' => $title,
             'slug' => Str::slug($title).'-'.fake()->unique()->numberBetween(100, 999),
             'summary' => fake()->paragraph(),
+            'featured_image_url' => null,
             'body_markdown' => "## Intro\n\n".fake()->paragraphs(4, true),
             'categories' => ['Product', 'Retail Guide'],
             'card_label' => 'News',

@@ -401,6 +401,196 @@ a {
   padding: 6px;
 }
 
+.admin-upload-stack,
+.admin-inline-upload-controls {
+  display: grid;
+  gap: 14px;
+}
+
+.admin-upload-stack {
+  gap: 18px;
+}
+
+.admin-upload-card {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid rgba(18, 52, 38, 0.1);
+  border-radius: 18px;
+  background: rgba(250, 252, 251, 0.92);
+}
+
+.admin-upload-card-heading {
+  display: grid;
+  gap: 6px;
+}
+
+.admin-editor-field {
+  gap: 12px !important;
+}
+
+.admin-editor {
+  overflow: hidden;
+  border: 1px solid rgba(18, 52, 38, 0.14);
+  border-radius: 18px;
+  background: #ffffff;
+}
+
+.admin-editor-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(18, 52, 38, 0.1);
+  background: #eef2ef;
+}
+
+.admin-editor-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #52655b;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-editor-button:hover,
+.admin-editor-button:focus-visible,
+.admin-editor-menu[open] .admin-editor-button--menu {
+  background: rgba(74, 173, 119, 0.12);
+  color: #163427;
+  outline: none;
+}
+
+.admin-editor-button--italic {
+  font-style: italic;
+}
+
+.admin-editor-menu {
+  position: relative;
+}
+
+.admin-editor-menu summary {
+  list-style: none;
+}
+
+.admin-editor-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.admin-editor-menu-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 10;
+  display: grid;
+  min-width: 148px;
+  padding: 8px;
+  border: 1px solid rgba(18, 52, 38, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 14px 28px rgba(17, 43, 31, 0.12);
+}
+
+.admin-editor-menu-panel button {
+  border: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: transparent;
+  color: #163427;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.admin-editor-menu-panel button:hover,
+.admin-editor-menu-panel button:focus-visible {
+  background: rgba(74, 173, 119, 0.1);
+  outline: none;
+}
+
+.admin-editor textarea {
+  min-height: 340px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  resize: vertical;
+}
+
+.admin-editor textarea:focus {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.admin-file-picker {
+  position: relative;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  justify-self: flex-start;
+  min-height: 46px;
+  padding: 0 18px;
+  border: 1px dashed rgba(43, 122, 87, 0.28);
+  border-radius: 999px;
+  background: rgba(74, 173, 119, 0.08);
+  color: #1d6a46;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.admin-file-picker input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.admin-image-preview {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid rgba(18, 52, 38, 0.08);
+  background: #ffffff;
+}
+
+.admin-image-preview img {
+  display: block;
+  width: 100%;
+  max-height: 280px;
+  object-fit: cover;
+}
+
+.admin-inline-upload-button {
+  min-height: 46px;
+}
+
+.admin-upload-feedback {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #476155;
+}
+
+.admin-upload-feedback[data-state="error"] {
+  color: #9a2f35;
+}
+
+.admin-upload-feedback[data-state="success"] {
+  color: #1d6a46;
+}
+
 .admin-primary-button,
 .admin-danger-button,
 .admin-secondary-link {
@@ -535,5 +725,20 @@ a {
 
   .admin-color-grid {
     grid-template-columns: 1fr;
+  }
+
+  .admin-inline-upload-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-editor-toolbar {
+    gap: 6px;
+    padding: 10px;
+  }
+
+  .admin-editor-button {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 8px;
   }
 }

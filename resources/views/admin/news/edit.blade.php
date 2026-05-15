@@ -12,7 +12,7 @@
       <a href="{{ route('admin.posts.index') }}" class="admin-secondary-link">Back to posts</a>
     </header>
 
-    <form method="POST" action="{{ route('admin.posts.update', $post) }}">
+    <form method="POST" action="{{ route('admin.posts.update', $post) }}" enctype="multipart/form-data">
       @csrf
       @method('PUT')
       @include('admin.news._form')

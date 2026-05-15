@@ -141,11 +141,23 @@
           <article class="news-card">
             <a href="{{ route('news.show', $article['slug']) }}" class="news-card-link">
               <div
-                class="news-card-art"
+                class="news-card-art{{ !empty($article['featured_image_url']) ? ' has-image' : '' }}"
                 style="--news-start: {{ $article['card_colors'][0] }}; --news-mid: {{ $article['card_colors'][1] }}; --news-end: {{ $article['card_colors'][2] }};"
               >
+                @if (!empty($article['featured_image_url']))
+                  <img
+                    src="{{ $article['featured_image_url'] }}"
+                    alt="{{ $article['title'] }}"
+                    class="news-card-art-image"
+                    loading="lazy"
+                    decoding="async"
+                  >
+                  <div class="news-card-image-overlay"></div>
+                @endif
                 <span class="news-card-badge">{{ $article['card_label'] }}</span>
-                <div class="news-card-glow"></div>
+                @if (empty($article['featured_image_url']))
+                  <div class="news-card-glow"></div>
+                @endif
               </div>
 
               <div class="news-card-copy">

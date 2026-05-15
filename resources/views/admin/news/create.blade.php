@@ -12,7 +12,7 @@
       <a href="{{ route('admin.posts.index') }}" class="admin-secondary-link">Back to posts</a>
     </header>
 
-    <form method="POST" action="{{ route('admin.posts.store') }}">
+    <form method="POST" action="{{ route('admin.posts.store') }}" enctype="multipart/form-data">
       @csrf
       @include('admin.news._form')
     </form>

@@ -64,6 +64,7 @@ $registerAdminRoutes = function (): void {
     Route::middleware('auth:admin')->group(function () {
         Route::get('/', AdminDashboardController::class)->name('dashboard');
         Route::post('/logout', [AdminAuthenticatedSessionController::class, 'destroy'])->name('logout');
+        Route::post('/posts/content-images', [AdminNewsPostController::class, 'uploadContentImage'])->name('posts.content-images.store');
         Route::resource('/posts', AdminNewsPostController::class)->except(['show']);
     });
 };
