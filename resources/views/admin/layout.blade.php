@@ -7,8 +7,9 @@
   <link rel="icon" href="{{ asset('assets/skel.png') }}" type="image/x-icon" />
   <link href="{{ asset('css/admin-news.css') }}?v={{ @filemtime(public_path('css/admin-news.css')) }}" rel="stylesheet" />
 </head>
-<body class="admin-body">
-  @auth('admin')
+@php($isAdminAuthenticated = auth('admin')->check())
+<body class="admin-body{{ $isAdminAuthenticated ? '' : ' admin-body--auth' }}">
+  @if ($isAdminAuthenticated)
     <aside class="admin-sidebar">
       <a href="{{ route('admin.dashboard') }}" class="admin-brand">
         <span class="admin-brand-mark">S</span>
@@ -29,9 +30,9 @@
         <button type="submit" class="admin-logout">Log out</button>
       </form>
     </aside>
-  @endauth
+  @endif
 
-  <div class="admin-main-shell">
+  <div class="admin-main-shell{{ $isAdminAuthenticated ? '' : ' admin-main-shell--auth' }}">
     @if (session('status'))
       <div class="admin-flash">{{ session('status') }}</div>
     @endif
