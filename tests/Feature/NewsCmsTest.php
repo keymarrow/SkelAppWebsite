@@ -75,7 +75,7 @@ class NewsCmsTest extends TestCase
 
         $this->get("/news/{$post->slug}")
             ->assertOk()
-            ->assertSee($featuredImageUrl, false)
+            ->assertDontSee($featuredImageUrl, false)
             ->assertSee($inlineImageUrl, false)
             ->assertSee('Inline campaign example', false);
     }

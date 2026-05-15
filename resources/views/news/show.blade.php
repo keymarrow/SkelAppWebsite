@@ -24,18 +24,6 @@
 
         <h1>{{ $article['title'] }}</h1>
 
-        @if (!empty($article['featured_image_url']))
-          <figure class="news-hero-media">
-            <img
-              src="{{ $article['featured_image_url'] }}"
-              alt="{{ $article['title'] }}"
-              loading="eager"
-              fetchpriority="high"
-              decoding="async"
-            >
-          </figure>
-        @endif
-
         <p class="news-hero-summary">{{ $article['summary'] }}</p>
       </header>
 

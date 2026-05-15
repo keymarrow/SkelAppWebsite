@@ -31,8 +31,8 @@
       <div class="admin-upload-stack">
         <section class="admin-upload-card">
           <div class="admin-upload-card-heading">
-            <span class="admin-field-label">Cover image</span>
-            <small>Optional. Used on the news card and at the top of the article page.</small>
+            <span class="admin-field-label">Card image</span>
+            <small>Optional. Used on news cards only. Add article images from the body toolbar.</small>
           </div>
 
           @if ($post->featured_image_url)
