@@ -7874,6 +7874,25 @@ nav {
     line-height: 1.7;
     max-width: 420px;
   }
+
+  /* Rectangle card images: anchor to the RIGHT edge.
+     Originally they were positioned via `left: 290px` / `left: 430px`
+     measured from the card's left edge — values that only worked when
+     the card was exactly 810.73px wide. Now that the rectangles stretch
+     to fill their grid column on wide desktops, anchoring from the
+     right edge keeps the image in the same visual position the design
+     intended. The offsets are computed from the original layout:
+       pos:      810.73 − natural_overflow → flush to the right (0)
+       handheld: 810.73 − 430 − 347 = 33.73px from the right */
+  .feature-rectangle-pos .feature-content-right img {
+    left: auto;
+    right: 0;
+  }
+
+  .feature-rectangle-handheld .feature-content-right .feature-handheld-pos {
+    left: auto;
+    right: 33.73px;
+  }
 }
 
 /* ───────────────────────────────────────────────────────────────
