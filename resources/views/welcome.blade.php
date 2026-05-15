@@ -158,40 +158,42 @@
       </div>
     </div>
 
-    <div class="carousel-slider" aria-label="Retailer carousel controls">
-      <button class="carousel-slider-button" type="button" data-carousel-prev aria-label="Previous retailer">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M14.5 5.5 8 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </button>
+    <div class="retailer-controls">
+      <div class="carousel-slider" aria-label="Retailer carousel controls">
+        <button class="carousel-slider-button" type="button" data-carousel-prev aria-label="Previous retailer">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M14.5 5.5 8 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
 
-      <div class="carousel-slider-dots" role="tablist" aria-label="Retailer slides">
-        @foreach ($retailerCards as $card)
-          <button
-            class="carousel-slider-dot{{ $loop->index === 1 ? ' is-active' : '' }}"
-            type="button"
-            role="tab"
-            data-carousel-dot="{{ $loop->index }}"
-            aria-label="Go to {{ $card['title'] }}"
-            aria-current="{{ $loop->index === 1 ? 'true' : 'false' }}"
-          ></button>
-        @endforeach
+        <div class="carousel-slider-dots" role="tablist" aria-label="Retailer slides">
+          @foreach ($retailerCards as $card)
+            <button
+              class="carousel-slider-dot{{ $loop->index === 1 ? ' is-active' : '' }}"
+              type="button"
+              role="tab"
+              data-carousel-dot="{{ $loop->index }}"
+              aria-label="Go to {{ $card['title'] }}"
+              aria-current="{{ $loop->index === 1 ? 'true' : 'false' }}"
+            ></button>
+          @endforeach
+        </div>
+
+        <button class="carousel-slider-button" type="button" data-carousel-next aria-label="Next retailer">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M9.5 5.5 16 12l-6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
       </div>
 
-      <button class="carousel-slider-button" type="button" data-carousel-next aria-label="Next retailer">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M9.5 5.5 16 12l-6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </button>
-    </div>
-
-    <div class="cta-container">
-      <button class="btn-talk">
-        Talk to our Team
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M5 12h14M12 5l7 7-7 7"/>
-        </svg>
-      </button>
+      <div class="cta-container">
+        <button class="btn-talk">
+          Talk to our Team
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
     </div>
 
     <div class="section-bottom">

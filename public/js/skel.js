@@ -282,6 +282,13 @@
       if (!container || !cards.length || !prevButton || !nextButton || !dots.length) return;
 
       const getTargetScrollLeft = (card) => {
+        // Desktop layout (≥969px): align card to the start so every card
+        // has a distinct scrollLeft target. Centering on desktop causes the
+        // first several cards to clamp to 0 (because the container is much
+        // wider than a card), breaking the next-arrow.
+        if (window.matchMedia('(min-width: 969px)').matches) {
+          return Math.max(0, card.offsetLeft);
+        }
         const centeredOffset = card.offsetLeft - ((container.clientWidth - card.clientWidth) / 2);
         return Math.max(0, centeredOffset);
       };

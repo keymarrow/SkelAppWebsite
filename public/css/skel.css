@@ -2115,7 +2115,7 @@ footer nav a:hover { color: var(--white); }
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  width: min(389px, 100%);
+  width: min(410px, 100%);
   height: 389px;
   min-height: 389px;
   justify-self: start;
@@ -2293,7 +2293,7 @@ footer nav a:hover { color: var(--white); }
 
 .feature-rectangle-pos .feature-content-right img {
   position: absolute;
-  left: 228.95px;
+  left: 290px;
   top: 0.54px;
   width: auto;
   height: auto;
@@ -2333,7 +2333,7 @@ footer nav a:hover { color: var(--white); }
 
 .feature-rectangle-handheld .feature-content-right .feature-handheld-pos {
   position: absolute;
-  left: 367.27px;
+  left: 430px;
   top: 76.49px;
   width: 347px;
   height: 289.37px;
@@ -6754,8 +6754,12 @@ body.error-404-page::before {
 
 .contact-page {
   background: #EEF7F2;
-  padding-top: 120px;
-  padding-bottom: 96px;
+  padding-top: 132px;
+  padding-bottom: 72px;
+}
+
+main.contact-page {
+  padding-bottom: 56px;
 }
 
 .contact-hero-heading {
@@ -7089,7 +7093,7 @@ body.error-404-page::before {
 @media (max-width: 900px) {
   .contact-layout {
     grid-template-columns: 1fr;
-    padding: 0 32px;
+    padding: 0px 30px 30px 30px;
     gap: 36px;
   }
 
@@ -7105,15 +7109,45 @@ body.error-404-page::before {
 @media (max-width: 540px) {
   .form-grid-2 {
     grid-template-columns: 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .form-grid-2 .form-field {
+    margin-bottom: 0;
+  }
+
+  .contact-form-card .form-field {
+    margin-bottom: 14px;
+  }
+
+  .contact-form-card .form-field:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .contact-form-card {
+    padding: 24px 20px 22px;
+    border-radius: 16px;
+  }
+
+  .contact-form-card h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .form-field input,
+  .form-field select {
+    height: 46px;
   }
 
   .contact-page {
     padding-top: 100px;
-    padding-bottom: 72px;
+    padding-bottom: 56px;
   }
 
   .form-actions {
     flex-direction: column-reverse;
+    margin-top: 22px;
   }
 
   .btn-cancel,
@@ -7420,6 +7454,10 @@ body.contact-page {
   flex-direction: column;
 }
 
+body.contact-page {
+  padding: 0;
+}
+
 .faq-page-body > main,
 body.news-page > main,
 body.terms-page > main,
@@ -7661,6 +7699,12 @@ nav {
     gap: clamp(8px, 0.4vw + 5px, 12px);
   }
 
+  .hero-right {
+    width: auto;
+    max-width: none;
+    flex: 0 0 auto;
+  }
+
   .hero-left h1 {
     font-size: clamp(24px, 0.7vw + 17.7px, 32px);
     font-weight: 400;
@@ -7701,5 +7745,203 @@ nav {
 
   .testimonial-card cite {
     font-size: clamp(13px, 0.2vw + 11.2px, 15px);
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────
+   APP-SHOWCASE — scale-up for large desktops (1400px → 1880px+).
+   Below 1400px the existing rules win (already tuned for tablet
+   and desktop). Above 1400px these clamp() ranges enlarge the
+   section smoothly so it fills a 1880px viewport without looking
+   too small. Capped at 1880px so 4K screens don't blow up.
+   ─────────────────────────────────────────────────────────────── */
+@media (min-width: 1400px) {
+  .showcase-container {
+    max-width: clamp(1680px, 100vw, 1920px);
+  }
+
+  /* Match the features section's .container (max-width: 1400px) so the
+     allfeatures intro starts where features-row starts on the left and
+     the allfeatures-grid ends where the last feature-card ends on the
+     right — both share the same horizontal extent. */
+  .allfeatures-container {
+    max-width: 1400px;
+  }
+
+  .showcase-card {
+    width: min(100%, clamp(1332px, 95vw + 2px, 1788px));
+    min-height: clamp(714px, 42.9vw + 113.4px, 920px);
+    padding: clamp(96px, 5.42vw + 20.2px, 122px) clamp(72px, 5vw + 2px, 96px) 0;
+    border-radius: clamp(18px, 1.25vw + 0.5px, 24px);
+  }
+
+  .showcase-header {
+    max-width: clamp(980px, 41.67vw + 396.67px, 1180px);
+  }
+
+  .showcase-title {
+    font-size: clamp(62.6px, 3.625vw + 11.85px, 80px);
+    margin-bottom: clamp(26px, 1.67vw + 2.67px, 34px);
+  }
+
+  .showcase-subtitle {
+    font-size: clamp(17.7px, 0.9vw + 5.16px, 22px);
+    max-width: clamp(1180px, 37.5vw + 655px, 1360px);
+  }
+
+  .app-buttons {
+    gap: clamp(28px, 1.67vw + 4.67px, 36px);
+    margin-top: clamp(32px, 1.67vw + 8.67px, 40px);
+  }
+
+  .store-badge-apple {
+    width: clamp(120px, 6.25vw + 32.5px, 150px);
+    height: clamp(40px, 2.08vw + 10.83px, 50px);
+  }
+
+  .store-badge-google {
+    width: clamp(135px, 6.875vw + 38.75px, 168px);
+    height: clamp(40px, 2.08vw + 10.83px, 50px);
+  }
+
+  .device-mockup {
+    max-width: clamp(1520px, 62.5vw + 645px, 1820px);
+    margin-top: clamp(84px, 5vw + 14px, 108px);
+    margin-bottom: clamp(-96px, -4.17vw - 17.62px, -76px);
+  }
+
+  .showcase-points {
+    width: min(100%, clamp(1332px, 95vw + 2px, 1788px));
+    margin-top: clamp(59px, 3.54vw + 9.42px, 76px);
+    column-gap: clamp(40px, 2.5vw + 5px, 52px);
+    row-gap: clamp(48px, 2.5vw + 13px, 60px);
+  }
+
+  .showcase-point-heading {
+    gap: clamp(12px, 0.83vw + 0.33px, 16px);
+    margin-bottom: clamp(10px, 0.83vw - 1.67px, 14px);
+  }
+
+  .showcase-point-icon {
+    width: clamp(20px, 1.25vw + 2.5px, 26px);
+    height: clamp(20px, 1.25vw + 2.5px, 26px);
+  }
+
+  .showcase-point h3 {
+    font-size: clamp(20px, 1.25vw + 2.5px, 26px);
+  }
+
+  .showcase-point p {
+    font-size: clamp(16px, 0.83vw + 4.33px, 20px);
+  }
+
+  /* Features grid — zigzag layout on wide desktops.
+       Row 1: F1 (fixed 389px) + F2 (fills ALL remaining space)
+       Row 2: F3 (fills ALL remaining space) + F4 (fixed 389px)
+     Using an explicit 389px track (instead of `auto`) guarantees the
+     small column is exactly the card's width, so the stretched
+     rectangle absorbs every other pixel. F4's right edge then lands
+     exactly on F2's right edge. */
+  .features-row:nth-of-type(1) {
+    grid-template-columns: 389px 1fr;
+  }
+
+  .features-row:nth-of-type(2) {
+    grid-template-columns: 1fr 389px;
+  }
+
+  .feature-square,
+  .feature-rectangle,
+  .feature-rectangle-pos,
+  .feature-rectangle-handheld {
+    width: 100%;
+    max-width: none;
+    justify-self: stretch;
+  }
+
+  /* Slight bump-up for feature card text on wide desktops so it
+     reads comfortably against the larger card width. */
+  .feature-square .feature-content-top h2,
+  .feature-rectangle .feature-content-left h2 {
+    font-size: 28px;
+    line-height: 1.25;
+    margin-bottom: 20px;
+  }
+
+  .feature-square .feature-content-top p,
+  .feature-rectangle .feature-content-left p {
+    font-size: 14px;
+    line-height: 1.7;
+    max-width: 420px;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────
+   RETAILER CONTROLS — slider + "Talk to our Team" button row.
+   Mobile (≤968px): keeps the existing stacked layout.
+   Desktop (≥969px): shows the slider (it was display:none before),
+   places btn-talk on the left and the slider on the right.
+   ─────────────────────────────────────────────────────────────── */
+.retailer-controls {
+  margin: 0 auto 58px;
+}
+
+@media (min-width: 969px) {
+  .retailer-controls {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .retailer-controls .carousel-slider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0;
+  }
+
+  .retailer-controls .carousel-slider-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border: none;
+    border-radius: 50%;
+    background: #f1f1ed;
+    color: #686868;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+  }
+
+  .retailer-controls .carousel-slider-button:hover:not(:disabled) {
+    background: #e8e8e2;
+    color: #151515;
+  }
+
+  .retailer-controls .carousel-slider-button:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+
+  .retailer-controls .carousel-slider-button svg {
+    display: block;
+    width: 22px;
+    height: 22px;
+  }
+
+  /* No dots on desktop — only the arrows. Kept in DOM so the
+     carousel JS (which looks them up via data-carousel-dot) still
+     wires the arrow click handlers. */
+  .retailer-controls .carousel-slider-dots {
+    display: none;
+  }
+
+  .retailer-controls .cta-container {
+    justify-content: flex-start;
+    margin: 0;
+    padding: 0;
   }
 }
