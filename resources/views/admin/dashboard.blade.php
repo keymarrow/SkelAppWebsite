@@ -26,26 +26,47 @@
     </header>
 
     {{-- ── KPI cards ── --}}
-    <section class="dashboard-kpis" aria-label="Key metrics">
-      @foreach ($kpis as $key => $card)
-        @php $spark = $sparklines[$key] ?? []; @endphp
-        <article class="kpi-card">
-          <div class="kpi-card-body">
-            <p class="kpi-card-label">{{ $card['label'] }}</p>
-            <p class="kpi-card-value">{{ number_format($card['value']) }}</p>
-            <span class="kpi-card-delta {{ $card['delta_positive'] ? 'is-up' : 'is-down' }}">
-              {{ $card['delta_positive'] ? '+' : '' }}{{ rtrim(rtrim(number_format($card['delta_percent'], 2), '0'), '.') }}%
-            </span>
-          </div>
-          <div class="kpi-card-spark">
-            <canvas
-              data-kpi-spark
-              data-spark-values="{{ json_encode(array_column($spark, 'value')) }}"
-              data-spark-trend="{{ $card['delta_positive'] ? 'up' : 'down' }}"
-            ></canvas>
-          </div>
-        </article>
-      @endforeach
+    <section class="dashboard-kpis-section" aria-labelledby="dashboard-kpis-title">
+      <header class="dashboard-section-head">
+        <div>
+          <h2 id="dashboard-kpis-title">Key metrics</h2>
+          <p>Showing {{ strtolower($rangeLabel) }} compared with the previous period.</p>
+        </div>
+
+        <nav class="dashboard-range-pills" aria-label="Dashboard time range">
+          @foreach ($ranges as $key => $cfg)
+            <a
+              href="{{ route('admin.dashboard', array_merge(request()->except('range'), ['range' => $key])) }}"
+              class="{{ $rangeKey === $key ? 'is-active' : '' }}"
+              aria-current="{{ $rangeKey === $key ? 'page' : 'false' }}"
+            >
+              {{ $cfg['label'] }}
+            </a>
+          @endforeach
+        </nav>
+      </header>
+
+      <div class="dashboard-kpis" aria-label="Key metrics">
+        @foreach ($kpis as $key => $card)
+          @php $spark = $sparklines[$key] ?? []; @endphp
+          <article class="kpi-card">
+            <div class="kpi-card-body">
+              <p class="kpi-card-label">{{ $card['label'] }}</p>
+              <p class="kpi-card-value">{{ number_format($card['value']) }}</p>
+              <span class="kpi-card-delta {{ $card['delta_positive'] ? 'is-up' : 'is-down' }}">
+                {{ $card['delta_positive'] ? '+' : '' }}{{ rtrim(rtrim(number_format($card['delta_percent'], 2), '0'), '.') }}%
+              </span>
+            </div>
+            <div class="kpi-card-spark">
+              <canvas
+                data-kpi-spark
+                data-spark-values="{{ json_encode(array_column($spark, 'value')) }}"
+                data-spark-trend="{{ $card['delta_positive'] ? 'up' : 'down' }}"
+              ></canvas>
+            </div>
+          </article>
+        @endforeach
+      </div>
     </section>
 
     {{-- ── Charts row ── --}}
@@ -56,13 +77,7 @@
             <h2>Website visitors</h2>
             <p class="dashboard-card-subtitle">Your site's traffic over time</p>
           </div>
-          <form method="GET" action="{{ route('admin.dashboard') }}" class="dashboard-range">
-            <select name="range" onchange="this.form.submit()" class="cms-input">
-              @foreach ($ranges as $key => $cfg)
-                <option value="{{ $key }}" @selected($rangeKey === $key)>{{ $cfg['label'] }}</option>
-              @endforeach
-            </select>
-          </form>
+          <span class="dashboard-card-range">{{ $rangeLabel }}</span>
         </header>
 
         <div class="dashboard-chart-wrap">
