@@ -53,17 +53,20 @@ fi
 # 4. Run database migrations.
 php artisan migrate --force
 
-# 5. Clear stale caches, then rebuild production caches.
+# 5. Ensure CMS page records exist and backfill any new default fields.
+php artisan db:seed --class=PagesSeeder --force
+
+# 6. Clear stale caches, then rebuild production caches.
 php artisan optimize:clear
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 php artisan event:cache
 
-# 6. Fix writable directories.
+# 7. Fix writable directories.
 chown -R www-data:www-data storage bootstrap/cache
 
-# 7. Bring site back up.
+# 8. Bring site back up.
 php artisan up
 MAINTENANCE_ENABLED=0
 trap - EXIT
