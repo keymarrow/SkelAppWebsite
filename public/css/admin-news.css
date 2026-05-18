@@ -2675,6 +2675,7 @@ body.cms-modal-open {
 
 /* Cards grid */
 .dashboard-grid {
+  --dashboard-primary-card-height: 460px;
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
   gap: 16px;
@@ -2696,13 +2697,19 @@ body.cms-modal-open {
 
 .dashboard-card--main,
 .dashboard-card--side {
-  height: 100%;
+  height: var(--dashboard-primary-card-height);
+  min-height: var(--dashboard-primary-card-height);
+}
+
+.dashboard-card--main {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  overflow: hidden;
 }
 
 .dashboard-card--side {
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr);
-  min-height: 0;
   overflow: hidden;
 }
 
@@ -2753,7 +2760,8 @@ body.cms-modal-open {
 }
 
 .dashboard-chart-wrap {
-  height: 280px;
+  height: 100%;
+  min-height: 280px;
   width: 100%;
   position: relative;
 }
@@ -3061,6 +3069,12 @@ body.cms-modal-open {
   }
   .dashboard-grid {
     grid-template-columns: 1fr;
+  }
+  .dashboard-card--main,
+  .dashboard-card--side {
+    display: block;
+    height: auto;
+    min-height: 0;
   }
   .dashboard-grid--secondary {
     grid-template-columns: 1fr;
