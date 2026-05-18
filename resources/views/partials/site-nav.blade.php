@@ -6,7 +6,7 @@
     ['label' => 'How it Works', 'href' => $sectionPrefix . '#howitworks'],
   ];
   $secondaryNavLinks = [
-    ['label' => 'Pricing', 'href' => $sectionPrefix . '#pricing'],
+    ['label' => 'Pricing', 'href' => route('pricing.show'), 'route' => 'pricing.show'],
     ['label' => 'FAQ', 'href' => route('faq.show'), 'route' => 'faq.show'],
     ['label' => 'News', 'href' => route('news.index'), 'route' => 'news.*'],
   ];

@@ -51,7 +51,13 @@
           <h4 class="footer-nav-title">More</h4>
           <ul class="footer-nav-list">
             <li><a href="{{ $footerHomeUrl }}#features">Features</a></li>
-            <li><a href="{{ $footerHomeUrl }}#pricing">Pricing</a></li>
+            <li>
+              <a href="{{ route('pricing.show') }}"
+                 @class(['is-active' => $currentRoute === 'pricing.show'])
+                 @if($currentRoute === 'pricing.show') aria-current="page" @endif>
+                Pricing
+              </a>
+            </li>
             <li><a href="{{ $footerHomeUrl }}#pos">POS Machine</a></li>
             <li>
               <a href="{{ route('faq.show') }}"
@@ -178,7 +184,13 @@
             <h4 class="footer-nav-title">More</h4>
             <ul class="footer-nav-list">
               <li><a href="{{ $footerHomeUrl }}#features">Features</a></li>
-              <li><a href="{{ $footerHomeUrl }}#pricing">Pricing</a></li>
+              <li>
+                <a href="{{ route('pricing.show') }}"
+                   @class(['is-active' => $currentRoute === 'pricing.show'])
+                   @if($currentRoute === 'pricing.show') aria-current="page" @endif>
+                  Pricing
+                </a>
+              </li>
               <li><a href="{{ $footerHomeUrl }}#pos">POS Machine</a></li>
               <li>
                 <a href="{{ route('faq.show') }}"

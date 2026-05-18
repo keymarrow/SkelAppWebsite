@@ -16,9 +16,9 @@
   <div class="hero-overlay"></div>
 <div class="hero-content">
   <div class="hero-left">
-    <h1>For Businesses That Think Bigger.</h1>
-    <p>Mobile-ready POS which gives you control to your business.</p>
-    <a href="#" class="btn-download">Download Now</a>
+    <h1>Run your Business like a pro.</h1>
+    <p>SkelApp is Tanzania's #1 Point Of Sale.<br> Track every sale, purchase, expense and stock level — from your phone.</p>
+    <a href="#" class="btn-download">Start free — Download SkelApp</a>
   </div>
 
   <div class="hero-right">
@@ -41,10 +41,10 @@
       <div class="showcase-header">
         <h2 class="showcase-title">POS, But 1% Better</h2>
         <p class="showcase-subtitle showcase-subtitle-primary">
-          SkelApp helps you manage sales, inventory, purchases, and expenses in one powerful POS platform
+          Stop losing track of your money. SkelApp gives you real-time visibility into every sale, every purchase, every expense — all in one place. 
         </p>
         <p class="showcase-subtitle showcase-subtitle-secondary">
-          Built for retail businesses of any size.
+          Built for Tanzanian retailers who want professional tools without the complexity.
         </p>
         <p class="showcase-subtitle showcase-subtitle-mobile">
           SkelApp helps you manage sales, inventory, purchases, and expenses for retail businesses of any size.
@@ -73,23 +73,23 @@
           <img src="{{ asset('assets/speed.svg') }}" alt="" class="showcase-point-icon" aria-hidden="true">
           <h3>Built for Speed</h3>
         </div>
-        <p>Complete sales in seconds</p>
+        <p>Your team is ready in minutes</p>
       </article>
 
       <article class="showcase-point">
         <div class="showcase-point-heading">
           <img src="{{ asset('assets/retail.svg') }}" alt="" class="showcase-point-icon" aria-hidden="true">
-          <h3>Designed for Retail</h3>
+          <h3>Designed for Tanzanian Retail</h3>
         </div>
-        <p>Made for daily shop operations</p>
+        <p>Sales, stock, expenses — all in one app</p>
       </article>
 
       <article class="showcase-point">
         <div class="showcase-point-heading">
           <img src="{{ asset('assets/scale.svg') }}" alt="" class="showcase-point-icon" aria-hidden="true">
-          <h3>Ready to Skel, Yes Scale.</h3>
+          <h3>Ready to Scale, Your Business.</h3>
         </div>
-        <p>From single shops to multiple branches</p>
+        <p>One shop or many branches, it scales</p>
       </article>
     </div>
   </div>
@@ -99,7 +99,7 @@
   <div class="container">
     <div class="section-header">
       <h2>Powering Retailers for Every Type</h2>
-      <p>Whether you run a boutique, grocery shop, hardware store, or kiosk, SkelApp adapts to your workflow.</p>
+      <p>From boutiques in Dar es Salaam to hardware shops in Arusha — SkelApp is built for how Tanzanian retailers actually work.</p>
     </div>
 
     @php
@@ -197,8 +197,8 @@
     </div>
 
     <div class="section-bottom">
-      <h2>A complete POS system that powers business growth</h2>
-      <p>Quick to set up, easy to use, and made for growing businesses in Tanzania.</p>
+      <h2>One app. Every number in your business — tracked.</h2>
+      <p>Set up in under 5 minutes. No IT person, no training course, no headaches — just open the app and start.</p>
     </div>
   </div>
 
@@ -207,11 +207,11 @@
   <div class="container">
     <!-- Top Row -->
     <div class="features-row">
-      <!-- Feature 1: Sell up to 10x faster (Square-ish) -->
+      <!-- Feature 1: Record every sale in seconds (Square-ish) -->
       <div class="feature-card feature-square feature-light feature-square-catalogue">
         <div class="feature-content-top">
-          <h2>Sell up to 10x faster</h2>
-          <p>Flexibly organise what you sell into a product catalogue with variants and modifiers</p>
+          <h2>Record every sale in seconds</h2>
+          <p>Add products, set prices, and process sales instantly. Your full product catalogue — organised, searchable, and always up to date.</p>
         </div>
         <div class="feature-content-bottom">
           <img src="{{ asset('assets/Moc-tab.webp') }}" alt="SkelApp tablet catalogue" class="feature-tab-mockup" loading="lazy" decoding="async">
@@ -235,8 +235,8 @@
       <!-- Feature 3: Fast, Reliable (Wide Rectangle) -->
       <div class="feature-card feature-rectangle feature-dark feature-rectangle-handheld">
         <div class="feature-content-left">
-          <h2>Fast, Reliable<br>Application for every<br>POS setup</h2>
-          <p>Accept payments from every major payment method with our handheld POS system.</p>
+          <h2>Works on mobile, tablet or POS terminal</h2>
+          <p>Use SkelApp on any device — phone, tablet, or full POS terminal. One app, all your business data, always in sync.</p>
         </div>
         <div class="feature-content-right">
           <img src="{{ asset('assets/poswithtab.webp') }}" alt="SkelApp handheld POS with tablet" class="feature-handheld-pos" loading="lazy" decoding="async">
@@ -263,8 +263,8 @@
       <div class="allfeatures-intro">
         <h2 class="allfeatures-intro-title">All the features.<br>All in one place.</h2>
         <p class="allfeatures-intro-copy">
-          SkelApp is an all-in-one retail POS solution that helps you sell smarter,
-          manage inventory in real time, and monitor business performance from anywhere.
+          Built specifically for Tanzanian retailers who want professional tools without the complexity
+          — or the cost. Just clarity.
         </p>
         <a href="#" class="btn-download">Download Now</a>
       </div>
@@ -274,13 +274,13 @@
       $allFeatureCards = [
         [
           'image' => 'crm.png',
-          'title' => 'Customer Relationship Tools',
-          'copy' => 'Build loyalty, track customer purchases, and grow repeat business.',
+          'title' => 'Know your best customers',
+          'copy' => 'See who buys most, track purchase history, and give your loyal customers a reason to keep coming back.',
         ],
         [
           'image' => 'fastbill.png',
-          'title' => 'Faster Billing & Order Processing',
-          'copy' => 'Create receipts, process split payments, and complete sales in seconds with a modern POS checkout system.',
+          'title' => 'Fast sales & split billing',
+          'copy' => 'Record a sale, split a bill, and print a receipt — all in under 30 seconds. Perfect for busy retail floors and boutiques.',
         ],
         [
           'image' => 'catalog.png',
@@ -294,13 +294,13 @@
         ],
         [
           'image' => 'report.png',
-          'title' => 'Retail Reporting & Analytics',
-          'copy' => 'Monitor daily sales, profits, expenses, and top-selling products with built-in POS reports.',
+          'title' => 'Know your profits — every single day',
+          'copy' => 'Open SkelApp every morning and see exactly how much you made, what you spent, and which products are making you money.',
         ],
         [
           'image' => 'attendants.png',
-          'title' => 'Staff & Employee Management',
-          'copy' => 'Control permissions, track cashier performance, and simplify shift operations.',
+          'title' => 'Full team control',
+          'copy' => 'Give each staff member the access they need — no more, no less. Track who sold what, and keep your team accountable without micromanaging.',
         ],
       ];
     @endphp
@@ -331,8 +331,8 @@
     <div class="how-it-works-stage">
       <div class="section-headerr">
         <div class="section-headerr-copy">
-          <h2>Get Started with SkelApp</h2>
-          <p>You're 1 minute away to automate your business.</p>
+          <h2>Up and running in under 5 minutes.</h2>
+          <p>If your staff can use WhatsApp, they can run SkelApp. Download, add your products, and start selling.</p>
         </div>
         <div class="section-headerr-action"><a href="#" class="btn-download">Download Now</a></div>
       </div>
@@ -345,40 +345,40 @@
         <div class="steps-container">
           <article class="step-item">
             <div class="step-image">
-              <img src="{{ asset('assets/rw.jpeg') }}" alt="Set Up Your Store" loading="lazy" decoding="async">
+              <img src="{{ asset('assets/rw.jpeg') }}" alt="Add your products" loading="lazy" decoding="async">
             </div>
             <div class="step-marker">
               <div class="step-number-box">1</div>
             </div>
             <div class="step-content">
-              <h3>Set Up Your Store</h3>
-              <p>Add products, prices, staff accounts, and locations in minutes.</p>
+              <h3>Add your products</h3>
+              <p>Enter your items, set your prices, and organise by category. Takes under 5 minutes to set up your full catalogue.</p>
             </div>
           </article>
 
           <article class="step-item">
             <div class="step-image">
-              <img src="{{ asset('assets/pix.jpeg') }}" alt="Start Selling Instantly" loading="lazy" decoding="async">
+              <img src="{{ asset('assets/pix.jpeg') }}" alt="Start recording sales" loading="lazy" decoding="async">
             </div>
             <div class="step-marker">
               <div class="step-number-box">2</div>
             </div>
             <div class="step-content">
-              <h3>Start Selling Instantly</h3>
-              <p>Process orders, accept payments, and print receipts from any device.</p>
+              <h3>Start recording sales</h3>
+              <p>Process sales, issue receipts, and track every transaction — from your phone, tablet or POS terminal.</p>
             </div>
           </article>
 
           <article class="step-item">
             <div class="step-image">
-              <img src="{{ asset('assets/sto.jpeg') }}" alt="Track & Grow" loading="lazy" decoding="async">
+              <img src="{{ asset('assets/sto.jpeg') }}" alt="See your profits clearly" loading="lazy" decoding="async">
             </div>
             <div class="step-marker">
               <div class="step-number-box">3</div>
             </div>
             <div class="step-content">
-              <h3>Track & Grow</h3>
-              <p>Monitor inventory, sales reports, and customer insights in real time.</p>
+              <h3>See your profits clearly</h3>
+              <p>Check daily sales, expenses, stock levels and profit reports — anytime, from anywhere in Tanzania.</p>
             </div>
           </article>
         </div>
@@ -392,9 +392,9 @@
   <div class="container">
     <div class="hardware-card">
       <div class="hardware-content">
-        <span class="hardware-label">POS Hardware Thats</span>
-        <h2>Skel with your Business.</h2>
-        <p>Upgrade your store with reliable POS terminals, barcode scanners, receipt printers, and cash drawers, fully integrated with SkelApp Application.</p>
+        <span class="hardware-label">Optional hardware — if you want the full setup</span>
+        <h2>Complete your setup with Skel hardware.</h2>
+        <p>Already have a phone or tablet? SkelApp works on it right now. Want a full counter setup? We supply POS terminals, barcode scanners, receipt printers and cash drawers — all pre-configured and ready to go in Tanzania.</p>
 
         <button class="btn-hardware">
           Request Hardware Pricing
@@ -527,84 +527,7 @@
   </div>
 
 </section>
-<section class="faq-section" id="faq">
-  <div class="faq-container">
-    <div class="faq-header">
-      <h2>Frequently Asked Questions</h2>
-      <a href="{{ route('faq.show') }}" class="faq-read-more">Read more</a>
-    </div>
-    <div class="faq-layout">
-      <p class="faq-subtitle">How it works</p>
-
-      <div class="faq-list">
-        <div class="faq-item active">
-          <button class="faq-question" aria-expanded="true">
-            <span>What is a POS system and how does it work?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-          </button>
-          <div class="faq-answer">
-            <p>Get full access to Point of Sale, Inventory Management, CRM, Employee Tools, and Retail Analytics — starting from only TZS 15,000/month.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>Does SkelApp support inventory management?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-          </button>
-          <div class="faq-answer">
-            <p>Yes, SkelApp includes comprehensive inventory management features. Track stock levels in real-time, manage product variants, set low-stock alerts, and monitor inventory across multiple locations from one dashboard.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>Can I use SkelApp on mobile and POS terminals?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-          </button>
-          <div class="faq-answer">
-            <p>Absolutely! SkelApp works seamlessly on mobile devices (iOS and Android), tablets, and traditional POS terminals. Your data syncs across all devices in real-time, so you can manage your business from anywhere.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>Is SkelApp good for small businesses?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-          </button>
-          <div class="faq-answer">
-            <p>Yes! SkelApp is specifically designed for small to medium-sized retail businesses. It's affordable, easy to set up, and scales with your business. Start with basic features and add more as you grow.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>Does the POS work offline?</span>
-            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-          </button>
-          <div class="faq-answer">
-            <p>Yes, SkelApp can process sales offline. When your internet connection is restored, all transactions automatically sync to the cloud. This ensures you never miss a sale, even during internet outages.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+@include('partials.home-faq')
 
 <!-- Image CTA Section - Separate section below FAQ -->
 <section class="image-cta-section">
@@ -616,7 +539,7 @@
     <div class="cta-content">
       <h2>Building momentum to move your business 1% better every day.</h2>
       <button class="btn-cta">
-        Start Selling Better
+        Download SkelApp Today
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M5 12h14M12 5l7 7-7 7"/>
         </svg>
