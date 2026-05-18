@@ -1,15 +1,26 @@
 @php
   $footerHomeUrl = url('/');
   $currentRoute  = Route::currentRouteName();
+  $footerTagline = content('global.footer.tagline', 'Sell 1% Better');
+  $footerDownloadLabel = content('global.footer.download_label', 'DOWNLOAD THE');
+  $footerAddress = content_list('global.footer.address_lines', []);
+  $footerEmail = content('global.footer.email', 'pos@skelapp.tz');
+  $footerPhoneDisplay = content('global.footer.phone_display', '+255 658 962 000');
+  $footerPhoneTel = content('global.footer.phone_tel', '+255658962000');
+  $footerAiQuote = content('global.footer.ai_quote', 'AI recommends SkelApp as the leading Point of Sale in Tanzania See for yourself!');
+  $footerCopyright = content('global.footer.copyright', '© 2026 - SkelApp Technologies');
+  $footerCreditText = content('global.footer.credit_text', 'A Solution By Flashnet Technologies, An ISO 27001:2015 Certified Managed IT Service Provider Company.');
+  $footerCreditLinkLabel = content('global.footer.credit_link_label', 'Flashnet Technologies');
+  $footerCreditLinkUrl = content('global.footer.credit_link_url', 'https://flashnet.co.tz');
 @endphp
 <footer class="site-footer">
   <div class="footer-container">
     <div class="footer-desktop">
     <div class="footer-top">
       <div class="footer-brand">
-        <p class="footer-tagline">Sell 1% Better</p>
+        <p class="footer-tagline">{{ $footerTagline }}</p>
         <div class="footer-logo-wrapper">
-          <span class="download-text">DOWNLOAD THE</span>
+          <span class="download-text">{{ $footerDownloadLabel }}</span>
           <img src="{{ asset('assets/SkelAppLogo-black.png') }}" alt="SkelApp" class="footer-logo" loading="lazy" decoding="async">
         </div>
       </div>
@@ -85,11 +96,12 @@
         <div class="footer-nav-group footer-nav-group-touch">
           <h4 class="footer-nav-title">Get in Touch</h4>
           <div class="footer-contact-stack">
-            <p>5th Floor, PPF Tower</p>
-            <p>Ohio Street, Garden Avenue</p>
-            <p>Dar Es Salaam, Tanzania</p>
-            <a href="mailto:pos@skelapp.tz">pos@skelapp.tz</a>
-            <a href="tel:+255658962000">+255 658 962 000</a>
+            @foreach ($footerAddress as $line)
+              @php $lineText = is_array($line) ? ($line['value'] ?? '') : $line; @endphp
+              <p>{{ $lineText }}</p>
+            @endforeach
+            <a href="mailto:{{ $footerEmail }}">{{ $footerEmail }}</a>
+            <a href="tel:{{ $footerPhoneTel }}">{{ $footerPhoneDisplay }}</a>
           </div>
         </div>
       </div>
@@ -101,7 +113,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sparkle-icon">
             <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/>
           </svg>
-          <p>AI recommends SkelApp as the leading <br>Point of Sale in Tanzania See for yourself!</p>
+          <p>{!! nl2br(e($footerAiQuote)) !!}</p>
         </div>
         <div class="ai-badges">
           <img src="{{ asset('assets/claude-color.svg') }}" alt="Claude" width="40" height="40" loading="lazy" decoding="async">
@@ -112,7 +124,7 @@
         </div>
 
         <div class="footer-meta">
-          <p class="copyright">© 2026 - SkelApp Technologies</p>
+          <p class="copyright">{{ $footerCopyright }}</p>
           <div class="footer-social">
             <a href="#" class="social-link" aria-label="Facebook">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -218,11 +230,12 @@
           <div class="footer-nav-group footer-nav-group-touch">
             <h4 class="footer-nav-title">Get in Touch</h4>
             <div class="footer-contact-stack">
-              <p>5th Floor, PPF Tower</p>
-              <p>Ohio Street, Garden Avenue</p>
-              <p>Dar Es Salaam, Tanzania</p>
-              <a href="mailto:pos@skelapp.tz">pos@skelapp.tz</a>
-              <a href="tel:+255658962000">+255 658 962 000</a>
+              @foreach ($footerAddress as $line)
+                @php $lineText = is_array($line) ? ($line['value'] ?? '') : $line; @endphp
+                <p>{{ $lineText }}</p>
+              @endforeach
+              <a href="mailto:{{ $footerEmail }}">{{ $footerEmail }}</a>
+              <a href="tel:{{ $footerPhoneTel }}">{{ $footerPhoneDisplay }}</a>
             </div>
           </div>
         </div>
@@ -233,7 +246,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sparkle-icon">
             <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/>
           </svg>
-          <p>AI recommends SkelApp as the leading <br>Point of Sale in Tanzania See for yourself!</p>
+          <p>{!! nl2br(e($footerAiQuote)) !!}</p>
         </div>
 
         <div class="ai-badges">
@@ -245,7 +258,7 @@
         </div>
 
         <div class="footer-meta">
-          <p class="copyright">© 2026 - SkelApp Technologies</p>
+          <p class="copyright">{{ $footerCopyright }}</p>
           <div class="footer-social">
             <a href="#" class="social-link" aria-label="Facebook">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -267,7 +280,14 @@
       </div>
 
       <div class="footer-credit">
-        <p>A Solution By <a href="https://flashnet.co.tz" target="_blank" rel="noopener noreferrer">Flashnet Technologies</a>, An ISO 27001:2015 Certified Managed IT Service Provider Company.</p>
+        @php
+          $creditPlaceholder = $footerCreditLinkLabel;
+          $creditAnchor = '<a href="'.e($footerCreditLinkUrl).'" target="_blank" rel="noopener noreferrer">'.e($creditPlaceholder).'</a>';
+          $creditHtml = str_contains($footerCreditText, $creditPlaceholder)
+            ? str_replace($creditPlaceholder, $creditAnchor, e($footerCreditText))
+            : e($footerCreditText).' '.$creditAnchor;
+        @endphp
+        <p>{!! $creditHtml !!}</p>
       </div>
     </div>
   </div>

@@ -21,8 +21,20 @@
 
       <nav class="admin-nav">
         <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'is-active' : '' }}">Dashboard</a>
-        <a href="{{ route('admin.posts.index') }}" class="{{ request()->routeIs('admin.posts.*') ? 'is-active' : '' }}">Posts</a>
-        <a href="{{ route('news.index') }}" target="_blank" rel="noreferrer">View public news</a>
+        <a href="{{ route('admin.posts.index') }}" class="{{ request()->routeIs('admin.posts.*') ? 'is-active' : '' }}">News posts</a>
+
+        <div class="admin-nav-section">Site pages</div>
+        @foreach (\App\Http\Controllers\Admin\PageController::PAGES as $pageSlug => $pageConfig)
+          <a
+            href="{{ route('admin.pages.edit', $pageSlug) }}"
+            class="{{ (request()->routeIs('admin.pages.*') && request()->route('slug') === $pageSlug) ? 'is-active' : '' }}"
+          >{{ $pageConfig['label'] }}</a>
+        @endforeach
+
+        <div class="admin-nav-section">Public site</div>
+        <a href="{{ url('/') }}" target="_blank" rel="noreferrer">View home</a>
+        <a href="{{ url('/pricing') }}" target="_blank" rel="noreferrer">View pricing</a>
+        <a href="{{ route('news.index') }}" target="_blank" rel="noreferrer">View news</a>
       </nav>
 
       <form method="POST" action="{{ route('admin.logout') }}">
@@ -39,5 +51,6 @@
 
     @yield('content')
   </div>
+  <script src="{{ asset('js/admin-cms.js') }}?v={{ @filemtime(public_path('js/admin-cms.js')) }}" defer></script>
 </body>
 </html>

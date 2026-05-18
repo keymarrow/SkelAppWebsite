@@ -85,12 +85,12 @@
       @endforeach
     </ul>
     <div class="nav-actions mobile-only">
-      <a href="tel:+255658962000" class="btn-login">
+      <a href="tel:{{ content('global.nav.phone_tel', '+255658962000') }}" class="btn-login">
         <img src="{{ asset('assets/call.svg') }}" alt="" aria-hidden="true">
-        +255 658 962 000
+        {{ content('global.nav.phone_display', '+255 658 962 000') }}
       </a>
       <a href="{{ route('contact.show') }}" class="btn-try" @if (request()->routeIs('contact.show')) aria-current="page" @endif>
-        Contact Us
+        {{ content('global.nav.contact_label', 'Contact Us') }}
       </a>
     </div>
   </div>

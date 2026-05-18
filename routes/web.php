@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\Auth\AdminAuthenticatedSessionController;
 use App\Http\Controllers\Admin\NewsPostController as AdminNewsPostController;
+use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\SitemapController;
 use Illuminate\Http\Request;
@@ -31,6 +32,10 @@ $registerPublicRoutes = function (): void {
             'company' => ['required', 'string', 'max:200'],
         ]);
 
+        $recipient = content('contact.form.recipient_email', 'pos@skelapp.tz');
+        $subjectPrefix = content('contact.form.subject_prefix', 'Demo Request');
+        $successTemplate = content('contact.form.success_message', "Thank you, {first_name}! We've received your request and will be in touch shortly.");
+
         $body = implode("\n", [
             'New demo request from the SkelApp website.',
             '',
@@ -40,15 +45,21 @@ $registerPublicRoutes = function (): void {
             "Company:  {$data['company']}",
         ]);
 
-        Mail::raw($body, function ($message) use ($data) {
+        Mail::raw($body, function ($message) use ($data, $recipient, $subjectPrefix) {
             $message
-                ->to('pos@skelapp.tz')
+                ->to($recipient)
                 ->replyTo($data['email'], "{$data['first_name']} {$data['last_name']}")
-                ->subject("Demo Request – {$data['first_name']} {$data['last_name']} ({$data['company']})");
+                ->subject("{$subjectPrefix} – {$data['first_name']} {$data['last_name']} ({$data['company']})");
         });
 
+        $successMessage = strtr($successTemplate, [
+            '{first_name}' => $data['first_name'],
+            '{last_name}' => $data['last_name'],
+            '{company}' => $data['company'],
+        ]);
+
         return redirect()->route('contact.show')
-            ->with('success', "Thank you, {$data['first_name']}! We've received your request and will be in touch shortly.");
+            ->with('success', $successMessage);
     })->name('contact.send');
 
     Route::get('/news', [NewsController::class, 'index'])->name('news.index');
@@ -68,6 +79,11 @@ $registerAdminRoutes = function (): void {
         Route::get('/media/images', [AdminNewsPostController::class, 'mediaLibrary'])->name('media.images.index');
         Route::post('/posts/content-images', [AdminNewsPostController::class, 'uploadContentImage'])->name('posts.content-images.store');
         Route::resource('/posts', AdminNewsPostController::class)->except(['show']);
+
+        Route::get('/pages/{slug}', [AdminPageController::class, 'edit'])->name('pages.edit');
+        Route::post('/pages/{slug}', [AdminPageController::class, 'update'])->name('pages.update');
+        Route::post('/pages/{slug}/publish', [AdminPageController::class, 'publish'])->name('pages.publish');
+        Route::post('/pages/{slug}/revert', [AdminPageController::class, 'revert'])->name('pages.revert');
     });
 };
 
