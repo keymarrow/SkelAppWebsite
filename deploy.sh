@@ -71,4 +71,4 @@ php artisan up
 MAINTENANCE_ENABLED=0
 trap - EXIT
 
-echo "✅ Deployment complete!"
+echo "✅ Deployment complete!🚀"
