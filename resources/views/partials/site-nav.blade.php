@@ -15,7 +15,7 @@
 <nav>
   <a href="{{ url('/') }}" class="nav-logo" aria-label="{{ config('app.name', 'SkelApp') }} - Home">
     <img
-      src="{{ asset('assets/SkelAppLogo-green.svg') }}"
+      src="{{ content_image('global.nav.logo', asset('assets/SkelAppLogo-green.svg')) }}"
       alt="{{ config('app.name', 'SkelApp') }} logo"
       width="240"
       height="74"
@@ -51,18 +51,18 @@
   </ul>
 
   <div class="nav-actions">
-    <a href="tel:+255658962000" class="btn-login">
-      <img src="{{ asset('assets/call.svg') }}" alt="" aria-hidden="true">
-      +255 658 962 000
+    <a href="tel:{{ content('global.nav.phone_tel', '+255658962000') }}" class="btn-login">
+      <img src="{{ content_image('global.nav.call_icon', asset('assets/call.svg')) }}" alt="" aria-hidden="true">
+      {{ content('global.nav.phone_display', '+255 658 962 000') }}
     </a>
     <a href="{{ route('contact.show') }}" class="btn-try" @if (request()->routeIs('contact.show')) aria-current="page" @endif>
-      Contact Us
+      {{ content('global.nav.contact_label', 'Contact Us') }}
     </a>
   </div>
 
   <button class="mobile-menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
     <img
-      src="{{ asset('assets/Vector.svg') }}"
+      src="{{ content_image('global.nav.mobile_menu_icon', asset('assets/Vector.svg')) }}"
       alt=""
       aria-hidden="true"
       class="mobile-menu-icon"

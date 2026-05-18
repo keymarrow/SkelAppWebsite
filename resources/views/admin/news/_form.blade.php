@@ -271,6 +271,7 @@
     const imageInput = document.querySelector('[data-inline-image-input]');
     const feedback = document.querySelector('[data-inline-image-feedback]');
     const bodyInput = document.querySelector('[data-body-markdown]');
+    const editorForm = document.querySelector('[data-news-preview-form]') || bodyInput?.closest('form');
     const csrfToken = document.querySelector('input[name="_token"]');
     const actionButtons = document.querySelectorAll('[data-editor-action]');
     const menu = document.querySelector('.admin-editor-menu');
@@ -294,6 +295,36 @@
     let mediaImages = [];
     let selectedMediaImage = null;
     let mediaLoaded = false;
+    let savedSelectionStart = bodyInput.value.length;
+    let savedSelectionEnd = bodyInput.value.length;
+
+    const requestPreviewSync = () => {
+      if (!editorForm) return;
+
+      editorForm.dispatchEvent(new CustomEvent('news:preview-sync-needed', { bubbles: true }));
+    };
+
+    const rememberSelection = () => {
+      if (typeof bodyInput.selectionStart !== 'number' || typeof bodyInput.selectionEnd !== 'number') {
+        return;
+      }
+
+      savedSelectionStart = bodyInput.selectionStart;
+      savedSelectionEnd = bodyInput.selectionEnd;
+    };
+
+    const currentSelection = () => {
+      if (document.activeElement === bodyInput) {
+        rememberSelection();
+      }
+
+      const maxLength = bodyInput.value.length;
+
+      return {
+        start: Math.max(0, Math.min(savedSelectionStart, maxLength)),
+        end: Math.max(0, Math.min(savedSelectionEnd, maxLength)),
+      };
+    };
 
     const showFeedback = (message, isError = false) => {
       feedback.hidden = false;
@@ -324,16 +355,25 @@
     };
 
     const replaceSelection = (replacement, selectionStartOffset = replacement.length, selectionEndOffset = replacement.length) => {
-      const start = bodyInput.selectionStart ?? bodyInput.value.length;
-      const end = bodyInput.selectionEnd ?? bodyInput.value.length;
-      bodyInput.value = `${bodyInput.value.slice(0, start)}${replacement}${bodyInput.value.slice(end)}`;
+      const { start, end } = currentSelection();
       bodyInput.focus();
-      bodyInput.setSelectionRange(start + selectionStartOffset, start + selectionEndOffset);
+
+      if (typeof bodyInput.setRangeText === 'function') {
+        bodyInput.setSelectionRange(start, end);
+        bodyInput.setRangeText(replacement, start, end, 'preserve');
+      } else {
+        bodyInput.value = `${bodyInput.value.slice(0, start)}${replacement}${bodyInput.value.slice(end)}`;
+      }
+
+      savedSelectionStart = start + selectionStartOffset;
+      savedSelectionEnd = start + selectionEndOffset;
+      bodyInput.setSelectionRange(savedSelectionStart, savedSelectionEnd);
+      bodyInput.dispatchEvent(new Event('input', { bubbles: true }));
+      requestPreviewSync();
     };
 
     const wrapSelection = (prefix, suffix, placeholder) => {
-      const start = bodyInput.selectionStart ?? bodyInput.value.length;
-      const end = bodyInput.selectionEnd ?? bodyInput.value.length;
+      const { start, end } = currentSelection();
       const selectedText = bodyInput.value.slice(start, end);
       const content = selectedText || placeholder;
       const replacement = `${prefix}${content}${suffix}`;
@@ -342,8 +382,7 @@
     };
 
     const prefixLines = (prefix, placeholder, numbered = false) => {
-      const start = bodyInput.selectionStart ?? bodyInput.value.length;
-      const end = bodyInput.selectionEnd ?? bodyInput.value.length;
+      const { start, end } = currentSelection();
       const selectedText = bodyInput.value.slice(start, end) || placeholder;
       const lines = selectedText.split('\n');
       const replacement = lines
@@ -354,13 +393,26 @@
     };
 
     const insertBlock = (content) => {
-      const start = bodyInput.selectionStart ?? bodyInput.value.length;
-      const end = bodyInput.selectionEnd ?? bodyInput.value.length;
+      const { start, end } = currentSelection();
       const prefix = start > 0 && !bodyInput.value.slice(0, start).endsWith('\n\n') ? '\n\n' : '';
       const suffix = end < bodyInput.value.length && !bodyInput.value.slice(end).startsWith('\n\n') ? '\n\n' : '';
       const replacement = `${prefix}${content}${suffix}`;
 
       replaceSelection(replacement, prefix.length, prefix.length + content.length);
+    };
+
+    const appendBlock = (content) => {
+      const trimmedValue = bodyInput.value.replace(/\s*$/, '');
+      const prefix = trimmedValue === '' ? '' : '\n\n';
+      const replacement = `${prefix}${content}\n\n`;
+
+      bodyInput.value = `${trimmedValue}${replacement}`;
+      savedSelectionStart = bodyInput.value.length;
+      savedSelectionEnd = bodyInput.value.length;
+      bodyInput.focus();
+      bodyInput.setSelectionRange(savedSelectionStart, savedSelectionEnd);
+      bodyInput.dispatchEvent(new Event('input', { bubbles: true }));
+      requestPreviewSync();
     };
 
     const renderMediaGrid = () => {
@@ -468,6 +520,10 @@
     const openMediaModal = async (mode) => {
       if (!mediaModal) return;
 
+      if (mode === 'body') {
+        rememberSelection();
+      }
+
       mediaMode = mode;
       mediaModal.hidden = false;
       selectedMediaImage = null;
@@ -479,6 +535,19 @@
       }
       await loadMediaLibrary();
     };
+
+    ['click', 'focus', 'input', 'keyup', 'keydown', 'mouseup', 'select', 'blur'].forEach((eventName) => {
+      bodyInput.addEventListener(eventName, rememberSelection);
+    });
+
+    actionButtons.forEach((button) => {
+      button.addEventListener('mousedown', (event) => {
+        rememberSelection();
+
+        // Keep the textarea selection alive while toolbar actions run.
+        event.preventDefault();
+      });
+    });
 
     const uploadSelectedImage = async () => {
       const selectedFile = imageInput.files?.[0];
@@ -534,8 +603,7 @@
             wrapSelection('`', '`', 'inline code');
             break;
           case 'link': {
-            const start = bodyInput.selectionStart ?? bodyInput.value.length;
-            const end = bodyInput.selectionEnd ?? bodyInput.value.length;
+            const { start, end } = currentSelection();
             const selectedText = bodyInput.value.slice(start, end) || 'Link text';
             const replacement = `[${selectedText}](https://)`;
             const urlStart = replacement.indexOf('https://');
@@ -543,7 +611,7 @@
             break;
           }
           case 'heading':
-            insertBlock(`## ${bodyInput.value.slice(bodyInput.selectionStart ?? 0, bodyInput.selectionEnd ?? 0) || 'Heading'}`);
+            insertBlock(`## ${bodyInput.value.slice(currentSelection().start, currentSelection().end) || 'Heading'}`);
             break;
           case 'quote':
             prefixLines('> ', 'Quote');
@@ -555,8 +623,7 @@
             prefixLines('', 'List item', true);
             break;
           case 'code-block': {
-            const start = bodyInput.selectionStart ?? bodyInput.value.length;
-            const end = bodyInput.selectionEnd ?? bodyInput.value.length;
+            const { start, end } = currentSelection();
             const selectedText = bodyInput.value.slice(start, end) || "Code block";
             insertBlock(`\`\`\`\n${selectedText}\n\`\`\``);
             break;
@@ -610,10 +677,12 @@
           coverExistingInput.value = '';
         }
         updateCoverPreview('');
+        requestPreviewSync();
         return;
       }
 
       updateCoverPreview(coverPreviewImage?.dataset.initialSrc || '');
+      requestPreviewSync();
     });
 
     mediaOpenButtons.forEach((button) => {
@@ -629,9 +698,11 @@
         return;
       }
 
+      const chosenImage = selectedMediaImage;
+
       if (mediaMode === 'cover') {
         if (coverExistingInput) {
-          coverExistingInput.value = selectedMediaImage.url;
+          coverExistingInput.value = chosenImage.url;
         }
 
         if (coverFileInput) {
@@ -643,15 +714,20 @@
         }
 
         if (coverPreviewImage) {
-          coverPreviewImage.dataset.initialSrc = selectedMediaImage.url;
+          coverPreviewImage.dataset.initialSrc = chosenImage.url;
         }
 
-        updateCoverPreview(selectedMediaImage.url, selectedMediaImage.alt);
+        updateCoverPreview(chosenImage.url, chosenImage.alt);
+        requestPreviewSync();
       }
 
       if (mediaMode === 'body') {
-        insertBlock(`![${selectedMediaImage.alt || 'News image'}](${selectedMediaImage.url})`);
-        showFeedback('Existing image inserted into the article.');
+        closeMediaModal();
+        window.requestAnimationFrame(() => {
+          appendBlock(`![${chosenImage.alt || 'News image'}](${chosenImage.url})`);
+          showFeedback('Existing image inserted into the article.');
+        });
+        return;
       }
 
       closeMediaModal();

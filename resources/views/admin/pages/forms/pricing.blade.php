@@ -16,6 +16,7 @@
 
   @include('admin.pages.fields.repeater', [
     'name' => 'features',
+    'flat' => true,
     'fields' => [
       ['key' => 'value', 'label' => 'Feature'],
     ],

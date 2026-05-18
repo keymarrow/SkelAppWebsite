@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ content('faq.meta.title', 'FAQ – SkelApp') }}</title>
   <meta name="description" content="{{ content('faq.meta.description') }}">
-  <link rel="icon" href="{{ asset('assets/skel.svg') }}" type="image/x-icon" />
+  <link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" type="image/x-icon" />
   <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body class="faq-page-body">

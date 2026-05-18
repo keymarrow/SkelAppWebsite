@@ -1,4 +1,8 @@
 (function () {
+  const SIDEBAR_STORAGE_KEY = 'skelapp-admin-sidebar-collapsed';
+
+  initAdminSidebarToggle();
+
   document.querySelectorAll('[data-cms-repeater]').forEach((repeater) => {
     const rowsContainer = repeater.querySelector('[data-repeater-rows]');
     const addBtn = repeater.querySelector('[data-repeater-add]');
@@ -45,9 +49,33 @@
       // Clear values inside the clone
       clone.querySelectorAll('input[type="text"], textarea').forEach((el) => { el.value = ''; });
       clone.querySelectorAll('input[type="checkbox"]').forEach((el) => { el.checked = false; });
+      // Reset image fields in the clone (URL, thumb, remove button, wiring flag)
+      clone.querySelectorAll('[data-cms-image-field]').forEach((field) => {
+        delete field.dataset.cmsImageWired;
+        const urlInput = field.querySelector('[data-cms-image-url]');
+        if (urlInput) urlInput.value = '';
+        const thumb = field.querySelector('[data-cms-image-thumb]');
+        if (thumb) {
+          thumb.classList.add('cms-image-thumb--empty');
+          thumb.innerHTML = '<span data-cms-image-preview-empty>No image</span>';
+        }
+        const removeBtn = field.querySelector('[data-cms-image-remove]');
+        if (removeBtn) removeBtn.hidden = true;
+        const feedback = field.querySelector('[data-cms-image-feedback]');
+        if (feedback) { feedback.hidden = true; feedback.textContent = ''; }
+        const fileInput = field.querySelector('[data-cms-image-file-input]');
+        if (fileInput) fileInput.value = '';
+      });
       rowsContainer.appendChild(clone);
       reindex();
       bindRemove(clone);
+      // Re-wire any image fields in the new row.
+      if (typeof window.__cmsInitImageField === 'function') {
+        clone.querySelectorAll('[data-cms-image-field]').forEach((field) => {
+          window.__cmsInitImageField(field);
+        });
+      }
+      repeater.dispatchEvent(new CustomEvent('cms:preview-sync-needed', { bubbles: true }));
     });
 
     const bindRemove = (row) => {
@@ -59,17 +87,691 @@
           // keep one row visible — just clear it
           row.querySelectorAll('input[type="text"], textarea').forEach((el) => { el.value = ''; });
           row.querySelectorAll('input[type="checkbox"]').forEach((el) => { el.checked = false; });
+          repeater.dispatchEvent(new CustomEvent('cms:preview-sync-needed', { bubbles: true }));
           return;
         }
         row.remove();
         reindex();
+        repeater.dispatchEvent(new CustomEvent('cms:preview-sync-needed', { bubbles: true }));
       });
     };
 
     rowsContainer.querySelectorAll('[data-repeater-row]').forEach(bindRemove);
   });
 
+  document.querySelectorAll('[data-cms-editor]').forEach((editor) => {
+    const form = editor.querySelector('[data-cms-form]');
+    const frame = editor.querySelector('[data-cms-preview-frame]');
+
+    if (!form || !frame) return;
+
+    const syncUrl = editor.dataset.previewSyncUrl || '';
+    const baseUrl = editor.dataset.previewBaseUrl || frame.getAttribute('src') || '';
+    const defaultTarget = editor.dataset.previewDefaultTarget || '';
+    const targetSelect = editor.querySelector('[data-cms-preview-target]');
+    const refreshBtn = editor.querySelector('[data-cms-preview-refresh]');
+    const openLink = editor.querySelector('[data-cms-preview-open]');
+    const statusEl = editor.querySelector('[data-cms-preview-status]');
+    const csrfToken = form.querySelector('input[name="_token"]')?.value || '';
+
+    let syncTimer = null;
+    let requestCounter = 0;
+
+    const setStatus = (message, state) => {
+      if (!statusEl) return;
+      statusEl.textContent = message;
+      statusEl.dataset.state = state || 'idle';
+    };
+
+    const previewTarget = () => targetSelect?.value || defaultTarget;
+
+    const buildPreviewUrl = (cacheBust) => {
+      const url = new URL(baseUrl, window.location.origin);
+      const target = previewTarget();
+
+      if (target) {
+        url.searchParams.set('target', target);
+      }
+
+      if (cacheBust) {
+        url.searchParams.set('ts', String(Date.now()));
+      }
+
+      return url.toString();
+    };
+
+    const syncOpenLink = () => {
+      if (openLink) {
+        openLink.href = buildPreviewUrl(false);
+      }
+    };
+
+    const reloadPreview = () => {
+      frame.src = buildPreviewUrl(true);
+      syncOpenLink();
+    };
+
+    const syncPreview = async () => {
+      if (!syncUrl) return;
+
+      requestCounter += 1;
+      const requestId = requestCounter;
+      const formData = new FormData(form);
+
+      form.querySelectorAll('input[type="file"][name]').forEach((input) => {
+        formData.delete(input.name);
+      });
+
+      setStatus('Updating preview…', 'loading');
+
+      try {
+        const response = await fetch(syncUrl, {
+          method: 'POST',
+          body: formData,
+          credentials: 'same-origin',
+          headers: {
+            'Accept': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Preview sync failed with status ${response.status}`);
+        }
+
+        if (requestId !== requestCounter) {
+          return;
+        }
+
+        reloadPreview();
+      } catch (error) {
+        if (requestId !== requestCounter) {
+          return;
+        }
+
+        console.error(error);
+        setStatus('Preview update failed. Save draft or refresh to try again.', 'error');
+      }
+    };
+
+    const queueSync = (delay = 450) => {
+      window.clearTimeout(syncTimer);
+      syncTimer = window.setTimeout(syncPreview, delay);
+    };
+
+    form.addEventListener('input', (event) => {
+      if (event.target instanceof HTMLInputElement && event.target.type === 'file') {
+        return;
+      }
+
+      queueSync();
+    });
+
+    form.addEventListener('change', (event) => {
+      if (event.target instanceof HTMLInputElement && event.target.type === 'file') {
+        setStatus('Save draft to preview new image uploads.', 'idle');
+        return;
+      }
+
+      queueSync(160);
+    });
+
+    form.addEventListener('cms:preview-sync-needed', () => {
+      queueSync(80);
+    });
+
+    targetSelect?.addEventListener('change', () => {
+      syncOpenLink();
+      queueSync(50);
+    });
+
+    refreshBtn?.addEventListener('click', () => {
+      window.clearTimeout(syncTimer);
+      syncPreview();
+    });
+
+    frame.addEventListener('load', () => {
+      if ((statusEl?.dataset.state || '') !== 'error') {
+        setStatus('Preview updated.', 'success');
+      }
+    });
+
+    // Viewport-mode buttons (Desktop / Tablet / Mobile).
+    // The iframe always renders at the true device width — we shrink it
+    // visually via CSS transform so the public stylesheet picks the right
+    // breakpoint.
+    const PREVIEW_MODE_KEY = 'skelapp-admin-preview-mode';
+    const modeButtons = editor.querySelectorAll('[data-cms-preview-mode]');
+    const frameWrap = editor.querySelector('[data-cms-preview-frame-wrap]');
+    const frameStage = editor.querySelector('[data-cms-preview-frame-stage]');
+
+    const recomputeScale = () => {
+      if (!frameWrap || !frameStage) return;
+      const styles = getComputedStyle(frameWrap);
+      const deviceWidth = parseFloat(styles.getPropertyValue('--device-width')) || 1440;
+      const deviceHeight = parseFloat(styles.getPropertyValue('--device-height')) || 950;
+      const padding = parseFloat(styles.paddingLeft) + parseFloat(styles.paddingRight);
+      const innerWidth = frameWrap.clientWidth - padding;
+      if (innerWidth <= 0) return;
+      const scale = Math.min(1, innerWidth / deviceWidth);
+      frameStage.style.setProperty('--scale', scale);
+      // Resize the wrap so it hugs the scaled iframe height (no empty space below).
+      const verticalPadding = parseFloat(styles.paddingTop) + parseFloat(styles.paddingBottom);
+      const scaledHeight = deviceHeight * scale;
+      const maxHeight = window.innerHeight * 0.82;
+      frameWrap.style.height = Math.min(scaledHeight, maxHeight) + verticalPadding + 'px';
+    };
+
+    const applyMode = (mode) => {
+      if (!frameWrap) return;
+      frameWrap.dataset.mode = mode;
+      modeButtons.forEach((btn) => {
+        const isActive = btn.dataset.cmsPreviewMode === mode;
+        btn.classList.toggle('is-active', isActive);
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+      try { localStorage.setItem(PREVIEW_MODE_KEY, mode); } catch (err) { /* ignore */ }
+      // The browser needs a tick to apply the new CSS vars before we measure.
+      window.requestAnimationFrame(recomputeScale);
+    };
+
+    modeButtons.forEach((btn) => {
+      btn.addEventListener('click', () => applyMode(btn.dataset.cmsPreviewMode));
+    });
+
+    // Restore last-used mode (falls back to desktop by default).
+    let restored = false;
+    try {
+      const saved = localStorage.getItem(PREVIEW_MODE_KEY);
+      if (saved && ['desktop', 'tablet', 'mobile'].includes(saved)) {
+        applyMode(saved);
+        restored = true;
+      }
+    } catch (err) { /* ignore */ }
+    if (!restored) {
+      recomputeScale();
+    }
+
+    // Recompute when the panel itself resizes (sidebar collapse, window resize).
+    if (typeof ResizeObserver === 'function' && frameWrap) {
+      new ResizeObserver(() => recomputeScale()).observe(frameWrap);
+    } else {
+      window.addEventListener('resize', recomputeScale);
+    }
+
+    syncOpenLink();
+    queueSync(20);
+  });
+
+  document.querySelectorAll('[data-news-preview-editor]').forEach((editor) => {
+    const form = editor.querySelector('[data-news-preview-form]');
+    const frame = editor.querySelector('[data-news-preview-frame]');
+
+    if (!form || !frame) return;
+
+    const syncUrl = editor.dataset.previewSyncUrl || '';
+    const baseUrl = editor.dataset.previewBaseUrl || frame.getAttribute('src') || '';
+    const refreshBtn = editor.querySelector('[data-news-preview-refresh]');
+    const openLink = editor.querySelector('[data-news-preview-open]');
+    const statusEl = editor.querySelector('[data-news-preview-status]');
+    const csrfToken = form.querySelector('input[name="_token"]')?.value || '';
+
+    let syncTimer = null;
+    let requestCounter = 0;
+
+    const setStatus = (message, state) => {
+      if (!statusEl) return;
+      statusEl.textContent = message;
+      statusEl.dataset.state = state || 'idle';
+    };
+
+    const buildPreviewUrl = (cacheBust) => {
+      const url = new URL(baseUrl, window.location.origin);
+
+      if (cacheBust) {
+        url.searchParams.set('ts', String(Date.now()));
+      }
+
+      return url.toString();
+    };
+
+    const syncOpenLink = () => {
+      if (openLink) {
+        openLink.href = buildPreviewUrl(false);
+      }
+    };
+
+    const reloadPreview = () => {
+      frame.src = buildPreviewUrl(true);
+      syncOpenLink();
+    };
+
+    const syncPreview = async () => {
+      if (!syncUrl) return;
+
+      requestCounter += 1;
+      const requestId = requestCounter;
+      const formData = new FormData(form);
+
+      form.querySelectorAll('input[type="file"][name]').forEach((input) => {
+        formData.delete(input.name);
+      });
+
+      setStatus('Updating preview…', 'loading');
+
+      try {
+        const response = await fetch(syncUrl, {
+          method: 'POST',
+          body: formData,
+          credentials: 'same-origin',
+          headers: {
+            'Accept': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Preview sync failed with status ${response.status}`);
+        }
+
+        if (requestId !== requestCounter) {
+          return;
+        }
+
+        reloadPreview();
+      } catch (error) {
+        if (requestId !== requestCounter) {
+          return;
+        }
+
+        console.error(error);
+        setStatus('Preview update failed. Save the post or refresh to try again.', 'error');
+      }
+    };
+
+    const queueSync = (delay = 450) => {
+      window.clearTimeout(syncTimer);
+      syncTimer = window.setTimeout(syncPreview, delay);
+    };
+
+    form.addEventListener('input', (event) => {
+      if (event.target instanceof HTMLInputElement && event.target.type === 'file') {
+        return;
+      }
+
+      queueSync();
+    });
+
+    form.addEventListener('change', (event) => {
+      if (event.target instanceof HTMLInputElement && event.target.type === 'file') {
+        setStatus('Save the post to preview uploaded images.', 'idle');
+        return;
+      }
+
+      queueSync(160);
+    });
+
+    form.addEventListener('news:preview-sync-needed', () => {
+      queueSync(80);
+    });
+
+    refreshBtn?.addEventListener('click', () => {
+      window.clearTimeout(syncTimer);
+      syncPreview();
+    });
+
+    frame.addEventListener('load', () => {
+      if ((statusEl?.dataset.state || '') !== 'error') {
+        setStatus('Preview updated.', 'success');
+      }
+    });
+
+    syncOpenLink();
+  });
+
+  // Exposed so cloned repeater rows can call this for new image fields.
+  window.__cmsInitImageField = null;
+
+  initCmsImagePickers();
+
+  function initCmsImagePickers() {
+    const modal = document.querySelector('[data-cms-media-modal]');
+    const csrfInput = document.querySelector('[data-cms-form] input[name="_token"]');
+    const csrfToken = csrfInput ? csrfInput.value : '';
+
+    const fields = document.querySelectorAll('[data-cms-image-field]');
+    if (fields.length === 0 && !modal) return;
+
+    // ── Modal state ─────────────────────────────────────────────────
+    let mediaImages = [];
+    let mediaLoaded = false;
+    let mediaSelected = null;
+    let activeField = null;
+
+    const grid = modal?.querySelector('[data-cms-media-grid]');
+    const emptyEl = modal?.querySelector('[data-cms-media-empty]');
+    const feedbackEl = modal?.querySelector('[data-cms-media-feedback]');
+    const searchInput = modal?.querySelector('[data-cms-media-search]');
+    const chooseBtn = modal?.querySelector('[data-cms-media-choose]');
+    const uploadInputModal = modal?.querySelector('[data-cms-media-upload-input]');
+    const libraryUrl = modal?.dataset.libraryUrl || '';
+    const uploadUrl = modal?.dataset.uploadUrl || '';
+
+    const setFeedback = (message, isError) => {
+      if (!feedbackEl) return;
+      if (!message) {
+        feedbackEl.hidden = true;
+        feedbackEl.textContent = '';
+        return;
+      }
+      feedbackEl.hidden = false;
+      feedbackEl.textContent = message;
+      feedbackEl.dataset.state = isError ? 'error' : 'info';
+    };
+
+    const renderGrid = () => {
+      if (!grid || !emptyEl || !chooseBtn) return;
+
+      const q = (searchInput?.value || '').trim().toLowerCase();
+      const filtered = mediaImages.filter((img) => {
+        return img.name.toLowerCase().includes(q) || (img.alt || '').toLowerCase().includes(q);
+      });
+
+      grid.innerHTML = '';
+
+      if (filtered.length === 0) {
+        emptyEl.hidden = false;
+        chooseBtn.disabled = true;
+        return;
+      }
+      emptyEl.hidden = true;
+
+      filtered.forEach((image) => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'cms-media-card';
+        card.dataset.selected = mediaSelected?.url === image.url ? 'true' : 'false';
+
+        const preview = document.createElement('div');
+        preview.className = 'cms-media-card-preview';
+        const img = document.createElement('img');
+        img.src = image.url;
+        img.alt = image.alt || '';
+        preview.appendChild(img);
+
+        const meta = document.createElement('div');
+        meta.className = 'cms-media-card-meta';
+        const title = document.createElement('strong');
+        title.textContent = image.name;
+        const section = document.createElement('span');
+        section.textContent = image.section === 'covers'
+          ? 'News cover'
+          : image.section === 'cms'
+            ? 'CMS upload'
+            : 'News body';
+        meta.append(title, section);
+
+        card.append(preview, meta);
+
+        card.addEventListener('click', () => {
+          mediaSelected = image;
+          chooseBtn.disabled = false;
+          renderGrid();
+        });
+
+        grid.appendChild(card);
+      });
+
+      if (mediaSelected && !filtered.some((img) => img.url === mediaSelected.url)) {
+        mediaSelected = null;
+        chooseBtn.disabled = true;
+      }
+    };
+
+    const loadLibrary = async (force = false) => {
+      if (!grid || !libraryUrl) return;
+      if (mediaLoaded && !force) {
+        renderGrid();
+        return;
+      }
+      setFeedback('Loading images…', false);
+      try {
+        const response = await fetch(libraryUrl, {
+          headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+          credentials: 'same-origin',
+        });
+        const payload = await response.json();
+        if (!response.ok || !Array.isArray(payload.images)) {
+          throw new Error(payload.message || 'Failed to load images.');
+        }
+        mediaImages = payload.images;
+        mediaLoaded = true;
+        setFeedback('', false);
+        renderGrid();
+      } catch (err) {
+        console.error(err);
+        setFeedback('Could not load the image library. Try again.', true);
+      }
+    };
+
+    const openModal = (field) => {
+      if (!modal) return;
+      activeField = field;
+      mediaSelected = null;
+      if (chooseBtn) chooseBtn.disabled = true;
+      if (searchInput) searchInput.value = '';
+      modal.hidden = false;
+      document.body.classList.add('cms-modal-open');
+      loadLibrary(false);
+    };
+
+    const closeModal = () => {
+      if (!modal) return;
+      modal.hidden = true;
+      activeField = null;
+      document.body.classList.remove('cms-modal-open');
+    };
+
+    const applyImageToField = (field, url) => {
+      if (!field) return;
+      const urlInput = field.querySelector('[data-cms-image-url]');
+      const thumb = field.querySelector('[data-cms-image-thumb]');
+      const removeBtn = field.querySelector('[data-cms-image-remove]');
+
+      if (urlInput) urlInput.value = url;
+      if (thumb) {
+        thumb.classList.toggle('cms-image-thumb--empty', !url);
+        thumb.innerHTML = url
+          ? `<img src="${escapeHtml(url)}" alt="" data-cms-image-preview>`
+          : '<span data-cms-image-preview-empty>No image</span>';
+      }
+      if (removeBtn) removeBtn.hidden = !url;
+
+      // Tell the live preview to refresh.
+      field.dispatchEvent(new CustomEvent('cms:preview-sync-needed', { bubbles: true }));
+    };
+
+    const uploadFile = async (file) => {
+      if (!uploadUrl || !file) return null;
+      const formData = new FormData();
+      formData.append('image', file);
+      const response = await fetch(uploadUrl, {
+        method: 'POST',
+        body: formData,
+        credentials: 'same-origin',
+        headers: {
+          'Accept': 'application/json',
+          'X-CSRF-TOKEN': csrfToken,
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      });
+      if (!response.ok) {
+        const text = await response.text().catch(() => '');
+        throw new Error(text || `Upload failed (${response.status})`);
+      }
+      return response.json();
+    };
+
+    const wireField = (field) => {
+      if (!field || field.dataset.cmsImageWired === '1') return;
+      field.dataset.cmsImageWired = '1';
+
+      const uploadBtn = field.querySelector('[data-cms-image-upload]');
+      const browseBtn = field.querySelector('[data-cms-image-browse]');
+      const removeBtn = field.querySelector('[data-cms-image-remove]');
+      const fileInput = field.querySelector('[data-cms-image-file-input]');
+      const feedback = field.querySelector('[data-cms-image-feedback]');
+
+      const showFeedback = (message, isError) => {
+        if (!feedback) return;
+        if (!message) {
+          feedback.hidden = true;
+          feedback.textContent = '';
+          return;
+        }
+        feedback.hidden = false;
+        feedback.textContent = message;
+        feedback.dataset.state = isError ? 'error' : 'info';
+      };
+
+      uploadBtn?.addEventListener('click', () => fileInput?.click());
+
+      fileInput?.addEventListener('change', async () => {
+        const file = fileInput.files && fileInput.files[0];
+        if (!file) return;
+        showFeedback('Uploading…', false);
+        try {
+          const payload = await uploadFile(file);
+          if (payload && payload.url) {
+            applyImageToField(field, payload.url);
+            showFeedback('Uploaded.', false);
+            mediaLoaded = false;
+            window.setTimeout(() => showFeedback('', false), 2000);
+          } else {
+            showFeedback('Upload returned no URL.', true);
+          }
+        } catch (err) {
+          console.error(err);
+          showFeedback('Upload failed. Try a smaller file or different format.', true);
+        } finally {
+          fileInput.value = '';
+        }
+      });
+
+      browseBtn?.addEventListener('click', () => openModal(field));
+
+      removeBtn?.addEventListener('click', () => {
+        applyImageToField(field, '');
+      });
+    };
+
+    window.__cmsInitImageField = wireField;
+    fields.forEach(wireField);
+
+    // Modal controls
+    modal?.querySelectorAll('[data-cms-media-close]').forEach((el) => {
+      el.addEventListener('click', closeModal);
+    });
+
+    searchInput?.addEventListener('input', renderGrid);
+
+    chooseBtn?.addEventListener('click', () => {
+      if (!mediaSelected || !activeField) return;
+      applyImageToField(activeField, mediaSelected.url);
+      closeModal();
+    });
+
+    uploadInputModal?.addEventListener('change', async () => {
+      const file = uploadInputModal.files && uploadInputModal.files[0];
+      if (!file) return;
+      setFeedback('Uploading…', false);
+      try {
+        const payload = await uploadFile(file);
+        if (payload && payload.url) {
+          mediaLoaded = false;
+          await loadLibrary(true);
+          // Pre-select the just-uploaded image so user can confirm with one click.
+          mediaSelected = mediaImages.find((img) => img.url === payload.url) || null;
+          if (chooseBtn) chooseBtn.disabled = !mediaSelected;
+          renderGrid();
+          setFeedback('Uploaded — click "Choose selected" to use it.', false);
+        }
+      } catch (err) {
+        console.error(err);
+        setFeedback('Upload failed. Try a smaller file or different format.', true);
+      } finally {
+        uploadInputModal.value = '';
+      }
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && modal && !modal.hidden) closeModal();
+    });
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, (c) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+    }[c]));
+  }
+
   function escapeRegex(s) {
     return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  function initAdminSidebarToggle() {
+    const body = document.body;
+    const toggle = document.querySelector('[data-admin-sidebar-toggle]');
+
+    if (!body || !toggle) return;
+
+    const mediaQuery = window.matchMedia('(min-width: 1081px)');
+
+    const readPreference = () => {
+      try {
+        return window.localStorage.getItem(SIDEBAR_STORAGE_KEY) === 'true';
+      } catch (error) {
+        return false;
+      }
+    };
+
+    const writePreference = (collapsed) => {
+      try {
+        window.localStorage.setItem(SIDEBAR_STORAGE_KEY, collapsed ? 'true' : 'false');
+      } catch (error) {
+        // Ignore storage errors and continue with the in-memory state.
+      }
+    };
+
+    const applyState = (collapsed) => {
+      body.classList.toggle('admin-body--sidebar-collapsed', collapsed);
+      toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+      toggle.setAttribute('aria-label', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+      toggle.setAttribute('title', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+    };
+
+    const syncFromStorage = () => {
+      const shouldCollapse = mediaQuery.matches && readPreference();
+      applyState(shouldCollapse);
+    };
+
+    toggle.addEventListener('click', () => {
+      if (!mediaQuery.matches) return;
+
+      const collapsed = !body.classList.contains('admin-body--sidebar-collapsed');
+      writePreference(collapsed);
+      applyState(collapsed);
+    });
+
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', syncFromStorage);
+    } else if (typeof mediaQuery.addListener === 'function') {
+      mediaQuery.addListener(syncFromStorage);
+    }
+
+    syncFromStorage();
   }
 })();

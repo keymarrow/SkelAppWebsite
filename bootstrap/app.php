@@ -12,6 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->web(append: [
+            \App\Http\Middleware\LogVisitorEvent::class,
+        ]);
+
         $middleware->redirectGuestsTo(function (Request $request): string {
             $adminHost = config('cms.admin_host');
             $adminPrefix = '/'.trim((string) config('cms.admin_prefix', 'admin'), '/');

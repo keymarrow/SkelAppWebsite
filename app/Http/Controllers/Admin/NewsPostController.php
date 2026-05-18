@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\NewsPostRequest;
 use App\Models\NewsPost;
 use App\Models\NewsPostSlugRedirect;
+use App\Http\Controllers\Admin\NewsPostPreviewController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -36,6 +37,8 @@ class NewsPostController extends Controller
                 'categories' => [],
             ]),
             'categoriesText' => '',
+            'previewUrl' => route('admin.posts.create.preview'),
+            'previewSyncUrl' => route('admin.posts.create.preview.sync'),
         ]);
     }
 
@@ -50,6 +53,8 @@ class NewsPostController extends Controller
 
         $post = NewsPost::query()->create($payload);
 
+        session()->forget(NewsPostPreviewController::createSessionKey());
+
         return redirect()
             ->route('admin.posts.edit', $post)
             ->with('status', 'Post created.');
@@ -61,6 +66,8 @@ class NewsPostController extends Controller
             'post' => $post,
             'categoriesText' => implode(', ', $post->categories ?? []),
             'redirectSlugs' => $post->slugRedirects()->latest()->pluck('slug'),
+            'previewUrl' => route('admin.posts.preview', $post),
+            'previewSyncUrl' => route('admin.posts.preview.sync', $post),
         ]);
     }
 
@@ -89,6 +96,8 @@ class NewsPostController extends Controller
             ->where('slug', $post->slug)
             ->delete();
 
+        session()->forget(NewsPostPreviewController::postSessionKey($post));
+
         return redirect()
             ->route('admin.posts.edit', $post)
             ->with('status', 'Post updated.');
@@ -108,17 +117,24 @@ class NewsPostController extends Controller
         $disk = Storage::disk('public');
 
         $images = collect($disk->allFiles('news'))
+            ->concat($disk->allFiles('cms'))
             ->filter(function (string $path): bool {
-                return preg_match('/\.(jpe?g|png|webp|gif)$/i', $path) === 1;
+                return preg_match('/\.(jpe?g|png|webp|gif|svg)$/i', $path) === 1;
             })
             ->map(function (string $path) use ($disk): array {
                 $filename = basename($path);
+                $section = 'body';
+                if (Str::startsWith($path, 'news/covers/')) {
+                    $section = 'covers';
+                } elseif (Str::startsWith($path, 'cms/')) {
+                    $section = 'cms';
+                }
 
                 return [
                     'name' => $filename,
                     'alt' => $this->humanizeImageName($filename),
                     'url' => $this->publicStorageUrl($path),
-                    'section' => Str::startsWith($path, 'news/covers/') ? 'covers' : 'body',
+                    'section' => $section,
                     'last_modified' => $disk->lastModified($path),
                 ];
             })

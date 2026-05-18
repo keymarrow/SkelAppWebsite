@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\Auth\AdminAuthenticatedSessionController;
+use App\Http\Controllers\Admin\ContactSubmissionController as AdminContactSubmissionController;
 use App\Http\Controllers\Admin\NewsPostController as AdminNewsPostController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
+use App\Http\Controllers\Admin\PagePreviewController as AdminPagePreviewController;
+use App\Http\Controllers\Admin\NewsPostPreviewController as AdminNewsPostPreviewController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\SitemapController;
 use Illuminate\Http\Request;
@@ -32,6 +35,19 @@ $registerPublicRoutes = function (): void {
             'company' => ['required', 'string', 'max:200'],
         ]);
 
+        // Persist the submission first so it's never lost even if email fails.
+        if (\App\Models\ContactSubmission::isAvailable()) {
+            \App\Models\ContactSubmission::create([
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'email' => $data['email'],
+                'phone' => $data['phone'],
+                'company' => $data['company'],
+                'ip_address' => $request->ip(),
+                'user_agent' => \Illuminate\Support\Str::limit((string) $request->userAgent(), 500, ''),
+            ]);
+        }
+
         $recipient = content('contact.form.recipient_email', 'pos@skelapp.tz');
         $subjectPrefix = content('contact.form.subject_prefix', 'Demo Request');
         $successTemplate = content('contact.form.success_message', "Thank you, {first_name}! We've received your request and will be in touch shortly.");
@@ -45,12 +61,17 @@ $registerPublicRoutes = function (): void {
             "Company:  {$data['company']}",
         ]);
 
-        Mail::raw($body, function ($message) use ($data, $recipient, $subjectPrefix) {
-            $message
-                ->to($recipient)
-                ->replyTo($data['email'], "{$data['first_name']} {$data['last_name']}")
-                ->subject("{$subjectPrefix} – {$data['first_name']} {$data['last_name']} ({$data['company']})");
-        });
+        try {
+            Mail::raw($body, function ($message) use ($data, $recipient, $subjectPrefix) {
+                $message
+                    ->to($recipient)
+                    ->replyTo($data['email'], "{$data['first_name']} {$data['last_name']}")
+                    ->subject("{$subjectPrefix} – {$data['first_name']} {$data['last_name']} ({$data['company']})");
+            });
+        } catch (\Throwable $e) {
+            // Email failure shouldn't break the form — submission is already saved.
+            report($e);
+        }
 
         $successMessage = strtr($successTemplate, [
             '{first_name}' => $data['first_name'],
@@ -78,8 +99,19 @@ $registerAdminRoutes = function (): void {
         Route::post('/logout', [AdminAuthenticatedSessionController::class, 'destroy'])->name('logout');
         Route::get('/media/images', [AdminNewsPostController::class, 'mediaLibrary'])->name('media.images.index');
         Route::post('/posts/content-images', [AdminNewsPostController::class, 'uploadContentImage'])->name('posts.content-images.store');
+        Route::get('/posts/create/preview', [AdminNewsPostPreviewController::class, 'create'])->name('posts.create.preview');
+        Route::post('/posts/create/preview-sync', [AdminNewsPostPreviewController::class, 'syncCreate'])->name('posts.create.preview.sync');
+        Route::get('/posts/{post}/preview', [AdminNewsPostPreviewController::class, 'show'])->name('posts.preview');
+        Route::post('/posts/{post}/preview-sync', [AdminNewsPostPreviewController::class, 'sync'])->name('posts.preview.sync');
         Route::resource('/posts', AdminNewsPostController::class)->except(['show']);
 
+        Route::get('/submissions', [AdminContactSubmissionController::class, 'index'])->name('submissions.index');
+        Route::get('/submissions/{submission}', [AdminContactSubmissionController::class, 'show'])->name('submissions.show');
+        Route::delete('/submissions/{submission}', [AdminContactSubmissionController::class, 'destroy'])->name('submissions.destroy');
+
+        Route::post('/pages/images/upload', [AdminPageController::class, 'uploadImage'])->name('pages.images.upload');
+        Route::get('/pages/{slug}/preview', [AdminPagePreviewController::class, 'show'])->name('pages.preview');
+        Route::post('/pages/{slug}/preview-sync', [AdminPagePreviewController::class, 'sync'])->name('pages.preview.sync');
         Route::get('/pages/{slug}', [AdminPageController::class, 'edit'])->name('pages.edit');
         Route::post('/pages/{slug}', [AdminPageController::class, 'update'])->name('pages.update');
         Route::post('/pages/{slug}/publish', [AdminPageController::class, 'publish'])->name('pages.publish');

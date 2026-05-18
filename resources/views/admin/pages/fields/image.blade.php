@@ -2,39 +2,65 @@
   use Illuminate\Support\Arr;
   $current = $current ?? Arr::get($content ?? [], $name, '');
   $inputId = $id ?? 'field-'.str_replace(['.', '[', ']'], '-', $name);
-  // For image fields the form path is `image[dot.path]` (file input) and the
-  // stored URL lives at `content[dot.path]`. We render a hidden `content[*]`
-  // copy of the current URL so re-saving without picking a new file keeps it.
+
+  // Resolve the stored value to a usable thumbnail URL (handles full URLs,
+  // /storage/ paths, "assets/x.png", AND legacy bare filenames like "speed.svg").
+  $previewSrc = $current ? cms_image($current) : '';
 @endphp
-<div class="cms-field">
-  <label class="cms-field-label">{{ $label }}</label>
+<div
+  class="cms-field cms-image-field"
+  data-cms-image-field
+  data-field-name="{{ $name }}"
+>
+  <label class="cms-field-label" for="{{ $inputId }}">{{ $label }}</label>
   @isset($hint)<p class="cms-field-hint">{{ $hint }}</p>@endisset
 
   <div class="cms-image-row">
-    @if ($current)
-      <a class="cms-image-thumb" href="{{ $current }}" target="_blank" rel="noreferrer">
-        <img src="{{ $current }}" alt="">
-      </a>
-    @else
-      <div class="cms-image-thumb cms-image-thumb--empty">No image</div>
-    @endif
+    <div
+      class="cms-image-thumb {{ $current ? '' : 'cms-image-thumb--empty' }}"
+      data-cms-image-thumb
+    >
+      @if ($current)
+        <img src="{{ $previewSrc }}" alt="" data-cms-image-preview>
+      @else
+        <span data-cms-image-preview-empty>No image</span>
+      @endif
+    </div>
 
     <div class="cms-image-controls">
       <input
-        type="file"
+        type="hidden"
         id="{{ $inputId }}"
-        name="image[{{ $name }}]"
-        accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"
-        class="cms-input"
+        name="content[{{ $name }}]"
+        value="{{ $current }}"
+        data-cms-image-url
       />
-      <input type="hidden" name="content[{{ $name }}]" value="{{ $current }}" />
 
-      @if ($current)
-        <label class="cms-image-remove">
-          <input type="checkbox" name="remove_image[]" value="{{ $name }}" />
-          Remove current image
-        </label>
-      @endif
+      <input
+        type="file"
+        accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"
+        hidden
+        data-cms-image-file-input
+      />
+
+      <p class="cms-image-feedback" data-cms-image-feedback hidden></p>
+
+      <div class="cms-image-actions">
+        <button type="button" class="cms-btn cms-btn-ghost" data-cms-image-upload>
+          Upload new
+        </button>
+        <button type="button" class="cms-btn cms-btn-ghost" data-cms-image-browse>
+          Choose existing
+        </button>
+        <button
+          type="button"
+          class="cms-btn cms-btn-ghost cms-image-remove-btn"
+          data-cms-image-remove
+          @unless ($current) hidden @endunless
+        >
+          Remove
+        </button>
+      </div>
     </div>
   </div>
 </div>

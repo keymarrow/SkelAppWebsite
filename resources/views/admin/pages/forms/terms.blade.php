@@ -6,6 +6,7 @@
 @component('admin.pages.fields.section', ['title' => 'Intro paragraphs (before numbered sections)'])
   @include('admin.pages.fields.repeater', [
     'name' => 'intro_paragraphs',
+    'flat' => true,
     'fields' => [
       ['key' => 'value', 'label' => 'Paragraph text', 'type' => 'textarea', 'rows' => 4],
     ],

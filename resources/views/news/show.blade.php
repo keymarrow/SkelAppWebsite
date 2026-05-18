@@ -2,6 +2,7 @@
   $title = ($article['meta_title'] ?? $article['title']) . ' | SkelApp News';
   $bodyClass = 'news-article-page';
   $metaDescription = $metaDescription ?? ($article['meta_description'] ?? $article['summary']);
+  $articleSections = $article['sections'] ?? [];
 @endphp
 
 @extends('news.layout')
@@ -48,7 +49,7 @@
         @if (!empty($article['body_html']))
           {!! $article['body_html'] !!}
         @else
-          @foreach ($article['sections'] as $section)
+          @foreach ($articleSections as $section)
             <section class="news-copy-block">
               @if (!empty($section['heading']))
                 <h2>{{ $section['heading'] }}</h2>

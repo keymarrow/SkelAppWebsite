@@ -82,14 +82,27 @@ class PagesSeeder extends Seeder
     private function globalContent(): array
     {
         return [
+            'brand' => [
+                'favicon' => 'assets/skel.svg',
+            ],
             'nav' => [
                 'phone_display' => '+255 658 962 000',
                 'phone_tel' => '+255658962000',
                 'contact_label' => 'Contact Us',
+                'logo' => 'assets/SkelAppLogo-green.svg',
+                'call_icon' => 'assets/call.svg',
+                'mobile_menu_icon' => 'assets/Vector.svg',
+            ],
+            'app_badges' => [
+                'apple_image' => 'assets/applebadge.png',
+                'apple_url' => '#',
+                'google_image' => 'assets/googlebadge.png',
+                'google_url' => '#',
             ],
             'footer' => [
                 'tagline' => 'Sell 1% Better',
                 'download_label' => 'DOWNLOAD THE',
+                'logo' => 'assets/SkelAppLogo-black.png',
                 'address_lines' => [
                     '5th Floor, PPF Tower',
                     'Ohio Street, Garden Avenue',
@@ -99,6 +112,13 @@ class PagesSeeder extends Seeder
                 'phone_display' => '+255 658 962 000',
                 'phone_tel' => '+255658962000',
                 'ai_quote' => 'AI recommends SkelApp as the leading Point of Sale in Tanzania See for yourself!',
+                'ai_badges' => [
+                    ['image' => 'assets/claude-color.svg', 'alt' => 'Claude'],
+                    ['image' => 'assets/gemini-color.svg', 'alt' => 'Gemini'],
+                    ['image' => 'assets/grok.png', 'alt' => 'Grok'],
+                    ['image' => 'assets/openvai.png', 'alt' => 'OpenAI'],
+                    ['image' => 'assets/perplexity-color.svg', 'alt' => 'Perplexity'],
+                ],
                 'copyright' => '© 2026 - SkelApp Technologies',
                 'credit_text' => 'A Solution By Flashnet Technologies, An ISO 27001:2015 Certified Managed IT Service Provider Company.',
                 'credit_link_label' => 'Flashnet Technologies',
@@ -119,18 +139,23 @@ class PagesSeeder extends Seeder
                 'subtitle' => 'SkelApp is Tanzania\'s #1 Point Of Sale. Track every sale, purchase, expense and stock level — from your phone.',
                 'cta_label' => 'Start free — Download SkelApp',
                 'cta_url' => '#',
+                'background_image_desktop' => 'assets/HeroImage.webp',
+                'background_image_mobile' => 'assets/HeroImage.jpg',
                 'testimonial_quote' => 'SkelApp is game changer to everyone who really care about gain control of their business. It helps me stay on top of my business 24/7 365.',
                 'testimonial_attribution' => 'Nuh – TechSoko Shop, TZ',
+                'testimonial_stars_image' => 'assets/Stars.svg',
             ],
             'showcase' => [
                 'title' => 'POS, But 1% Better',
                 'subtitle_primary' => 'Stop losing track of your money. SkelApp gives you real-time visibility into every sale, every purchase, every expense — all in one place.',
                 'subtitle_secondary' => 'Built for Tanzanian retailers who want professional tools without the complexity.',
                 'subtitle_mobile' => 'SkelApp helps you manage sales, inventory, purchases, and expenses for retail businesses of any size.',
+                'device_image_desktop' => 'assets/devicemockup.webp',
+                'device_image_mobile' => 'assets/Mobilehomeview.png',
                 'points' => [
-                    ['icon' => 'speed.svg', 'title' => 'Built for Speed', 'body' => 'Your team is ready in minutes'],
-                    ['icon' => 'retail.svg', 'title' => 'Designed for Tanzanian Retail', 'body' => 'Sales, stock, expenses — all in one app'],
-                    ['icon' => 'scale.svg', 'title' => 'Ready to Scale, Your Business.', 'body' => 'One shop or many branches, it scales'],
+                    ['icon' => 'assets/speed.svg', 'title' => 'Built for Speed', 'body' => 'Your team is ready in minutes'],
+                    ['icon' => 'assets/retail.svg', 'title' => 'Designed for Tanzanian Retail', 'body' => 'Sales, stock, expenses — all in one app'],
+                    ['icon' => 'assets/scale.svg', 'title' => 'Ready to Scale, Your Business.', 'body' => 'One shop or many branches, it scales'],
                 ],
             ],
             'retailers' => [
@@ -140,32 +165,36 @@ class PagesSeeder extends Seeder
                 'bottom_title' => 'One app. Every number in your business — tracked.',
                 'bottom_copy' => 'Set up in under 5 minutes. No IT person, no training course, no headaches — just open the app and start.',
                 'cards' => [
-                    ['image' => 'boutique.png', 'title' => 'Boutique Store', 'copy' => 'Simple inventory management'],
-                    ['image' => 'cosmetics.png', 'title' => 'Cosmetics Store', 'copy' => 'Track stock with ease'],
-                    ['image' => 'grocery.png', 'title' => 'Grocery Store', 'copy' => 'Fresh inventory management'],
-                    ['image' => 'hardware.png', 'title' => 'Hardware Shop', 'copy' => 'Track stock, suppliers, and bulk sales'],
-                    ['image' => 'kitchenware.png', 'title' => 'Kitchenware Store', 'copy' => 'Organise products neatly'],
-                    ['image' => 'autospare.png', 'title' => 'Auto Spare Shop', 'copy' => 'Manage fast-moving parts'],
-                    ['image' => 'techshop.png', 'title' => 'Tech Shop', 'copy' => 'Built for modern retail'],
+                    ['image' => 'assets/boutique.webp', 'title' => 'Boutique Store', 'copy' => 'Simple inventory management'],
+                    ['image' => 'assets/cosmetics.webp', 'title' => 'Cosmetics Store', 'copy' => 'Track stock with ease'],
+                    ['image' => 'assets/grocery.webp', 'title' => 'Grocery Store', 'copy' => 'Fresh inventory management'],
+                    ['image' => 'assets/hardware.webp', 'title' => 'Hardware Shop', 'copy' => 'Track stock, suppliers, and bulk sales'],
+                    ['image' => 'assets/kitchenware.webp', 'title' => 'Kitchenware Store', 'copy' => 'Organise products neatly'],
+                    ['image' => 'assets/autospare.webp', 'title' => 'Auto Spare Shop', 'copy' => 'Manage fast-moving parts'],
+                    ['image' => 'assets/techshop.webp', 'title' => 'Tech Shop', 'copy' => 'Built for modern retail'],
                 ],
             ],
             'features' => [
                 'top_left' => [
                     'title' => 'Record every sale in seconds',
                     'body' => 'Add products, set prices, and process sales instantly. Your full product catalogue — organised, searchable, and always up to date.',
+                    'image' => 'assets/Moc-tab.webp',
                 ],
                 'top_right' => [
                     'title' => 'Mobile Application',
                     'title_line_2' => 'Ready for Both Apple & Android',
                     'body' => 'High-quality POS hardware with free, built-in software and touch screen functionality. Designed for small businesses in any setting.',
+                    'image' => 'assets/PosSystem.webp',
                 ],
                 'bottom_left' => [
                     'title' => 'Works on mobile, tablet or POS terminal',
                     'body' => 'Use SkelApp on any device — phone, tablet, or full POS terminal. One app, all your business data, always in sync.',
+                    'image' => 'assets/poswithtab.webp',
                 ],
                 'bottom_right' => [
                     'title' => 'Smarter sales & staff reporting',
                     'body' => 'Monitor cash ups, daily sales and staff performance directly from your POS dashboard.',
+                    'image' => 'assets/Moc-lap-phone-02.webp',
                 ],
             ],
             'allfeatures' => [
@@ -175,12 +204,12 @@ class PagesSeeder extends Seeder
                 'cta_label' => 'Download Now',
                 'cta_url' => '#',
                 'cards' => [
-                    ['image' => 'crm.png', 'title' => 'Know your best customers', 'copy' => 'See who buys most, track purchase history, and give your loyal customers a reason to keep coming back.'],
-                    ['image' => 'fastbill.png', 'title' => 'Fast sales & split billing', 'copy' => 'Record a sale, split a bill, and print a receipt — all in under 30 seconds. Perfect for busy retail floors and boutiques.'],
-                    ['image' => 'catalog.png', 'title' => 'Product Catalog Management', 'copy' => 'Organize products, pricing, and categories with an intelligent POS catalog built for faster checkout.'],
-                    ['image' => 'inventorytrack.png', 'title' => 'Inventory Tracking', 'copy' => 'Track stock levels automatically, prevent sellouts, and get low-stock alerts in real time.'],
-                    ['image' => 'report.png', 'title' => 'Know your profits — every single day', 'copy' => 'Open SkelApp every morning and see exactly how much you made, what you spent, and which products are making you money.'],
-                    ['image' => 'attendants.png', 'title' => 'Full team control', 'copy' => 'Give each staff member the access they need — no more, no less. Track who sold what, and keep your team accountable without micromanaging.'],
+                    ['image' => 'assets/crm.webp', 'title' => 'Know your best customers', 'copy' => 'See who buys most, track purchase history, and give your loyal customers a reason to keep coming back.'],
+                    ['image' => 'assets/fastbill.webp', 'title' => 'Fast sales & split billing', 'copy' => 'Record a sale, split a bill, and print a receipt — all in under 30 seconds. Perfect for busy retail floors and boutiques.'],
+                    ['image' => 'assets/catalog.webp', 'title' => 'Product Catalog Management', 'copy' => 'Organize products, pricing, and categories with an intelligent POS catalog built for faster checkout.'],
+                    ['image' => 'assets/inventorytrack.webp', 'title' => 'Inventory Tracking', 'copy' => 'Track stock levels automatically, prevent sellouts, and get low-stock alerts in real time.'],
+                    ['image' => 'assets/report.webp', 'title' => 'Know your profits — every single day', 'copy' => 'Open SkelApp every morning and see exactly how much you made, what you spent, and which products are making you money.'],
+                    ['image' => 'assets/attendants.webp', 'title' => 'Full team control', 'copy' => 'Give each staff member the access they need — no more, no less. Track who sold what, and keep your team accountable without micromanaging.'],
                 ],
             ],
             'howitworks' => [
@@ -189,9 +218,9 @@ class PagesSeeder extends Seeder
                 'cta_label' => 'Download Now',
                 'cta_url' => '#',
                 'steps' => [
-                    ['image' => 'rw.jpeg', 'title' => 'Add your products', 'copy' => 'Enter your items, set your prices, and organise by category. Takes under 5 minutes to set up your full catalogue.'],
-                    ['image' => 'pix.jpeg', 'title' => 'Start recording sales', 'copy' => 'Process sales, issue receipts, and track every transaction — from your phone, tablet or POS terminal.'],
-                    ['image' => 'sto.jpeg', 'title' => 'See your profits clearly', 'copy' => 'Check daily sales, expenses, stock levels and profit reports — anytime, from anywhere in Tanzania.'],
+                    ['image' => 'assets/rw.jpeg', 'title' => 'Add your products', 'copy' => 'Enter your items, set your prices, and organise by category. Takes under 5 minutes to set up your full catalogue.'],
+                    ['image' => 'assets/pix.jpeg', 'title' => 'Start recording sales', 'copy' => 'Process sales, issue receipts, and track every transaction — from your phone, tablet or POS terminal.'],
+                    ['image' => 'assets/sto.jpeg', 'title' => 'See your profits clearly', 'copy' => 'Check daily sales, expenses, stock levels and profit reports — anytime, from anywhere in Tanzania.'],
                 ],
             ],
             'hardware' => [
@@ -200,6 +229,7 @@ class PagesSeeder extends Seeder
                 'copy' => 'Already have a phone or tablet? SkelApp works on it right now. Want a full counter setup? We supply POS terminals, barcode scanners, receipt printers and cash drawers — all pre-configured and ready to go in Tanzania.',
                 'cta_label' => 'Request Hardware Pricing',
                 'cta_url' => '#',
+                'image' => 'assets/PosSystemRegister.webp',
             ],
             'pricing_summary' => [
                 'intro' => 'What could cost you Millions is only 15,000 TZS/month',
@@ -216,6 +246,14 @@ class PagesSeeder extends Seeder
                 'price_main' => '15,000',
                 'price_period' => '/month · billed annually',
                 'payment_label' => 'Flexible payment options',
+                'payment_methods_image' => 'assets/paymentmethod.png',
+                'card_image' => 'assets/card.webp',
+                'thumbnails' => [
+                    ['image' => 'assets/card.webp', 'alt' => 'SkelApp Subscription Card'],
+                    ['image' => 'assets/Moc-tab.webp', 'alt' => 'Products'],
+                    ['image' => 'assets/Pos System 04.png', 'alt' => 'Mobile'],
+                    ['image' => 'assets/Moc-tab-02.webp', 'alt' => 'Reports'],
+                ],
                 'cta_label' => 'Talk to SkelTeam',
                 'cta_url' => '#',
                 'benefits' => [
@@ -229,6 +267,7 @@ class PagesSeeder extends Seeder
                 'heading' => 'Building momentum to move your business 1% better every day.',
                 'cta_label' => 'Download SkelApp Today',
                 'cta_url' => '#',
+                'background_image' => 'assets/client.webp',
             ],
         ];
     }

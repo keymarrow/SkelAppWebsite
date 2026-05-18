@@ -12,6 +12,12 @@
   $footerCreditText = content('global.footer.credit_text', 'A Solution By Flashnet Technologies, An ISO 27001:2015 Certified Managed IT Service Provider Company.');
   $footerCreditLinkLabel = content('global.footer.credit_link_label', 'Flashnet Technologies');
   $footerCreditLinkUrl = content('global.footer.credit_link_url', 'https://flashnet.co.tz');
+  $footerLogo = content_image('global.footer.logo', asset('assets/SkelAppLogo-black.png'));
+  $appleBadge = content_image('global.app_badges.apple_image', asset('assets/applebadge.png'));
+  $googleBadge = content_image('global.app_badges.google_image', asset('assets/googlebadge.png'));
+  $appleUrl = content('global.app_badges.apple_url', '#');
+  $googleUrl = content('global.app_badges.google_url', '#');
+  $aiBadges = content_list('global.footer.ai_badges', []);
 @endphp
 <footer class="site-footer">
   <div class="footer-container">
@@ -21,16 +27,16 @@
         <p class="footer-tagline">{{ $footerTagline }}</p>
         <div class="footer-logo-wrapper">
           <span class="download-text">{{ $footerDownloadLabel }}</span>
-          <img src="{{ asset('assets/SkelAppLogo-black.png') }}" alt="SkelApp" class="footer-logo" loading="lazy" decoding="async">
+          <img src="{{ $footerLogo }}" alt="SkelApp" class="footer-logo" loading="lazy" decoding="async">
         </div>
       </div>
 
       <div class="footer-app-badges">
         <a href="#" class="app-badge" aria-label="Download on App Store">
-          <img src="{{ asset('assets/applebadge.png') }}" alt="Download on App Store" loading="lazy" decoding="async">
+          <img src="{{ $appleBadge }}" alt="Download on App Store" loading="lazy" decoding="async">
         </a>
         <a href="#" class="app-badge" aria-label="Get it on Google Play">
-          <img src="{{ asset('assets/googlebadge.png') }}" alt="Get it on Google Play" loading="lazy" decoding="async">
+          <img src="{{ $googleBadge }}" alt="Get it on Google Play" loading="lazy" decoding="async">
         </a>
       </div>
     </div>
@@ -116,11 +122,9 @@
           <p>{!! nl2br(e($footerAiQuote)) !!}</p>
         </div>
         <div class="ai-badges">
-          <img src="{{ asset('assets/claude-color.svg') }}" alt="Claude" width="40" height="40" loading="lazy" decoding="async">
-          <img src="{{ asset('assets/gemini-color.svg') }}" alt="Gemini" width="40" height="40" loading="lazy" decoding="async">
-          <img src="{{ asset('assets/grok.png') }}" alt="Grok" width="40" height="40" loading="lazy" decoding="async">
-          <img src="{{ asset('assets/openvai.png') }}" alt="OpenAI" width="40" height="40" loading="lazy" decoding="async">
-          <img src="{{ asset('assets/perplexity-color.svg') }}" alt="Perplexity" width="40" height="40" loading="lazy" decoding="async">
+          @foreach ($aiBadges as $badge)
+            <img src="{{ cms_image($badge['image'] ?? null) }}" alt="{{ $badge['alt'] ?? '' }}" width="40" height="40" loading="lazy" decoding="async">
+          @endforeach
         </div>
 
         <div class="footer-meta">
@@ -162,10 +166,10 @@
 
       <div class="footer-app-badges">
         <a href="#" class="app-badge" aria-label="Download on App Store">
-          <img src="{{ asset('assets/applebadge.png') }}" alt="Download on App Store" loading="lazy" decoding="async">
+          <img src="{{ $appleBadge }}" alt="Download on App Store" loading="lazy" decoding="async">
         </a>
         <a href="#" class="app-badge" aria-label="Get it on Google Play">
-          <img src="{{ asset('assets/googlebadge.png') }}" alt="Get it on Google Play" loading="lazy" decoding="async">
+          <img src="{{ $googleBadge }}" alt="Get it on Google Play" loading="lazy" decoding="async">
         </a>
       </div>
 
@@ -250,11 +254,9 @@
         </div>
 
         <div class="ai-badges">
-          <img src="{{ asset('assets/claude-color.svg') }}" alt="Claude" width="40" height="40" loading="lazy" decoding="async">
-          <img src="{{ asset('assets/gemini-color.svg') }}" alt="Gemini" width="40" height="40" loading="lazy" decoding="async">
-          <img src="{{ asset('assets/grok.png') }}" alt="Grok" width="40" height="40" loading="lazy" decoding="async">
-          <img src="{{ asset('assets/openvai.png') }}" alt="OpenAI" width="40" height="40" loading="lazy" decoding="async">
-          <img src="{{ asset('assets/perplexity-color.svg') }}" alt="Perplexity" width="40" height="40" loading="lazy" decoding="async">
+          @foreach ($aiBadges as $badge)
+            <img src="{{ cms_image($badge['image'] ?? null) }}" alt="{{ $badge['alt'] ?? '' }}" width="40" height="40" loading="lazy" decoding="async">
+          @endforeach
         </div>
 
         <div class="footer-meta">

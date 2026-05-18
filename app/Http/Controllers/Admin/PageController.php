@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use App\Support\CmsPreview;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -37,6 +39,8 @@ class PageController extends Controller
             'slug' => $slug,
             'config' => self::PAGES[$slug],
             'content' => $page->effectiveDraft(),
+            'previewTargets' => CmsPreview::targetsFor($slug),
+            'defaultPreviewTarget' => CmsPreview::defaultTarget($slug),
         ]);
     }
 
@@ -67,6 +71,8 @@ class PageController extends Controller
             $page->forgetCache();
         }
 
+        session()->forget(CmsPreview::sessionKey($slug));
+
         return redirect()
             ->route('admin.pages.edit', $slug)
             ->with('status', $message);
@@ -87,9 +93,37 @@ class PageController extends Controller
             $page->forgetCache();
         }
 
+        session()->forget(CmsPreview::sessionKey($slug));
+
         return redirect()
             ->route('admin.pages.edit', $slug)
             ->with('status', 'Page published.');
+    }
+
+    /**
+     * AJAX image upload — used by the in-form image picker. Stores the file in
+     * the public cms/ disk and returns the URL the form should save.
+     */
+    public function uploadImage(Request $request): JsonResponse
+    {
+        $request->validate([
+            'image' => ['required', 'file', 'mimes:jpg,jpeg,png,webp,gif,svg', 'max:8192'],
+        ]);
+
+        /** @var UploadedFile $image */
+        $image = $request->file('image');
+        $url = $this->storeUploadedImage($image, 'cms');
+        $alt = Str::of($image->getClientOriginalName())
+            ->beforeLast('.')
+            ->replace(['-', '_'], ' ')
+            ->trim()
+            ->title()
+            ->toString();
+
+        return response()->json([
+            'url' => $url,
+            'alt' => $alt !== '' ? $alt : 'Image',
+        ]);
     }
 
     public function revert(string $slug): RedirectResponse
@@ -102,6 +136,7 @@ class PageController extends Controller
             'draft_content' => $page->published_content,
         ]);
         $page->forgetCache();
+        session()->forget(CmsPreview::sessionKey($slug));
 
         return redirect()
             ->route('admin.pages.edit', $slug)

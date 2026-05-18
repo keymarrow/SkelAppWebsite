@@ -14,16 +14,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>{{ content('home.meta.title', 'SkelApp – The Best POS in Tanzania.') }}</title>
 <meta name="description" content="{{ content('home.meta.description') }}">
-<link rel="icon" href="{{ asset('assets/skel.svg') }}" type="image/x-icon" />
-<link rel="preload" as="image" href="{{ asset('assets/HeroImage.webp') }}" media="(min-width: 901px)" fetchpriority="high" />
-<link rel="preload" as="image" href="{{ asset('assets/HeroImage.jpg') }}" media="(max-width: 900px)" fetchpriority="high" />
+<link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" type="image/x-icon" />
+<link rel="preload" as="image" href="{{ content_image('home.hero.background_image_desktop', asset('assets/HeroImage.webp')) }}" media="(min-width: 901px)" fetchpriority="high" />
+<link rel="preload" as="image" href="{{ content_image('home.hero.background_image_mobile', asset('assets/HeroImage.jpg')) }}" media="(max-width: 900px)" fetchpriority="high" />
 <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body>
 @include('partials.site-nav', ['isHome' => true])
 <section class="hero" id="overview">
-  <div class="hero-bg"></div>
+  <div
+    id="hero-bg"
+    class="hero-bg"
+    data-bg-desktop="{{ content_image('home.hero.background_image_desktop', asset('assets/HeroImage.webp')) }}"
+    data-bg-mobile="{{ content_image('home.hero.background_image_mobile', asset('assets/HeroImage.jpg')) }}"
+  ></div>
   <div class="hero-overlay"></div>
+  <script>
+    (function () {
+      var el = document.getElementById('hero-bg');
+      if (!el) return;
+      var desktop = el.dataset.bgDesktop || '';
+      var mobile = el.dataset.bgMobile || '';
+      var apply = function () {
+        var url = window.matchMedia('(max-width: 900px)').matches ? (mobile || desktop) : desktop;
+        if (url) el.style.setProperty('background-image', "url('" + url.replace(/'/g, "\\'") + "')", 'important');
+      };
+      apply();
+      window.addEventListener('resize', apply);
+    })();
+  </script>
 <div class="hero-content">
   <div class="hero-left">
     <h1>{{ content('home.hero.title', 'Run your Business like a pro.') }}</h1>
@@ -34,7 +53,7 @@
   <div class="hero-right">
     <div class="testimonial-card">
       <div class="stars">
-        <img src="{{ asset('assets/Stars.svg') }}" alt="5 star rating">
+        <img src="{{ content_image('home.hero.testimonial_stars_image', asset('assets/Stars.svg')) }}" alt="5 star rating">
       </div>
       <blockquote>
         {{ content('home.hero.testimonial_quote') }}
@@ -61,19 +80,19 @@
         </p>
 
         <div class="app-buttons">
-          <a href="#" class="store-badge store-badge-apple" aria-label="Download on the App Store">
-            <img src="{{ asset('assets/applebadge.png') }}" alt="Download on the App Store">
+          <a href="{{ content('global.app_badges.apple_url', '#') }}" class="store-badge store-badge-apple" aria-label="Download on the App Store">
+            <img src="{{ content_image('global.app_badges.apple_image', asset('assets/applebadge.png')) }}" alt="Download on the App Store">
           </a>
 
-          <a href="#" class="store-badge store-badge-google" aria-label="Get it on Google Play">
-            <img src="{{ asset('assets/googlebadge.png') }}" alt="Get it on Google Play">
+          <a href="{{ content('global.app_badges.google_url', '#') }}" class="store-badge store-badge-google" aria-label="Get it on Google Play">
+            <img src="{{ content_image('global.app_badges.google_image', asset('assets/googlebadge.png')) }}" alt="Get it on Google Play">
           </a>
         </div>
       </div>
 
       <div class="device-mockup">
-        <img src="{{ asset('assets/devicemockup.webp') }}" alt="SkelApp on desktop" class="device-mockup-image desktop-only-img" loading="lazy" decoding="async">
-        <img src="{{ asset('assets/Mobilehomeview.png') }}" alt="SkelApp on mobile" class="device-mockup-image mobile-only-img" loading="lazy" decoding="async">
+        <img src="{{ content_image('home.showcase.device_image_desktop', asset('assets/devicemockup.webp')) }}" alt="SkelApp on desktop" class="device-mockup-image desktop-only-img" loading="lazy" decoding="async">
+        <img src="{{ content_image('home.showcase.device_image_mobile', asset('assets/Mobilehomeview.png')) }}" alt="SkelApp on mobile" class="device-mockup-image mobile-only-img" loading="lazy" decoding="async">
       </div>
     </div>
 
@@ -81,7 +100,7 @@
       @foreach ($homeShowcasePoints as $point)
         <article class="showcase-point">
           <div class="showcase-point-heading">
-            <img src="{{ asset('assets/'.($point['icon'] ?? 'speed.svg')) }}" alt="" class="showcase-point-icon" aria-hidden="true">
+            <img src="{{ cms_image($point['icon'] ?? null, asset('assets/speed.svg')) }}" alt="" class="showcase-point-icon" aria-hidden="true">
             <h3>{{ $point['title'] ?? '' }}</h3>
           </div>
           <p>{{ $point['body'] ?? '' }}</p>
@@ -103,7 +122,7 @@
         @foreach ($retailerCards as $card)
           <div class="retailer-card">
             <div class="card-image">
-              <img src="{{ asset('assets/' . pathinfo($card['image'] ?? 'boutique.png', PATHINFO_FILENAME) . '.webp') }}" alt="{{ $card['title'] ?? '' }}" draggable="false" loading="lazy" decoding="async">
+              <img src="{{ cms_image($card['image'] ?? null, asset('assets/boutique.webp')) }}" alt="{{ $card['title'] ?? '' }}" draggable="false" loading="lazy" decoding="async">
               <div class="card-overlay">
                 <h3>{{ $card['title'] ?? '' }}</h3>
                 <p>{{ $card['copy'] ?? '' }}</p>
@@ -169,7 +188,7 @@
           <p>{{ content('home.features.top_left.body') }}</p>
         </div>
         <div class="feature-content-bottom">
-          <img src="{{ asset('assets/Moc-tab.webp') }}" alt="SkelApp tablet catalogue" class="feature-tab-mockup" loading="lazy" decoding="async">
+          <img src="{{ content_image('home.features.top_left.image', asset('assets/Moc-tab.webp')) }}" alt="SkelApp tablet catalogue" class="feature-tab-mockup" loading="lazy" decoding="async">
         </div>
       </div>
 
@@ -179,7 +198,7 @@
           <p>{{ content('home.features.top_right.body') }}</p>
         </div>
         <div class="feature-content-right">
-          <img src="{{ asset('assets/PosSystem.webp') }}" alt="SkelApp POS system" loading="lazy" decoding="async">
+          <img src="{{ content_image('home.features.top_right.image', asset('assets/PosSystem.webp')) }}" alt="SkelApp POS system" loading="lazy" decoding="async">
         </div>
       </div>
     </div>
@@ -192,7 +211,7 @@
           <p>{{ content('home.features.bottom_left.body') }}</p>
         </div>
         <div class="feature-content-right">
-          <img src="{{ asset('assets/poswithtab.webp') }}" alt="SkelApp handheld POS with tablet" class="feature-handheld-pos" loading="lazy" decoding="async">
+          <img src="{{ content_image('home.features.bottom_left.image', asset('assets/poswithtab.webp')) }}" alt="SkelApp handheld POS with tablet" class="feature-handheld-pos" loading="lazy" decoding="async">
         </div>
       </div>
 
@@ -202,7 +221,7 @@
           <p>{{ content('home.features.bottom_right.body') }}</p>
         </div>
         <div class="feature-content-bottom">
-          <img src="{{ asset('assets/Moc-lap-phone-02.webp') }}" alt="SkelApp reporting dashboard on laptop and phone" class="feature-reporting-mockup" loading="lazy" decoding="async">
+          <img src="{{ content_image('home.features.bottom_right.image', asset('assets/Moc-lap-phone-02.webp')) }}" alt="SkelApp reporting dashboard on laptop and phone" class="feature-reporting-mockup" loading="lazy" decoding="async">
         </div>
       </div>
     </div>
@@ -226,7 +245,7 @@
         <article class="allfeatures-card">
           <div class="allfeatures-card-media">
             <img
-              src="{{ asset('assets/' . pathinfo($featureCard['image'] ?? 'crm.png', PATHINFO_FILENAME) . '.webp') }}"
+              src="{{ cms_image($featureCard['image'] ?? null, asset('assets/crm.webp')) }}"
               alt="{{ $featureCard['title'] ?? '' }}"
               width="352"
               height="352"
@@ -263,7 +282,7 @@
           @foreach ($howSteps as $step)
             <article class="step-item">
               <div class="step-image">
-                <img src="{{ asset('assets/' . ($step['image'] ?? 'rw.jpeg')) }}" alt="{{ $step['title'] ?? '' }}" loading="lazy" decoding="async">
+                <img src="{{ cms_image($step['image'] ?? null, asset('assets/rw.jpeg')) }}" alt="{{ $step['title'] ?? '' }}" loading="lazy" decoding="async">
               </div>
               <div class="step-marker">
                 <div class="step-number-box">{{ $loop->iteration }}</div>
@@ -298,7 +317,7 @@
       </div>
 
       <div class="hardware-image">
-        <img src="{{ asset('assets/PosSystemRegister.webp') }}" alt="POS Hardware Terminal" loading="lazy" decoding="async">
+        <img src="{{ content_image('home.hardware.image', asset('assets/PosSystemRegister.webp')) }}" alt="POS Hardware Terminal" loading="lazy" decoding="async">
       </div>
     </div>
   </div>
@@ -308,26 +327,23 @@
 <section class="pricing-section" id="pricing">
   <div class="container">
     <div class="pricing-layout">
+      @php
+        $pricingThumbnails = content_list('home.pricing_summary.thumbnails', []);
+        $pricingCardImage = content_image('home.pricing_summary.card_image', asset('assets/card.webp'));
+      @endphp
       <!-- Left Side - Card Preview -->
       <div class="pricing-preview is-subscription-preview">
         <div class="preview-card is-subscription-preview">
-          <img src="{{ asset('assets/card.webp') }}" alt="SkelApp Subscription Card" class="card-preview-image" loading="lazy" decoding="async">
+          <img src="{{ $pricingCardImage }}" alt="SkelApp Subscription Card" class="card-preview-image" loading="lazy" decoding="async">
         </div>
 
         <!-- Thumbnail Previews -->
         <div class="thumbnail-grid">
-          <div class="thumbnail active">
-            <img src="{{ asset('assets/card.webp') }}" alt="SkelApp Subscription Card" loading="lazy" decoding="async">
-          </div>
-          <div class="thumbnail">
-            <img src="{{ asset('assets/Moc-tab.webp') }}" alt="Products" loading="lazy" decoding="async">
-          </div>
-          <div class="thumbnail">
-            <img src="{{ asset('assets/Pos System 04.png') }}" alt="Mobile" loading="lazy" decoding="async">
-          </div>
-          <div class="thumbnail">
-            <img src="{{ asset('assets/Moc-tab-02.webp') }}" alt="Reports" loading="lazy" decoding="async">
-          </div>
+          @foreach ($pricingThumbnails as $thumbIdx => $thumb)
+            <div class="thumbnail{{ $thumbIdx === 0 ? ' active' : '' }}">
+              <img src="{{ cms_image($thumb['image'] ?? null, asset('assets/card.webp')) }}" alt="{{ $thumb['alt'] ?? '' }}" loading="lazy" decoding="async">
+            </div>
+          @endforeach
         </div>
       </div>
 
@@ -364,7 +380,7 @@
         <div class="payment-row">
           <span class="payment-label">{{ content('home.pricing_summary.payment_label', 'Flexible payment options') }}</span>
           <div class="payment-methods-art">
-            <img src="{{ asset('assets/paymentmethod.png') }}" alt="Supported payment methods" loading="lazy" decoding="async">
+            <img src="{{ content_image('home.pricing_summary.payment_methods_image', asset('assets/paymentmethod.png')) }}" alt="Supported payment methods" loading="lazy" decoding="async">
           </div>
         </div>
 
@@ -411,7 +427,7 @@
 <!-- Image CTA Section - Separate section below FAQ -->
 <section class="image-cta-section">
   <div class="cta-background">
-    <img src="{{ asset('assets/client.webp') }}" alt="Building momentum" class="cta-img" loading="lazy" decoding="async">
+    <img src="{{ content_image('home.image_cta.background_image', asset('assets/client.webp')) }}" alt="Building momentum" class="cta-img" loading="lazy" decoding="async">
     <div class="cta-overlay"></div>
   </div>
   <div class="cta-content-wrapper">
