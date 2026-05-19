@@ -28,15 +28,15 @@
           @endforeach
         </h1>
         <p class="pricing-plan-subtitle">
-          <span class="pricing-plan-subtitle-mark">{{ content('pricing.header.subtitle') }}</span>
+          <span class="pricing-plan-subtitle-mark {{ content_typography_class('pricing.header.subtitle') }}" style="{{ content_typography_vars('pricing.header.subtitle') }}">{{ content_text('pricing.header.subtitle') }}</span>
         </p>
       </header>
 
       <form class="pricing-plan-grid" data-pricing-form>
         <section class="pricing-box pricing-box--features" aria-labelledby="features-title">
           <header class="pricing-box-header">
-            <h2 id="features-title" class="pricing-box-title">{{ content('pricing.features_box.title', 'Features') }}</h2>
-            <p class="pricing-box-subtitle">{{ content('pricing.features_box.subtitle') }}</p>
+            <h2 id="features-title" class="pricing-box-title {{ content_typography_class('pricing.features_box.title') }}" style="{{ content_typography_vars('pricing.features_box.title') }}">{{ content_text('pricing.features_box.title', 'Features') }}</h2>
+            <p class="pricing-box-subtitle {{ content_typography_class('pricing.features_box.subtitle') }}" style="{{ content_typography_vars('pricing.features_box.subtitle') }}">{{ content_text('pricing.features_box.subtitle') }}</p>
           </header>
 
           <ul class="pricing-feature-list">
@@ -56,8 +56,8 @@
 
         <section class="pricing-box pricing-box--plans" aria-labelledby="plans-title">
           <header class="pricing-box-header">
-            <h2 id="plans-title" class="pricing-box-title">{{ content('pricing.plans_box.title', 'Pricing Plan') }}</h2>
-            <p class="pricing-box-subtitle">{{ content('pricing.plans_box.subtitle') }}</p>
+            <h2 id="plans-title" class="pricing-box-title {{ content_typography_class('pricing.plans_box.title') }}" style="{{ content_typography_vars('pricing.plans_box.title') }}">{{ content_text('pricing.plans_box.title', 'Pricing Plan') }}</h2>
+            <p class="pricing-box-subtitle {{ content_typography_class('pricing.plans_box.subtitle') }}" style="{{ content_typography_vars('pricing.plans_box.subtitle') }}">{{ content_text('pricing.plans_box.subtitle') }}</p>
           </header>
 
           <div class="plan-option-list" role="radiogroup" aria-label="Billing period">
@@ -128,14 +128,14 @@
         </div>
 
         <div class="getstarted-content">
-          <h2 id="getstarted-heading" class="getstarted-title">
-            {{ content('pricing.getstarted.title_top', 'Get Started') }} <br/>{{ content('pricing.getstarted.title_bottom', 'with the App') }}
+          <h2 id="getstarted-heading" class="getstarted-title {{ content_typography_class('pricing.getstarted.title_top') }}" style="{{ content_typography_vars('pricing.getstarted.title_top') }}">
+            {{ content_text('pricing.getstarted.title_top', 'Get Started') }} <br/>{{ content('pricing.getstarted.title_bottom', 'with the App') }}
           </h2>
 
           <a href="{{ content('pricing.getstarted.cta_url', '#') }}" class="btn-download">{{ content('pricing.getstarted.cta_label', 'Download Now') }}</a>
 
-          <p class="getstarted-copy">
-            {{ content('pricing.getstarted.copy') }}
+          <p class="getstarted-copy {{ content_typography_class('pricing.getstarted.copy') }}" style="{{ content_typography_vars('pricing.getstarted.copy') }}">
+            {{ content_text('pricing.getstarted.copy') }}
           </p>
         </div>
       </div>

@@ -45,8 +45,8 @@
   </script>
 <div class="hero-content">
   <div class="hero-left">
-    <h1>{{ content('home.hero.title', 'Run your Business like a pro.') }}</h1>
-    <p>{!! nl2br(e(content('home.hero.subtitle', "SkelApp is Tanzania's #1 Point Of Sale. Track every sale, purchase, expense and stock level — from your phone."))) !!}</p>
+    <h1 class="{{ content_typography_class('home.hero.title') }}" style="{{ content_typography_vars('home.hero.title') }}">{{ content_text('home.hero.title', 'Run your Business like a pro.') }}</h1>
+    <p class="{{ content_typography_class('home.hero.subtitle') }}" style="{{ content_typography_vars('home.hero.subtitle') }}">{!! nl2br(e(content_text('home.hero.subtitle', "SkelApp is Tanzania's #1 Point Of Sale. Track every sale, purchase, expense and stock level — from your phone."))) !!}</p>
     <a href="{{ content('home.hero.cta_url', '#') }}" class="btn-download">{{ content('home.hero.cta_label', 'Start free — Download SkelApp') }}</a>
   </div>
 
@@ -55,10 +55,10 @@
       <div class="stars">
         <img src="{{ content_image('home.hero.testimonial_stars_image', asset('assets/Stars.svg')) }}" alt="5 star rating">
       </div>
-      <blockquote>
-        {{ content('home.hero.testimonial_quote') }}
+      <blockquote class="{{ content_typography_class('home.hero.testimonial_quote') }}" style="{{ content_typography_vars('home.hero.testimonial_quote') }}">
+        {{ content_text('home.hero.testimonial_quote') }}
       </blockquote>
-      <cite>{{ content('home.hero.testimonial_attribution') }}</cite>
+      <cite class="{{ content_typography_class('home.hero.testimonial_attribution') }}" style="{{ content_typography_vars('home.hero.testimonial_attribution') }}">{{ content_text('home.hero.testimonial_attribution') }}</cite>
     </div>
   </div>
 </div>
@@ -68,15 +68,15 @@
   <div class="showcase-container">
     <div class="showcase-card">
       <div class="showcase-header">
-        <h2 class="showcase-title">{{ content('home.showcase.title', 'POS, But 1% Better') }}</h2>
-        <p class="showcase-subtitle showcase-subtitle-primary">
-          {{ content('home.showcase.subtitle_primary') }}
+        <h2 class="showcase-title {{ content_typography_class('home.showcase.title') }}" style="{{ content_typography_vars('home.showcase.title') }}">{{ content_text('home.showcase.title', 'POS, But 1% Better') }}</h2>
+        <p class="showcase-subtitle showcase-subtitle-primary {{ content_typography_class('home.showcase.subtitle_primary') }}" style="{{ content_typography_vars('home.showcase.subtitle_primary') }}">
+          {{ content_text('home.showcase.subtitle_primary') }}
         </p>
-        <p class="showcase-subtitle showcase-subtitle-secondary">
-          {{ content('home.showcase.subtitle_secondary') }}
+        <p class="showcase-subtitle showcase-subtitle-secondary {{ content_typography_class('home.showcase.subtitle_secondary') }}" style="{{ content_typography_vars('home.showcase.subtitle_secondary') }}">
+          {{ content_text('home.showcase.subtitle_secondary') }}
         </p>
-        <p class="showcase-subtitle showcase-subtitle-mobile">
-          {{ content('home.showcase.subtitle_mobile') }}
+        <p class="showcase-subtitle showcase-subtitle-mobile {{ content_typography_class('home.showcase.subtitle_mobile') }}" style="{{ content_typography_vars('home.showcase.subtitle_mobile') }}">
+          {{ content_text('home.showcase.subtitle_mobile') }}
         </p>
 
         <div class="app-buttons">
@@ -97,13 +97,17 @@
     </div>
 
     <div class="showcase-points desktop-only" aria-label="SkelApp highlights">
-      @foreach ($homeShowcasePoints as $point)
+      @foreach ($homeShowcasePoints as $idx => $point)
+        @php
+          $titleKey = "home.showcase.points.{$idx}.title";
+          $bodyKey = "home.showcase.points.{$idx}.body";
+        @endphp
         <article class="showcase-point">
           <div class="showcase-point-heading">
             <img src="{{ cms_image($point['icon'] ?? null, asset('assets/speed.svg')) }}" alt="" class="showcase-point-icon" aria-hidden="true">
-            <h3>{{ $point['title'] ?? '' }}</h3>
+            <h3 class="{{ content_typography_class($titleKey) }}" style="{{ content_typography_vars($titleKey) }}">{{ content_text($titleKey, $point['title'] ?? '') }}</h3>
           </div>
-          <p>{{ $point['body'] ?? '' }}</p>
+          <p class="{{ content_typography_class($bodyKey) }}" style="{{ content_typography_vars($bodyKey) }}">{{ content_text($bodyKey, $point['body'] ?? '') }}</p>
         </article>
       @endforeach
     </div>
@@ -113,19 +117,23 @@
 <section class="retailers-section" id="retailers">
   <div class="container">
     <div class="section-header">
-      <h2>{{ content('home.retailers.title', 'Powering Retailers for Every Type') }}</h2>
-      <p>{{ content('home.retailers.subtitle') }}</p>
+      <h2 class="{{ content_typography_class('home.retailers.title') }}" style="{{ content_typography_vars('home.retailers.title') }}">{{ content_text('home.retailers.title', 'Powering Retailers for Every Type') }}</h2>
+      <p class="{{ content_typography_class('home.retailers.subtitle') }}" style="{{ content_typography_vars('home.retailers.subtitle') }}">{{ content_text('home.retailers.subtitle') }}</p>
     </div>
 
     <div class="carousel-container" data-drag-scroll data-carousel-default-index="1">
       <div class="carousel-track">
-        @foreach ($retailerCards as $card)
+        @foreach ($retailerCards as $idx => $card)
+          @php
+            $titleKey = "home.retailers.cards.{$idx}.title";
+            $copyKey = "home.retailers.cards.{$idx}.copy";
+          @endphp
           <div class="retailer-card">
             <div class="card-image">
-              <img src="{{ cms_image($card['image'] ?? null, asset('assets/boutique.webp')) }}" alt="{{ $card['title'] ?? '' }}" draggable="false" loading="lazy" decoding="async">
+              <img src="{{ cms_image($card['image'] ?? null, asset('assets/boutique.webp')) }}" alt="{{ content_text($titleKey, $card['title'] ?? '') }}" draggable="false" loading="lazy" decoding="async">
               <div class="card-overlay">
-                <h3>{{ $card['title'] ?? '' }}</h3>
-                <p>{{ $card['copy'] ?? '' }}</p>
+                <h3 class="{{ content_typography_class($titleKey) }}" style="{{ content_typography_vars($titleKey) }}">{{ content_text($titleKey, $card['title'] ?? '') }}</h3>
+                <p class="{{ content_typography_class($copyKey) }}" style="{{ content_typography_vars($copyKey) }}">{{ content_text($copyKey, $card['copy'] ?? '') }}</p>
               </div>
             </div>
           </div>
@@ -143,12 +151,13 @@
 
         <div class="carousel-slider-dots" role="tablist" aria-label="Retailer slides">
           @foreach ($retailerCards as $card)
+            @php $dotLabel = content_text("home.retailers.cards.{$loop->index}.title", $card['title'] ?? ''); @endphp
             <button
               class="carousel-slider-dot{{ $loop->index === 1 ? ' is-active' : '' }}"
               type="button"
               role="tab"
               data-carousel-dot="{{ $loop->index }}"
-              aria-label="Go to {{ $card['title'] }}"
+              aria-label="Go to {{ $dotLabel }}"
               aria-current="{{ $loop->index === 1 ? 'true' : 'false' }}"
             ></button>
           @endforeach
@@ -172,8 +181,8 @@
     </div>
 
     <div class="section-bottom">
-      <h2>{{ content('home.retailers.bottom_title', 'One app. Every number in your business — tracked.') }}</h2>
-      <p>{{ content('home.retailers.bottom_copy') }}</p>
+      <h2 class="{{ content_typography_class('home.retailers.bottom_title') }}" style="{{ content_typography_vars('home.retailers.bottom_title') }}">{{ content_text('home.retailers.bottom_title', 'One app. Every number in your business — tracked.') }}</h2>
+      <p class="{{ content_typography_class('home.retailers.bottom_copy') }}" style="{{ content_typography_vars('home.retailers.bottom_copy') }}">{{ content_text('home.retailers.bottom_copy') }}</p>
     </div>
   </div>
 
@@ -184,8 +193,8 @@
     <div class="features-row">
       <div class="feature-card feature-square feature-light feature-square-catalogue">
         <div class="feature-content-top">
-          <h2>{{ content('home.features.top_left.title', 'Record every sale in seconds') }}</h2>
-          <p>{{ content('home.features.top_left.body') }}</p>
+          <h2 class="{{ content_typography_class('home.features.top_left.title') }}" style="{{ content_typography_vars('home.features.top_left.title') }}">{{ content_text('home.features.top_left.title', 'Record every sale in seconds') }}</h2>
+          <p class="{{ content_typography_class('home.features.top_left.body') }}" style="{{ content_typography_vars('home.features.top_left.body') }}">{{ content_text('home.features.top_left.body') }}</p>
         </div>
         <div class="feature-content-bottom">
           <img src="{{ content_image('home.features.top_left.image', asset('assets/Moc-tab.webp')) }}" alt="SkelApp tablet catalogue" class="feature-tab-mockup" loading="lazy" decoding="async">
@@ -194,8 +203,8 @@
 
       <div class="feature-card feature-rectangle feature-green feature-rectangle-pos">
         <div class="feature-content-left">
-          <h2>{{ content('home.features.top_right.title', 'Mobile Application') }}<br>{{ content('home.features.top_right.title_line_2', 'Ready for Both Apple & Android') }}</h2>
-          <p>{{ content('home.features.top_right.body') }}</p>
+          <h2 class="{{ content_typography_class('home.features.top_right.title') }}" style="{{ content_typography_vars('home.features.top_right.title') }}">{{ content_text('home.features.top_right.title', 'Mobile Application') }}<br>{{ content('home.features.top_right.title_line_2', 'Ready for Both Apple & Android') }}</h2>
+          <p class="{{ content_typography_class('home.features.top_right.body') }}" style="{{ content_typography_vars('home.features.top_right.body') }}">{{ content_text('home.features.top_right.body') }}</p>
         </div>
         <div class="feature-content-right">
           <img src="{{ content_image('home.features.top_right.image', asset('assets/PosSystem.webp')) }}" alt="SkelApp POS system" loading="lazy" decoding="async">
@@ -207,8 +216,8 @@
     <div class="features-row">
       <div class="feature-card feature-rectangle feature-dark feature-rectangle-handheld">
         <div class="feature-content-left">
-          <h2>{{ content('home.features.bottom_left.title', 'Works on mobile, tablet or POS terminal') }}</h2>
-          <p>{{ content('home.features.bottom_left.body') }}</p>
+          <h2 class="{{ content_typography_class('home.features.bottom_left.title') }}" style="{{ content_typography_vars('home.features.bottom_left.title') }}">{{ content_text('home.features.bottom_left.title', 'Works on mobile, tablet or POS terminal') }}</h2>
+          <p class="{{ content_typography_class('home.features.bottom_left.body') }}" style="{{ content_typography_vars('home.features.bottom_left.body') }}">{{ content_text('home.features.bottom_left.body') }}</p>
         </div>
         <div class="feature-content-right">
           <img src="{{ content_image('home.features.bottom_left.image', asset('assets/poswithtab.webp')) }}" alt="SkelApp handheld POS with tablet" class="feature-handheld-pos" loading="lazy" decoding="async">
@@ -217,8 +226,8 @@
 
       <div class="feature-card feature-square feature-light feature-square-reporting">
         <div class="feature-content-top">
-          <h2>{!! nl2br(e(content('home.features.bottom_right.title', 'Smarter sales & staff reporting'))) !!}</h2>
-          <p>{{ content('home.features.bottom_right.body') }}</p>
+          <h2 class="{{ content_typography_class('home.features.bottom_right.title') }}" style="{{ content_typography_vars('home.features.bottom_right.title') }}">{!! nl2br(e(content_text('home.features.bottom_right.title', 'Smarter sales & staff reporting'))) !!}</h2>
+          <p class="{{ content_typography_class('home.features.bottom_right.body') }}" style="{{ content_typography_vars('home.features.bottom_right.body') }}">{{ content_text('home.features.bottom_right.body') }}</p>
         </div>
         <div class="feature-content-bottom">
           <img src="{{ content_image('home.features.bottom_right.image', asset('assets/Moc-lap-phone-02.webp')) }}" alt="SkelApp reporting dashboard on laptop and phone" class="feature-reporting-mockup" loading="lazy" decoding="async">
@@ -232,29 +241,33 @@
   <div class="allfeatures-container">
     <div class="allfeatures-intro-wrap">
       <div class="allfeatures-intro">
-        <h2 class="allfeatures-intro-title">{{ content('home.allfeatures.title_line_1', 'All the features.') }}<br>{{ content('home.allfeatures.title_line_2', 'All in one place.') }}</h2>
-        <p class="allfeatures-intro-copy">
-          {{ content('home.allfeatures.copy') }}
+        <h2 class="allfeatures-intro-title {{ content_typography_class('home.allfeatures.title_line_1') }}" style="{{ content_typography_vars('home.allfeatures.title_line_1') }}">{{ content_text('home.allfeatures.title_line_1', 'All the features.') }}<br>{{ content_text('home.allfeatures.title_line_2', 'All in one place.') }}</h2>
+        <p class="allfeatures-intro-copy {{ content_typography_class('home.allfeatures.copy') }}" style="{{ content_typography_vars('home.allfeatures.copy') }}">
+          {{ content_text('home.allfeatures.copy') }}
         </p>
         <a href="{{ content('home.allfeatures.cta_url', '#') }}" class="btn-download">{{ content('home.allfeatures.cta_label', 'Download Now') }}</a>
       </div>
     </div>
 
     <div class="allfeatures-grid">
-      @foreach ($allFeatureCards as $featureCard)
+      @foreach ($allFeatureCards as $idx => $featureCard)
+        @php
+          $titleKey = "home.allfeatures.cards.{$idx}.title";
+          $copyKey = "home.allfeatures.cards.{$idx}.copy";
+        @endphp
         <article class="allfeatures-card">
           <div class="allfeatures-card-media">
             <img
               src="{{ cms_image($featureCard['image'] ?? null, asset('assets/crm.webp')) }}"
-              alt="{{ $featureCard['title'] ?? '' }}"
+              alt="{{ content_text($titleKey, $featureCard['title'] ?? '') }}"
               width="352"
               height="352"
               loading="lazy"
               decoding="async"
             >
           </div>
-          <h2>{{ $featureCard['title'] ?? '' }}</h2>
-          <p>{{ $featureCard['copy'] ?? '' }}</p>
+          <h2 class="{{ content_typography_class($titleKey) }}" style="{{ content_typography_vars($titleKey) }}">{{ content_text($titleKey, $featureCard['title'] ?? '') }}</h2>
+          <p class="{{ content_typography_class($copyKey) }}" style="{{ content_typography_vars($copyKey) }}">{{ content_text($copyKey, $featureCard['copy'] ?? '') }}</p>
         </article>
       @endforeach
     </div>
@@ -266,8 +279,8 @@
     <div class="how-it-works-stage">
       <div class="section-headerr">
         <div class="section-headerr-copy">
-          <h2>{{ content('home.howitworks.title', 'Up and running in under 5 minutes.') }}</h2>
-          <p>{{ content('home.howitworks.copy') }}</p>
+          <h2 class="{{ content_typography_class('home.howitworks.title') }}" style="{{ content_typography_vars('home.howitworks.title') }}">{{ content_text('home.howitworks.title', 'Up and running in under 5 minutes.') }}</h2>
+          <p class="{{ content_typography_class('home.howitworks.copy') }}" style="{{ content_typography_vars('home.howitworks.copy') }}">{{ content_text('home.howitworks.copy') }}</p>
         </div>
         <div class="section-headerr-action">
           <a href="{{ content('home.howitworks.cta_url', '#') }}" class="btn-download">{{ content('home.howitworks.cta_label', 'Download Now') }}</a>
@@ -279,17 +292,21 @@
           <div class="steps-line-progress"></div>
         </div>
         <div class="steps-container">
-          @foreach ($howSteps as $step)
+          @foreach ($howSteps as $idx => $step)
+            @php
+              $titleKey = "home.howitworks.steps.{$idx}.title";
+              $copyKey = "home.howitworks.steps.{$idx}.copy";
+            @endphp
             <article class="step-item">
               <div class="step-image">
-                <img src="{{ cms_image($step['image'] ?? null, asset('assets/rw.jpeg')) }}" alt="{{ $step['title'] ?? '' }}" loading="lazy" decoding="async">
+                <img src="{{ cms_image($step['image'] ?? null, asset('assets/rw.jpeg')) }}" alt="{{ content_text($titleKey, $step['title'] ?? '') }}" loading="lazy" decoding="async">
               </div>
               <div class="step-marker">
                 <div class="step-number-box">{{ $loop->iteration }}</div>
               </div>
               <div class="step-content">
-                <h3>{{ $step['title'] ?? '' }}</h3>
-                <p>{{ $step['copy'] ?? '' }}</p>
+                <h3 class="{{ content_typography_class($titleKey) }}" style="{{ content_typography_vars($titleKey) }}">{{ content_text($titleKey, $step['title'] ?? '') }}</h3>
+                <p class="{{ content_typography_class($copyKey) }}" style="{{ content_typography_vars($copyKey) }}">{{ content_text($copyKey, $step['copy'] ?? '') }}</p>
               </div>
             </article>
           @endforeach
@@ -304,9 +321,9 @@
   <div class="container">
     <div class="hardware-card">
       <div class="hardware-content">
-        <span class="hardware-label">{{ content('home.hardware.label', 'Optional hardware — if you want the full setup') }}</span>
-        <h2>{{ content('home.hardware.title', 'Complete your setup with Skel hardware.') }}</h2>
-        <p>{{ content('home.hardware.copy') }}</p>
+        <span class="hardware-label {{ content_typography_class('home.hardware.label') }}" style="{{ content_typography_vars('home.hardware.label') }}">{{ content_text('home.hardware.label', 'Optional hardware — if you want the full setup') }}</span>
+        <h2 class="{{ content_typography_class('home.hardware.title') }}" style="{{ content_typography_vars('home.hardware.title') }}">{{ content_text('home.hardware.title', 'Complete your setup with Skel hardware.') }}</h2>
+        <p class="{{ content_typography_class('home.hardware.copy') }}" style="{{ content_typography_vars('home.hardware.copy') }}">{{ content_text('home.hardware.copy') }}</p>
 
         <a href="{{ content('home.hardware.cta_url', '#') }}" class="btn-hardware">
           {{ content('home.hardware.cta_label', 'Request Hardware Pricing') }}
@@ -349,12 +366,12 @@
 
       <!-- Right Side - Pricing Details -->
       <div class="pricing-details">
-        <p class="pricing-intro">{{ content('home.pricing_summary.intro') }}</p>
+        <p class="pricing-intro {{ content_typography_class('home.pricing_summary.intro') }}" style="{{ content_typography_vars('home.pricing_summary.intro') }}">{{ content_text('home.pricing_summary.intro') }}</p>
 
-        <h2>{{ content('home.pricing_summary.title_line_1', 'SkelApp') }} <br>{{ content('home.pricing_summary.title_line_2', 'Subscription') }}</h2>
+        <h2 class="{{ content_typography_class('home.pricing_summary.title_line_1') }}" style="{{ content_typography_vars('home.pricing_summary.title_line_1') }}">{{ content_text('home.pricing_summary.title_line_1', 'SkelApp') }} <br>{{ content('home.pricing_summary.title_line_2', 'Subscription') }}</h2>
 
-        <p class="pricing-description">
-          {{ content('home.pricing_summary.description') }}
+        <p class="pricing-description {{ content_typography_class('home.pricing_summary.description') }}" style="{{ content_typography_vars('home.pricing_summary.description') }}">
+          {{ content_text('home.pricing_summary.description') }}
         </p>
 
         <ul class="pricing-features">
@@ -432,7 +449,7 @@
   </div>
   <div class="cta-content-wrapper">
     <div class="cta-content">
-      <h2>{{ content('home.image_cta.heading', 'Building momentum to move your business 1% better every day.') }}</h2>
+      <h2 class="{{ content_typography_class('home.image_cta.heading') }}" style="{{ content_typography_vars('home.image_cta.heading') }}">{{ content_text('home.image_cta.heading', 'Building momentum to move your business 1% better every day.') }}</h2>
       <a href="{{ content('home.image_cta.cta_url', '#') }}" class="btn-cta">
         {{ content('home.image_cta.cta_label', 'Download SkelApp Today') }}
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

@@ -1,5 +1,5 @@
 @component('admin.pages.fields.section', ['title' => 'Full FAQ page (/faq)'])
-  @include('admin.pages.fields.text', ['name' => 'page.title', 'label' => 'Sidebar heading (e.g. "FAQs")'])
+  @include('admin.pages.fields.text_typography', ['name' => 'page.title', 'label' => 'Sidebar heading (e.g. "FAQs")', 'preset' => 'h1-display'])
 
   @include('admin.pages.fields.repeater', [
     'name' => 'page.groups',
@@ -16,8 +16,8 @@
 @endcomponent
 
 @component('admin.pages.fields.section', ['title' => 'Home-page FAQ preview', 'subtitle' => 'The short accordion shown on the home + pricing pages.'])
-  @include('admin.pages.fields.text', ['name' => 'home_preview.heading', 'label' => 'Section heading'])
-  @include('admin.pages.fields.text', ['name' => 'home_preview.subtitle', 'label' => 'Subtitle eyebrow (e.g. "How it works")'])
+  @include('admin.pages.fields.text_typography', ['name' => 'home_preview.heading', 'label' => 'Section heading', 'preset' => 'h2-section'])
+  @include('admin.pages.fields.text_typography', ['name' => 'home_preview.subtitle', 'label' => 'Subtitle eyebrow (e.g. "How it works")', 'preset' => 'label'])
   @include('admin.pages.fields.text', ['name' => 'home_preview.read_more_label', 'label' => '"Read more" link label'])
 
   @include('admin.pages.fields.repeater', [

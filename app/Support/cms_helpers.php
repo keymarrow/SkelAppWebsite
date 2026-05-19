@@ -73,6 +73,114 @@ if (! function_exists('cms_image')) {
     }
 }
 
+if (! function_exists('content_text')) {
+    /**
+     * Read a text value. Supports both plain strings and typography-wrapped
+     * objects like {"text": "...", "typography": {...}}. The fallback may also
+     * be either form — handy when iterating a repeater row whose value is now
+     * an object after typography was enabled for that field.
+     */
+    function content_text(string $key, mixed $fallback = null): string
+    {
+        $normalize = function ($value): ?string {
+            if (is_array($value)) {
+                $text = $value['text'] ?? null;
+                return is_string($text) && $text !== '' ? $text : null;
+            }
+            return is_string($value) && $value !== '' ? $value : null;
+        };
+
+        $raw = content($key, null);
+        $fromKey = $normalize($raw);
+        if ($fromKey !== null) {
+            return $fromKey;
+        }
+        $fromFallback = $normalize($fallback);
+        return $fromFallback ?? '';
+    }
+}
+
+if (! function_exists('content_typography_vars')) {
+    /**
+     * Build the CSS-variable string from a typography config object stored at $key.
+     * Returns "" when no overrides are set.
+     */
+    function content_typography_vars(string $key): string
+    {
+        $raw = content($key, null);
+        if (! is_array($raw) || empty($raw['typography']) || ! is_array($raw['typography'])) {
+            return '';
+        }
+        $map = [
+            'font_size' => 'fs',
+            'font_weight' => 'fw',
+            'font_style' => 'fst',
+            'line_height' => 'lh',
+            'letter_spacing' => 'ls',
+            'text_align' => 'ta',
+            'color' => 'color',
+        ];
+        $vars = [];
+        foreach (['desktop', 'tablet', 'mobile'] as $viewport) {
+            $bucket = $raw['typography'][$viewport] ?? null;
+            if (! is_array($bucket)) {
+                continue;
+            }
+            foreach ($map as $field => $short) {
+                $value = $bucket[$field] ?? null;
+                if ($value === null || $value === '') {
+                    continue;
+                }
+                if ($field === 'font_size' && is_numeric($value)) {
+                    $value = $value.'px';
+                }
+                $vars[] = '--cms-'.$short.'-'.$viewport.':'.$value;
+            }
+        }
+        return implode(';', $vars);
+    }
+}
+
+if (! function_exists('content_typography_class')) {
+    /**
+     * Returns "cms-typo" when typography overrides exist at $key, otherwise empty.
+     * Drop it into existing class lists in Blade: class="hero-title {{ content_typography_class(...) }}"
+     */
+    function content_typography_class(string $key): string
+    {
+        return content_typography_vars($key) === '' ? '' : 'cms-typo';
+    }
+}
+
+if (! function_exists('content_typography_html')) {
+    /**
+     * Emits the full `class="..."` (optionally) `style="..."` attribute pair for
+     * a CMS-styled element, with proper escaping. Returns "" when neither base
+     * class nor typography overrides exist. Use with `{!! ... !!}`:
+     *
+     *   <h1 {!! content_typography_html('home.hero.title', 'hero-title') !!}>...</h1>
+     *
+     * Avoids the empty `style=""` attributes that confuse IDE CSS analyzers when
+     * typography isn't set.
+     */
+    function content_typography_html(string $key, string $baseClass = ''): string
+    {
+        $typoClass = content_typography_class($key);
+        $vars = content_typography_vars($key);
+        $classList = trim($baseClass.' '.$typoClass);
+
+        $parts = [];
+        if ($classList !== '') {
+            $parts[] = 'class="'.htmlspecialchars($classList, ENT_QUOTES).'"';
+        }
+        if ($vars !== '') {
+            $parts[] = 'style="'.htmlspecialchars($vars, ENT_QUOTES).'"';
+        }
+
+        return implode(' ', $parts);
+    }
+}
+
 if (! function_exists('content_image')) {
     /**
      * Convenience: read a content key and resolve as an image URL in one call.

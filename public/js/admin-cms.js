@@ -238,33 +238,51 @@
     });
 
     // Viewport-mode buttons (Desktop / Tablet / Mobile).
-    // The iframe always renders at the true device width — we shrink it
-    // visually via CSS transform so the public stylesheet picks the right
-    // breakpoint.
+    // The iframe is resized to the *true* device width (e.g. 390px for mobile)
+    // so the public CSS picks the matching @media breakpoint. We then visually
+    // shrink it with a CSS transform so it fits the preview panel.
     const PREVIEW_MODE_KEY = 'skelapp-admin-preview-mode';
+    const PREVIEW_DEVICE_DIMENSIONS = {
+      desktop: { width: 1440, height: 950 },
+      tablet: { width: 768, height: 1024 },
+      mobile: { width: 390, height: 844 },
+    };
     const modeButtons = editor.querySelectorAll('[data-cms-preview-mode]');
     const frameWrap = editor.querySelector('[data-cms-preview-frame-wrap]');
     const frameStage = editor.querySelector('[data-cms-preview-frame-stage]');
+    let currentMode = frameWrap?.dataset.mode || 'desktop';
 
     const recomputeScale = () => {
       if (!frameWrap || !frameStage) return;
+      const dims = PREVIEW_DEVICE_DIMENSIONS[currentMode] || PREVIEW_DEVICE_DIMENSIONS.desktop;
       const styles = getComputedStyle(frameWrap);
-      const deviceWidth = parseFloat(styles.getPropertyValue('--device-width')) || 1440;
-      const deviceHeight = parseFloat(styles.getPropertyValue('--device-height')) || 950;
-      const padding = parseFloat(styles.paddingLeft) + parseFloat(styles.paddingRight);
-      const innerWidth = frameWrap.clientWidth - padding;
+      const padX = parseFloat(styles.paddingLeft) + parseFloat(styles.paddingRight);
+      const padY = parseFloat(styles.paddingTop) + parseFloat(styles.paddingBottom);
+      const innerWidth = frameWrap.clientWidth - padX;
       if (innerWidth <= 0) return;
-      const scale = Math.min(1, innerWidth / deviceWidth);
+      const scale = Math.min(1, innerWidth / dims.width);
+      // Set the stage to the exact device pixel size — belt-and-suspenders, so
+      // the iframe definitely loads with that viewport regardless of CSS var
+      // resolution timing.
+      frameStage.style.width = dims.width + 'px';
+      frameStage.style.height = dims.height + 'px';
       frameStage.style.setProperty('--scale', scale);
-      // Resize the wrap so it hugs the scaled iframe height (no empty space below).
-      const verticalPadding = parseFloat(styles.paddingTop) + parseFloat(styles.paddingBottom);
-      const scaledHeight = deviceHeight * scale;
+      // And mirror onto the iframe in case width:100% doesn't propagate in
+      // some browsers during transitions.
+      if (frame) {
+        frame.style.width = dims.width + 'px';
+        frame.style.height = dims.height + 'px';
+      }
+      // Resize the wrap to hug the scaled iframe height (no empty gutter).
+      const scaledHeight = dims.height * scale;
       const maxHeight = window.innerHeight * 0.82;
-      frameWrap.style.height = Math.min(scaledHeight, maxHeight) + verticalPadding + 'px';
+      frameWrap.style.height = Math.min(scaledHeight, maxHeight) + padY + 'px';
     };
 
-    const applyMode = (mode) => {
+    const applyMode = (mode, { force = false } = {}) => {
       if (!frameWrap) return;
+      const prevMode = currentMode;
+      currentMode = mode;
       frameWrap.dataset.mode = mode;
       modeButtons.forEach((btn) => {
         const isActive = btn.dataset.cmsPreviewMode === mode;
@@ -272,28 +290,40 @@
         btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
       });
       try { localStorage.setItem(PREVIEW_MODE_KEY, mode); } catch (err) { /* ignore */ }
-      // The browser needs a tick to apply the new CSS vars before we measure.
-      window.requestAnimationFrame(recomputeScale);
+
+      window.requestAnimationFrame(() => {
+        recomputeScale();
+        // Force a fresh load of the public page at the new viewport size so
+        // CSS media queries are re-evaluated by the iframe's content document.
+        if (frame && (force || prevMode !== mode)) {
+          const url = new URL(frame.src, window.location.origin);
+          url.searchParams.set('mode', mode);
+          url.searchParams.set('ts', String(Date.now()));
+          frame.src = url.toString();
+          syncOpenLink();
+        }
+      });
     };
 
     modeButtons.forEach((btn) => {
       btn.addEventListener('click', () => applyMode(btn.dataset.cmsPreviewMode));
     });
 
-    // Restore last-used mode (falls back to desktop by default).
+    // Restore last-used mode (falls back to desktop).
     let restored = false;
     try {
       const saved = localStorage.getItem(PREVIEW_MODE_KEY);
-      if (saved && ['desktop', 'tablet', 'mobile'].includes(saved)) {
-        applyMode(saved);
+      if (saved && saved in PREVIEW_DEVICE_DIMENSIONS) {
+        applyMode(saved, { force: true });
         restored = true;
       }
     } catch (err) { /* ignore */ }
     if (!restored) {
-      recomputeScale();
+      // Apply default desktop dims explicitly so initial measure is correct.
+      applyMode(currentMode, { force: false });
     }
 
-    // Recompute when the panel itself resizes (sidebar collapse, window resize).
+    // Recompute when the panel resizes (sidebar collapse, window resize).
     if (typeof ResizeObserver === 'function' && frameWrap) {
       new ResizeObserver(() => recomputeScale()).observe(frameWrap);
     } else {
@@ -435,6 +465,32 @@
   window.__cmsInitImageField = null;
 
   initCmsImagePickers();
+  initCmsTypographyTabs();
+
+  function initCmsTypographyTabs() {
+    document.querySelectorAll('[data-cms-typography-field]').forEach((field) => {
+      const tabs = field.querySelectorAll('[data-typography-tab]');
+      const bodies = field.querySelectorAll('[data-typography-body]');
+      if (!tabs.length || !bodies.length) return;
+
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', (event) => {
+          event.preventDefault();
+          const target = tab.dataset.typographyTab;
+          tabs.forEach((t) => {
+            const isActive = t === tab;
+            t.classList.toggle('is-active', isActive);
+            t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          });
+          bodies.forEach((body) => {
+            const isMatch = body.dataset.typographyBody === target;
+            body.classList.toggle('is-active', isMatch);
+            body.hidden = !isMatch;
+          });
+        });
+      });
+    });
+  }
 
   function initCmsImagePickers() {
     const modal = document.querySelector('[data-cms-media-modal]');

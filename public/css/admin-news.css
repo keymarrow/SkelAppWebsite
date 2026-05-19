@@ -3088,3 +3088,124 @@ body.cms-modal-open {
   .dashboard-mini-stats { grid-template-columns: 1fr; }
   .cms-detail-grid { grid-template-columns: 1fr; }
 }
+
+/* =====================================================================
+   CMS typography field (text + per-viewport overrides)
+   ===================================================================== */
+.cms-field--typography {
+  /* The base text input already has cms-field spacing; we add the panel below. */
+}
+
+.cms-typography-panel {
+  margin-top: 8px;
+  border: 1px dashed rgba(15, 17, 22, 0.12);
+  border-radius: 10px;
+  background: #fafbfc;
+}
+
+.cms-typography-panel > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  list-style: none;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #4d5460;
+}
+
+.cms-typography-panel > summary::-webkit-details-marker { display: none; }
+
+.cms-typography-panel > summary::before {
+  content: "Aa";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: rgba(74, 173, 119, 0.10);
+  color: #16a34a;
+  font-size: 0.72rem;
+  font-weight: 700;
+  margin-right: 8px;
+}
+
+.cms-typography-panel[open] > summary {
+  border-bottom: 1px solid rgba(15, 17, 22, 0.08);
+}
+
+.cms-typography-panel > summary small {
+  color: #8a8f99;
+  font-weight: 500;
+  font-size: 0.76rem;
+  margin-left: auto;
+}
+
+.cms-typography-tabs {
+  display: inline-flex;
+  margin: 12px 14px 0;
+  background: rgba(15, 17, 22, 0.05);
+  border-radius: 8px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.cms-typography-tab {
+  padding: 5px 12px;
+  border: 0;
+  background: transparent;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #6b7380;
+  cursor: pointer;
+}
+
+.cms-typography-tab.is-active {
+  background: #ffffff;
+  color: #0f1116;
+  box-shadow: 0 1px 2px rgba(15, 17, 22, 0.08);
+}
+
+.cms-typography-panel-body {
+  padding: 12px 14px 14px;
+}
+
+.cms-typography-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.cms-typography-input {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cms-typography-input span {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #6b7380;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cms-typography-input--full {
+  grid-column: 1 / -1;
+}
+
+.cms-typography-input .cms-input {
+  padding: 7px 10px;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 720px) {
+  .cms-typography-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

@@ -18,7 +18,7 @@
   <main class="faq-page">
     <div class="faq-page-shell">
       <aside class="faq-page-sidebar">
-        <h1 class="faq-page-title">{{ content('faq.page.title', 'FAQs') }}</h1>
+        <h1 class="faq-page-title {{ content_typography_class('faq.page.title') }}" style="{{ content_typography_vars('faq.page.title') }}">{{ content_text('faq.page.title', 'FAQs') }}</h1>
 
         <div class="faq-page-categories" role="navigation" aria-label="FAQ categories">
           @foreach ($faqGroups as $group)

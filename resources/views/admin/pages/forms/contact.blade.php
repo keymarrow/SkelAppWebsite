@@ -1,11 +1,11 @@
 @component('admin.pages.fields.section', ['title' => 'Page hero'])
-  @include('admin.pages.fields.text', ['name' => 'hero.heading', 'label' => 'Big heading (top of page)'])
+  @include('admin.pages.fields.text_typography', ['name' => 'hero.heading', 'label' => 'Big heading (top of page)', 'preset' => 'h1-hero'])
 @endcomponent
 
 @component('admin.pages.fields.section', ['title' => 'Left-side info panel'])
-  @include('admin.pages.fields.text', ['name' => 'info.heading', 'label' => 'Panel heading (e.g. "Contact Us:")'])
-  @include('admin.pages.fields.textarea', ['name' => 'info.intro', 'label' => 'Intro paragraph', 'rows' => 2])
-  @include('admin.pages.fields.text', ['name' => 'info.social_heading', 'label' => 'Heading above social icons'])
+  @include('admin.pages.fields.text_typography', ['name' => 'info.heading', 'label' => 'Panel heading (e.g. "Contact Us:")', 'preset' => 'h2-section'])
+  @include('admin.pages.fields.text_typography', ['name' => 'info.intro', 'label' => 'Intro paragraph', 'preset' => 'body', 'multiline' => true, 'rows' => 2])
+  @include('admin.pages.fields.text_typography', ['name' => 'info.social_heading', 'label' => 'Heading above social icons', 'preset' => 'body'])
 
   @include('admin.pages.fields.repeater', [
     'name' => 'cards',
@@ -26,7 +26,7 @@
 @endcomponent
 
 @component('admin.pages.fields.section', ['title' => 'Right-side demo form'])
-  @include('admin.pages.fields.text', ['name' => 'form.heading', 'label' => 'Form heading'])
+  @include('admin.pages.fields.text_typography', ['name' => 'form.heading', 'label' => 'Form heading', 'preset' => 'h2-section'])
 
   @include('admin.pages.fields.text', ['name' => 'form.first_name_label', 'label' => 'First name field label'])
   @include('admin.pages.fields.text', ['name' => 'form.first_name_placeholder', 'label' => 'First name placeholder'])

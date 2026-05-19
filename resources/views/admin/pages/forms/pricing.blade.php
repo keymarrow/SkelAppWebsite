@@ -7,12 +7,12 @@
     ],
   ])
 
-  @include('admin.pages.fields.textarea', ['name' => 'header.subtitle', 'label' => 'Subtitle paragraph', 'rows' => 3])
+  @include('admin.pages.fields.text_typography', ['name' => 'header.subtitle', 'label' => 'Subtitle paragraph', 'preset' => 'body-lead', 'multiline' => true, 'rows' => 3])
 @endcomponent
 
 @component('admin.pages.fields.section', ['title' => 'Features box', 'subtitle' => 'Left-hand card on the pricing layout'])
-  @include('admin.pages.fields.text', ['name' => 'features_box.title', 'label' => 'Box heading'])
-  @include('admin.pages.fields.text', ['name' => 'features_box.subtitle', 'label' => 'Box subtitle'])
+  @include('admin.pages.fields.text_typography', ['name' => 'features_box.title', 'label' => 'Box heading', 'preset' => 'h3-card'])
+  @include('admin.pages.fields.text_typography', ['name' => 'features_box.subtitle', 'label' => 'Box subtitle', 'preset' => 'body'])
 
   @include('admin.pages.fields.repeater', [
     'name' => 'features',
@@ -24,8 +24,8 @@
 @endcomponent
 
 @component('admin.pages.fields.section', ['title' => 'Pricing plans', 'subtitle' => 'Right-hand card with the radio plans'])
-  @include('admin.pages.fields.text', ['name' => 'plans_box.title', 'label' => 'Box heading'])
-  @include('admin.pages.fields.text', ['name' => 'plans_box.subtitle', 'label' => 'Box subtitle'])
+  @include('admin.pages.fields.text_typography', ['name' => 'plans_box.title', 'label' => 'Box heading', 'preset' => 'h3-card'])
+  @include('admin.pages.fields.text_typography', ['name' => 'plans_box.subtitle', 'label' => 'Box subtitle', 'preset' => 'body'])
 
   @include('admin.pages.fields.repeater', [
     'name' => 'plans',
@@ -44,11 +44,11 @@
 @endcomponent
 
 @component('admin.pages.fields.section', ['title' => '"Get Started" footer block', 'subtitle' => 'Phone mockup + download CTA at the bottom of the page'])
-  @include('admin.pages.fields.text', ['name' => 'getstarted.title_top', 'label' => 'Title — first line'])
+  @include('admin.pages.fields.text_typography', ['name' => 'getstarted.title_top', 'label' => 'Title — first line', 'preset' => 'h2-section'])
   @include('admin.pages.fields.text', ['name' => 'getstarted.title_bottom', 'label' => 'Title — second line'])
   @include('admin.pages.fields.text', ['name' => 'getstarted.cta_label', 'label' => 'Button text'])
   @include('admin.pages.fields.text', ['name' => 'getstarted.cta_url', 'label' => 'Button URL'])
-  @include('admin.pages.fields.textarea', ['name' => 'getstarted.copy', 'label' => 'Supporting paragraph', 'rows' => 3])
+  @include('admin.pages.fields.text_typography', ['name' => 'getstarted.copy', 'label' => 'Supporting paragraph', 'preset' => 'body', 'multiline' => true, 'rows' => 3])
   @include('admin.pages.fields.image', ['name' => 'getstarted.phone_image', 'label' => 'Phone mockup image', 'hint' => 'PNG or WebP recommended.'])
 @endcomponent
 

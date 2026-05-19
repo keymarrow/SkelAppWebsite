@@ -9083,3 +9083,49 @@ nav {
     font-size: 0.95rem;
   }
 }
+
+/* =====================================================================
+   CMS typography overrides
+   --------------------------------------------------------------------
+   Elements wrapped by `content_typography_attrs()` get class `.cms-typo`
+   plus inline custom properties. The rules below apply those properties
+   per-viewport, with each smaller breakpoint falling back to the bigger
+   one so admins only need to fill in what they want to override.
+   ===================================================================== */
+.cms-typo {
+  font-size: var(--cms-fs-desktop) !important;
+  font-weight: var(--cms-fw-desktop) !important;
+  font-style: var(--cms-fst-desktop) !important;
+  line-height: var(--cms-lh-desktop) !important;
+  letter-spacing: var(--cms-ls-desktop) !important;
+  text-align: var(--cms-ta-desktop) !important;
+  color: var(--cms-color-desktop) !important;
+}
+
+/* When a custom property isn't set the declaration is "invalid at computed
+   value time" and that single declaration is ignored — meaning the element's
+   prior CSS stays intact for that property. So unset props just no-op. */
+
+@media (max-width: 1024px) {
+  .cms-typo {
+    font-size: var(--cms-fs-tablet, var(--cms-fs-desktop)) !important;
+    font-weight: var(--cms-fw-tablet, var(--cms-fw-desktop)) !important;
+    font-style: var(--cms-fst-tablet, var(--cms-fst-desktop)) !important;
+    line-height: var(--cms-lh-tablet, var(--cms-lh-desktop)) !important;
+    letter-spacing: var(--cms-ls-tablet, var(--cms-ls-desktop)) !important;
+    text-align: var(--cms-ta-tablet, var(--cms-ta-desktop)) !important;
+    color: var(--cms-color-tablet, var(--cms-color-desktop)) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .cms-typo {
+    font-size: var(--cms-fs-mobile, var(--cms-fs-tablet, var(--cms-fs-desktop))) !important;
+    font-weight: var(--cms-fw-mobile, var(--cms-fw-tablet, var(--cms-fw-desktop))) !important;
+    font-style: var(--cms-fst-mobile, var(--cms-fst-tablet, var(--cms-fst-desktop))) !important;
+    line-height: var(--cms-lh-mobile, var(--cms-lh-tablet, var(--cms-lh-desktop))) !important;
+    letter-spacing: var(--cms-ls-mobile, var(--cms-ls-tablet, var(--cms-ls-desktop))) !important;
+    text-align: var(--cms-ta-mobile, var(--cms-ta-tablet, var(--cms-ta-desktop))) !important;
+    color: var(--cms-color-mobile, var(--cms-color-tablet, var(--cms-color-desktop))) !important;
+  }
+}

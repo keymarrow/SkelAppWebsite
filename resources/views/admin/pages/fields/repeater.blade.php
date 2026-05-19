@@ -37,6 +37,8 @@
               </div>
             @elseif ($fieldType === 'image')
               @include('admin.pages.fields.image', ['name' => $fieldName, 'label' => $fieldLabel, 'current' => $fieldValue, 'content' => null, 'hint' => $field['hint'] ?? null])
+            @elseif ($fieldType === 'text_typography')
+              @include('admin.pages.fields.text_typography', ['name' => $fieldName, 'label' => $fieldLabel, 'value' => $fieldValue, 'content' => null, 'preset' => $field['preset'] ?? null, 'multiline' => $field['multiline'] ?? false, 'rows' => $field['rows'] ?? null])
             @else
               @include('admin.pages.fields.text', ['name' => $fieldName, 'label' => $fieldLabel, 'value' => $fieldValue, 'content' => null])
             @endif

@@ -1,6 +1,6 @@
 @component('admin.pages.fields.section', ['title' => 'Page hero'])
-  @include('admin.pages.fields.text', ['name' => 'hero.heading', 'label' => 'Big page heading'])
-  @include('admin.pages.fields.text', ['name' => 'hero.last_updated', 'label' => '"Last updated" line'])
+  @include('admin.pages.fields.text_typography', ['name' => 'hero.heading', 'label' => 'Big page heading', 'preset' => 'h1-display'])
+  @include('admin.pages.fields.text_typography', ['name' => 'hero.last_updated', 'label' => '"Last updated" line', 'preset' => 'label'])
 @endcomponent
 
 @component('admin.pages.fields.section', ['title' => 'Intro paragraphs (before numbered sections)'])

@@ -18,8 +18,8 @@
 
 <main class="terms-main">
   <section class="terms-hero">
-    <h1>{{ content('terms.hero.heading', 'Terms of Service') }}</h1>
-    <p class="terms-updated">{{ content('terms.hero.last_updated') }}</p>
+    <h1 class="{{ content_typography_class('terms.hero.heading') }}" style="{{ content_typography_vars('terms.hero.heading') }}">{{ content_text('terms.hero.heading', 'Terms of Service') }}</h1>
+    <p class="terms-updated {{ content_typography_class('terms.hero.last_updated') }}" style="{{ content_typography_vars('terms.hero.last_updated') }}">{{ content_text('terms.hero.last_updated') }}</p>
   </section>
 
   <section class="terms-card">

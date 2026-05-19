@@ -29,7 +29,7 @@
 {{-- ── Page ── --}}
 <main class="contact-page">
 
-  <h1 class="contact-hero-heading">{{ content('contact.hero.heading', "Ready to get started? We're just a message away!") }}</h1>
+  <h1 class="contact-hero-heading {{ content_typography_class('contact.hero.heading') }}" style="{{ content_typography_vars('contact.hero.heading') }}">{{ content_text('contact.hero.heading', "Ready to get started? We're just a message away!") }}</h1>
 
   {{-- Flash messages --}}
   @if (session('success'))
@@ -48,8 +48,8 @@
 
     {{-- ── Left: contact info ── --}}
     <aside class="contact-info-panel">
-      <h2>{{ content('contact.info.heading', 'Contact Us:') }}</h2>
-      <p>{{ content('contact.info.intro') }}</p>
+      <h2 class="{{ content_typography_class('contact.info.heading') }}" style="{{ content_typography_vars('contact.info.heading') }}">{{ content_text('contact.info.heading', 'Contact Us:') }}</h2>
+      <p class="{{ content_typography_class('contact.info.intro') }}" style="{{ content_typography_vars('contact.info.intro') }}">{{ content_text('contact.info.intro') }}</p>
 
       <div class="contact-cards">
         @foreach ($contactCards as $card)
@@ -84,7 +84,7 @@
         @endforeach
       </div>
 
-      <p class="contact-social-heading">{{ content('contact.info.social_heading') }}</p>
+      <p class="contact-social-heading {{ content_typography_class('contact.info.social_heading') }}" style="{{ content_typography_vars('contact.info.social_heading') }}">{{ content_text('contact.info.social_heading') }}</p>
 
       <div class="contact-social-icons">
         @foreach ($contactSocials as $social)
@@ -100,7 +100,7 @@
 
     {{-- ── Right: form ── --}}
     <div class="contact-form-card">
-      <h2>{{ content('contact.form.heading', 'Book a Demo') }}</h2>
+      <h2 class="{{ content_typography_class('contact.form.heading') }}" style="{{ content_typography_vars('contact.form.heading') }}">{{ content_text('contact.form.heading', 'Book a Demo') }}</h2>
 
       <form method="POST" action="{{ route('contact.send') }}" novalidate>
         @csrf
