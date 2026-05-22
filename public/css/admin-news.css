@@ -174,8 +174,8 @@ button {
 .admin-logout {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 11px 16px;
+  gap: 5px;
+  padding: 5px 16px;
   border-radius: 12px;
   color: rgba(242, 248, 244, 0.78);
   background: transparent;
@@ -198,7 +198,6 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.08);
   color: rgba(242, 248, 244, 0.88);
 }
 

@@ -21,6 +21,7 @@ $registerPublicRoutes = function (): void {
     Route::view('/terms-of-service', 'terms')->name('terms.show');
     Route::view('/faq', 'faq')->name('faq.show');
     Route::view('/pricing', 'pricing')->name('pricing.show');
+    Route::view('/features', 'features')->name('features.show');
 
     Route::get('/contact', function () {
         return view('contact');

@@ -2,7 +2,7 @@
   $isHome = $isHome ?? false;
   $sectionPrefix = $isHome ? '' : url('/');
   $primaryNavLinks = [
-    ['label' => 'Features', 'href' => $sectionPrefix . '#features'],
+    ['label' => 'Features', 'href' => route('features.show'), 'route' => 'features.show'],
     ['label' => 'How it Works', 'href' => $sectionPrefix . '#howitworks'],
   ];
   $secondaryNavLinks = [

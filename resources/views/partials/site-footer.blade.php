@@ -67,7 +67,13 @@
         <div class="footer-nav-group">
           <h4 class="footer-nav-title">More</h4>
           <ul class="footer-nav-list">
-            <li><a href="{{ $footerHomeUrl }}#features">Features</a></li>
+            <li>
+              <a href="{{ route('features.show') }}"
+                 @class(['is-active' => $currentRoute === 'features.show'])
+                 @if($currentRoute === 'features.show') aria-current="page" @endif>
+                Features
+              </a>
+            </li>
             <li>
               <a href="{{ route('pricing.show') }}"
                  @class(['is-active' => $currentRoute === 'pricing.show'])
@@ -199,7 +205,13 @@
           <div class="footer-nav-group">
             <h4 class="footer-nav-title">More</h4>
             <ul class="footer-nav-list">
-              <li><a href="{{ $footerHomeUrl }}#features">Features</a></li>
+              <li>
+              <a href="{{ route('features.show') }}"
+                 @class(['is-active' => $currentRoute === 'features.show'])
+                 @if($currentRoute === 'features.show') aria-current="page" @endif>
+                Features
+              </a>
+            </li>
               <li>
                 <a href="{{ route('pricing.show') }}"
                    @class(['is-active' => $currentRoute === 'pricing.show'])

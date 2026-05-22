@@ -6,6 +6,7 @@ final class CmsPreview
 {
     private const SCREENS = [
         'home' => ['label' => 'Home page', 'view' => 'welcome'],
+        'features' => ['label' => 'Features page', 'view' => 'features'],
         'pricing' => ['label' => 'Pricing page', 'view' => 'pricing'],
         'faq' => ['label' => 'FAQ page', 'view' => 'faq'],
         'contact' => ['label' => 'Contact page', 'view' => 'contact'],
@@ -14,11 +15,12 @@ final class CmsPreview
 
     private const TARGETS = [
         'home' => ['home'],
+        'features' => ['features'],
         'pricing' => ['pricing'],
         'faq' => ['faq', 'home'],
         'contact' => ['contact'],
         'terms' => ['terms'],
-        'global' => ['home', 'pricing', 'faq', 'contact', 'terms'],
+        'global' => ['home', 'features', 'pricing', 'faq', 'contact', 'terms'],
     ];
 
     public static function targetsFor(string $editedSlug): array

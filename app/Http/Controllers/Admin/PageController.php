@@ -21,6 +21,7 @@ class PageController extends Controller
      */
     public const PAGES = [
         'home' => ['label' => 'Home', 'view' => 'admin.pages.forms.home'],
+        'features' => ['label' => 'Features', 'view' => 'admin.pages.forms.features'],
         'pricing' => ['label' => 'Pricing', 'view' => 'admin.pages.forms.pricing'],
         'faq' => ['label' => 'FAQ', 'view' => 'admin.pages.forms.faq'],
         'contact' => ['label' => 'Contact', 'view' => 'admin.pages.forms.contact'],

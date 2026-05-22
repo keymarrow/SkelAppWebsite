@@ -72,6 +72,7 @@ class PagesSeeder extends Seeder
         return [
             'global' => ['title' => 'Footer & Navigation', 'content' => $this->globalContent()],
             'home' => ['title' => 'Home', 'content' => $this->homeContent()],
+            'features' => ['title' => 'Features', 'content' => $this->featuresContent()],
             'pricing' => ['title' => 'Pricing', 'content' => $this->pricingContent()],
             'contact' => ['title' => 'Contact', 'content' => $this->contactContent()],
             'faq' => ['title' => 'FAQ', 'content' => $this->faqContent()],
@@ -268,6 +269,126 @@ class PagesSeeder extends Seeder
                 'cta_label' => 'Download SkelApp Today',
                 'cta_url' => '#',
                 'background_image' => 'assets/client.webp',
+            ],
+        ];
+    }
+
+    private function featuresContent(): array
+    {
+        return [
+            'meta' => [
+                'title' => 'Features – SkelApp',
+                'description' => 'Every SkelApp feature in one place — sales, inventory, customers, and reports built for Tanzanian retailers.',
+            ],
+            'hero' => [
+                'eyebrow' => 'All in One Place',
+                'title' => "Powerful Features,\nSeamlessly Connected",
+                'subtitle' => 'SkelApp brings sales, inventory, customers, and reports together in one simple platform — so you can focus on growing your business, not juggling tools.',
+                'image' => 'assets/featureheroimage.png',
+            ],
+            'detail' => [
+                'eyebrow' => 'Key Features',
+                'title' => 'Detailed Overview of Our POS Features',
+                'subtitle' => 'Our point-of-sale features help you record sales, track inventory, and grow customer loyalty — keeping every shop running smoothly.',
+                'cards' => [
+                    [
+                        'eyebrow' => 'Point of sale',
+                        'title' => 'Speed every sale with a flexible checkout built for busy retail.',
+                        'bullets' => [
+                            ['title' => 'Scan, search, sell', 'body' => 'Barcode-scan or search the catalogue in seconds.'],
+                            ['title' => 'Split bills your way', 'body' => 'Mix cash, M-Pesa, Airtel Money and cards on one sale.'],
+                            ['title' => 'Receipts on every channel', 'body' => 'Print on thermal, send to a phone, or email a copy.'],
+                        ],
+                        'image' => 'assets/CHECKOUTPOS.png',
+                        'variant' => 'light',
+                    ],
+                    [
+                        'eyebrow' => 'Inventory',
+                        'title' => 'See every product across every branch on one live stock list.',
+                        'bullets' => [
+                            ['title' => 'Low-stock alerts', 'body' => 'Get pinged before fast-movers run out of stock.'],
+                            ['title' => 'Multi-branch view', 'body' => 'Track quantities at each shop without spreadsheets.'],
+                            ['title' => 'Supplier-ready', 'body' => 'Log deliveries and reconcile counts at end of day.'],
+                        ],
+                        'image' => 'assets/STOCKLIST.png',
+                        'variant' => 'light',
+                    ],
+                    [
+                        'eyebrow' => 'Reports & analytics',
+                        'title' => 'Open SkelApp every morning and know exactly where you stand.',
+                        'bullets' => [
+                            ['title' => 'Yesterday at a glance', 'body' => 'Sales, expenses and profit, side by side.'],
+                            ['title' => 'By cashier or branch', 'body' => "See who's selling what, and where, in real time."],
+                            ['title' => 'Best-sellers first', 'body' => 'Spot the products earning you the most this week.'],
+                        ],
+                        'image' => 'assets/DASHBOARD.png',
+                        'variant' => 'light',
+                    ],
+                    [
+                        'eyebrow' => 'Cashflow',
+                        'title' => 'Track every shilling moving through your business in real time.',
+                        'bullets' => [
+                            ['title' => 'Money in, money out', 'body' => 'Sales, purchases and expenses on one view.'],
+                            ['title' => 'Spot trends early', 'body' => 'See slow weeks coming and plan restocks confidently.'],
+                            ['title' => 'Decisions backed by data', 'body' => 'Replace gut feel with live numbers you can trust.'],
+                        ],
+                        'image' => 'assets/CASHFLOW.png',
+                        'variant' => 'light',
+                    ],
+                    [
+                        'eyebrow' => 'Mobile',
+                        'title' => 'Run your shop from anywhere — your full inventory in your pocket.',
+                        'bullets' => [
+                            ['title' => 'Stock control from your phone', 'body' => 'Update prices, scan items and log restocks on the go.'],
+                            ['title' => 'Works offline', 'body' => 'Keep syncing even when the connection drops out.'],
+                            ['title' => 'Across every device', 'body' => 'Android, iOS, tablets and POS terminals.'],
+                        ],
+                        'image' => 'assets/Inventory.png',
+                        'variant' => 'light',
+                        'layout' => 'wide',
+                        'cta_label' => 'Download SkelApp',
+                        'cta_url' => '#',
+                    ],
+                ],
+            ],
+            'faq' => [
+                'eyebrow' => 'POS FAQ',
+                'title' => 'POS questions, answered',
+                'subtitle' => 'Common questions about using SkelApp as your point of sale.',
+                'items' => [
+                    [
+                        'question' => 'Can I use SkelApp without a dedicated POS machine?',
+                        'answer' => "Yes. SkelApp runs on any Android or iOS phone, tablet or laptop — most shop owners start on a phone they already own. You can add a thermal receipt printer, barcode scanner or full POS terminal later as your volume grows. There's no requirement to buy hardware on day one.",
+                    ],
+                    [
+                        'question' => 'Does the POS work when the internet is slow or off?',
+                        'answer' => "Yes. SkelApp keeps you selling offline — you can ring up sales, scan items and print receipts even without a connection. The moment your network comes back, every offline transaction syncs to the cloud automatically so your reports stay accurate.",
+                    ],
+                    [
+                        'question' => 'Does SkelApp print receipts and barcode labels?',
+                        'answer' => 'Yes. SkelApp supports thermal receipt printers, A4 invoice printing and barcode-label printing on the popular printer models used across Tanzania. Setup takes a few minutes — pair the device, pick the paper size, and you\'re printing.',
+                    ],
+                    [
+                        'question' => 'Can I manage multiple branches from one account?',
+                        'answer' => 'Yes. SkelApp is built for multi-branch retail. Monitor sales, stock and cash by location, transfer stock between branches, and give each manager their own login with permissions you control. Owners see the full picture across every shop.',
+                    ],
+                    [
+                        'question' => 'Which payment methods can SkelApp record?',
+                        'answer' => 'Cash, M-Pesa, Airtel Money, Tigo Pesa, card, bank transfer and invoice — all tracked with their own reports. You can also split a single bill across two or three payment methods on the same sale and print one combined receipt.',
+                    ],
+                    [
+                        'question' => 'How fast can I get my shop up and running on SkelApp?',
+                        'answer' => "Most shops are live the same day. Import or type your product list, set your prices and user roles, then start selling. Our team is on WhatsApp and on-site (Dar es Salaam) to help with the first week's setup if you need a hand.",
+                    ],
+                ],
+            ],
+            'cta' => [
+                'title' => 'Run your shop 1% Better.',
+                'title_accent' => '1% Better',
+                'subtitle' => 'Download SkelApp and start tracking every sale, every product, every customer — all from your phone.',
+                'primary_label' => 'Download Now',
+                'primary_url' => '#',
+                'secondary_label' => 'Talk to our team',
             ],
         ];
     }
