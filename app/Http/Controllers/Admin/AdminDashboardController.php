@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ContactSubmission;
 use App\Models\NewsPost;
 use App\Models\VisitorEvent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -14,29 +15,34 @@ use Illuminate\View\View;
 class AdminDashboardController extends Controller
 {
     private const RANGES = [
-        '7' => ['label' => 'Last 7 days', 'days' => 7],
-        '30' => ['label' => 'Last 30 days', 'days' => 30],
-        '90' => ['label' => 'Last 90 days', 'days' => 90],
-        '365' => ['label' => 'Last 12 months', 'days' => 365],
+        'today'  => 'Today',
+        'week'   => 'This week',
+        'month'  => 'This month',
+        'year'   => 'This year',
+        'custom' => 'Custom',
     ];
 
     public function __invoke(Request $request): View
     {
-        $rangeKey = $request->query('range', '30');
+        $rangeKey = (string) $request->query('range', 'month');
         if (! array_key_exists($rangeKey, self::RANGES)) {
-            $rangeKey = '30';
+            $rangeKey = 'month';
         }
-        $days = self::RANGES[$rangeKey]['days'];
 
-        $now = Carbon::now();
-        $rangeStart = $now->copy()->subDays($days - 1)->startOfDay();
-        $rangeEnd = $now->copy()->endOfDay();
-        $priorStart = $rangeStart->copy()->subDays($days);
+        [$rangeStart, $rangeEnd, $rangeLabel, $customStart, $customEnd] =
+            $this->resolveRange($rangeKey, $request);
+
+        $duration = max(60, $rangeStart->diffInSeconds($rangeEnd, true));
         $priorEnd = $rangeStart->copy()->subSecond();
-        $chartLabels = $this->dailyLabels($rangeStart, $rangeEnd);
+        $priorStart = $priorEnd->copy()->subSeconds((int) $duration);
+
+        $granularity = $this->granularity($rangeKey, $rangeStart, $rangeEnd);
+        $buckets = $this->buildBuckets($rangeStart, $rangeEnd, $granularity);
+        $chartLabels = array_column($buckets, 'label');
+        $bucketCount = count($buckets);
         $zeroSeries = array_map(
-            fn (string $label) => ['label' => $label, 'value' => 0],
-            $chartLabels
+            fn (array $b) => ['label' => $b['label'], 'value' => 0],
+            $buckets
         );
 
         $kpis = [
@@ -53,8 +59,8 @@ class AdminDashboardController extends Controller
         ];
         $visitorsChart = [
             'labels' => $chartLabels,
-            'this_period' => array_fill(0, count($chartLabels), 0),
-            'prior_period' => array_fill(0, count($chartLabels), 0),
+            'this_period' => array_fill(0, $bucketCount, 0),
+            'prior_period' => array_fill(0, $bucketCount, 0),
         ];
         $usersInLast30 = $this->emptyUsersInLast30Minutes();
         $activePages = [];
@@ -71,21 +77,31 @@ class AdminDashboardController extends Controller
             ];
 
             $sparklines = [
-                'new_visitors' => $this->dailySeries($rangeStart, $rangeEnd, 'is_new_visitor', true),
-                'returning_visitors' => $this->dailySeries($rangeStart, $rangeEnd, 'is_returning_session'),
-                'organic_search' => $this->dailySeries($rangeStart, $rangeEnd, 'source', 'organic'),
-                'most_engaged' => $this->dailySeries($rangeStart, $rangeEnd, 'is_engaged'),
+                'new_visitors' => $this->bucketSeries($rangeStart, $rangeEnd, $granularity, 'new_visitors'),
+                'returning_visitors' => $this->bucketSeries($rangeStart, $rangeEnd, $granularity, 'returning_visitors'),
+                'organic_search' => $this->bucketSeries($rangeStart, $rangeEnd, $granularity, 'organic'),
+                'most_engaged' => $this->bucketSeries($rangeStart, $rangeEnd, $granularity, 'engaged'),
             ];
 
             $visitorsChart = [
                 'labels' => $chartLabels,
-                'this_period' => array_column($this->dailySeries($rangeStart, $rangeEnd, 'all_sessions'), 'value'),
-                'prior_period' => array_column($this->dailySeries($priorStart, $priorEnd, 'all_sessions'), 'value'),
+                'this_period' => array_column(
+                    $this->bucketSeries($rangeStart, $rangeEnd, $granularity, 'all_sessions'),
+                    'value'
+                ),
+                'prior_period' => $this->alignToLength(
+                    array_column(
+                        $this->bucketSeries($priorStart, $priorEnd, $granularity, 'all_sessions'),
+                        'value'
+                    ),
+                    $bucketCount
+                ),
             ];
 
             $usersInLast30 = $this->usersInLast30Minutes();
 
             $activePages = VisitorEvent::query()
+                ->publicSite()
                 ->between($rangeStart, $rangeEnd)
                 ->select('path', DB::raw('COUNT(*) as hits'))
                 ->groupBy('path')
@@ -100,8 +116,10 @@ class AdminDashboardController extends Controller
 
         return view('admin.dashboard', [
             'rangeKey' => $rangeKey,
-            'rangeLabel' => self::RANGES[$rangeKey]['label'],
+            'rangeLabel' => $rangeLabel,
             'ranges' => self::RANGES,
+            'customStart' => $customStart,
+            'customEnd' => $customEnd,
             'kpis' => $kpis,
             'sparklines' => $sparklines,
             'visitorsChart' => $visitorsChart,
@@ -115,20 +133,279 @@ class AdminDashboardController extends Controller
         ]);
     }
 
+    /**
+     * @return array{0:Carbon,1:Carbon,2:string,3:?string,4:?string}
+     *         [rangeStart, rangeEnd, rangeLabel, customStart (Y-m-d), customEnd (Y-m-d)]
+     */
+    private function resolveRange(string $key, Request $request): array
+    {
+        $now = Carbon::now();
+        $customStart = null;
+        $customEnd = null;
+
+        switch ($key) {
+            case 'today':
+                $start = $now->copy()->startOfDay();
+                $end = $now->copy();
+                $label = 'Today';
+                break;
+
+            case 'week':
+                $start = $now->copy()->startOfWeek();
+                $end = $now->copy();
+                $label = 'This week';
+                break;
+
+            case 'year':
+                $start = $now->copy()->startOfYear();
+                $end = $now->copy();
+                $label = 'This year';
+                break;
+
+            case 'custom':
+                [$start, $end, $customStart, $customEnd] = $this->parseCustomRange($request, $now);
+                $label = $start->format('M j, Y').' – '.$end->format('M j, Y');
+                break;
+
+            case 'month':
+            default:
+                $start = $now->copy()->startOfMonth();
+                $end = $now->copy();
+                $label = 'This month';
+                break;
+        }
+
+        return [$start, $end, $label, $customStart, $customEnd];
+    }
+
+    /**
+     * @return array{0:Carbon,1:Carbon,2:string,3:string}
+     */
+    private function parseCustomRange(Request $request, Carbon $now): array
+    {
+        $rawStart = (string) $request->query('start', '');
+        $rawEnd = (string) $request->query('end', '');
+
+        try {
+            $start = $rawStart !== '' ? Carbon::parse($rawStart)->startOfDay() : $now->copy()->subDays(6)->startOfDay();
+        } catch (\Throwable) {
+            $start = $now->copy()->subDays(6)->startOfDay();
+        }
+        try {
+            $end = $rawEnd !== '' ? Carbon::parse($rawEnd)->endOfDay() : $now->copy()->endOfDay();
+        } catch (\Throwable) {
+            $end = $now->copy()->endOfDay();
+        }
+
+        if ($start->greaterThan($end)) {
+            [$start, $end] = [$end->copy()->startOfDay(), $start->copy()->endOfDay()];
+        }
+        // Don't allow end in the future.
+        if ($end->greaterThan($now)) {
+            $end = $now->copy();
+        }
+        // Sanity ceiling: 5 years max to avoid runaway queries.
+        if ($start->lessThan($now->copy()->subYears(5))) {
+            $start = $now->copy()->subYears(5)->startOfDay();
+        }
+
+        return [$start, $end, $start->toDateString(), $end->toDateString()];
+    }
+
+    /**
+     * Choose bucket granularity for a range. Returns one of: 'hour', 'day', 'month'.
+     */
+    private function granularity(string $key, Carbon $start, Carbon $end): string
+    {
+        if ($key === 'today') {
+            return 'hour';
+        }
+        if ($key === 'year') {
+            return 'month';
+        }
+        if ($key === 'week' || $key === 'month') {
+            return 'day';
+        }
+        // Custom — pick from span.
+        $hours = $start->diffInHours($end, true);
+        $days = $start->diffInDays($end, true);
+        if ($hours <= 36) {
+            return 'hour';
+        }
+        if ($days <= 92) {
+            return 'day';
+        }
+        return 'month';
+    }
+
+    /**
+     * Build the empty bucket scaffold (keys are bucket identifiers, values are
+     * ['label' => string, 'value' => int]).
+     *
+     * @return array<string, array{label:string,value:int}>
+     */
+    private function buildBuckets(Carbon $from, Carbon $to, string $gran): array
+    {
+        $buckets = [];
+        $cursor = match ($gran) {
+            'hour' => $from->copy()->startOfHour(),
+            'day' => $from->copy()->startOfDay(),
+            'month' => $from->copy()->startOfMonth(),
+        };
+
+        while ($cursor->lte($to)) {
+            $buckets[$this->bucketKey($cursor, $gran)] = [
+                'label' => $this->bucketLabel($cursor, $gran),
+                'value' => 0,
+            ];
+            $cursor = match ($gran) {
+                'hour' => $cursor->copy()->addHour(),
+                'day' => $cursor->copy()->addDay(),
+                'month' => $cursor->copy()->addMonth(),
+            };
+        }
+
+        return $buckets;
+    }
+
+    private function bucketKey(Carbon $c, string $gran): string
+    {
+        return match ($gran) {
+            'hour' => $c->format('Y-m-d H'),
+            'day' => $c->toDateString(),
+            'month' => $c->format('Y-m'),
+        };
+    }
+
+    private function bucketLabel(Carbon $c, string $gran): string
+    {
+        return match ($gran) {
+            'hour' => $c->format('g A'),
+            'day' => $c->format('M j'),
+            'month' => $c->format('M Y'),
+        };
+    }
+
+    /**
+     * SQL expression that produces the bucket key for a row's created_at. Driver-aware.
+     */
+    private function bucketSqlExpr(string $gran): string
+    {
+        $driver = DB::connection()->getDriverName();
+
+        if ($driver === 'sqlite') {
+            return match ($gran) {
+                'hour' => "strftime('%Y-%m-%d %H', created_at)",
+                'day' => "DATE(created_at)",
+                'month' => "strftime('%Y-%m', created_at)",
+            };
+        }
+
+        // MySQL / MariaDB
+        return match ($gran) {
+            'hour' => "DATE_FORMAT(created_at, '%Y-%m-%d %H')",
+            'day' => "DATE(created_at)",
+            'month' => "DATE_FORMAT(created_at, '%Y-%m')",
+        };
+    }
+
+    /**
+     * Build a series for one metric, returned as a list of ['label','value']
+     * in chronological order.
+     *
+     * Metrics: 'new_visitors', 'returning_visitors', 'organic', 'engaged',
+     *          'all_sessions'.
+     *
+     * @return list<array{label:string,value:int}>
+     */
+    private function bucketSeries(Carbon $from, Carbon $to, string $gran, string $metric): array
+    {
+        $buckets = $this->buildBuckets($from, $to, $gran);
+        $bucketExpr = $this->bucketSqlExpr($gran);
+
+        $base = VisitorEvent::query()->publicSite()->between($from, $to);
+
+        $rows = match ($metric) {
+            'new_visitors' => (clone $base)
+                ->where('is_new_visitor', true)
+                ->select(DB::raw("$bucketExpr as bk"), DB::raw('COUNT(*) as v'))
+                ->groupBy('bk')->get(),
+
+            'returning_visitors' => (clone $base)
+                ->where('is_new_session', true)
+                ->where('is_new_visitor', false)
+                ->select(DB::raw("$bucketExpr as bk"), DB::raw('COUNT(*) as v'))
+                ->groupBy('bk')->get(),
+
+            'organic' => (clone $base)
+                ->where('source', 'organic')
+                ->select(DB::raw("$bucketExpr as bk"), DB::raw('COUNT(*) as v'))
+                ->groupBy('bk')->get(),
+
+            'all_sessions' => (clone $base)
+                ->select(DB::raw("$bucketExpr as bk"), DB::raw('COUNT(DISTINCT session_id) as v'))
+                ->groupBy('bk')->get(),
+
+            'engaged' => (clone $base)
+                ->select(
+                    DB::raw("$bucketExpr as bk"),
+                    DB::raw('session_id'),
+                    DB::raw('COUNT(*) as ec')
+                )
+                ->groupBy('bk', 'session_id')
+                ->havingRaw('COUNT(*) >= 3')
+                ->get()
+                ->groupBy('bk')
+                ->map(fn ($g) => (object) ['bk' => (string) $g->first()->bk, 'v' => $g->count()])
+                ->values(),
+
+            default => collect(),
+        };
+
+        foreach ($rows as $row) {
+            $key = (string) $row->bk;
+            if (isset($buckets[$key])) {
+                $buckets[$key]['value'] = (int) $row->v;
+            }
+        }
+
+        return array_values($buckets);
+    }
+
+    /**
+     * Pad or truncate $values so it has exactly $length entries.
+     *
+     * @param list<int> $values
+     * @return list<int>
+     */
+    private function alignToLength(array $values, int $length): array
+    {
+        if (count($values) === $length) {
+            return $values;
+        }
+        if (count($values) > $length) {
+            return array_slice($values, 0, $length);
+        }
+        return array_pad($values, $length, 0);
+    }
+
+    /**
+     * @return array{new_visitors:int,returning_visitors:int,organic_search:int,most_engaged:int}
+     */
     private function kpiCounts(Carbon $from, Carbon $to): array
     {
-        $base = VisitorEvent::query()->between($from, $to);
+        $base = fn (): Builder => VisitorEvent::query()->publicSite()->between($from, $to);
 
-        $newVisitors = (clone $base)->where('is_new_visitor', true)->count();
+        $newVisitors = $base()->where('is_new_visitor', true)->count();
 
-        // Returning visitors = sessions started in the range whose visitor existed before this range.
-        $totalNewSessions = (clone $base)->where('is_new_session', true)->count();
-        $returningVisitors = max(0, $totalNewSessions - $newVisitors);
+        $returningVisitors = $base()
+            ->where('is_new_session', true)
+            ->where('is_new_visitor', false)
+            ->count();
 
-        $organic = (clone $base)->where('source', 'organic')->count();
+        $organic = $base()->where('source', 'organic')->count();
 
-        // "Most engaged" = sessions with 3+ page views in the range.
-        $engagedSessionsCount = (clone $base)
+        $engagedSessionsCount = $base()
             ->select('session_id')
             ->groupBy('session_id')
             ->havingRaw('COUNT(*) >= 3')
@@ -158,83 +435,6 @@ class AdminDashboardController extends Controller
         ];
     }
 
-    /**
-     * Build a per-day series (label + value) for the given metric over [$from, $to].
-     * $metric values:
-     *   'all_sessions'              — count of distinct sessions per day
-     *   'is_new_visitor' / 'is_new_session' (boolean) — count where flag is true
-     *   'is_returning_session'      — new sessions minus new visitors
-     *   'is_engaged'                — sessions with 3+ events that day
-     *   'source' + $value           — count where source = $value
-     */
-    private function dailySeries(Carbon $from, Carbon $to, string $metric, mixed $value = true): array
-    {
-        $days = [];
-        $cursor = $from->copy()->startOfDay();
-        while ($cursor->lte($to)) {
-            $days[$cursor->toDateString()] = ['label' => $cursor->format('M j'), 'value' => 0];
-            $cursor->addDay();
-        }
-
-        if ($metric === 'all_sessions') {
-            $rows = VisitorEvent::query()
-                ->between($from, $to)
-                ->select(DB::raw('DATE(created_at) as day, COUNT(DISTINCT session_id) as v'))
-                ->groupBy('day')->get();
-        } elseif ($metric === 'is_returning_session') {
-            $rows = VisitorEvent::query()
-                ->between($from, $to)
-                ->where('is_new_session', true)
-                ->where('is_new_visitor', false)
-                ->select(DB::raw('DATE(created_at) as day, COUNT(*) as v'))
-                ->groupBy('day')->get();
-        } elseif ($metric === 'is_engaged') {
-            // Sessions with >= 3 events per day.
-            $rows = VisitorEvent::query()
-                ->between($from, $to)
-                ->select(DB::raw('DATE(created_at) as day, session_id, COUNT(*) as ec'))
-                ->groupBy('day', 'session_id')
-                ->havingRaw('ec >= 3')
-                ->get()
-                ->groupBy('day')
-                ->map(fn ($grp) => (object) ['day' => $grp->first()->day, 'v' => $grp->count()])
-                ->values();
-        } elseif ($metric === 'source') {
-            $rows = VisitorEvent::query()
-                ->between($from, $to)
-                ->where('source', (string) $value)
-                ->select(DB::raw('DATE(created_at) as day, COUNT(*) as v'))
-                ->groupBy('day')->get();
-        } else {
-            // Boolean column metric.
-            $rows = VisitorEvent::query()
-                ->between($from, $to)
-                ->where($metric, $value)
-                ->select(DB::raw('DATE(created_at) as day, COUNT(*) as v'))
-                ->groupBy('day')->get();
-        }
-
-        foreach ($rows as $row) {
-            $key = $row->day instanceof Carbon ? $row->day->toDateString() : (string) $row->day;
-            if (isset($days[$key])) {
-                $days[$key]['value'] = (int) $row->v;
-            }
-        }
-
-        return array_values($days);
-    }
-
-    private function dailyLabels(Carbon $from, Carbon $to): array
-    {
-        $labels = [];
-        $cursor = $from->copy()->startOfDay();
-        while ($cursor->lte($to)) {
-            $labels[] = $cursor->format('M j');
-            $cursor->addDay();
-        }
-        return $labels;
-    }
-
     private function usersInLast30Minutes(): array
     {
         if (! VisitorEvent::isAvailable()) {
@@ -244,6 +444,7 @@ class AdminDashboardController extends Controller
         $now = Carbon::now()->startOfMinute();
         $windowStart = $now->copy()->subMinutes(29);
         $events = VisitorEvent::query()
+            ->publicSite()
             ->where('created_at', '>=', $windowStart)
             ->get(['session_id', 'created_at']);
 
@@ -260,8 +461,8 @@ class AdminDashboardController extends Controller
             $cursor->addMinute();
         }
 
-        // Total unique sessions in the 30-min window
         $distinctUsers = VisitorEvent::query()
+            ->publicSite()
             ->where('created_at', '>=', $windowStart)
             ->distinct()
             ->count('session_id');

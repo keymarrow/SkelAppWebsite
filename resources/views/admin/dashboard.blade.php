@@ -34,17 +34,32 @@
         </div>
 
         <nav class="dashboard-range-pills" aria-label="Dashboard time range">
-          @foreach ($ranges as $key => $cfg)
+          @foreach ($ranges as $key => $label)
             <a
-              href="{{ route('admin.dashboard', array_merge(request()->except('range'), ['range' => $key])) }}"
+              href="{{ route('admin.dashboard', array_merge(request()->except(['range', 'start', 'end']), ['range' => $key])) }}"
               class="{{ $rangeKey === $key ? 'is-active' : '' }}"
               aria-current="{{ $rangeKey === $key ? 'page' : 'false' }}"
             >
-              {{ $cfg['label'] }}
+              {{ $label }}
             </a>
           @endforeach
         </nav>
       </header>
+
+      @if ($rangeKey === 'custom')
+        <form method="get" action="{{ route('admin.dashboard') }}" class="dashboard-custom-range" aria-label="Custom date range">
+          <input type="hidden" name="range" value="custom">
+          <label>
+            <span>From</span>
+            <input type="date" name="start" value="{{ $customStart }}" max="{{ now()->toDateString() }}" required>
+          </label>
+          <label>
+            <span>To</span>
+            <input type="date" name="end" value="{{ $customEnd }}" max="{{ now()->toDateString() }}" required>
+          </label>
+          <button type="submit" class="cms-btn cms-btn-primary">Apply</button>
+        </form>
+      @endif
 
       <div class="dashboard-kpis" aria-label="Key metrics">
         @foreach ($kpis as $key => $card)
