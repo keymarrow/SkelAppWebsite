@@ -14,7 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>{{ content('home.meta.title', 'SkelApp – The Best POS in Tanzania.') }}</title>
 <meta name="description" content="{{ content('home.meta.description') }}">
-<link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" type="image/x-icon" />
+<link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" sizes="any" />
 <link rel="preload" as="image" href="{{ content_image('home.hero.background_image_desktop', asset('assets/HeroImage.webp')) }}" media="(min-width: 901px)" fetchpriority="high" />
 <link rel="preload" as="image" href="{{ content_image('home.hero.background_image_mobile', asset('assets/HeroImage.jpg')) }}" media="(max-width: 900px)" fetchpriority="high" />
 <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />

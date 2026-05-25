@@ -12,7 +12,7 @@
   <meta property="og:title" content="{{ $title ?? 'SkelApp News' }}" />
   <meta property="og:description" content="{{ $metaDescription ?? 'SkelApp news, retail insights, and product updates.' }}" />
   <meta property="og:type" content="website" />
-  <link rel="icon" href="{{ asset('assets/skel.png') }}" type="image/x-icon" />
+  <link rel="icon" href="{{ asset('assets/skel.png') }}" type="image/png" sizes="any" />
   <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body class="news-page {{ $bodyClass ?? '' }}">

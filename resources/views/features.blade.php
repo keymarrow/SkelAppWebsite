@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ content('features.meta.title', 'Features – SkelApp') }}</title>
   <meta name="description" content="{{ content('features.meta.description', 'Every SkelApp feature in one place — sales, inventory, customers, and reports built for Tanzanian retailers.') }}">
-  <link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" type="image/x-icon" />
+  <link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" sizes="any" />
   <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body class="features-page-body">
