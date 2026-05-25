@@ -7,6 +7,7 @@ use App\Models\ContactSubmission;
 use App\Models\NewsPost;
 use App\Models\VisitorEvent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -23,6 +24,32 @@ class AdminDashboardController extends Controller
     ];
 
     public function __invoke(Request $request): View
+    {
+        return view('admin.dashboard', $this->buildPayload($request));
+    }
+
+    public function data(Request $request): JsonResponse
+    {
+        $payload = $this->buildPayload($request);
+
+        $payload['recentSubmissions'] = collect($payload['recentSubmissions'])
+            ->map(fn ($s) => [
+                'id' => $s->id,
+                'full_name' => $s->fullName(),
+                'company' => $s->company,
+                'created_at_human' => $s->created_at?->diffForHumans(),
+                'created_at_full' => $s->created_at?->toDayDateTimeString(),
+                'is_unread' => $s->read_at === null,
+                'url' => route('admin.submissions.show', $s),
+            ])
+            ->all();
+
+        $payload['serverTime'] = Carbon::now()->toIso8601String();
+
+        return response()->json($payload);
+    }
+
+    private function buildPayload(Request $request): array
     {
         $rangeKey = (string) $request->query('range', 'month');
         if (! array_key_exists($rangeKey, self::RANGES)) {
@@ -114,7 +141,7 @@ class AdminDashboardController extends Controller
 
         $submissionsAvailable = ContactSubmission::isAvailable();
 
-        return view('admin.dashboard', [
+        return [
             'rangeKey' => $rangeKey,
             'rangeLabel' => $rangeLabel,
             'ranges' => self::RANGES,
@@ -130,7 +157,7 @@ class AdminDashboardController extends Controller
             'recentSubmissions' => $submissionsAvailable ? ContactSubmission::query()->latest()->take(5)->get() : collect(),
             'totalPosts' => NewsPost::query()->count(),
             'publishedPosts' => NewsPost::query()->where('is_published', true)->count(),
-        ]);
+        ];
     }
 
     /**
@@ -426,10 +453,15 @@ class AdminDashboardController extends Controller
             ? ($current === 0 ? 0.0 : 100.0)
             : (($current - $prior) / $prior) * 100;
 
+        $deltaRounded = round($delta, 2);
+        $deltaFormatted = rtrim(rtrim(number_format($deltaRounded, 2), '0'), '.');
+
         return [
             'label' => $label,
             'value' => $current,
-            'delta_percent' => round($delta, 2),
+            'value_formatted' => number_format($current),
+            'delta_percent' => $deltaRounded,
+            'delta_formatted' => ($deltaRounded >= 0 ? '+' : '').$deltaFormatted.'%',
             'delta_positive' => $delta >= 0,
             'prior' => $prior,
         ];

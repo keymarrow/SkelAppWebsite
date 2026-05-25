@@ -23,7 +23,7 @@
 
         <div class="features-hero-art">
           <img
-            src="{{ content_image('features.hero.image', asset('assets/featureheroimage.png')) }}"
+            src="{{ content_image('features.hero.image', asset('assets/featureheroimage.webp')) }}"
             alt="SkelApp running across multiple devices"
             class="features-hero-image"
             loading="eager"
