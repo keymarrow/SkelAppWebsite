@@ -1574,6 +1574,22 @@ footer nav a:hover { color: var(--white); }
   box-shadow: 0 32px 80px rgba(0, 0, 0, 0.06);
 }
 
+/* ───────────────────────────────────────────────────────────────
+   Light-mode glass treatment — showcase / product / hardware cards
+   (scoped to light mode only; dark mode keeps its own surfaces)
+   ─────────────────────────────────────────────────────────────── */
+html:not([data-theme="dark"]) .showcase-card,
+html:not([data-theme="dark"]) .product-card,
+html:not([data-theme="dark"]) .hardware-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.65), rgba(244, 246, 248, 0.45));
+  -webkit-backdrop-filter: blur(22px) saturate(155%);
+  backdrop-filter: blur(22px) saturate(155%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 20px 50px rgba(20, 40, 30, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
 .showcase-header {
   max-width: 980px;
   margin: 0 auto;
@@ -10724,7 +10740,7 @@ html:not([data-theme="dark"]) .pricing-page .pricing-hero-btn--text:hover {
   padding: 64px 20px 50px;
   background:
     radial-gradient(80% 65% at 50% 60%, rgba(74, 173, 119, 0.12) 0%, rgba(74, 173, 119, 0) 70%),
-    #ffffff;
+    transparent;
   overflow: hidden;
 }
 
@@ -15797,6 +15813,134 @@ html[data-theme="dark"] body.welcome-page-body {
      skel.js drifts --dm-glow-x / --dm-glow-a a touch on scroll for life. */
   background-attachment: fixed;
   color: var(--dm-text);
+}
+
+/* ───────────────────────────────────────────────────────────────
+   Light-mode tinted canvas (mirrors the dark canvas above).
+   The page body carries one continuous sage/green tint and the home
+   sections sit transparent on top, so they blend seamlessly and give
+   the frosted glass cards (showcase / product / hardware) tone to read
+   against instead of white-on-white.
+   ─────────────────────────────────────────────────────────────── */
+html:not([data-theme="dark"]) body.welcome-page-body {
+  background:
+    radial-gradient(70% 55% at 50% -5%, rgba(74, 173, 119, 0.22) 0%, rgba(74, 173, 119, 0) 60%),
+    linear-gradient(180deg, #eef4f0 0%, #e7f0eb 55%, #e1eae5 100%);
+  background-attachment: fixed;
+}
+
+html:not([data-theme="dark"]) .welcome-page-body .app-showcase,
+html:not([data-theme="dark"]) .welcome-page-body .products-section,
+html:not([data-theme="dark"]) .welcome-page-body .allfeatures,
+html:not([data-theme="dark"]) .welcome-page-body .retailers-section,
+html:not([data-theme="dark"]) .welcome-page-body .features-section,
+html:not([data-theme="dark"]) .welcome-page-body .how-it-works-section,
+html:not([data-theme="dark"]) .welcome-page-body .hardware-section,
+html:not([data-theme="dark"]) .welcome-page-body .pricing-section {
+  background: transparent;
+}
+
+/* The dark image-CTA is framed by the faq-section (above) and footer (below);
+   each tucks 40px over the image and its rounded corners used to mask the
+   image's edges (back when both were solid white). Paint them with the SAME
+   fixed canvas gradient as the body — visually seamless with the canvas, but
+   opaque, so their rounded corners mask the image edges again (the original
+   framing, just tinted instead of white). */
+html:not([data-theme="dark"]) .welcome-page-body .faq-section,
+html:not([data-theme="dark"]) .welcome-page-body .site-footer {
+  background:
+    radial-gradient(70% 55% at 50% -5%, rgba(74, 173, 119, 0.22) 0%, rgba(74, 173, 119, 0) 60%),
+    linear-gradient(180deg, #eef4f0 0%, #e7f0eb 55%, #e1eae5 100%);
+  background-attachment: fixed;
+}
+
+/* Inner panels that used to sit on white section backgrounds — let them blend
+   into the tinted canvas too (light mode only; dark mode keeps its surfaces). */
+
+/* Greenish glow behind the subscription preview card so its frosted glass
+   reads against tone (white glass on the pale tint is otherwise too subtle).
+   It sits behind the glass card, so the card's backdrop-filter frosts it. */
+html:not([data-theme="dark"]) .welcome-page-body .pricing-section .pricing-preview.is-subscription-preview {
+  background: radial-gradient(75% 48% at 50% 38%,
+    rgba(74, 173, 119, 0.45) 0%, rgba(74, 173, 119, 0.14) 58%, rgba(74, 173, 119, 0) 100%);
+}
+
+/* Pricing preview card → same frosted glass as the showcase/product/hardware
+   cards, so it reads as a glass panel on the tint (keeps its 20px radius). */
+html:not([data-theme="dark"]) .welcome-page-body .pricing-section .preview-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.65), rgba(244, 246, 248, 0.45));
+  -webkit-backdrop-filter: blur(22px) saturate(155%);
+  backdrop-filter: blur(22px) saturate(155%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 20px 50px rgba(20, 40, 30, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+html:not([data-theme="dark"]) .welcome-page-body .faq-list {
+  background: transparent;
+}
+
+/* Affordability cards → frosted glass. They sit in the whyus-section, whose
+   green radial + canvas tint give the frost tone to read against. The --light
+   variant is neutral glass; --tint is the same glass washed with brand green
+   so it blends with the sage/green skel canvas (replacing the old mint fill). */
+html:not([data-theme="dark"]) .welcome-page-body .afford-card--light {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.60), rgba(244, 246, 248, 0.42));
+  -webkit-backdrop-filter: blur(22px) saturate(155%);
+  backdrop-filter: blur(22px) saturate(155%);
+  border: 1px solid rgba(255, 255, 255, 0.68);
+  box-shadow:
+    0 20px 50px rgba(20, 40, 30, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+html:not([data-theme="dark"]) .welcome-page-body .afford-card--tint {
+  background:
+    radial-gradient(125% 95% at 82% 100%, rgba(74, 173, 119, 0.28) 0%, rgba(74, 173, 119, 0) 62%),
+    linear-gradient(135deg, rgba(231, 240, 235, 0.58), rgba(213, 231, 221, 0.42));
+  -webkit-backdrop-filter: blur(22px) saturate(165%);
+  backdrop-filter: blur(22px) saturate(165%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 20px 50px rgba(20, 40, 30, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Feature cards → frosted glass, each tuned to its tone so they read as glass
+   on the tinted canvas while keeping their light / green / dark identity. */
+html:not([data-theme="dark"]) .welcome-page-body .feature-light {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.60), rgba(244, 246, 248, 0.42));
+  -webkit-backdrop-filter: blur(22px) saturate(155%);
+  backdrop-filter: blur(22px) saturate(155%);
+  border: 1px solid rgba(255, 255, 255, 0.68);
+  box-shadow:
+    0 20px 50px rgba(20, 40, 30, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+html:not([data-theme="dark"]) .welcome-page-body .feature-green {
+  background:
+    radial-gradient(120% 110% at 100% 0%, rgba(95, 206, 146, 0.45) 0%, rgba(95, 206, 146, 0) 55%),
+    linear-gradient(135deg, rgba(74, 173, 119, 0.82), rgba(60, 143, 102, 0.70));
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow:
+    0 20px 50px rgba(30, 80, 55, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+html:not([data-theme="dark"]) .welcome-page-body .feature-dark {
+  background:
+    radial-gradient(120% 110% at 100% 0%, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0) 55%),
+    linear-gradient(135deg, rgba(38, 42, 46, 0.84), rgba(24, 27, 30, 0.70));
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 20px 50px rgba(10, 14, 18, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 html[data-theme="dark"] h1,
