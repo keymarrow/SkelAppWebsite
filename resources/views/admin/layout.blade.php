@@ -21,13 +21,25 @@
     'inbox' => '<path d="M22 12h-6l-2 3h-4l-2-3H2"></path><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>',
     'logout' => '<path d="M15 17l5-5-5-5"></path><path d="M20 12H9"></path><path d="M11 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h5"></path>',
     'collapse' => '<path d="m15 18-6-6 6-6"></path>',
+    'team' => '<circle cx="9" cy="8" r="3.2"></circle><path d="M3.5 19.5a5.5 5.5 0 0 1 11 0"></path><path d="M16 5.2a3 3 0 0 1 0 5.8"></path><path d="M17.5 14.2a5.2 5.2 0 0 1 3 4.9"></path>',
+    'affiliate' => '<circle cx="6.5" cy="6.5" r="2.5"></circle><circle cx="17.5" cy="17.5" r="2.5"></circle><circle cx="17.5" cy="6.5" r="2.5"></circle><path d="M8.7 7.8 15.3 16.2"></path><path d="M15 6.5H9"></path>',
   ];
   $pageIconMap = [
     'home' => 'home',
+    'features' => 'dashboard',
+    'pos' => 'pricing',
+    'hardware' => 'dashboard',
+    'retailers' => 'home',
+    'integrations' => 'dashboard',
+    'integration' => 'dashboard',
     'pricing' => 'pricing',
+    'affiliate' => 'dashboard',
+    'affiliate-apply' => 'contact',
     'faq' => 'faq',
     'contact' => 'contact',
+    'why' => 'home',
     'terms' => 'terms',
+    'privacy' => 'terms',
     'global' => 'global',
   ];
   $renderAdminIcon = function (string $icon) use ($adminIconPaths) {
@@ -68,6 +80,20 @@
           @if ($submissionsUnread > 0)
             <span class="admin-nav-badge" aria-label="{{ $submissionsUnread }} unread">{{ $submissionsUnread }}</span>
           @endif
+        </a>
+
+        @php($affiliatePending = \App\Models\AffiliateApplication::pendingCount())
+        <a href="{{ route('admin.affiliate-applications.index') }}" class="{{ request()->routeIs('admin.affiliate-applications.*') ? 'is-active' : '' }}" title="Affiliate applications">
+          <span class="admin-nav-icon">{!! $renderAdminIcon('affiliate') !!}</span>
+          <span class="admin-nav-label">Affiliate applications</span>
+          @if ($affiliatePending > 0)
+            <span class="admin-nav-badge" aria-label="{{ $affiliatePending }} pending">{{ $affiliatePending }}</span>
+          @endif
+        </a>
+
+        <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') ? 'is-active' : '' }}" title="Team & admins">
+          <span class="admin-nav-icon">{!! $renderAdminIcon('team') !!}</span>
+          <span class="admin-nav-label">Team &amp; admins</span>
         </a>
 
         <div class="admin-nav-section">Site pages</div>
