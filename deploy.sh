@@ -2,10 +2,18 @@
 set -euo pipefail
 
 APP_DIR="${APP_DIR:-/var/www/skelapp.tz}"
+DEPLOY_BRANCH="${DEPLOY_BRANCH:-main}"
 
-echo "🚀 Deploying SkelAppWebsite..."
+# Allow Composer to run as root (this script deploys as root) without prompting.
+export COMPOSER_ALLOW_SUPERUSER=1
+
+echo "🚀 Deploying SkelAppWebsite ($DEPLOY_BRANCH)..."
 
 cd "$APP_DIR"
+
+# Git refuses to operate on a repo owned by another user ("dubious ownership").
+# The webroot is owned by www-data, so mark it safe for the deploy user (root).
+git config --global --add safe.directory "$APP_DIR" 2>/dev/null || true
 
 artisan_boots() {
   php artisan --version >/dev/null 2>&1
@@ -33,8 +41,8 @@ else
 fi
 
 # 2. Sync server code exactly to GitHub.
-git fetch origin
-git reset --hard origin/main
+git fetch origin --prune
+git reset --hard "origin/$DEPLOY_BRANCH"
 
 # 3. Install/update PHP dependencies.
 composer install \
