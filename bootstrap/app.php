@@ -12,6 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Behind Cloudflare + nginx: trust forwarded headers so Laravel sees
+        // the real visitor IP and knows the connection is HTTPS.
+        $middleware->trustProxies(at: '*');
+
         $middleware->web(append: [
             \App\Http\Middleware\LogVisitorEvent::class,
         ]);
