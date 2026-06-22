@@ -7,20 +7,40 @@ final class CmsPreview
     private const SCREENS = [
         'home' => ['label' => 'Home page', 'view' => 'welcome'],
         'features' => ['label' => 'Features page', 'view' => 'features'],
+        'pos' => ['label' => 'Point of Sale page', 'view' => 'point-of-sale'],
+        'hardware' => ['label' => 'Hardware page', 'view' => 'hardware'],
+        'hardware-product' => ['label' => 'Hardware product page', 'view' => 'hardware-product'],
+        'retailers' => ['label' => 'Retailers page', 'view' => 'retailers-index'],
+        'retailer' => ['label' => 'Retailer detail page', 'view' => 'retailer'],
+        'integrations' => ['label' => 'Integrations page', 'view' => 'integrations'],
+        'integration' => ['label' => 'Integration detail page', 'view' => 'integration'],
         'pricing' => ['label' => 'Pricing page', 'view' => 'pricing'],
+        'affiliate' => ['label' => 'Affiliate page', 'view' => 'affiliate'],
+        'affiliate-apply' => ['label' => 'Affiliate form page', 'view' => 'affiliate-apply'],
         'faq' => ['label' => 'FAQ page', 'view' => 'faq'],
         'contact' => ['label' => 'Contact page', 'view' => 'contact'],
+        'why' => ['label' => 'Why SkelApp page', 'view' => 'why'],
         'terms' => ['label' => 'Terms page', 'view' => 'terms'],
+        'privacy' => ['label' => 'Privacy page', 'view' => 'privacy'],
     ];
 
     private const TARGETS = [
         'home' => ['home'],
         'features' => ['features'],
+        'pos' => ['pos'],
+        'hardware' => ['hardware', 'hardware-product'],
+        'retailers' => ['retailers', 'retailer'],
+        'integrations' => ['integrations'],
+        'integration' => ['integration'],
         'pricing' => ['pricing'],
+        'affiliate' => ['affiliate'],
+        'affiliate-apply' => ['affiliate-apply'],
         'faq' => ['faq', 'home'],
         'contact' => ['contact'],
+        'why' => ['why'],
         'terms' => ['terms'],
-        'global' => ['home', 'features', 'pricing', 'faq', 'contact', 'terms'],
+        'privacy' => ['privacy'],
+        'global' => ['home', 'features', 'pos', 'hardware', 'hardware-product', 'retailers', 'retailer', 'integrations', 'integration', 'pricing', 'affiliate', 'affiliate-apply', 'faq', 'contact', 'why', 'terms', 'privacy'],
     ];
 
     public static function targetsFor(string $editedSlug): array

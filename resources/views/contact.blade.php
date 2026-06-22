@@ -166,12 +166,12 @@
         </div>
 
         <div class="form-field">
-          <label for="company">{{ content('contact.form.company_label', 'Company Name') }}<span class="req">*</span></label>
+          <label for="company">{{ content('contact.form.company_label', 'Business Name') }}<span class="req">*</span></label>
           <input
             type="text"
             id="company"
             name="company"
-            placeholder="{{ content('contact.form.company_placeholder', 'Enter your company name') }}"
+            placeholder="{{ content('contact.form.company_placeholder', 'Enter your business name') }}"
             value="{{ old('company') }}"
             autocomplete="organization"
             required

@@ -113,6 +113,7 @@ if (! function_exists('content_typography_vars')) {
         }
         $map = [
             'font_size' => 'fs',
+            'font_family' => 'ff',
             'font_weight' => 'fw',
             'font_style' => 'fst',
             'line_height' => 'lh',

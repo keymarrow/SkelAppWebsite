@@ -49,6 +49,21 @@
   $weightOptions = ['', '100','200','300','400','500','600','700','800','900'];
   $styleOptions = ['', 'normal', 'italic'];
   $alignOptions = ['', 'left', 'center', 'right', 'justify'];
+  $fontFamilyOptions = [
+    ['value' => '', 'label' => 'inherit'],
+    ['value' => 'NewBlack, Satoshi, sans-serif', 'label' => 'NewBlack'],
+    ['value' => 'Satoshi, sans-serif', 'label' => 'Satoshi'],
+  ];
+  $fontFamilyLabel = function (?string $value): string {
+    $value = trim((string) $value);
+
+    return match ($value) {
+      'NewBlack, Satoshi, sans-serif' => 'NewBlack',
+      'Satoshi, sans-serif' => 'Satoshi',
+      '' => 'inherit',
+      default => $value,
+    };
+  };
 
   // Multi-line text mode: caller passes `multiline => true` (or `rows => N`)
   // to render a textarea instead of a single-line input.
@@ -82,7 +97,7 @@
   <details class="cms-typography-panel" {{ $hasTypography ? 'open' : '' }}>
     <summary>
       <span>Typography</span>
-      <small>Override font size, weight, style per viewport</small>
+      <small>Override font size, family, weight, style per viewport</small>
     </summary>
 
     <div class="cms-typography-tabs" role="tablist" aria-label="Viewport">
@@ -99,15 +114,26 @@
         $lhPh = $presetValue($vp, 'line_height') ?: 'inherit';
         $lsPh = $presetValue($vp, 'letter_spacing') ?: 'inherit';
         $colorPh = $presetValue($vp, 'color') ?: 'inherit';
+        $fontFamilyCurrent = $presetValue($vp, 'font_family');
         $weightCurrent = $presetValue($vp, 'font_weight');
         $styleCurrent = $presetValue($vp, 'font_style');
         $alignCurrent = $presetValue($vp, 'text_align');
+        $fontFamilyInheritLabel = $fontFamilyCurrent ? '— inherit ('.$fontFamilyLabel($fontFamilyCurrent).') —' : '— inherit —';
         $weightInheritLabel = $weightCurrent ? '— inherit ('.$weightCurrent.') —' : '— inherit —';
         $styleInheritLabel = $styleCurrent ? '— inherit ('.$styleCurrent.') —' : '— inherit —';
         $alignInheritLabel = $alignCurrent ? '— inherit ('.$alignCurrent.') —' : '— inherit —';
       @endphp
       <div class="cms-typography-panel-body {{ $loop->first ? 'is-active' : '' }}" data-typography-body="{{ $vp }}" {{ $loop->first ? '' : 'hidden' }}>
         <div class="cms-typography-grid">
+          <label class="cms-typography-input">
+            <span>Font family</span>
+            <select name="content[{{ $name }}.typography.{{ $vp }}.font_family]" class="cms-input">
+              @foreach ($fontFamilyOptions as $opt)
+                <option value="{{ $opt['value'] }}" @selected($storedValue($vp, 'font_family') === $opt['value'])>{{ $opt['value'] === '' ? $fontFamilyInheritLabel : $opt['label'] }}</option>
+              @endforeach
+            </select>
+          </label>
+
           <label class="cms-typography-input">
             <span>Font size</span>
             <input

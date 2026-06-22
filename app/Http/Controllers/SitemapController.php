@@ -20,6 +20,9 @@ class SitemapController extends Controller
             ['loc' => route('faq.show'), 'lastmod' => now()->toDateString()],
             ['loc' => route('contact.show'), 'lastmod' => now()->toDateString()],
             ['loc' => route('terms.show'), 'lastmod' => now()->toDateString()],
+            ['loc' => route('privacy.show'), 'lastmod' => now()->toDateString()],
+            ['loc' => route('affiliate.show'), 'lastmod' => now()->toDateString()],
+            ['loc' => route('affiliate.apply.show'), 'lastmod' => now()->toDateString()],
         ]);
 
         $newsUrls = $this->newsRepository->publicArticles()

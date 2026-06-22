@@ -1,8 +1,10 @@
 @component('admin.pages.fields.section', ['title' => 'Hero'])
   @include('admin.pages.fields.text_typography', ['name' => 'hero.title', 'label' => 'Headline (big H1)', 'preset' => 'h1-hero'])
   @include('admin.pages.fields.text_typography', ['name' => 'hero.subtitle', 'label' => 'Subtitle paragraph', 'preset' => 'body-lead', 'multiline' => true, 'rows' => 3])
-  @include('admin.pages.fields.text', ['name' => 'hero.cta_label', 'label' => 'CTA button label'])
-  @include('admin.pages.fields.text', ['name' => 'hero.cta_url', 'label' => 'CTA button URL'])
+  @include('admin.pages.fields.text', ['name' => 'hero.cta_label', 'label' => 'Primary CTA button label'])
+  @include('admin.pages.fields.text', ['name' => 'hero.cta_url', 'label' => 'Primary CTA button URL'])
+  @include('admin.pages.fields.text', ['name' => 'hero.cta2_label', 'label' => 'Secondary CTA button label'])
+  @include('admin.pages.fields.text', ['name' => 'hero.cta2_url', 'label' => 'Secondary CTA button URL'])
   @include('admin.pages.fields.image', ['name' => 'hero.background_image_desktop', 'label' => 'Hero background image — desktop', 'hint' => 'Used at min-width: 901px. WebP recommended.'])
   @include('admin.pages.fields.image', ['name' => 'hero.background_image_mobile', 'label' => 'Hero background image — mobile', 'hint' => 'Used at max-width: 900px.'])
   @include('admin.pages.fields.text_typography', ['name' => 'hero.testimonial_quote', 'label' => 'Testimonial quote', 'preset' => 'body', 'multiline' => true, 'rows' => 3])
@@ -28,6 +30,47 @@
   ])
 @endcomponent
 
+@component('admin.pages.fields.section', ['title' => 'Affordability cards ("most affordable way to run your business")'])
+  @include('admin.pages.fields.text_typography', ['name' => 'affordable.eyebrow', 'label' => 'Eyebrow label (small uppercase)', 'preset' => 'label'])
+  @include('admin.pages.fields.text_typography', ['name' => 'affordable.title', 'label' => 'Section heading', 'preset' => 'h2-section'])
+  @include('admin.pages.fields.text_typography', ['name' => 'affordable.subtitle', 'label' => 'Section subtitle', 'preset' => 'body-lead', 'multiline' => true, 'rows' => 2])
+
+  @include('admin.pages.fields.repeater', [
+    'name' => 'affordable.cards',
+    'fields' => [
+      ['key' => 'variant', 'label' => 'Card style — light, photo or tint'],
+      ['key' => 'title', 'label' => 'Card title'],
+      ['key' => 'copy', 'label' => 'Card copy', 'type' => 'textarea', 'rows' => 2],
+      ['key' => 'link_label', 'label' => 'Link label'],
+      ['key' => 'link_url', 'label' => 'Link URL'],
+      ['key' => 'image', 'label' => 'Card image', 'type' => 'image'],
+      ['key' => 'overlay_big', 'label' => 'Overlay — big text (light card only)'],
+      ['key' => 'overlay_small', 'label' => 'Overlay — small text (light card only)'],
+      ['key' => 'price_label', 'label' => 'Price label (photo card only, e.g. "From")'],
+      ['key' => 'price', 'label' => 'Price (photo card only, e.g. "500 TZS/day")'],
+      ['key' => 'badge', 'label' => 'Badge (photo card only, e.g. "SAVE 40%")'],
+    ],
+  ])
+@endcomponent
+
+@component('admin.pages.fields.section', ['title' => 'Products showcase (two POS cards)'])
+  @include('admin.pages.fields.text_typography', ['name' => 'products.eyebrow', 'label' => 'Eyebrow label (small uppercase)', 'preset' => 'label'])
+  @include('admin.pages.fields.text_typography', ['name' => 'products.title', 'label' => 'Section heading', 'preset' => 'h2-section'])
+  @include('admin.pages.fields.text_typography', ['name' => 'products.subtitle', 'label' => 'Section subtitle', 'preset' => 'body-lead', 'multiline' => true, 'rows' => 2])
+
+  @include('admin.pages.fields.repeater', [
+    'name' => 'products.cards',
+    'fields' => [
+      ['key' => 'eyebrow', 'label' => 'Card eyebrow (e.g. "SKELAPP COUNTER")', 'type' => 'text_typography', 'preset' => 'label'],
+      ['key' => 'title', 'label' => 'Card title', 'type' => 'text_typography', 'preset' => 'h3-card'],
+      ['key' => 'body', 'label' => 'Card description', 'type' => 'text_typography', 'preset' => 'body', 'multiline' => true, 'rows' => 3],
+      ['key' => 'link_label', 'label' => 'Link label', 'type' => 'text_typography', 'preset' => 'label'],
+      ['key' => 'link_url', 'label' => 'Link URL', 'type' => 'text'],
+      ['key' => 'image', 'label' => 'Product image', 'type' => 'image'],
+    ],
+  ])
+@endcomponent
+
 @component('admin.pages.fields.section', ['title' => 'Retailers carousel'])
   @include('admin.pages.fields.text_typography', ['name' => 'retailers.title', 'label' => 'Section heading', 'preset' => 'h2-section'])
   @include('admin.pages.fields.text_typography', ['name' => 'retailers.subtitle', 'label' => 'Section subtitle', 'preset' => 'body', 'multiline' => true, 'rows' => 2])
@@ -39,8 +82,10 @@
     'name' => 'retailers.cards',
     'fields' => [
       ['key' => 'image', 'label' => 'Card image', 'type' => 'image'],
+      ['key' => 'category', 'label' => 'Category pill (shows on the active card)', 'type' => 'text_typography', 'preset' => 'label'],
       ['key' => 'title', 'label' => 'Card title', 'type' => 'text_typography', 'preset' => 'h3-card'],
       ['key' => 'copy', 'label' => 'Card copy', 'type' => 'text_typography', 'preset' => 'body', 'multiline' => true, 'rows' => 2],
+      ['key' => 'link_url', 'label' => 'Card link URL (where the card takes you)', 'type' => 'text'],
     ],
   ])
 @endcomponent
@@ -77,12 +122,21 @@
   @include('admin.pages.fields.text', ['name' => 'allfeatures.cta_label', 'label' => 'CTA button label'])
   @include('admin.pages.fields.text', ['name' => 'allfeatures.cta_url', 'label' => 'CTA button URL'])
 
+  <h4 style="margin: 16px 0 8px;">Center feature card</h4>
+  @include('admin.pages.fields.image', ['name' => 'allfeatures.feature_image', 'label' => 'Feature image (tall center card)'])
+  @include('admin.pages.fields.text_typography', ['name' => 'allfeatures.feature_label', 'label' => 'Feature label', 'preset' => 'label'])
+  @include('admin.pages.fields.text_typography', ['name' => 'allfeatures.feature_desc', 'label' => 'Feature short description', 'preset' => 'body', 'multiline' => true, 'rows' => 2])
+  @include('admin.pages.fields.text', ['name' => 'allfeatures.feature_link_url', 'label' => 'Feature "Learn more" URL'])
+  @include('admin.pages.fields.text_typography', ['name' => 'allfeatures.tagline', 'label' => 'Tagline (below center card)', 'preset' => 'h3-card', 'multiline' => true, 'rows' => 2])
+
   @include('admin.pages.fields.repeater', [
     'name' => 'allfeatures.cards',
     'fields' => [
       ['key' => 'image', 'label' => 'Card image', 'type' => 'image'],
+      ['key' => 'label', 'label' => 'Card label (short — shown on the image)', 'type' => 'text_typography', 'preset' => 'label'],
       ['key' => 'title', 'label' => 'Card title', 'type' => 'text_typography', 'preset' => 'h3-card'],
-      ['key' => 'copy', 'label' => 'Card copy', 'type' => 'text_typography', 'preset' => 'body', 'multiline' => true, 'rows' => 3],
+      ['key' => 'copy', 'label' => 'Card copy (short description on the image)', 'type' => 'text_typography', 'preset' => 'body', 'multiline' => true, 'rows' => 3],
+      ['key' => 'link_url', 'label' => 'Card "Learn more" URL', 'type' => 'text'],
     ],
   ])
 @endcomponent

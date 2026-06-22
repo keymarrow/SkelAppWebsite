@@ -191,12 +191,13 @@
   const initDragScroll = () => {
     document.querySelectorAll('[data-drag-scroll]').forEach((container) => {
       let isDragging = false;
+      let hasDragged = false;
       let startX = 0;
       let startY = 0;
       let startScrollLeft = 0;
       let touchAxisLock = null;
-      const initialScrollOffset = window.matchMedia('(max-width: 768px), (width: 820px)').matches ? 0 : 167.65;
       const touchLockThreshold = 8;
+      const dragClickThreshold = 5;
 
       const stopDragging = () => {
         isDragging = false;
@@ -204,12 +205,9 @@
         container.classList.remove('is-dragging');
       };
 
-      window.requestAnimationFrame(() => {
-        container.scrollLeft = initialScrollOffset;
-      });
-
       container.addEventListener('mousedown', (e) => {
         isDragging = true;
+        hasDragged = false;
         startX = e.pageX;
         startScrollLeft = container.scrollLeft;
         container.classList.add('is-dragging');
@@ -222,8 +220,18 @@
       container.addEventListener('mousemove', (e) => {
         if (!isDragging) return;
         e.preventDefault();
+        if (Math.abs(e.pageX - startX) > dragClickThreshold) hasDragged = true;
         container.scrollLeft = startScrollLeft - (e.pageX - startX);
       });
+
+      // Suppress link navigation when the pointer was dragging the carousel.
+      container.addEventListener('click', (e) => {
+        if (hasDragged) {
+          e.preventDefault();
+          e.stopPropagation();
+          hasDragged = false;
+        }
+      }, true);
 
       container.addEventListener('touchstart', (e) => {
         const touch = e.touches[0];
@@ -264,6 +272,34 @@
 
       container.addEventListener('touchend', stopDragging, { passive: true });
       container.addEventListener('touchcancel', stopDragging, { passive: true });
+
+      // Custom circular "drag" cursor that follows the pointer over the carousel.
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        const cursor = document.createElement('div');
+        cursor.className = 'carousel-cursor';
+        cursor.setAttribute('aria-hidden', 'true');
+        cursor.innerHTML =
+          '<div class="carousel-cursor-inner">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" ' +
+          'stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10M17 9v8h-8"/></svg>' +
+          '</div>';
+        document.body.appendChild(cursor);
+
+        const moveCursor = (e) => {
+          cursor.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px)';
+        };
+
+        container.addEventListener('mouseenter', (e) => {
+          moveCursor(e);
+          cursor.classList.add('is-visible');
+        });
+        container.addEventListener('mouseleave', () => {
+          cursor.classList.remove('is-visible', 'is-down');
+        });
+        container.addEventListener('mousemove', moveCursor);
+        container.addEventListener('mousedown', () => cursor.classList.add('is-down'));
+        window.addEventListener('mouseup', () => cursor.classList.remove('is-down'));
+      }
     });
   };
 
@@ -281,16 +317,14 @@
 
       if (!container || !cards.length || !prevButton || !nextButton || !dots.length) return;
 
+      const track = container.querySelector('.carousel-track');
+      const getLeftInset = () => (track ? parseFloat(getComputedStyle(track).paddingLeft) || 0 : 0);
+
       const getTargetScrollLeft = (card) => {
-        // Desktop layout (≥969px): align card to the start so every card
-        // has a distinct scrollLeft target. Centering on desktop causes the
-        // first several cards to clamp to 0 (because the container is much
-        // wider than a card), breaking the next-arrow.
-        if (window.matchMedia('(min-width: 969px)').matches) {
-          return Math.max(0, card.offsetLeft);
-        }
-        const centeredOffset = card.offsetLeft - ((container.clientWidth - card.clientWidth) / 2);
-        return Math.max(0, centeredOffset);
+        // Align each card to the track's left inset at every breakpoint, so the
+        // first card starts flush with the section heading (its left margin
+        // stays visible) and every card keeps the same left margin when active.
+        return Math.max(0, card.offsetLeft - getLeftInset());
       };
 
       const getActiveIndex = () => {
@@ -620,6 +654,289 @@
     applyCurrentState();
   };
 
+  /* ─── App showcase zoom (eases from slightly small to full size on scroll) ── */
+  const initShowcaseZoom = () => {
+    const section = document.querySelector('.app-showcase');
+    const container = section?.querySelector('.showcase-container');
+    if (!section || !container) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const MIN = 0.9;   // starting scale as it enters from the bottom
+    const EASE = 0.1;  // lower = smoother / longer glide
+    let target = 1;
+    let cur = 1;
+    let rafId = null;
+
+    const compute = () => {
+      const rect = section.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const start = vh;        // section top at viewport bottom → smallest
+      const end = vh * 0.4;    // section top at 40% → full size
+      const p = Math.max(0, Math.min(1, (start - rect.top) / (start - end)));
+      target = MIN + p * (1 - MIN);
+    };
+
+    const apply = () => {
+      container.style.transform = 'scale(' + cur.toFixed(4) + ')';
+    };
+
+    const animate = () => {
+      cur += (target - cur) * EASE;
+      apply();
+      if (Math.abs(target - cur) > 0.001) {
+        rafId = window.requestAnimationFrame(animate);
+      } else {
+        cur = target;
+        apply();
+        rafId = null;
+      }
+    };
+
+    const onScroll = () => {
+      compute();
+      if (!rafId) rafId = window.requestAnimationFrame(animate);
+    };
+
+    compute();
+    cur = target;
+    apply();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+  };
+
+  /* ─── Why Us cards intro (staggered pop-in when scrolled into view) ── */
+  const initWhyusIntro = () => {
+    const grid = document.querySelector('.whyus-grid');
+    if (!grid) return;
+
+    // Reduced motion or no observer support: just show the cards.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+        !('IntersectionObserver' in window)) {
+      grid.classList.add('is-inview');
+      return;
+    }
+
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        grid.classList.add('is-inview');
+        obs.disconnect();
+      });
+    }, { threshold: 0.2 });
+
+    io.observe(grid);
+  };
+
+  /* ─── Affordable cards intro (staggered rise into view) ── */
+  const initAffordGridReveal = () => {
+    const grid = document.querySelector('[data-afford-reveal]');
+    if (!grid) return;
+
+    const showGrid = () => {
+      grid.classList.add('is-inview');
+    };
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+        !('IntersectionObserver' in window)) {
+      showGrid();
+      return;
+    }
+
+    grid.classList.add('is-anim-ready');
+
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        showGrid();
+        obs.disconnect();
+      });
+    }, {
+      rootMargin: '0px 0px -12% 0px',
+      threshold: 0.2,
+    });
+
+    io.observe(grid);
+  };
+
+  /* ─── All Features gallery (sticky center + parallax sides + entry) ── */
+  const initAllFeaturesGallery = () => {
+    const section = document.querySelector('.allfeatures');
+    const gallery = section?.querySelector('[data-af-gallery]');
+    if (!section || !gallery) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const animEls = Array.from(gallery.querySelectorAll('[data-af-anim]'));
+    const feature = gallery.querySelector('[data-af-feature]');
+    const parallaxEls = Array.from(gallery.querySelectorAll('[data-af-parallax]'));
+
+    // 3. Entry fade-in — triggered once the section scrolls into view.
+    if (reduceMotion) {
+      animEls.forEach((el) => el.classList.add('is-visible'));
+      feature?.classList.add('is-visible');
+    } else {
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          animEls.forEach((el) => el.classList.add('is-visible'));
+          feature?.classList.add('is-visible');
+          obs.disconnect();
+        });
+      }, { threshold: 0 });
+      io.observe(section);
+    }
+
+    // 2. Parallax — the whole gallery rises up toward the button as the section
+    //    enters; side cards drift up, center card drifts slightly down. All eased
+    //    so motion glides to a stop after scrolling.
+    const centerEl = gallery.querySelector('[data-af-center]');
+    if (!reduceMotion && (parallaxEls.length || centerEl)) {
+      const SIDE_UP = 120;      // side cards travel upward (px)
+      const CENTER_DOWN = 60;   // center card drifts down a little (px)
+      const GALLERY_RISE = 150; // whole gallery rises up to meet the button (matches CSS margin-top)
+      const HEAD_RISE = 70;     // header rises up from below as the section enters
+      const EASE = 0.08;        // lower = smoother / longer glide to stop
+
+      const headEl = section.querySelector('.allfeatures-head');
+
+      let targetSide = 0;
+      let targetCenter = 0;
+      let targetGallery = 0;
+      let targetHead = 0;
+      let targetHeadOp = 1;
+      let curSide = 0;
+      let curCenter = 0;
+      let curGallery = 0;
+      let curHead = 0;
+      let curHeadOp = 1;
+      let rafId = null;
+
+      const isDesktopAF = () => window.matchMedia('(min-width: 1025px)').matches;
+
+      const computeTargets = () => {
+        // Below desktop the gallery is a horizontal carousel — no vertical parallax.
+        if (!isDesktopAF()) {
+          targetSide = 0;
+          targetCenter = 0;
+          targetGallery = 0;
+          targetHead = 0;
+          targetHeadOp = 1;
+          return;
+        }
+        const rect = section.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const sectionHeight = section.offsetHeight;
+
+        // Per-card drift: progress as the section scrolls through the viewport.
+        const through = Math.max(0, Math.min(1,
+          (-rect.top) / Math.max(sectionHeight - vh, 1)));
+        targetSide = -through * SIDE_UP;
+        targetCenter = through * CENTER_DOWN;
+
+        // Gallery rise: as the section enters from the bottom, lift it up to the
+        // button, then hold (clamped) once it has fully risen.
+        const riseStart = vh * 0.9;
+        const riseEnd = vh * 0.3;
+        const rise = Math.max(0, Math.min(1, (riseStart - rect.top) / (riseStart - riseEnd)));
+        targetGallery = -rise * GALLERY_RISE;
+
+        // Header reveal: slides up from below + fades in as the section enters.
+        const headStart = vh * 0.95;
+        const headEnd = vh * 0.55;
+        const headProgress = Math.max(0, Math.min(1, (headStart - rect.top) / (headStart - headEnd)));
+        targetHead = (1 - headProgress) * HEAD_RISE;
+        targetHeadOp = headProgress;
+      };
+
+      const apply = () => {
+        const sy = curSide.toFixed(2);
+        for (let i = 0; i < parallaxEls.length; i += 1) {
+          parallaxEls[i].style.transform = 'translate3d(0,' + sy + 'px,0)';
+        }
+        if (centerEl) centerEl.style.transform = 'translate3d(0,' + curCenter.toFixed(2) + 'px,0)';
+        gallery.style.transform = 'translate3d(0,' + curGallery.toFixed(2) + 'px,0)';
+        if (headEl) {
+          headEl.style.transform = 'translate3d(0,' + curHead.toFixed(2) + 'px,0)';
+          headEl.style.opacity = curHeadOp.toFixed(3);
+        }
+      };
+
+      const settled = () =>
+        Math.abs(targetSide - curSide) < 0.1 &&
+        Math.abs(targetCenter - curCenter) < 0.1 &&
+        Math.abs(targetGallery - curGallery) < 0.1 &&
+        Math.abs(targetHead - curHead) < 0.1 &&
+        Math.abs(targetHeadOp - curHeadOp) < 0.01;
+
+      const animate = () => {
+        curSide += (targetSide - curSide) * EASE;
+        curCenter += (targetCenter - curCenter) * EASE;
+        curGallery += (targetGallery - curGallery) * EASE;
+        curHead += (targetHead - curHead) * EASE;
+        curHeadOp += (targetHeadOp - curHeadOp) * EASE;
+        apply();
+        if (!settled()) {
+          rafId = window.requestAnimationFrame(animate);
+        } else {
+          curSide = targetSide;
+          curCenter = targetCenter;
+          curGallery = targetGallery;
+          curHead = targetHead;
+          curHeadOp = targetHeadOp;
+          apply();
+          rafId = null;
+        }
+      };
+
+      const onScroll = () => {
+        computeTargets();
+        if (!rafId) rafId = window.requestAnimationFrame(animate);
+      };
+
+      // Snap to the initial position without animating in.
+      computeTargets();
+      curSide = targetSide;
+      curCenter = targetCenter;
+      curGallery = targetGallery;
+      curHead = targetHead;
+      curHeadOp = targetHeadOp;
+      apply();
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+    }
+
+    // 4. Custom circular down-right arrow cursor when hovering the cards.
+    //    Skipped for the plain (non-interactive) gallery — keep the normal cursor.
+    if (!section.classList.contains('allfeatures--plain') && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      const cursor = document.createElement('div');
+      cursor.className = 'carousel-cursor';
+      cursor.setAttribute('aria-hidden', 'true');
+      cursor.innerHTML =
+        '<div class="carousel-cursor-inner">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" ' +
+        'stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10M17 9v8h-8"/></svg>' +
+        '</div>';
+      document.body.appendChild(cursor);
+
+      const moveCursor = (e) => {
+        cursor.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px)';
+      };
+
+      gallery.querySelectorAll('.af-card').forEach((card) => {
+        card.addEventListener('mouseenter', (e) => {
+          moveCursor(e);
+          cursor.classList.add('is-visible');
+        });
+        card.addEventListener('mouseleave', () => {
+          cursor.classList.remove('is-visible', 'is-down');
+        });
+        card.addEventListener('mousemove', moveCursor);
+        card.addEventListener('mousedown', () => cursor.classList.add('is-down'));
+      });
+      window.addEventListener('mouseup', () => cursor.classList.remove('is-down'));
+    }
+  };
+
   /* ─── All Features Cards ──────────────────────────────── */
   const initAllFeaturesScrollStory = () => {
     const section = document.querySelector('.allfeatures');
@@ -793,7 +1110,8 @@
       tGlowX = 0; tGlowY = 0;
       active = false;
       img.style.transform = 'none';
-      shine.style.backgroundImage = 'transparent';
+      shine.style.transform = 'none';
+      shine.style.backgroundImage = 'none';
       glow.style.transform = 'translate(-50%, -50%)';
     };
 
@@ -808,6 +1126,9 @@
       /* Only the image tilts — container stays flat */
       img.style.transform =
         `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.02,1.02,1.02)`;
+      /* Keep the shine locked to the tilting image so it doesn't leave a static
+         light patch ("grey mark") at the image's original position. */
+      shine.style.transform = img.style.transform;
 
       /* Shine follows cursor across the image face */
       shine.style.backgroundImage =
@@ -1117,8 +1438,32 @@
     window.addEventListener('beforeunload', stopAudio);
   };
 
+  /* ─── Hero banner zoom (pricing/why/retailer hero banners) ── */
+  const initHeroBannerZoom = () => {
+    const banners = Array.from(document.querySelectorAll('.pricing-hero-banner'));
+    if (!banners.length) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    banners.forEach((banner) => {
+      const hero = banner.closest('.pricing-hero, .why-hero, .retailer-hero') || banner.parentElement;
+      banner.style.transformOrigin = 'center top';
+      banner.style.willChange = 'transform';
+      let ticking = false;
+      const update = () => {
+        const h = hero.offsetHeight || 1;
+        const progress = Math.min(Math.max(window.scrollY / h, 0), 1);
+        banner.style.transform = 'scale(' + (1 - progress * 0.12).toFixed(4) + ')';
+        ticking = false;
+      };
+      const onScroll = () => { if (!ticking) { window.requestAnimationFrame(update); ticking = true; } };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    });
+  };
+
   /* ─── Boot ────────────────────────────────────────────── */
   onReady(() => {
+    initHeroBannerZoom();
     initFaqAccordion();
     initFaqPageNavigation();
     initDragScroll();
@@ -1127,6 +1472,10 @@
     initNewsArticleActions();
     initPricingCardTilt();
     initPricingThumbnails();
+    initWhyusIntro();
+    initAffordGridReveal();
+    initShowcaseZoom();
+    initAllFeaturesGallery();
 
     const initScrollStories = async () => {
       if (window.__scrollStoriesInitialized) return;
@@ -1168,4 +1517,27 @@
       window.addEventListener('load', scheduleScrollStories, { once: true });
     }
   });
+})();
+
+/* ── Dark-mode ambient glow ──────────────────────────────────────────
+   The light part of the dark background drifts a hair to the right and
+   brightens as you scroll — barely noticeable, but it keeps the page
+   feeling alive. Dark mode only; skipped for reduced-motion users. */
+(function () {
+  var root = document.documentElement;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+  var ticking = false;
+  function update() {
+    ticking = false;
+    if (root.getAttribute('data-theme') !== 'dark') return;
+    var max = (document.documentElement.scrollHeight - window.innerHeight) || 1;
+    var p = Math.min(1, Math.max(0, window.scrollY / max));   // 0 -> 1 scroll progress
+    root.style.setProperty('--dm-glow-x', (82 + p * 8).toFixed(2) + '%');   // 82% -> 90%
+    root.style.setProperty('--dm-glow-a', (0.14 + p * 0.07).toFixed(3));    // 0.14 -> 0.21
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
 })();

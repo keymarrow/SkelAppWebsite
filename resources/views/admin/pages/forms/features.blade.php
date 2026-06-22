@@ -11,21 +11,24 @@
   @include('admin.pages.fields.text_typography', ['name' => 'detail.subtitle', 'label' => 'Section subtitle', 'preset' => 'body-lead', 'multiline' => true, 'rows' => 3])
 @endcomponent
 
-@component('admin.pages.fields.section', ['title' => 'Feature cards'])
+@component('admin.pages.fields.section', ['title' => 'Feature sections'])
   <p class="cms-field-hint" style="margin-bottom: 10px;">
-    Each card shows in the 2-column grid below the detailed-overview header. Use the variant to switch between light, dark, or green cards for visual variety.
+    These rows power the detailed outline on the public features page. Use one section per major feature area. For "Detailed rows", enter one item per line in the format: <code>Title | Description</code>.
   </p>
 
   @include('admin.pages.fields.repeater', [
     'name' => 'detail.cards',
     'fields' => [
-      ['key' => 'image', 'label' => 'Card image', 'type' => 'image'],
-      ['key' => 'title', 'label' => 'Card title', 'type' => 'text_typography', 'preset' => 'h3-card'],
-      ['key' => 'body', 'label' => 'Card body', 'type' => 'text_typography', 'preset' => 'body', 'multiline' => true, 'rows' => 4],
-      ['key' => 'icon', 'label' => 'Decorative icon (optional, sits over the top-left corner)', 'type' => 'image'],
-      ['key' => 'variant', 'label' => 'Card style — light, dark, or green'],
-      ['key' => 'layout', 'label' => 'Card layout — stack (default) or wide (spans both columns, body on left + image on right)'],
-      ['key' => 'cta_label', 'label' => 'CTA button label (leave blank for no button)'],
+      ['key' => 'slug', 'label' => 'Section slug (used for anchor links)'],
+      ['key' => 'nav_label', 'label' => 'Left navigation label'],
+      ['key' => 'eyebrow', 'label' => 'Small section label'],
+      ['key' => 'title', 'label' => 'Section title', 'type' => 'text_typography', 'preset' => 'h3-card'],
+      ['key' => 'overview', 'label' => 'Overview paragraph', 'type' => 'textarea', 'rows' => 4],
+      ['key' => 'note_label', 'label' => 'Side note label'],
+      ['key' => 'note_value', 'label' => 'Side note copy', 'type' => 'textarea', 'rows' => 3],
+      ['key' => 'image', 'label' => 'Section image', 'type' => 'image'],
+      ['key' => 'capabilities_text', 'label' => 'Detailed rows (Title | Description)', 'type' => 'textarea', 'rows' => 7],
+      ['key' => 'cta_label', 'label' => 'CTA button label (optional)'],
       ['key' => 'cta_url', 'label' => 'CTA button URL'],
     ],
   ])

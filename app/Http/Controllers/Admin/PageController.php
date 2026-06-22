@@ -22,10 +22,19 @@ class PageController extends Controller
     public const PAGES = [
         'home' => ['label' => 'Home', 'view' => 'admin.pages.forms.home'],
         'features' => ['label' => 'Features', 'view' => 'admin.pages.forms.features'],
+        'pos' => ['label' => 'Point of Sale', 'view' => 'admin.pages.forms.pos'],
+        'hardware' => ['label' => 'Hardware', 'view' => 'admin.pages.forms.hardware'],
+        'retailers' => ['label' => 'Retailers', 'view' => 'admin.pages.forms.retailers'],
+        'integrations' => ['label' => 'Integrations', 'view' => 'admin.pages.forms.integrations'],
+        'integration' => ['label' => 'Integration Detail', 'view' => 'admin.pages.forms.integration'],
         'pricing' => ['label' => 'Pricing', 'view' => 'admin.pages.forms.pricing'],
+        'affiliate' => ['label' => 'Affiliate Program', 'view' => 'admin.pages.forms.affiliate'],
+        'affiliate-apply' => ['label' => 'Affiliate Form', 'view' => 'admin.pages.forms.affiliate-apply'],
         'faq' => ['label' => 'FAQ', 'view' => 'admin.pages.forms.faq'],
         'contact' => ['label' => 'Contact', 'view' => 'admin.pages.forms.contact'],
+        'why' => ['label' => 'Why SkelApp', 'view' => 'admin.pages.forms.why'],
         'terms' => ['label' => 'Terms', 'view' => 'admin.pages.forms.terms'],
+        'privacy' => ['label' => 'Privacy', 'view' => 'admin.pages.forms.privacy'],
         'global' => ['label' => 'Footer & Nav', 'view' => 'admin.pages.forms.global'],
     ];
 

@@ -35,4 +35,13 @@ return [
         ],
     ],
 
+    'beem' => [
+        'send_url' => env('BEEM_SMS_SEND_URL', 'https://apisms.beem.africa/v1/send'),
+        'api_key' => env('BEEM_SMS_API_KEY'),
+        'secret_key' => env('BEEM_SMS_SECRET_KEY'),
+        'sender_id' => env('BEEM_SMS_SENDER_ID'),
+        'apple_url' => env('APP_STORE_URL', ''),
+        'google_url' => env('PLAY_STORE_URL', ''),
+    ],
+
 ];

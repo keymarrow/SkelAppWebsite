@@ -1,3 +1,16 @@
+@component('admin.pages.fields.section', ['title' => 'Hero banner', 'subtitle' => 'Full-width photo banner at the top of the page'])
+  @include('admin.pages.fields.image', ['name' => 'hero.image', 'label' => 'Background image'])
+  @include('admin.pages.fields.text', ['name' => 'hero.trust_label', 'label' => 'Trust line — prefix (e.g. "Trusted by")'])
+  @include('admin.pages.fields.text', ['name' => 'hero.trust_count', 'label' => 'Trust line — count (e.g. "10,000+")'])
+  @include('admin.pages.fields.text', ['name' => 'hero.trust_suffix', 'label' => 'Trust line — suffix (e.g. "small businesses")'])
+  @include('admin.pages.fields.text_typography', ['name' => 'hero.title', 'label' => 'Hero title', 'preset' => 'h1-hero', 'multiline' => true, 'rows' => 2])
+  @include('admin.pages.fields.text_typography', ['name' => 'hero.subtitle', 'label' => 'Hero subtitle', 'preset' => 'body-lead', 'multiline' => true, 'rows' => 2])
+  @include('admin.pages.fields.text', ['name' => 'hero.primary_label', 'label' => 'Primary button label'])
+  @include('admin.pages.fields.text', ['name' => 'hero.primary_url', 'label' => 'Primary button URL'])
+  @include('admin.pages.fields.text', ['name' => 'hero.secondary_label', 'label' => 'Secondary button label'])
+  @include('admin.pages.fields.text', ['name' => 'hero.secondary_url', 'label' => 'Secondary button URL'])
+@endcomponent
+
 @component('admin.pages.fields.section', ['title' => 'Page header', 'subtitle' => 'Big stacked title + supporting paragraph'])
   @include('admin.pages.fields.repeater', [
     'name' => 'header.title_lines',

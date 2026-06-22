@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Page;
+use App\Support\CmsCatalogs;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 
@@ -67,16 +68,47 @@ class PagesSeeder extends Seeder
         return $current;
     }
 
+    private function bulletLines(array $bullets): string
+    {
+        return implode("\n", array_values(array_filter(array_map(function (array $bullet): string {
+            $label = trim((string) ($bullet['label'] ?? ''));
+            $text = trim((string) ($bullet['text'] ?? ''));
+
+            if ($label !== '' && $text !== '') {
+                return $label.' | '.$text;
+            }
+
+            return $text;
+        }, $bullets))));
+    }
+
+    private function lines(array $items): string
+    {
+        return implode("\n", array_values(array_filter(array_map(
+            fn ($item) => trim((string) $item),
+            $items
+        ))));
+    }
+
     private function definitions(): array
     {
         return [
             'global' => ['title' => 'Footer & Navigation', 'content' => $this->globalContent()],
             'home' => ['title' => 'Home', 'content' => $this->homeContent()],
             'features' => ['title' => 'Features', 'content' => $this->featuresContent()],
+            'pos' => ['title' => 'Point of Sale', 'content' => $this->posContent()],
+            'hardware' => ['title' => 'Hardware', 'content' => $this->hardwareContent()],
+            'retailers' => ['title' => 'Retailers', 'content' => $this->retailersContent()],
+            'integrations' => ['title' => 'Integrations', 'content' => $this->integrationsContent()],
+            'integration' => ['title' => 'Integration Detail', 'content' => $this->integrationContent()],
             'pricing' => ['title' => 'Pricing', 'content' => $this->pricingContent()],
+            'affiliate' => ['title' => 'Affiliate Program', 'content' => $this->affiliateContent()],
+            'affiliate-apply' => ['title' => 'Affiliate Application', 'content' => $this->affiliateApplyContent()],
             'contact' => ['title' => 'Contact', 'content' => $this->contactContent()],
             'faq' => ['title' => 'FAQ', 'content' => $this->faqContent()],
             'terms' => ['title' => 'Terms of Service', 'content' => $this->termsContent()],
+            'privacy' => ['title' => 'Privacy Policy', 'content' => $this->privacyContent()],
+            'why' => ['title' => 'Why SkelApp', 'content' => $this->whyContent()],
         ];
     }
 
@@ -87,12 +119,21 @@ class PagesSeeder extends Seeder
                 'favicon' => 'assets/skel.svg',
             ],
             'nav' => [
+                'login_label' => 'Login',
+                'login_url' => 'https://web.skelapp.tz',
                 'phone_display' => '+255 658 962 000',
                 'phone_tel' => '+255658962000',
                 'contact_label' => 'Contact Us',
                 'logo' => 'assets/SkelAppLogo-green.svg',
                 'call_icon' => 'assets/call.svg',
                 'mobile_menu_icon' => 'assets/Vector.svg',
+                'mega_image' => 'assets/techshop.webp',
+                'mega_eyebrow' => 'Built for Tanzania',
+                'mega_title' => 'Run your whole shop, 1% better',
+                'mega_tags' => [
+                    'FAST CHECKOUT',
+                    'WORKS OFFLINE',
+                ],
             ],
             'app_badges' => [
                 'apple_image' => 'assets/applebadge.png',
@@ -104,6 +145,7 @@ class PagesSeeder extends Seeder
                 'tagline' => 'Sell 1% Better',
                 'download_label' => 'DOWNLOAD THE',
                 'logo' => 'assets/SkelAppLogo-black.png',
+                'logo_dark' => 'assets/SkelAppLogo-green.svg',
                 'address_lines' => [
                     '5th Floor, PPF Tower',
                     'Ohio Street, Garden Avenue',
@@ -125,6 +167,15 @@ class PagesSeeder extends Seeder
                 'credit_link_label' => 'Flashnet Technologies',
                 'credit_link_url' => 'https://flashnet.co.tz',
             ],
+            'download' => [
+                'title' => 'Get the SkelApp',
+                'subtitle' => 'Scan the QR code to download the app',
+                'sms_label' => 'or get a download link via SMS',
+                'country_code' => '+255',
+                'phone_placeholder' => 'Mobile number',
+                'qr_alt' => 'Scan to download SkelApp',
+                'qr_image' => '',
+            ],
         ];
     }
 
@@ -140,6 +191,8 @@ class PagesSeeder extends Seeder
                 'subtitle' => 'SkelApp is Tanzania\'s #1 Point Of Sale. Track every sale, purchase, expense and stock level — from your phone.',
                 'cta_label' => 'Start free — Download SkelApp',
                 'cta_url' => '#',
+                'cta2_label' => 'Get Demo',
+                'cta2_url' => '/contact',
                 'background_image_desktop' => 'assets/HeroImage.webp',
                 'background_image_mobile' => 'assets/HeroImage.jpg',
                 'testimonial_quote' => 'SkelApp is game changer to everyone who really care about gain control of their business. It helps me stay on top of my business 24/7 365.',
@@ -148,7 +201,7 @@ class PagesSeeder extends Seeder
             ],
             'showcase' => [
                 'title' => 'POS, But 1% Better',
-                'subtitle_primary' => 'Stop losing track of your money. SkelApp gives you real-time visibility into every sale, every purchase, every expense — all in one place.',
+                'subtitle_primary' => 'Stop losing track of your money. SkelApp gives you real-time visibility into every sale, purchase, expense — all in one place.',
                 'subtitle_secondary' => 'Built for Tanzanian retailers who want professional tools without the complexity.',
                 'subtitle_mobile' => 'SkelApp helps you manage sales, inventory, purchases, and expenses for retail businesses of any size.',
                 'device_image_desktop' => 'assets/devicemockup.webp',
@@ -159,6 +212,65 @@ class PagesSeeder extends Seeder
                     ['icon' => 'assets/scale.svg', 'title' => 'Ready to Scale, Your Business.', 'body' => 'One shop or many branches, it scales'],
                 ],
             ],
+            'affordable' => [
+                'eyebrow' => 'Built for Tanzania',
+                'title' => 'The most affordable way to run your business.',
+                'subtitle' => 'Lower rates, free software and hardware that pays for itself.',
+                'cards' => [
+                    [
+                        'variant' => 'light',
+                        'title' => 'Keep more of every sale.',
+                        'copy' => 'Lower rates, free POS software, and zero monthly fees — forever.',
+                        'link_label' => 'See pricing',
+                        'link_url' => '/pricing',
+                        'image' => 'assets/poswithtab.webp',
+                        'overlay_big' => 'Zero',
+                        'overlay_small' => 'Monthly Fees',
+                    ],
+                    [
+                        'variant' => 'photo',
+                        'title' => 'Save 40% on Skel Register.',
+                        'copy' => 'The all-in-one POS and card machine for busy counters.',
+                        'link_label' => 'Shop hardware',
+                        'link_url' => '/hardware',
+                        'image' => 'assets/attendants.webp',
+                        'price_label' => 'From',
+                        'price' => '500 TZS/day',
+                        'badge' => 'SAVE 40%',
+                    ],
+                    [
+                        'variant' => 'tint',
+                        'title' => 'Tap to Pay on your phone.',
+                        'copy' => 'Accept contactless payments with no extra hardware needed.',
+                        'link_label' => 'Learn more',
+                        'link_url' => '/features',
+                        'image' => 'assets/Mobilehomeview.png',
+                    ],
+                ],
+            ],
+            'products' => [
+                'eyebrow' => 'Hardware',
+                'title' => 'Smart, reliable point of sale systems.',
+                'subtitle' => 'Everything you need to run and grow your business — in one place.',
+                'cards' => [
+                    [
+                        'eyebrow' => 'SkelApp Counter',
+                        'title' => 'All-in-one POS and payments',
+                        'body' => 'Track and manage every sale, purchase and payment from one system — and save hours of admin time.',
+                        'link_label' => 'See how it works',
+                        'link_url' => '#',
+                        'image' => 'assets/Moc-lap-phone-02.webp',
+                    ],
+                    [
+                        'eyebrow' => 'SkelApp Terminal',
+                        'title' => 'Handheld POS for any business',
+                        'body' => 'With smart POS features, SkelApp lets you take orders and payments from your phone, anywhere.',
+                        'link_label' => 'See how it works',
+                        'link_url' => '#',
+                        'image' => 'assets/Mobilehomeview.png',
+                    ],
+                ],
+            ],
             'retailers' => [
                 'title' => 'Powering Retailers for Every Type',
                 'subtitle' => 'From boutiques in Dar es Salaam to hardware shops in Arusha — SkelApp is built for how Tanzanian retailers actually work.',
@@ -166,13 +278,13 @@ class PagesSeeder extends Seeder
                 'bottom_title' => 'One app. Every number in your business — tracked.',
                 'bottom_copy' => 'Set up in under 5 minutes. No IT person, no training course, no headaches — just open the app and start.',
                 'cards' => [
-                    ['image' => 'assets/boutique.webp', 'title' => 'Boutique Store', 'copy' => 'Simple inventory management'],
-                    ['image' => 'assets/cosmetics.webp', 'title' => 'Cosmetics Store', 'copy' => 'Track stock with ease'],
-                    ['image' => 'assets/grocery.webp', 'title' => 'Grocery Store', 'copy' => 'Fresh inventory management'],
-                    ['image' => 'assets/hardware.webp', 'title' => 'Hardware Shop', 'copy' => 'Track stock, suppliers, and bulk sales'],
-                    ['image' => 'assets/kitchenware.webp', 'title' => 'Kitchenware Store', 'copy' => 'Organise products neatly'],
-                    ['image' => 'assets/autospare.webp', 'title' => 'Auto Spare Shop', 'copy' => 'Manage fast-moving parts'],
-                    ['image' => 'assets/techshop.webp', 'title' => 'Tech Shop', 'copy' => 'Built for modern retail'],
+                    ['image' => 'assets/boutique.webp', 'category' => 'Fashion', 'title' => 'Boutique Store', 'copy' => 'Simple inventory management', 'link_url' => '#'],
+                    ['image' => 'assets/cosmetics.webp', 'category' => 'Beauty', 'title' => 'Cosmetics Store', 'copy' => 'Track stock with ease', 'link_url' => '#'],
+                    ['image' => 'assets/grocery.webp', 'category' => 'Food', 'title' => 'Grocery Store', 'copy' => 'Fresh inventory management', 'link_url' => '#'],
+                    ['image' => 'assets/hardware.webp', 'category' => 'Hardware', 'title' => 'Hardware Shop', 'copy' => 'Track stock, suppliers, and bulk sales', 'link_url' => '#'],
+                    ['image' => 'assets/kitchenware.webp', 'category' => 'Homeware', 'title' => 'Kitchenware Store', 'copy' => 'Organise products neatly', 'link_url' => '#'],
+                    ['image' => 'assets/autospare.webp', 'category' => 'Automotive', 'title' => 'Auto Spare Shop', 'copy' => 'Manage fast-moving parts', 'link_url' => '#'],
+                    ['image' => 'assets/techshop.webp', 'category' => 'Electronics', 'title' => 'Tech Shop', 'copy' => 'Built for modern retail', 'link_url' => '#'],
                 ],
             ],
             'features' => [
@@ -199,18 +311,23 @@ class PagesSeeder extends Seeder
                 ],
             ],
             'allfeatures' => [
-                'title_line_1' => 'All the features.',
-                'title_line_2' => 'All in one place.',
+                'title_line_1' => 'Sell much Better with',
+                'title_line_2' => 'Modern Retail Point Of Sale',
                 'copy' => 'Built specifically for Tanzanian retailers who want professional tools without the complexity — or the cost. Just clarity.',
-                'cta_label' => 'Download Now',
+                'cta_label' => 'See how it works',
                 'cta_url' => '#',
+                'feature_image' => 'assets/techshop.webp',
+                'feature_label' => 'Point of sale',
+                'feature_desc' => 'Run sales, inventory and daily reports from one screen — built for the way Tanzanian shops work.',
+                'feature_link_url' => '#',
+                'tagline' => 'Seamless products. Connected team. Higher margins.',
                 'cards' => [
-                    ['image' => 'assets/crm.webp', 'title' => 'Know your best customers', 'copy' => 'See who buys most, track purchase history, and give your loyal customers a reason to keep coming back.'],
-                    ['image' => 'assets/fastbill.webp', 'title' => 'Fast sales & split billing', 'copy' => 'Record a sale, split a bill, and print a receipt — all in under 30 seconds. Perfect for busy retail floors and boutiques.'],
-                    ['image' => 'assets/catalog.webp', 'title' => 'Product Catalog Management', 'copy' => 'Organize products, pricing, and categories with an intelligent POS catalog built for faster checkout.'],
-                    ['image' => 'assets/inventorytrack.webp', 'title' => 'Inventory Tracking', 'copy' => 'Track stock levels automatically, prevent sellouts, and get low-stock alerts in real time.'],
-                    ['image' => 'assets/report.webp', 'title' => 'Know your profits — every single day', 'copy' => 'Open SkelApp every morning and see exactly how much you made, what you spent, and which products are making you money.'],
-                    ['image' => 'assets/attendants.webp', 'title' => 'Full team control', 'copy' => 'Give each staff member the access they need — no more, no less. Track who sold what, and keep your team accountable without micromanaging.'],
+                    ['image' => 'assets/crm.webp', 'label' => 'Customers', 'title' => 'Know your best customers', 'copy' => 'See who buys most and keep your loyal customers coming back.', 'link_url' => '#'],
+                    ['image' => 'assets/fastbill.webp', 'label' => 'Fast checkout', 'title' => 'Fast sales & split billing', 'copy' => 'Record a sale, split a bill and print a receipt in under 30 seconds.', 'link_url' => '#'],
+                    ['image' => 'assets/catalog.webp', 'label' => 'Catalog', 'title' => 'Product Catalog Management', 'copy' => 'Organise products, pricing and categories for faster checkout.', 'link_url' => '#'],
+                    ['image' => 'assets/inventorytrack.webp', 'label' => 'Inventory', 'title' => 'Inventory Tracking', 'copy' => 'Track stock automatically and get low-stock alerts in real time.', 'link_url' => '#'],
+                    ['image' => 'assets/report.webp', 'label' => 'Profits', 'title' => 'Know your profits — every single day', 'copy' => 'See exactly what you made, spent and which products earn most.', 'link_url' => '#'],
+                    ['image' => 'assets/attendants.webp', 'label' => 'Team control', 'title' => 'Full team control', 'copy' => 'Give each staff member the right access and track who sold what.', 'link_url' => '#'],
                 ],
             ],
             'howitworks' => [
@@ -226,9 +343,9 @@ class PagesSeeder extends Seeder
             ],
             'hardware' => [
                 'label' => 'Optional hardware — if you want the full setup',
-                'title' => 'Complete your setup with Skel hardware.',
-                'copy' => 'Already have a phone or tablet? SkelApp works on it right now. Want a full counter setup? We supply POS terminals, barcode scanners, receipt printers and cash drawers — all pre-configured and ready to go in Tanzania.',
-                'cta_label' => 'Request Hardware Pricing',
+                'title' => 'Complete your shop setup with Skel hardware.',
+                'copy' => 'Already have a phone or tablet? SkelApp works on it now. Want the full counter setup? We got you covered.',
+                'cta_label' => 'Explore SkelHardware',
                 'cta_url' => '#',
                 'image' => 'assets/PosSystemRegister.webp',
             ],
@@ -385,10 +502,469 @@ class PagesSeeder extends Seeder
             'cta' => [
                 'title' => 'Run your shop 1% Better.',
                 'title_accent' => '1% Better',
-                'subtitle' => 'Download SkelApp and start tracking every sale, every product, every customer — all from your phone.',
+                'subtitle' => 'Download SkelApp and start tracking every sale, product, customer — all from your phone.',
                 'primary_label' => 'Download Now',
                 'primary_url' => '#',
                 'secondary_label' => 'Talk to our team',
+            ],
+        ];
+    }
+
+    private function posContent(): array
+    {
+        $shared = config('hardware_products.shared', []);
+
+        return [
+            'meta' => [
+                'title' => 'Point of Sale – SkelApp',
+                'description' => 'SkelApp Point of Sale — fast checkout, every payment, works offline. The POS built for how Tanzania sells.',
+            ],
+            'hero' => [
+                'eyebrow' => 'Point of sale',
+                'title' => 'A point of sale made for',
+                'title_accent' => 'how Tanzania sells',
+                'subtitle' => 'Ring up any sale in seconds, take any payment, and keep selling even when the power or network drops — all from one simple app your team learns in minutes.',
+                'image' => 'assets/HeroImage.webp',
+                'primary_label' => 'Get a demo',
+                'primary_url' => '/contact',
+                'secondary_label' => 'See pricing',
+                'secondary_url' => '/pricing',
+            ],
+            'detail' => [
+                'title' => 'Everything a busy counter needs',
+                'subtitle' => 'One app for checkout, payments and receipts — fast, reliable and built for real trading days.',
+            ],
+            'features' => [
+                ['name' => 'Lightning-fast checkout', 'body' => 'Ring up any sale in seconds on a screen your team learns in minutes. Search, scan or tap a favourite, take payment and move on — so queues keep moving even at your busiest.', 'image' => 'assets/CHECKOUTPOS.png'],
+                ['name' => 'Takes every payment', 'body' => 'Cash, M-Pesa, Airtel Money, Tigo Pesa and cards — all from one screen and reconciled automatically, so the day balances at closing without anyone keying figures by hand.', 'image' => 'assets/card.webp'],
+                ['name' => 'Keeps selling offline', 'body' => 'Power cut or weak network? SkelApp keeps ringing up sales on the device and syncs every order, payment and stock change the moment you reconnect — you never lose a sale.', 'image' => 'assets/CASHFLOW.png'],
+                ['name' => 'Receipts your way', 'body' => 'Print a crisp thermal receipt or send it by SMS or email in a tap — every customer leaves with a clear record, however they prefer to receive it.', 'image' => 'assets/Pos System 04.png'],
+            ],
+            'ecosystem' => $shared['ecosystem'] ?? [],
+            'testimonial' => $shared['testimonial'] ?? [],
+            'pricing' => [
+                'title' => 'Run your whole shop for',
+                'title_accent' => 'nearly nothing a day',
+                'link_label' => 'Explore all pricing plans',
+                'card_name' => 'SkelApp',
+                'card_name_accent' => 'POS',
+                'price_was' => '1,000 TZS',
+                'price_was_suffix' => '/day',
+                'price_now' => '500 TZS',
+                'price_now_suffix' => '/day',
+                'note' => 'Karibu sifuri kwa siku — about 500 TZS a day runs your entire shop, less than a cup of chai.',
+            ],
+            'faq' => array_merge($shared['faq'] ?? [], [
+                'subtitle' => 'POS FAQ',
+                'read_more_label' => 'Read more',
+            ]),
+            'cta' => [
+                'title' => 'Ready to ring up your',
+                'title_accent' => 'first sale?',
+                'link_label' => 'See the hardware',
+                'note' => 'Download SkelApp and start selling today — add hardware whenever you’re ready.',
+                'primary_label' => 'Start for free',
+                'primary_url' => '/contact',
+            ],
+        ];
+    }
+
+    private function hardwareContent(): array
+    {
+        $shared = config('hardware_products.shared', []);
+        $productFaq = array_merge($shared['faq'] ?? [], [
+            'subtitle' => 'Hardware FAQ',
+            'read_more_label' => 'Read more',
+        ]);
+
+        $lineup = [
+            ['name' => 'Skel Terminal', 'tag' => 'Handheld POS', 'copy' => 'Take orders and payments anywhere in your shop — pocket-sized, all-day battery.', 'image' => 'assets/Pos System 04.png', 'url' => '/hardware/skel-terminal'],
+            ['name' => 'Skel Register', 'tag' => 'Countertop POS', 'copy' => 'A full checkout station for busy counters — big screen, fast and reliable.', 'image' => 'assets/PosSystemRegister.webp', 'url' => '/hardware/skel-register'],
+            ['name' => 'Skel Tab', 'tag' => 'Tablet POS', 'copy' => 'Turn a tablet into a complete point of sale with the SkelApp stand.', 'image' => 'assets/Moc-tab.webp', 'url' => '/hardware/skel-tab'],
+            ['name' => 'Skel Phone', 'tag' => 'POS on your phone', 'copy' => 'Run your whole shop from the phone in your pocket — scan, sell and print.', 'image' => 'assets/Mobilehomeview.png', 'url' => '/hardware/skel-phone'],
+        ];
+        $spotlights = [
+            [
+                'eyebrow' => 'Flagship countertop',
+                'name' => 'SkelApp Register',
+                'copy' => 'The complete checkout for your counter. A bright, tilting touchscreen, built-in receipt printing and room for a drawer and scanner — all running SkelApp out of the box.',
+                'image' => 'assets/PosSystemRegister.webp',
+                'points' => ['Bright tilting touchscreen', 'Built-in thermal printer', 'Plug-and-play with SkelApp', 'Works offline, syncs later'],
+                'url' => '/hardware/skel-register',
+            ],
+            [
+                'eyebrow' => 'Sell anywhere',
+                'name' => 'SkelApp Terminal',
+                'copy' => 'Your whole shop in one hand. Scan, sell, take mobile money and print a receipt from the aisle, the table or the doorway — all-day battery included.',
+                'image' => 'assets/Mobilehomeview.png',
+                'points' => ['All-day battery life', 'Built for one-hand use', 'M-Pesa, Airtel & Tigo ready', 'Rugged, dust-resistant body'],
+                'url' => '/hardware/skel-terminal',
+            ],
+        ];
+        $whyItems = [
+            ['title' => 'Plug-and-play', 'copy' => 'Open the box, sign in to SkelApp, and start selling in minutes — no IT person required.'],
+            ['title' => 'Offline-ready', 'copy' => 'Power cut or weak network? Keep ringing up sales. Everything syncs the moment you reconnect.'],
+            ['title' => 'Built for here', 'copy' => 'Chosen and tested for Tanzanian retail — dust, heat, voltage swings and long days.'],
+            ['title' => 'Local support', 'copy' => 'On-the-ground help in Dar es Salaam, WhatsApp support and a warranty on every device.'],
+        ];
+        $accessories = [
+            ['name' => 'Tablet stand', 'copy' => 'Sturdy, swivelling stand for counter checkout.', 'image' => 'assets/Moc-tab.webp'],
+            ['name' => 'Charging dock', 'copy' => 'Keep every Terminal topped up and ready.', 'image' => 'assets/hardware.webp'],
+            ['name' => 'Receipt paper', 'copy' => '80mm thermal rolls, sold by the box.', 'image' => 'assets/Pos System 04.png'],
+            ['name' => 'Barcode Scanner', 'copy' => 'Ring up items in a tap — wired or wireless.', 'image' => 'assets/inventorytrack.webp'],
+            ['name' => 'Cash Drawer', 'copy' => 'Secure cash, opens automatically on each sale.', 'image' => 'assets/PosSystem.webp'],
+        ];
+
+        return [
+            'meta' => [
+                'title' => 'Hardware & Accessories – SkelApp',
+                'description' => 'SkelApp hardware and accessories — terminals, registers, printers, scanners and complete kits built for Tanzanian retail.',
+            ],
+            'hero' => [
+                'eyebrow' => 'Hardware lineup',
+                'title' => "Hardware built for\nhow Tanzania sells.",
+                'subtitle' => 'Terminals, registers, printers, scanners and everything in between — chosen, tested and supported to run SkelApp from day one.',
+                'image' => 'assets/PosSystemRegister.webp',
+                'primary_label' => 'Talk to our team',
+                'primary_url' => '/contact',
+                'secondary_label' => 'See the lineup',
+                'stat1_value' => '5 min',
+                'stat1_label' => 'to set up',
+                'stat2_value' => '100%',
+                'stat2_label' => 'offline-ready',
+                'stat3_value' => '1 yr',
+                'stat3_label' => 'warranty',
+            ],
+            'lineup' => [
+                'title' => 'Everything your counter needs',
+                'subtitle' => 'Mix and match the devices that fit your shop — every one of them speaks SkelApp natively.',
+                'items' => $lineup,
+            ],
+            'spotlights' => [
+                'items' => array_map(fn (array $spotlight) => $spotlight + ['points_text' => $this->lines($spotlight['points'])], $spotlights),
+            ],
+            'why' => [
+                'title' => 'Made to be switched on and forgotten about',
+                'subtitle' => 'Reliable, locally supported hardware that just works — set it up once and get on with selling.',
+                'items' => $whyItems,
+            ],
+            'accessories' => [
+                'title' => 'The little things that finish the setup',
+                'subtitle' => 'Stands, printers, scanners and more — everything you need to complete your counter.',
+                'items' => $accessories,
+            ],
+            'cta' => [
+                'title' => "Let's build your setup.",
+                'subtitle' => 'Tell us about your shop and we’ll recommend the right hardware — and have you selling on SkelApp in no time.',
+                'secondary_label' => 'See pricing',
+                'secondary_url' => '/pricing',
+                'primary_label' => 'Talk to our team',
+                'primary_url' => '/contact',
+            ],
+            'products' => CmsCatalogs::hardwareProducts(),
+            'product_faq' => $productFaq,
+        ];
+    }
+
+    private function retailersContent(): array
+    {
+        $showcaseSteps = [
+            ['title' => 'Yes, it’s a full POS system', 'body' => 'Not just a card machine. SkelApp brings your products, stock, team and payments together in one place — so you stop paying for tools that don’t talk to each other.', 'image' => 'assets/techshop.webp'],
+            ['title' => 'No hidden costs', 'body' => 'Free POS software and no monthly licence fees — affordable payments, and you only pay when you get paid.', 'image' => 'assets/PosSystem.webp'],
+            ['title' => 'We’ll help you set up', 'body' => 'Getting started is simple, and our team is here to help you load your products and prices from day one.', 'image' => 'assets/poswithtab.webp'],
+            ['title' => 'One account for everything', 'body' => 'Payments, POS, receipts and reporting all in one place. No juggling between systems that don’t fit together.', 'image' => 'assets/Moc-lap-phone-02.webp'],
+            ['title' => 'Get paid fast, every day', 'body' => 'Sales settle quickly, straight to your account — so your cash keeps moving and your shelves stay full.', 'image' => 'assets/Mobilehomeview.png'],
+        ];
+        $typeCards = [
+            ['title' => 'Boutique', 'category' => 'Fashion', 'slug' => 'boutique', 'image' => 'assets/boutique.webp'],
+            ['title' => 'Cosmetics Store', 'category' => 'Beauty', 'slug' => 'cosmetics', 'image' => 'assets/cosmetics.webp'],
+            ['title' => 'Grocery Store', 'category' => 'Everyday', 'slug' => 'grocery', 'image' => 'assets/grocery.webp'],
+            ['title' => 'Hardware Shop', 'category' => 'Trade', 'slug' => 'hardware-shop', 'image' => 'assets/hardware.webp'],
+            ['title' => 'Kitchenware Store', 'category' => 'Homeware', 'slug' => 'kitchenware', 'image' => 'assets/kitchenware.webp'],
+            ['title' => 'AutoSpare Shop', 'category' => 'Parts', 'slug' => 'autospare', 'image' => 'assets/autospare.webp'],
+            ['title' => 'Tech Shop', 'category' => 'Electronics', 'slug' => 'tech-shop', 'image' => 'assets/techshop.webp'],
+        ];
+
+        return [
+            'meta' => [
+                'title' => 'Retailers – SkelApp',
+                'description' => 'One point of sale for every kind of shop — boutiques, grocery, hardware, cosmetics, kitchenware, auto spares and tech.',
+            ],
+            'hero' => [
+                'eyebrow' => 'For every type of shop',
+                'title' => "One point of sale\nfor every retailer",
+                'subtitle' => 'Whatever you sell, SkelApp fits the way you trade — fast checkout, every payment, and stock you can trust.',
+                'image' => 'assets/HeroImage.webp',
+                'primary_label' => 'Get a demo',
+                'secondary_label' => 'See pricing',
+            ],
+            'showcase' => [
+                'headline' => 'Everything your business needs, all in one place',
+                'steps' => $showcaseSteps,
+            ],
+            'types' => [
+                'title' => 'Powering retailers of every type',
+                'subtitle' => 'From small shops to large chains — SkelApp scales with your business.',
+                'cards' => $typeCards,
+            ],
+            'faq' => [
+                'title' => 'Questions, answered',
+                'subtitle' => 'Retailers FAQ',
+                'read_more_label' => 'Read more',
+                'items' => [
+                    ['q' => 'Will SkelApp work for my type of shop?', 'a' => 'Yes — from boutiques to grocery, hardware to tech, SkelApp adapts to how you sell. Pick your business type to see how.'],
+                    ['q' => 'Do I need special hardware to start?', 'a' => 'No. Start on the phone or tablet you already have, and add a register, terminal or printer whenever you’re ready.'],
+                    ['q' => 'Does it work without internet?', 'a' => 'Absolutely. Keep selling during power cuts or weak network; everything syncs the moment you reconnect.'],
+                    ['q' => 'What payments can I take?', 'a' => 'Cash, M-Pesa, Airtel Money, Tigo Pesa and cards — all recorded automatically and printed on one receipt.'],
+                ],
+            ],
+            'cta' => [
+                'title' => 'Find the SkelApp built for',
+                'title_accent' => 'your shop',
+                'link_label' => 'See pricing',
+                'note' => 'Whatever you sell, there’s a SkelApp setup that fits. Start free today — add hardware whenever you’re ready.',
+                'primary_label' => 'Start for free',
+            ],
+            'pages' => CmsCatalogs::retailerPages(),
+        ];
+    }
+
+    private function integrationsContent(): array
+    {
+        $config = config('integrations', []);
+
+        return [
+            'meta' => [
+                'title' => 'Integrations - SkelApp',
+                'description' => 'Connect SkelApp with Zoho Books, Xero, QuickBooks, Sage, WhatsApp and Notify Africa BulkSMS.',
+            ],
+            'hero' => $config['hero'] ?? [],
+            'categories' => array_map(function (array $category) {
+                return $category + [
+                    'slugs_text' => $this->lines($category['slugs'] ?? []),
+                ];
+            }, $config['categories'] ?? []),
+            'strip' => [
+                'label' => 'Also integrates with',
+            ],
+            'faq' => [
+                'heading' => 'Integration questions, answered',
+                'subtitle' => 'Integrations FAQ',
+                'read_more_label' => 'Read more',
+                'items' => $config['faq'] ?? [],
+            ],
+            'items' => CmsCatalogs::integrationItems(),
+        ];
+    }
+
+    private function integrationContent(): array
+    {
+        return [
+            'meta' => [
+                'title_suffix' => 'integration - SkelApp',
+                'description_fallback' => 'SkelApp integration details.',
+            ],
+            'hero' => [
+                'kicker_suffix' => 'integration',
+                'primary_label' => 'Talk to an expert',
+                'secondary_label' => 'Visit website',
+            ],
+            'features' => [
+                'kicker' => 'Key features',
+                'title_prefix' => 'What you can expect from',
+            ],
+            'interest' => [
+                'kicker' => 'Coming soon',
+                'title_prefix' => 'Join the waitlist for',
+                'copy' => 'Share your details and we’ll let you know as soon as this integration becomes available for your team.',
+                'avatars' => [
+                    ['src' => 'assets/client.png', 'alt' => 'SkelApp merchant profile 1', 'position' => '50% 26%'],
+                    ['src' => 'assets/pix.jpeg', 'alt' => 'SkelApp merchant profile 2', 'position' => '48% 24%'],
+                    ['src' => 'assets/attendants.png', 'alt' => 'SkelApp merchant profile 3', 'position' => '50% 22%'],
+                    ['src' => 'assets/sto.jpeg', 'alt' => 'SkelApp merchant profile 4', 'position' => '58% 18%'],
+                    ['src' => 'assets/local.jpeg', 'alt' => 'SkelApp merchant profile 5', 'position' => '72% 20%'],
+                ],
+            ],
+            'form' => [
+                'full_name_label' => 'Full name',
+                'full_name_placeholder' => 'Provide your full name',
+                'email_label' => 'Email',
+                'email_placeholder' => 'Provide your email address',
+                'submit_label' => 'Join waitlist',
+                'note_prefix' => 'We’ll only use these details to contact you about',
+            ],
+            'faq' => [
+                'title_suffix' => 'questions',
+                'subtitle_suffix' => 'FAQ',
+                'read_more_label' => 'Read more',
+            ],
+            'back_label' => 'Back to integration page',
+        ];
+    }
+
+    private function affiliateContent(): array
+    {
+        $config = config('affiliate_program', []);
+
+        return [
+            'meta' => $config['meta'] ?? [],
+            'hero' => $config['hero'] ?? [],
+            'steps' => $config['steps'] ?? [],
+            'referrals' => $config['referrals'] ?? [],
+            'partners' => $config['partners'] ?? [],
+            'cta' => $config['cta'] ?? [],
+        ];
+    }
+
+    private function affiliateApplyContent(): array
+    {
+        $config = config('affiliate_program', []);
+
+        return [
+            'meta' => [
+                'title' => 'Affiliate Application | SkelApp',
+                'description' => $config['meta']['description'] ?? 'Apply to join the SkelApp affiliate program.',
+            ],
+            'application' => ($config['application'] ?? []) + [
+                'agreement_link_label' => 'affiliate agreement',
+                'terms_link_label' => 'Terms of Service',
+                'privacy_link_label' => 'Privacy Policy',
+            ],
+            'form' => [
+                'first_name_label' => 'First Name',
+                'first_name_placeholder' => 'Enter your first name',
+                'last_name_label' => 'Last Name',
+                'last_name_placeholder' => 'Enter your last name',
+                'email_label' => 'Email',
+                'email_placeholder' => 'Enter your email address',
+                'phone_label' => 'Phone Number',
+                'phone_placeholder' => '712 345 678',
+                'country_label' => 'Country',
+                'country_placeholder' => 'Select country',
+                'primary_method_label' => 'Primary Promotional Method',
+                'primary_method_placeholder' => '-None-',
+                'discovery_label' => 'How did you hear about the program?',
+                'discovery_placeholder' => 'Select one',
+                'captcha_label' => 'Enter the captcha',
+                'captcha_placeholder' => 'Type the code shown below',
+                'submit_label' => 'Submit',
+                'reset_label' => 'Reset',
+                'back_label' => 'Back',
+            ],
+        ];
+    }
+
+    private function privacyContent(): array
+    {
+        $sections = [
+            [
+                'title' => 'Information We Collect',
+                'intro' => 'We may collect information directly from you, automatically through your use of the website, or from service interactions with our team.',
+                'bullets' => [
+                    ['label' => 'Contact details', 'text' => 'Your name, email address, phone number, business name, and any details you submit through contact forms or waitlists.'],
+                    ['label' => 'Technical data', 'text' => 'Information such as IP address, browser type, device details, and basic usage information collected for security, analytics, and service improvement.'],
+                    ['label' => 'Communications', 'text' => 'Any information you provide when you email us, request support, book a demo, or respond to our team.'],
+                ],
+            ],
+            [
+                'title' => 'How We Use Information',
+                'intro' => 'We use collected information to operate the website and support legitimate business communication.',
+                'bullets' => [
+                    ['label' => 'Service delivery', 'text' => 'To respond to enquiries, schedule demos, follow up on requests, and provide information about SkelApp products and services.'],
+                    ['label' => 'Operations and improvement', 'text' => 'To monitor website performance, improve content, understand interest in our services, and maintain the reliability of our systems.'],
+                    ['label' => 'Security and compliance', 'text' => 'To detect misuse, prevent fraud, maintain records, and comply with legal or regulatory obligations where required.'],
+                ],
+            ],
+            [
+                'title' => 'How We Share Information',
+                'intro' => 'We do not sell your personal information. We may share information only where necessary for normal business operations.',
+                'bullets' => [
+                    ['label' => 'Service providers', 'text' => 'With trusted vendors who help us host the website, send communications, or support our systems, subject to appropriate confidentiality obligations.'],
+                    ['label' => 'Legal reasons', 'text' => 'Where disclosure is required to comply with applicable law, regulation, court order, or a lawful government request.'],
+                    ['label' => 'Business protection', 'text' => 'Where reasonably necessary to protect our rights, users, systems, property, or safety.'],
+                ],
+            ],
+            ['title' => 'Data Retention', 'intro' => 'We retain personal information only for as long as reasonably necessary for the purpose it was collected, including follow-up, recordkeeping, security, and legal compliance.'],
+            ['title' => 'Cookies and Analytics', 'intro' => 'Our website may use cookies or similar technologies to support site functionality, measure traffic, and improve user experience. You may manage cookie preferences through your browser settings, though some functionality may be affected.'],
+            ['title' => 'Security', 'intro' => 'We use reasonable technical and organisational measures to protect the personal information we hold. However, no method of transmission over the internet or electronic storage is completely secure, and we cannot guarantee absolute security.'],
+            ['title' => 'Your Choices', 'intro' => 'You may contact us to request updates or corrections to the information you have submitted to us, or to opt out of non-essential communications where applicable.'],
+            ['title' => 'Updates to This Policy', 'intro' => 'We may revise this Privacy Policy from time to time. Any updates will be reflected on this page together with the effective or last-updated date.'],
+            ['title' => 'Contact Us', 'intro' => 'If you have questions about this Privacy Policy or how we handle personal information, please contact us using the details provided on our Contact page.'],
+        ];
+
+        return [
+            'meta' => [
+                'title' => 'Privacy Policy | SkelApp',
+                'description' => 'Read SkelApp\'s privacy policy and how we collect, use, and protect personal information.',
+            ],
+            'hero' => [
+                'heading' => 'Privacy Policy',
+                'last_updated' => 'Last updated: June 13, 2026',
+            ],
+            'intro_paragraphs' => [
+                'This Privacy Policy explains how SkelApp collects, uses, stores, and protects personal information when you visit our website, request a demo, contact our team, or use related services.',
+                'By accessing our website or sharing your information with us, you acknowledge the practices described in this policy. If you do not agree with this policy, please do not use the website or submit personal information through it.',
+            ],
+            'sections' => array_map(fn (array $section) => $section + ['bullets_text' => $this->bulletLines($section['bullets'] ?? [])], $sections),
+        ];
+    }
+
+    private function whyContent(): array
+    {
+        return [
+            'meta' => [
+                'title' => 'Why SkelApp – About Us',
+                'description' => 'SkelApp is on a mission to transform Tanzanian small businesses — built by people who show up, with products and support that just work.',
+            ],
+            'hero' => [
+                'eyebrow' => 'About SkelApp',
+                'title' => "Transforming Tanzania's small businesses to grow — and communities to thrive.",
+                'subtitle' => 'We put powerful, affordable tools in the hands of every shop — so businesses grow stronger and the people around them thrive.',
+                'image' => 'assets/HeroImage.webp',
+                'primary_label' => 'Talk to us',
+                'primary_url' => '/contact',
+                'secondary_label' => 'Explore SkelApp',
+                'secondary_url' => '/features',
+            ],
+            'gallery' => [
+                'eyebrow' => 'Why SkelApp?',
+                'title' => 'We genuinely<br><span class="af-accent">care</span>',
+            ],
+            'people' => [
+                'title' => "People who\nshow up",
+                'copy' => 'We take the time to understand what really matters to you. From the first discussion, we\'ve got your back — and we see it through until it\'s right.',
+            ],
+            'story' => [
+                'cards' => [
+                    ['num' => '01', 'title' => 'The problem', 'body' => 'It\'s too hard for small shops to track sales, stock and cash — and grow without the numbers they need.', 'image' => 'assets/techshop.webp'],
+                    ['num' => '02', 'title' => 'The idea', 'body' => 'Put a simple, reliable point of sale in every shop — one that works offline and fits how Tanzania sells.', 'image' => 'assets/client.webp'],
+                    ['num' => '03', 'title' => 'The outcome', 'body' => 'Thousands of businesses now run on SkelApp — selling faster, wasting less and growing with confidence.', 'image' => 'assets/HeroImage.webp'],
+                ],
+            ],
+            'product' => [
+                'image' => 'assets/PosSystemRegister.webp',
+                'title' => "Products that fuel\nefficiency",
+                'subtitle' => 'We build products that make your job easier and more profitable. From taking orders and payments to managing stock and staff — everything works together so you can focus on your customers.',
+                'cta_label' => 'Get a demo',
+                'cta_url' => '/contact',
+            ],
+            'support' => [
+                'title' => 'Support',
+                'title_accent' => 'that\'s always there',
+                'subtitle' => 'When something matters, you reach a real person who knows your business — fast, local and on your side.',
+                'features' => [
+                    ['name' => 'Always-on help', 'body' => 'Reach us on WhatsApp, phone or email — real people who know retail, ready the moment you need them.', 'image' => 'assets/CRM-phone-feature.png'],
+                    ['name' => 'Set up in minutes', 'body' => 'Hands-on onboarding and training so your whole team is selling confidently from the very first day.', 'image' => 'assets/CHECKOUTPOS.png'],
+                    ['name' => 'On the ground', 'body' => 'A local team in Dar es Salaam for setup, repairs and advice — not a call centre on the other side of the world.', 'image' => 'assets/techshop.webp'],
+                    ['name' => 'Warranty & care', 'body' => 'Every device is covered, and we keep you running with fast repairs and replacements when you need them.', 'image' => 'assets/hardware.webp'],
+                ],
+            ],
+            'culture' => [
+                'title' => 'A culture that',
+                'title_accent' => 'shows up',
+                'link_label' => 'Work with us',
+                'link_url' => '/contact',
+                'note' => 'We\'re builders, problem-solvers and people who care. We move fast, stay close to our customers, and take pride in work that lasts — kazi safi, kila siku.',
             ],
         ];
     }
@@ -399,6 +975,18 @@ class PagesSeeder extends Seeder
             'meta' => [
                 'title' => 'Pricing – SkelApp',
                 'description' => 'SkelApp pricing — clear, affordable, no hidden costs. Choose Monthly, 6-month, or 12-month plans and save more the longer you commit.',
+            ],
+            'hero' => [
+                'image' => 'assets/HeroImage.webp',
+                'trust_label' => 'Trusted by',
+                'trust_count' => '10,000+',
+                'trust_suffix' => 'small businesses',
+                'title' => "Get more value\nfrom every payment",
+                'subtitle' => 'We’ve got flexible plans to suit any growing business.',
+                'primary_url' => '#pricing-plans',
+                'primary_label' => 'See plans',
+                'secondary_url' => '/contact',
+                'secondary_label' => 'Contact sales',
             ],
             'header' => [
                 'title_lines' => [
@@ -482,8 +1070,8 @@ class PagesSeeder extends Seeder
                 'email_placeholder' => 'Enter your email address',
                 'phone_label' => 'Phone Number',
                 'phone_placeholder' => 'Enter your phone number',
-                'company_label' => 'Company Name',
-                'company_placeholder' => 'Enter your company name',
+                'company_label' => 'Business Name',
+                'company_placeholder' => 'Enter your business name',
                 'cancel_label' => 'Cancel',
                 'submit_label' => 'Submit',
                 'recipient_email' => 'pos@skelapp.tz',

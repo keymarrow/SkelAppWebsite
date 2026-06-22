@@ -18,19 +18,36 @@
   @include('partials.site-nav')
 
   <main class="pricing-page">
-    <section class="pricing-plan-section" aria-labelledby="pricing-plan-title">
-      <header class="pricing-plan-header">
-        <h1 id="pricing-plan-title" class="pricing-plan-title">
-          @foreach ($titleLines as $line)
-            <span class="pricing-plan-title-line">
-              <span class="pricing-plan-title-mark {{ !empty($line['accent']) ? 'is-accent' : '' }}">{{ $line['text'] ?? '' }}</span>
-            </span>
-          @endforeach
-        </h1>
-        <p class="pricing-plan-subtitle">
-          <span class="pricing-plan-subtitle-mark {{ content_typography_class('pricing.header.subtitle') }}" style="{{ content_typography_vars('pricing.header.subtitle') }}">{{ content_text('pricing.header.subtitle') }}</span>
-        </p>
-      </header>
+    {{-- ══════════════ HERO BANNER ══════════════ --}}
+    <section class="pricing-hero" aria-label="Pricing overview">
+      <div class="pricing-hero-banner">
+        <img src="{{ content_image('pricing.hero.image', asset('assets/HeroImage.webp')) }}" alt="" class="pricing-hero-bg" loading="eager" decoding="async">
+        <div class="pricing-hero-content">
+          <p class="pricing-hero-eyebrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01z"/></svg>
+            {{ content('pricing.hero.trust_label', 'Trusted by') }} <strong>{{ content('pricing.hero.trust_count', '10,000+') }}</strong> {{ content('pricing.hero.trust_suffix', 'small businesses') }}
+          </p>
+          <h1 class="pricing-hero-title">{!! nl2br(e(content_text('pricing.hero.title', "Get more value\nfrom every payment"))) !!}</h1>
+          <p class="pricing-hero-sub">{{ content_text('pricing.hero.subtitle', "We’ve got flexible plans to suit any growing business.") }}</p>
+          <div class="pricing-hero-actions">
+            <a href="{{ content('pricing.hero.primary_url', '#pricing-plans') }}" class="pricing-hero-btn pricing-hero-btn--solid">{{ content('pricing.hero.primary_label', 'See plans') }}</a>
+            <a href="{{ content('pricing.hero.secondary_url', route('contact.show')) }}" class="pricing-hero-btn pricing-hero-btn--text">{{ content('pricing.hero.secondary_label', 'Contact sales') }}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pricing-plan-section" id="pricing-plans" aria-label="Pricing plans">
+      <div class="hwp-section-header">
+        <h2 class="hwp-section-title">
+          @forelse ($titleLines as $line)
+            @if (!empty($line['accent']))<strong>{{ $line['text'] ?? '' }}</strong>@else{{ $line['text'] ?? '' }}@endif{{ !$loop->last ? ' ' : '' }}
+          @empty
+            Simple, <strong>transparent pricing</strong>
+          @endforelse
+        </h2>
+        <p class="hwp-section-subtitle">{{ content_text('pricing.header.subtitle', 'Clear, affordable plans with no hidden costs — pick what fits your shop today and scale as you grow.') }}</p>
+      </div>
 
       <form class="pricing-plan-grid" data-pricing-form>
         <section class="pricing-box pricing-box--features" aria-labelledby="features-title">
@@ -106,8 +123,6 @@
       </form>
     </section>
 
-    @include('partials.home-faq')
-
     @php
       $gsPhone = content('pricing.getstarted.phone_image', asset('assets/Mobilehomeview.png'));
       // If the stored value is a relative asset path (legacy), resolve via asset(); if it already includes a scheme, use as-is.
@@ -116,30 +131,33 @@
       }
     @endphp
     <section class="pricing-getstarted" aria-labelledby="getstarted-heading">
-      <div class="getstarted-shell">
-        <div class="getstarted-phone">
-          <img
-            src="{{ $gsPhone }}"
-            alt="SkelApp running on mobile"
-            class="getstarted-phone-image"
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
-
-        <div class="getstarted-content">
-          <h2 id="getstarted-heading" class="getstarted-title {{ content_typography_class('pricing.getstarted.title_top') }}" style="{{ content_typography_vars('pricing.getstarted.title_top') }}">
-            {{ content_text('pricing.getstarted.title_top', 'Get Started') }} <br/>{{ content('pricing.getstarted.title_bottom', 'with the App') }}
-          </h2>
-
-          <a href="{{ content('pricing.getstarted.cta_url', '#') }}" class="btn-download">{{ content('pricing.getstarted.cta_label', 'Download Now') }}</a>
-
-          <p class="getstarted-copy {{ content_typography_class('pricing.getstarted.copy') }}" style="{{ content_typography_vars('pricing.getstarted.copy') }}">
-            {{ content_text('pricing.getstarted.copy') }}
-          </p>
+      <div class="hwp-hero-shell">
+        <div class="hwp-hero-panel">
+          <div class="hwp-hero-copy">
+            <div class="hwp-hero-tagrow">
+              <span class="hwp-hero-badge">SkelApp</span>
+              <span class="hwp-hero-label">Get started</span>
+            </div>
+            <h2 id="getstarted-heading" class="hwp-hero-title">{{ content_text('pricing.getstarted.title_top', 'Get Started') }} {{ content('pricing.getstarted.title_bottom', 'with the App') }}</h2>
+            <p class="hwp-hero-subtitle">{{ content_text('pricing.getstarted.copy') }}</p>
+            <div class="hwp-hero-actions">
+              <a href="{{ content('pricing.getstarted.cta_url', '#') }}" class="hwp-hero-btn hwp-hero-btn--solid" data-download-modal>{{ content('pricing.getstarted.cta_label', 'Download Now') }}</a>
+            </div>
+          </div>
+          <div class="hwp-hero-art">
+            <img
+              src="{{ $gsPhone }}"
+              alt="SkelApp running on mobile"
+              class="hwp-hero-image"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
         </div>
       </div>
     </section>
+
+    @include('partials.home-faq')
   </main>
 
   @include('partials.site-footer')

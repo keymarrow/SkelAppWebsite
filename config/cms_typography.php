@@ -10,6 +10,7 @@
  *
  * Units:
  *   font_size       — px (string with px ok too)
+ *   font_family     — CSS font-family value
  *   font_weight     — numeric string (100 … 900)
  *   font_style      — normal | italic
  *   line_height     — unitless number (preferred) or px/em
@@ -22,6 +23,7 @@ return [
     'h1-hero' => [
         'desktop' => [
             'font_size' => '56',
+            'font_family' => 'NewBlack, Satoshi, sans-serif',
             'font_weight' => '800',
             'line_height' => '1.05',
             'letter_spacing' => '-0.02em',
@@ -38,6 +40,7 @@ return [
     'h1-display' => [
         'desktop' => [
             'font_size' => '70',
+            'font_family' => 'NewBlack, Satoshi, sans-serif',
             'font_weight' => '900',
             'line_height' => '1.06',
             'letter_spacing' => '-0.02em',
@@ -54,6 +57,7 @@ return [
     'h2-section' => [
         'desktop' => [
             'font_size' => '42',
+            'font_family' => 'NewBlack, Satoshi, sans-serif',
             'font_weight' => '700',
             'line_height' => '1.1',
             'letter_spacing' => '-0.01em',
@@ -70,6 +74,7 @@ return [
     'h3-card' => [
         'desktop' => [
             'font_size' => '24',
+            'font_family' => 'Satoshi, sans-serif',
             'font_weight' => '600',
             'line_height' => '1.2',
         ],
@@ -82,6 +87,7 @@ return [
     'body-lead' => [
         'desktop' => [
             'font_size' => '18',
+            'font_family' => 'Satoshi, sans-serif',
             'font_weight' => '400',
             'line_height' => '1.55',
         ],
@@ -94,6 +100,7 @@ return [
     'body' => [
         'desktop' => [
             'font_size' => '16',
+            'font_family' => 'Satoshi, sans-serif',
             'font_weight' => '400',
             'line_height' => '1.55',
         ],
@@ -103,6 +110,7 @@ return [
     'label' => [
         'desktop' => [
             'font_size' => '13',
+            'font_family' => 'Satoshi, sans-serif',
             'font_weight' => '600',
             'letter_spacing' => '0.06em',
         ],

@@ -1,11 +1,128 @@
 @php
+  use Illuminate\Support\Str;
+
   $homeShowcasePoints = content_list('home.showcase.points', []);
+  $arrowSvg = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+  $affordCards = content_list('home.affordable.cards', [
+    [
+      'variant' => 'light',
+      'title' => 'Keep more of every sale.',
+      'copy' => 'Lower rates, free POS software, and zero monthly fees — forever.',
+      'link_label' => 'See pricing',
+      'link_url' => route('pricing.show'),
+      'image' => 'poswithtab.webp',
+      'overlay_big' => 'Zero',
+      'overlay_small' => 'Monthly Fees',
+    ],
+    [
+      'variant' => 'photo',
+      'title' => 'Save 40% on Skel Register.',
+      'copy' => 'The all-in-one POS and card machine for busy counters.',
+      'link_label' => 'Shop hardware',
+      'link_url' => route('hardware.show'),
+      'image' => 'attendants.webp',
+      'price_label' => 'From',
+      'price' => '500 TZS/day',
+      'badge' => 'SAVE 40%',
+    ],
+    [
+      'variant' => 'tint',
+      'title' => 'Tap to Pay on your phone.',
+      'copy' => 'Accept contactless payments with no extra hardware needed.',
+      'link_label' => 'Learn more',
+      'link_url' => route('features.show'),
+      'image' => 'Mobilehomeview.png',
+    ],
+  ]);
+  $homeProductCards = content_list('home.products.cards', [
+    [
+      'eyebrow' => 'SkelApp Counter',
+      'title' => 'All-in-one POS and payments',
+      'body' => 'Track and manage every sale, purchase and payment from one system — and save hours of admin time.',
+      'link_label' => 'See how it works',
+      'link_url' => '#',
+      'image' => 'Moc-lap-phone-02.webp',
+    ],
+    [
+      'eyebrow' => 'SkelApp Terminal',
+      'title' => 'Handheld POS for any business',
+      'body' => 'With smart POS features, SkelApp lets you take orders and payments from your phone, anywhere.',
+      'link_label' => 'See how it works',
+      'link_url' => '#',
+      'image' => 'Mobilehomeview.png',
+    ],
+  ]);
   $retailerCards = content_list('home.retailers.cards', []);
   $allFeatureCards = content_list('home.allfeatures.cards', []);
   $howSteps = content_list('home.howitworks.steps', []);
   $pricingSummaryFeatures = content_list('home.pricing_summary.features', []);
   $pricingSummaryBenefits = content_list('home.pricing_summary.benefits', []);
   $homePricingBenefit2Mobile = content('home.pricing_summary.benefit_mobile_2', '');
+  $featureCatalogSections = config('feature_catalog.sections', []);
+  $mixedContentText = static function ($value, string $fallback = ''): string {
+      if (is_string($value) || is_numeric($value)) {
+          return trim((string) $value);
+      }
+
+      if (is_array($value)) {
+          $text = $value['text'] ?? null;
+          if (is_string($text) || is_numeric($text)) {
+              return trim((string) $text);
+          }
+      }
+
+      return $fallback;
+  };
+  $allFeatureCardAnchorDefaults = [
+      0 => 'customers-and-loyalty',
+      1 => 'point-of-sale',
+      2 => 'catalog-and-products',
+      3 => 'inventory-and-stock',
+      4 => 'reports-and-profits',
+      5 => 'staff-and-branches',
+  ];
+  $resolveFeatureDetailUrl = function (array $card, int $index = 0, ?string $preferredSlug = null) use ($featureCatalogSections, $mixedContentText): string {
+      $link = $mixedContentText($card['link_url'] ?? '');
+      if ($link !== '' && $link !== '#') {
+          return $link;
+      }
+
+      $slug = $mixedContentText($card['detail_slug'] ?? $preferredSlug ?? '');
+      $label = $mixedContentText($card['label'] ?? '');
+      $title = $mixedContentText($card['title'] ?? '');
+      $search = Str::lower(trim($label.' '.$title));
+
+      if ($slug === '' && $search !== '') {
+          foreach ($featureCatalogSections as $section) {
+              foreach (($section['match_terms'] ?? []) as $term) {
+                  if ($term !== '' && str_contains($search, Str::lower((string) $term))) {
+                      $slug = (string) ($section['slug'] ?? '');
+                      break 2;
+                  }
+              }
+          }
+      }
+
+      if ($slug === '' && isset($featureCatalogSections[$index]['slug'])) {
+          $slug = (string) $featureCatalogSections[$index]['slug'];
+      }
+
+      if ($slug === '') {
+          $slug = 'features-detail';
+      }
+
+      return route('features.show').'#'.$slug;
+  };
+  $allFeaturesCtaUrl = trim((string) content('home.allfeatures.cta_url', ''));
+  if ($allFeaturesCtaUrl === '' || $allFeaturesCtaUrl === '#') {
+      $allFeaturesCtaUrl = route('features.show').'#features-detail';
+  }
+  $centerFeatureLink = $resolveFeatureDetailUrl([
+      'label' => content_text('home.allfeatures.feature_label', 'Point of sale'),
+      'title' => content_text('home.allfeatures.feature_label', 'Point of sale'),
+      'link_url' => content('home.allfeatures.feature_link_url', '#'),
+      'detail_slug' => 'point-of-sale',
+  ]);
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -19,12 +136,12 @@
 <link rel="preload" as="image" href="{{ content_image('home.hero.background_image_mobile', asset('assets/HeroImage.jpg')) }}" media="(max-width: 900px)" fetchpriority="high" />
 <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
-<body>
+<body class="welcome-page-body">
 @include('partials.site-nav', ['isHome' => true])
 <section class="hero" id="overview">
   <div
     id="hero-bg"
-    class="hero-bg"
+    class="hero-bg" 
     data-bg-desktop="{{ content_image('home.hero.background_image_desktop', asset('assets/HeroImage.webp')) }}"
     data-bg-mobile="{{ content_image('home.hero.background_image_mobile', asset('assets/HeroImage.jpg')) }}"
   ></div>
@@ -41,13 +158,35 @@
       };
       apply();
       window.addEventListener('resize', apply);
+
+      // Scroll-driven zoom: the whole overview section scales up as it
+      // scrolls away, and scales back in as you scroll up toward the top.
+      var hero = el.closest('.hero') || el.parentElement;
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduce && hero) {
+        var ticking = false;
+        var update = function () {
+          var h = hero.offsetHeight || 1;
+          var progress = Math.min(Math.max(window.scrollY / h, 0), 1);
+          hero.style.transform = 'scale(' + (1 - progress * 0.18).toFixed(4) + ')';
+          ticking = false;
+        };
+        var onScroll = function () {
+          if (!ticking) { window.requestAnimationFrame(update); ticking = true; }
+        };
+        update();
+        window.addEventListener('scroll', onScroll, { passive: true });
+      }
     })();
   </script>
 <div class="hero-content">
   <div class="hero-left">
-    <h1 class="{{ content_typography_class('home.hero.title') }}" style="{{ content_typography_vars('home.hero.title') }}">{{ content_text('home.hero.title', 'Run your Business like a pro.') }}</h1>
+    <h1 class="{{ content_typography_class('home.hero.title') }}" style="{{ content_typography_vars('home.hero.title') }}">{!! preg_replace('/&lt;br\s*\/?&gt;/i', '<br>', e(content_text('home.hero.title', 'Run your Business <br> like a pro.'))) !!}</h1>
     <p class="{{ content_typography_class('home.hero.subtitle') }}" style="{{ content_typography_vars('home.hero.subtitle') }}">{!! nl2br(e(content_text('home.hero.subtitle', "SkelApp is Tanzania's #1 Point Of Sale. Track every sale, purchase, expense and stock level — from your phone."))) !!}</p>
-    <a href="{{ content('home.hero.cta_url', '#') }}" class="btn-download">{{ content('home.hero.cta_label', 'Start free — Download SkelApp') }}</a>
+    <div class="hero-cta">
+      <a href="{{ content('home.hero.cta_url', '#') }}" class="btn-download">{{ content('home.hero.cta_label', 'Start for free') }}</a>
+      <a href="{{ content('home.hero.cta2_url', '#') }}" class="btn-demo">{{ content('home.hero.cta2_label', 'Get Demo') }}</a>
+    </div>
   </div>
 
   <div class="hero-right">
@@ -62,6 +201,55 @@
     </div>
   </div>
 </div>
+</section>
+
+<section class="whyus-section afford-section" id="whyus">
+  <div class="container">
+    <div class="afford-head products-header">
+      <h2 class="afford-title products-title {{ content_typography_class('home.affordable.title') }}" style="{{ content_typography_vars('home.affordable.title') }}">{{ content_text('home.affordable.title', 'The most affordable way to run your business.') }}</h2>
+      <p class="afford-subtitle products-subtitle {{ content_typography_class('home.affordable.subtitle') }}" style="{{ content_typography_vars('home.affordable.subtitle') }}">{{ content_text('home.affordable.subtitle', content_text('home.affordable.eyebrow', 'Built for Tanzania')) }}</p>
+    </div>
+
+    <div class="afford-grid" data-afford-reveal>
+      @foreach ($affordCards as $idx => $card)
+        @php
+          $variant  = $card['variant'] ?? 'light';
+          $titleKey = "home.affordable.cards.{$idx}.title";
+          $img      = cms_image($card['image'] ?? null, asset('assets/PosSystemRegister.webp'));
+        @endphp
+
+        @if ($variant === 'photo')
+          <article class="afford-card afford-card--photo" style="background-image: linear-gradient(180deg, rgba(8,14,11,0.12) 0%, rgba(8,14,11,0.80) 100%), url('{{ $img }}');">
+            <div class="afford-card-top">
+              <h3 class="afford-card-title">{{ content_text($titleKey, $card['title'] ?? '') }}</h3>
+              @if (! empty($card['copy']))<p class="afford-card-copy">{{ $card['copy'] }}</p>@endif
+              <a href="{{ $card['link_url'] ?? '#' }}" class="afford-card-link">{{ $card['link_label'] ?? 'Learn more' }}{!! $arrowSvg !!}</a>
+            </div>
+            @if (! empty($card['price']))
+              <div class="afford-price">
+                @if (! empty($card['price_label']))<span class="afford-price-label">{{ $card['price_label'] }}</span>@endif
+                <span class="afford-price-amount">{{ $card['price'] }}</span>
+              </div>
+            @endif
+            @if (! empty($card['badge']))<span class="afford-badge">{{ $card['badge'] }}</span>@endif
+          </article>
+        @else
+          <article class="afford-card afford-card--{{ $variant }}">
+            <div class="afford-card-top">
+              <h3 class="afford-card-title">{{ content_text($titleKey, $card['title'] ?? '') }}</h3>
+              @if (! empty($card['copy']))<p class="afford-card-copy">{{ $card['copy'] }}</p>@endif
+              <a href="{{ $card['link_url'] ?? '#' }}" class="afford-card-link">{{ $card['link_label'] ?? 'Learn more' }}{!! $arrowSvg !!}</a>
+            </div>
+            <div class="afford-card-media">
+              <img src="{{ $img }}" alt="{{ content_text($titleKey, $card['title'] ?? '') }}" loading="lazy" decoding="async">
+              @if (! empty($card['overlay_big']))
+              @endif
+            </div>
+          </article>
+        @endif
+      @endforeach
+    </div>
+  </div>
 </section>
 
 <section class="app-showcase" id="showcase">
@@ -114,34 +302,150 @@
   </div>
 </section>
 
-<section class="retailers-section" id="retailers">
+<section class="products-section" id="products">
   <div class="container">
-    <div class="section-header">
-      <h2 class="{{ content_typography_class('home.retailers.title') }}" style="{{ content_typography_vars('home.retailers.title') }}">{{ content_text('home.retailers.title', 'Powering Retailers for Every Type') }}</h2>
-      <p class="{{ content_typography_class('home.retailers.subtitle') }}" style="{{ content_typography_vars('home.retailers.subtitle') }}">{{ content_text('home.retailers.subtitle') }}</p>
+    <div class="products-header">
+      <h2 class="products-title {{ content_typography_class('home.products.title') }}" style="{{ content_typography_vars('home.products.title') }}">{{ content_text('home.products.title', 'Smart, reliable point of sale systems.') }}</h2>
+      <p class="products-subtitle {{ content_typography_class('home.products.subtitle') }}" style="{{ content_typography_vars('home.products.subtitle') }}">{{ content_text('home.products.subtitle', 'Everything you need to run and grow your business — in one place.') }}</p>
     </div>
 
-    <div class="carousel-container" data-drag-scroll data-carousel-default-index="1">
-      <div class="carousel-track">
-        @foreach ($retailerCards as $idx => $card)
+    <div class="products-grid">
+      @foreach ($homeProductCards as $idx => $card)
+        @php
+          $eyebrowKey = "home.products.cards.{$idx}.eyebrow";
+          $titleKey = "home.products.cards.{$idx}.title";
+          $bodyKey = "home.products.cards.{$idx}.body";
+          $linkLabelKey = "home.products.cards.{$idx}.link_label";
+        @endphp
+        <article class="product-card">
+          <div class="product-card-body">
+            <span class="product-card-eyebrow {{ content_typography_class($eyebrowKey) }}" style="{{ content_typography_vars($eyebrowKey) }}">{{ content_text($eyebrowKey, $card['eyebrow'] ?? '') }}</span>
+            <h3 class="product-card-title {{ content_typography_class($titleKey) }}" style="{{ content_typography_vars($titleKey) }}">{{ content_text($titleKey, $card['title'] ?? '') }}</h3>
+            <p class="product-card-copy {{ content_typography_class($bodyKey) }}" style="{{ content_typography_vars($bodyKey) }}">{{ content_text($bodyKey, $card['body'] ?? '') }}</p>
+            <a href="{{ content("home.products.cards.{$idx}.link_url", $card['link_url'] ?? '#') }}" class="product-card-link">
+              {{ content_text($linkLabelKey, $card['link_label'] ?? 'See how it works') }}
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+          <div class="product-card-media">
+            <img src="{{ cms_image($card['image'] ?? null, asset('assets/Moc-lap-phone-02.webp')) }}" alt="{{ content_text($titleKey, $card['title'] ?? '') }}" loading="lazy" decoding="async">
+          </div>
+        </article>
+      @endforeach
+    </div>
+  </div>
+</section>
+
+<section class="allfeatures" id="allfeatures">
+  @php
+    $afLeft = array_slice($allFeatureCards, 0, 3, true);
+    $afRight = array_slice($allFeatureCards, 3, 3, true);
+  @endphp
+  <div class="allfeatures-container">
+    <div class="allfeatures-head">
+      <h2 class="allfeatures-head-title {{ content_typography_class('home.allfeatures.title_line_1') }}" style="{{ content_typography_vars('home.allfeatures.title_line_1') }}">{{ content_text('home.allfeatures.title_line_1', 'Sell much Better with') }} {{ content_text('home.allfeatures.title_line_2', 'Modern Retail POS') }}</h2>
+      <p class="allfeatures-head-copy {{ content_typography_class('home.allfeatures.copy') }}" style="{{ content_typography_vars('home.allfeatures.copy') }}">{{ content_text('home.allfeatures.copy', 'Powerful tools designed to help you sell faster and manage smarter.') }}</p>
+      <a href="{{ $allFeaturesCtaUrl }}" class="btn-allfeatures-cta">{{ content('home.allfeatures.cta_label', 'See how it works') }}</a>
+    </div>
+
+    <div class="allfeatures-gallery" data-af-gallery>
+      <div class="af-col af-col--left">
+        @foreach ($afLeft as $idx => $featureCard)
           @php
-            $titleKey = "home.retailers.cards.{$idx}.title";
-            $copyKey = "home.retailers.cards.{$idx}.copy";
+            $titleKey = "home.allfeatures.cards.{$idx}.title";
+            $labelKey = "home.allfeatures.cards.{$idx}.label";
+            $copyKey = "home.allfeatures.cards.{$idx}.copy";
+            $afLabel = content_text($labelKey, $featureCard['label'] ?? content_text($titleKey, $featureCard['title'] ?? ''));
+            $afDesc = content_text($copyKey, $featureCard['copy'] ?? '');
+            $featureCard['link_url'] = content("home.allfeatures.cards.{$idx}.link_url", $featureCard['link_url'] ?? '#');
+            $afLink = $resolveFeatureDetailUrl($featureCard, $idx, $allFeatureCardAnchorDefaults[$idx] ?? null);
           @endphp
-          <div class="retailer-card">
-            <div class="card-image">
-              <img src="{{ cms_image($card['image'] ?? null, asset('assets/boutique.webp')) }}" alt="{{ content_text($titleKey, $card['title'] ?? '') }}" draggable="false" loading="lazy" decoding="async">
-              <div class="card-overlay">
-                <h3 class="{{ content_typography_class($titleKey) }}" style="{{ content_typography_vars($titleKey) }}">{{ content_text($titleKey, $card['title'] ?? '') }}</h3>
-                <p class="{{ content_typography_class($copyKey) }}" style="{{ content_typography_vars($copyKey) }}">{{ content_text($copyKey, $card['copy'] ?? '') }}</p>
+          <div class="af-parallax" data-af-parallax>
+            <a href="{{ $afLink }}" class="af-card af-card-link af-anim" data-af-anim style="--af-delay: {{ $idx * 150 }}ms">
+              <div class="af-media">
+                <img src="{{ cms_image($featureCard['image'] ?? null, asset('assets/crm.webp')) }}" alt="{{ $afLabel }}" loading="lazy" decoding="async">
               </div>
+              <div class="af-content">
+                <span class="af-label {{ content_typography_class($labelKey) }}" style="{{ content_typography_vars($labelKey) }}">{{ $afLabel }}</span>
+                @if ($afDesc !== '')
+                  <span class="af-desc">{{ $afDesc }}</span>
+                @endif
+                <span class="af-learn">
+                  <span>Learn more</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </span>
+              </div>
+            </a>
+          </div>
+        @endforeach
+      </div>
+
+      <div class="af-col af-col--center">
+        <div class="af-center-parallax" data-af-center>
+          <a href="{{ $centerFeatureLink }}" class="af-card af-card-link af-feature" data-af-feature>
+            <div class="af-media">
+              <img src="{{ content_image('home.allfeatures.feature_image', asset('assets/techshop.webp')) }}" alt="{{ content_text('home.allfeatures.feature_label', 'Point of sale') }}" loading="lazy" decoding="async">
             </div>
+            @php $featureDesc = content_text('home.allfeatures.feature_desc'); @endphp
+            <div class="af-content">
+              <span class="af-label {{ content_typography_class('home.allfeatures.feature_label') }}" style="{{ content_typography_vars('home.allfeatures.feature_label') }}">{{ content_text('home.allfeatures.feature_label', 'Point of sale') }}</span>
+              @if ($featureDesc !== '')
+                <span class="af-desc">{{ $featureDesc }}</span>
+              @endif
+              <span class="af-learn">
+                <span>Learn more</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </div>
+          </a>
+          <p class="af-tagline {{ content_typography_class('home.allfeatures.tagline') }}" style="{{ content_typography_vars('home.allfeatures.tagline') }}">{{ content_text('home.allfeatures.tagline', 'Seamless products. Connected team. Higher margins.') }}</p>
+        </div>
+      </div>
+
+      <div class="af-col af-col--right">
+        @foreach ($afRight as $idx => $featureCard)
+          @php
+            $titleKey = "home.allfeatures.cards.{$idx}.title";
+            $labelKey = "home.allfeatures.cards.{$idx}.label";
+            $copyKey = "home.allfeatures.cards.{$idx}.copy";
+            $afLabel = content_text($labelKey, $featureCard['label'] ?? content_text($titleKey, $featureCard['title'] ?? ''));
+            $afDesc = content_text($copyKey, $featureCard['copy'] ?? '');
+            $featureCard['link_url'] = content("home.allfeatures.cards.{$idx}.link_url", $featureCard['link_url'] ?? '#');
+            $afLink = $resolveFeatureDetailUrl($featureCard, $idx, $allFeatureCardAnchorDefaults[$idx] ?? null);
+          @endphp
+          <div class="af-parallax" data-af-parallax>
+            <a href="{{ $afLink }}" class="af-card af-card-link af-anim" data-af-anim style="--af-delay: {{ $idx * 150 }}ms">
+              <div class="af-media">
+                <img src="{{ cms_image($featureCard['image'] ?? null, asset('assets/crm.webp')) }}" alt="{{ $afLabel }}" loading="lazy" decoding="async">
+              </div>
+              <div class="af-content">
+                <span class="af-label {{ content_typography_class($labelKey) }}" style="{{ content_typography_vars($labelKey) }}">{{ $afLabel }}</span>
+                @if ($afDesc !== '')
+                  <span class="af-desc">{{ $afDesc }}</span>
+                @endif
+                <span class="af-learn">
+                  <span>Learn more</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </span>
+              </div>
+            </a>
           </div>
         @endforeach
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="retailer-controls">
+<section class="retailers-section" id="retailers">
+  <div class="container">
+    <div class="retailer-head">
+      <div class="section-header retailer-head-copy">
+        <h2 class="{{ content_typography_class('home.retailers.title') }}" style="{{ content_typography_vars('home.retailers.title') }}">{{ content_text('home.retailers.title', 'Powering Retailers for Every Type') }}</h2>
+        <p class="{{ content_typography_class('home.retailers.subtitle') }}" style="{{ content_typography_vars('home.retailers.subtitle') }}">{{ content_text('home.retailers.subtitle', 'From small shops to large chains — SkelApp scales with your business.') }}</p>
+      </div>
+
       <div class="carousel-slider" aria-label="Retailer carousel controls">
         <button class="carousel-slider-button" type="button" data-carousel-prev aria-label="Previous retailer">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -149,7 +453,13 @@
           </svg>
         </button>
 
-        <div class="carousel-slider-dots" role="tablist" aria-label="Retailer slides">
+        <button class="carousel-slider-button" type="button" data-carousel-next aria-label="Next retailer">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M9.5 5.5 16 12l-6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+
+        <div class="carousel-slider-dots" role="tablist" aria-label="Retailer slides" aria-hidden="true">
           @foreach ($retailerCards as $card)
             @php $dotLabel = content_text("home.retailers.cards.{$loop->index}.title", $card['title'] ?? ''); @endphp
             <button
@@ -159,34 +469,49 @@
               data-carousel-dot="{{ $loop->index }}"
               aria-label="Go to {{ $dotLabel }}"
               aria-current="{{ $loop->index === 1 ? 'true' : 'false' }}"
+              tabindex="-1"
             ></button>
           @endforeach
         </div>
-
-        <button class="carousel-slider-button" type="button" data-carousel-next aria-label="Next retailer">
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path d="M9.5 5.5 16 12l-6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </button>
-      </div>
-
-      <div class="cta-container">
-        <button class="btn-talk">
-          {{ content('home.retailers.cta_label', 'Talk to our Team') }}
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-        </button>
       </div>
     </div>
 
-    <div class="section-bottom">
-      <h2 class="{{ content_typography_class('home.retailers.bottom_title') }}" style="{{ content_typography_vars('home.retailers.bottom_title') }}">{{ content_text('home.retailers.bottom_title', 'One app. Every number in your business — tracked.') }}</h2>
-      <p class="{{ content_typography_class('home.retailers.bottom_copy') }}" style="{{ content_typography_vars('home.retailers.bottom_copy') }}">{{ content_text('home.retailers.bottom_copy') }}</p>
+    <div class="carousel-container" data-drag-scroll data-carousel-default-index="0">
+      <div class="carousel-track">
+        @foreach ($retailerCards as $idx => $card)
+          @php
+            $titleKey = "home.retailers.cards.{$idx}.title";
+            $catKey = "home.retailers.cards.{$idx}.category";
+            $cat = content_text($catKey, $card['category'] ?? '');
+          @endphp
+          <div class="retailer-card">
+            <div class="card-image">
+              <img src="{{ cms_image($card['image'] ?? null, asset('assets/boutique.webp')) }}" alt="{{ content_text($titleKey, $card['title'] ?? '') }}" draggable="false" loading="lazy" decoding="async">
+              @if ($cat !== '')
+                <span class="retailer-card-pill {{ content_typography_class($catKey) }}" style="{{ content_typography_vars($catKey) }}">{{ $cat }}</span>
+              @endif
+              <div class="card-overlay">
+                <h3 class="{{ content_typography_class($titleKey) }}" style="{{ content_typography_vars($titleKey) }}">{{ content_text($titleKey, $card['title'] ?? '') }}</h3>
+              </div>
+              <a href="{{ content("home.retailers.cards.{$idx}.link_url", $card['link_url'] ?? '#') }}" class="retailer-card-link" aria-label="{{ content_text($titleKey, $card['title'] ?? '') }}"></a>
+            </div>
+          </div>
+        @endforeach
+      </div>
     </div>
+
   </div>
 
 </section>
+
+<!-- Retailers bottom (kept separate to preserve layout) -->
+<div class="section-bottom retailers-section-bottom">
+  <div class="container">
+    <h2 class="{{ content_typography_class('home.retailers.bottom_title') }}" style="{{ content_typography_vars('home.retailers.bottom_title') }}">{{ content_text('home.retailers.bottom_title', 'One app. Every number in your business — tracked.') }}</h2>
+    <p class="{{ content_typography_class('home.retailers.bottom_copy') }}" style="{{ content_typography_vars('home.retailers.bottom_copy') }}">{{ content_text('home.retailers.bottom_copy') }}</p>
+  </div>
+</div>
+
 <section class="features-section" id="features">
   <div class="container">
     <!-- Top Row -->
@@ -237,43 +562,6 @@
   </div>
 </section>
 
-<section class="allfeatures" id="allfeatures">
-  <div class="allfeatures-container">
-    <div class="allfeatures-intro-wrap">
-      <div class="allfeatures-intro">
-        <h2 class="allfeatures-intro-title {{ content_typography_class('home.allfeatures.title_line_1') }}" style="{{ content_typography_vars('home.allfeatures.title_line_1') }}">{{ content_text('home.allfeatures.title_line_1', 'All the features.') }}<br>{{ content_text('home.allfeatures.title_line_2', 'All in one place.') }}</h2>
-        <p class="allfeatures-intro-copy {{ content_typography_class('home.allfeatures.copy') }}" style="{{ content_typography_vars('home.allfeatures.copy') }}">
-          {{ content_text('home.allfeatures.copy') }}
-        </p>
-        <a href="{{ content('home.allfeatures.cta_url', '#') }}" class="btn-download">{{ content('home.allfeatures.cta_label', 'Download Now') }}</a>
-      </div>
-    </div>
-
-    <div class="allfeatures-grid">
-      @foreach ($allFeatureCards as $idx => $featureCard)
-        @php
-          $titleKey = "home.allfeatures.cards.{$idx}.title";
-          $copyKey = "home.allfeatures.cards.{$idx}.copy";
-        @endphp
-        <article class="allfeatures-card">
-          <div class="allfeatures-card-media">
-            <img
-              src="{{ cms_image($featureCard['image'] ?? null, asset('assets/crm.webp')) }}"
-              alt="{{ content_text($titleKey, $featureCard['title'] ?? '') }}"
-              width="352"
-              height="352"
-              loading="lazy"
-              decoding="async"
-            >
-          </div>
-          <h2 class="{{ content_typography_class($titleKey) }}" style="{{ content_typography_vars($titleKey) }}">{{ content_text($titleKey, $featureCard['title'] ?? '') }}</h2>
-          <p class="{{ content_typography_class($copyKey) }}" style="{{ content_typography_vars($copyKey) }}">{{ content_text($copyKey, $featureCard['copy'] ?? '') }}</p>
-        </article>
-      @endforeach
-    </div>
-  </div>
-</section>
-
 <section class="how-it-works-section" id="howitworks">
   <div class="container how-it-works-scroll">
     <div class="how-it-works-stage">
@@ -293,7 +581,7 @@
         </div>
         <div class="steps-container">
           @foreach ($howSteps as $idx => $step)
-            @php
+              @php
               $titleKey = "home.howitworks.steps.{$idx}.title";
               $copyKey = "home.howitworks.steps.{$idx}.copy";
             @endphp
@@ -321,12 +609,11 @@
   <div class="container">
     <div class="hardware-card">
       <div class="hardware-content">
-        <span class="hardware-label {{ content_typography_class('home.hardware.label') }}" style="{{ content_typography_vars('home.hardware.label') }}">{{ content_text('home.hardware.label', 'Optional hardware — if you want the full setup') }}</span>
-        <h2 class="{{ content_typography_class('home.hardware.title') }}" style="{{ content_typography_vars('home.hardware.title') }}">{{ content_text('home.hardware.title', 'Complete your setup with Skel hardware.') }}</h2>
+        <h2 class="{{ content_typography_class('home.hardware.title') }}" style="{{ content_typography_vars('home.hardware.title') }}">{{ content_text('home.hardware.title', 'Complete your shop setup with Skel hardware.') }}</h2>
         <p class="{{ content_typography_class('home.hardware.copy') }}" style="{{ content_typography_vars('home.hardware.copy') }}">{{ content_text('home.hardware.copy') }}</p>
 
-        <a href="{{ content('home.hardware.cta_url', '#') }}" class="btn-hardware">
-          {{ content('home.hardware.cta_label', 'Request Hardware Pricing') }}
+        <a href="{{ content('home.hardware.cta_url', route('hardware.show')) }}" class="btn-hardware">
+          {{ content('home.hardware.cta_label', 'Explore SkelHardware') }}
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
@@ -466,5 +753,6 @@
 
 
 <script src="{{ asset('js/skel.js') }}?v={{ @filemtime(public_path('js/skel.js')) }}" defer></script>
+<script>window.$zoho=window.$zoho || {};$zoho.salesiq=$zoho.salesiq||{ready:function(){}}</script><script id="zsiqscript" src="https://salesiq.zohopublic.com/widget?wc=siqa0f9828d26a6345a15cb1a7907634290f7f5bfa5509a978c7226ae97a79099da" defer></script>
 </body>
 </html>
