@@ -280,8 +280,7 @@
         cursor.setAttribute('aria-hidden', 'true');
         cursor.innerHTML =
           '<div class="carousel-cursor-inner">' +
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" ' +
-          'stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10M17 9v8h-8"/></svg>' +
+          '<img src="/assets/cursor.svg" alt="" draggable="false">' +
           '</div>';
         document.body.appendChild(cursor);
 
@@ -913,8 +912,7 @@
       cursor.setAttribute('aria-hidden', 'true');
       cursor.innerHTML =
         '<div class="carousel-cursor-inner">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" ' +
-        'stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10M17 9v8h-8"/></svg>' +
+        '<img src="/assets/cursor.svg" alt="" draggable="false">' +
         '</div>';
       document.body.appendChild(cursor);
 

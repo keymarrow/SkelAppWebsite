@@ -11413,7 +11413,7 @@ html[data-theme="dark"] .afford-card--tint .afford-card-copy { color: rgba(255,2
 .carousel-cursor-inner {
   position: absolute;
   left: 0;
-  top: 0;
+  top: 10px;
   width: 56px;
   height: 56px;
   border-radius: 50%;
@@ -11439,9 +11439,13 @@ html[data-theme="dark"] .afford-card--tint .afford-card-copy { color: rgba(255,2
   transform: translate(-50%, -50%) scale(0.82);
 }
 
-.carousel-cursor-inner svg {
-  width: 22px;
-  height: 22px;
+.carousel-cursor-inner img {
+  display: block;
+  width: 33px;
+  height: 33px;
+  object-fit: contain;
+  /* Nudge toward bottom-left so the arrow sits balanced in the circle */
+  transform: translate(-3px, 3px);
 }
 
 /* Hide the native cursor over the carousel on hover-capable desktops */
