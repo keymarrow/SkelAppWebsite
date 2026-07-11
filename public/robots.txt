@@ -1,2 +1,12 @@
+# SkelApp — robots.txt
+# The full URL list is generated dynamically at /sitemap.xml
+
 User-agent: *
-Disallow:
+Allow: /
+
+# Keep private / functional areas out of the index
+Disallow: /admin
+Disallow: /login
+Disallow: /storage/
+
+Sitemap: https://skelapp.tz/sitemap.xml

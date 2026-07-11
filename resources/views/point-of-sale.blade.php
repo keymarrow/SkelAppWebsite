@@ -22,6 +22,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ content('pos.meta.title', 'Point of Sale – SkelApp') }}</title>
   <meta name="description" content="{{ content('pos.meta.description', 'SkelApp Point of Sale — fast checkout, every payment, works offline. The POS built for how Tanzania sells.') }}">
+  @include('partials.seo', [
+    'seoTitle'       => content('pos.meta.title', 'SkelApp - Point of Sale in Tanzania'),
+    'seoDescription' => content('pos.meta.description', 'SkelApp Point of Sale and Inventory Management, Track every sale, every expense, and every purchase. The POS built for how Tanzania sells.'),
+    'seoType'        => 'website',
+    'seoImage'       => content_image('pos.hero.image', content_image('home.hero.background_image_desktop', asset('assets/HeroImage.webp'))),
+    'seoSoftware'    => true,
+    'seoFaqs'        => $faq['items'] ?? [],
+    'seoBreadcrumbs' => [
+      ['name' => 'Home', 'url' => url('/')],
+      ['name' => 'Point of Sale', 'url' => route('pos.show')],
+    ],
+  ])
   <link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" sizes="any" />
   <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>

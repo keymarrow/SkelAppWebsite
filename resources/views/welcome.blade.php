@@ -1,34 +1,38 @@
 @php
   use Illuminate\Support\Str;
 
-  $homeShowcasePoints = content_list('home.showcase.points', []);
+  $homeShowcasePoints = content_list('home.showcase.points', [
+    ['icon' => 'speed.svg', 'title' => 'Ready in Minutes', 'body' => 'Set up and selling — no training day.'],
+    ['icon' => 'retail.svg', 'title' => 'Made for Tanzanian Retail', 'body' => 'Sales, stock, expenses — in shillings.'],
+    ['icon' => 'scale.svg', 'title' => 'Grows With You', 'body' => 'One duka today, five branches tomorrow.'],
+  ]);
   $arrowSvg = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
   $affordCards = content_list('home.affordable.cards', [
     [
       'variant' => 'light',
-      'title' => 'Keep more of every sale.',
-      'copy' => 'Lower rates, free POS software, and zero monthly fees — forever.',
+      'title' => 'Know your profit, not just your sales.',
+      'copy' => 'SkelApp does the profit math live — so busy days become paid days.',
       'link_label' => 'See pricing',
       'link_url' => route('pricing.show'),
       'image' => 'poswithtab.webp',
-      'overlay_big' => 'Zero',
-      'overlay_small' => 'Monthly Fees',
+      'overlay_big' => '',
+      'overlay_small' => '',
     ],
     [
       'variant' => 'photo',
-      'title' => 'Save 40% on Skel Register.',
-      'copy' => 'The all-in-one POS and card machine for busy counters.',
-      'link_label' => 'Shop hardware',
-      'link_url' => route('hardware.show'),
+      'title' => 'Get your debts out of the notebook.',
+      'copy' => 'Who owes you, how much, since when — tracked, not scribbled and forgotten.',
+      'link_label' => 'Learn more',
+      'link_url' => route('features.show'),
       'image' => 'attendants.webp',
-      'price_label' => 'From',
-      'price' => '500 TZS/day',
-      'badge' => 'SAVE 40%',
+      'price_label' => '',
+      'price' => '',
+      'badge' => '',
     ],
     [
       'variant' => 'tint',
-      'title' => 'Tap to Pay on your phone.',
-      'copy' => 'Accept contactless payments with no extra hardware needed.',
+      'title' => 'However they pay, it counts.',
+      'copy' => 'Cash, mobile money, or bank transfer — every payment lands in one record.',
       'link_label' => 'Learn more',
       'link_url' => route('features.show'),
       'image' => 'Mobilehomeview.png',
@@ -37,27 +41,55 @@
   $homeProductCards = content_list('home.products.cards', [
     [
       'eyebrow' => 'SkelApp Counter',
-      'title' => 'All-in-one POS and payments',
-      'body' => 'Track and manage every sale, purchase and payment from one system — and save hours of admin time.',
+      'title' => "Your shop's command center.",
+      'body' => 'Sales, purchases, stock, and debts — the full picture from one screen at the counter.',
       'link_label' => 'See how it works',
       'link_url' => '#',
       'image' => 'Moc-lap-phone-02.webp',
     ],
     [
       'eyebrow' => 'SkelApp Terminal',
-      'title' => 'Handheld POS for any business',
-      'body' => 'With smart POS features, SkelApp lets you take orders and payments from your phone, anywhere.',
+      'title' => 'The whole counter, in your pocket.',
+      'body' => 'Record sales, check stock, and chase debts from your phone — at the market, at the supplier, anywhere.',
       'link_label' => 'See how it works',
       'link_url' => '#',
       'image' => 'Mobilehomeview.png',
     ],
   ]);
-  $retailerCards = content_list('home.retailers.cards', []);
-  $allFeatureCards = content_list('home.allfeatures.cards', []);
-  $howSteps = content_list('home.howitworks.steps', []);
-  $pricingSummaryFeatures = content_list('home.pricing_summary.features', []);
-  $pricingSummaryBenefits = content_list('home.pricing_summary.benefits', []);
-  $homePricingBenefit2Mobile = content('home.pricing_summary.benefit_mobile_2', '');
+  $retailerCards = content_list('home.retailers.cards', [
+    ['image' => 'boutique.webp', 'category' => 'Fashion', 'title' => 'Boutique', 'copy' => 'Simple inventory management', 'link_url' => '#'],
+    ['image' => 'cosmetics.webp', 'category' => 'Beauty', 'title' => 'Cosmetics', 'copy' => 'Track stock with ease', 'link_url' => '#'],
+    ['image' => 'grocery.webp', 'category' => 'Food', 'title' => 'Grocery', 'copy' => 'Fresh inventory management', 'link_url' => '#'],
+    ['image' => 'hardware.webp', 'category' => 'Hardware', 'title' => 'Hardware', 'copy' => 'Track stock, suppliers, and bulk sales', 'link_url' => '#'],
+    ['image' => 'kitchenware.webp', 'category' => 'Homeware', 'title' => 'Kitchenware', 'copy' => 'Organise products neatly', 'link_url' => '#'],
+    ['image' => 'autospare.webp', 'category' => 'Automotive', 'title' => 'Auto Spare Shop', 'copy' => 'Manage fast-moving parts', 'link_url' => '#'],
+    ['image' => 'techshop.webp', 'category' => 'Electronics', 'title' => 'Tech Shop', 'copy' => 'Built for modern retail', 'link_url' => '#'],
+  ]);
+  $allFeatureCards = content_list('home.allfeatures.cards', [
+    ['image' => 'crm.webp', 'label' => 'Customers', 'title' => "See who buys most, who's gone quiet, and who's worth a call.", 'copy' => "See who buys most, who's gone quiet, and who's worth a call.", 'link_url' => '/features#customers-and-loyalty'],
+    ['image' => 'fastbill.webp', 'label' => 'Fast checkout', 'title' => 'Record a sale and print a receipt in under 30 seconds.', 'copy' => 'Record a sale and print a receipt in under 30 seconds.', 'link_url' => '/features#point-of-sale'],
+    ['image' => 'catalog.webp', 'label' => 'Catalog', 'title' => 'Organise products, pricing and categories for faster checkout.', 'copy' => 'Organise products, pricing and categories for faster checkout.', 'link_url' => '/features#catalog-and-products'],
+    ['image' => 'inventorytrack.webp', 'label' => 'Inventory', 'title' => 'Low-stock alerts before you run out, not after the customer walks out.', 'copy' => 'Low-stock alerts before you run out, not after the customer walks out.', 'link_url' => '/features#inventory-and-stock'],
+    ['image' => 'report.webp', 'label' => 'Profits', 'title' => 'What you made, what you spent, which products carry the shop.', 'copy' => 'What you made, what you spent, which products carry the shop.', 'link_url' => '/features#reports-and-profits'],
+    ['image' => 'attendants.webp', 'label' => 'Team control', 'title' => 'Give each staff member the right access and track who sold what.', 'copy' => 'Give each staff member the right access and track who sold what.', 'link_url' => '/features#staff-and-branches'],
+  ]);
+  $howSteps = content_list('home.howitworks.steps', [
+    ['image' => 'rw.jpeg', 'title' => 'Add your products', 'copy' => "Enter your items, set your prices. A typical shop's catalogue is done before the kettle boils."],
+    ['image' => 'pix.jpeg', 'title' => 'Start selling', 'copy' => 'Tap the product, take the payment, receipt done. Every sale lands in your records automatically.'],
+    ['image' => 'sto.jpeg', 'title' => 'Watch the numbers', 'copy' => "Sales, stock, and profit update themselves. Open the app tomorrow and you'll know exactly where you stand."],
+  ]);
+  $pricingSummaryFeatures = content_list('home.pricing_summary.features', [
+    'Products, pricing, purchases, and restocking — one app',
+    'Every branch and every staff account included',
+    'Daily reports: sales, expenses, profit',
+    'Customer and supplier debts, tracked automatically',
+  ]);
+  $pricingSummaryBenefits = content_list('home.pricing_summary.benefits', [
+    'Cancel anytime',
+    'Works on mobile & tablet',
+    'Setup in minutes',
+  ]);
+  $homePricingBenefit2Mobile = content('home.pricing_summary.benefit_mobile_2', 'Works on mobile & tablet');
   $featureCatalogSections = config('feature_catalog.sections', []);
   $mixedContentText = static function ($value, string $fallback = ''): string {
       if (is_string($value) || is_numeric($value)) {
@@ -129,8 +161,15 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>{{ content('home.meta.title', 'SkelApp – The Best POS in Tanzania.') }}</title>
-<meta name="description" content="{{ content('home.meta.description') }}">
+<title>{{ content('home.meta.title', 'SkelApp — POS System & Inventory Management for Small Businesses in Tanzania') }}</title>
+<meta name="description" content="{{ content('home.meta.description', 'SkelApp is the point of sale and inventory management app for small businesses in Tanzania — every sale, expense, and stock item tracked in real time.') }}">
+@include('partials.seo', [
+  'seoTitle'       => content('home.meta.title', 'SkelApp — POS System & Inventory Management for Small Businesses in Tanzania'),
+  'seoDescription' => content('home.meta.description', 'SkelApp is the point of sale and inventory management app for small businesses in Tanzania — every sale, expense, and stock item tracked in real time.'),
+  'seoType'        => 'website',
+  'seoImage'       => content_image('home.hero.background_image_desktop', asset('assets/HeroImage.webp')),
+  'seoSoftware'    => true,
+])
 <link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" sizes="any" />
 <link rel="preload" as="image" href="{{ content_image('home.hero.background_image_desktop', asset('assets/HeroImage.webp')) }}" media="(min-width: 901px)" fetchpriority="high" />
 <link rel="preload" as="image" href="{{ content_image('home.hero.background_image_mobile', asset('assets/HeroImage.jpg')) }}" media="(max-width: 900px)" fetchpriority="high" />
@@ -181,11 +220,11 @@
   </script>
 <div class="hero-content">
   <div class="hero-left">
-    <h1 class="{{ content_typography_class('home.hero.title') }}" style="{{ content_typography_vars('home.hero.title') }}">{!! preg_replace('/&lt;br\s*\/?&gt;/i', '<br>', e(content_text('home.hero.title', 'Run your Business <br> like a pro.'))) !!}</h1>
-    <p class="{{ content_typography_class('home.hero.subtitle') }}" style="{{ content_typography_vars('home.hero.subtitle') }}">{!! nl2br(e(content_text('home.hero.subtitle', "SkelApp is Tanzania's #1 Point Of Sale. Track every sale, purchase, expense and stock level — from your phone."))) !!}</p>
+    <h1 class="{{ content_typography_class('home.hero.title') }}" style="{{ content_typography_vars('home.hero.title') }}">{!! content_text_html('home.hero.title', 'Run your business <br>like you mean it.') !!}</h1>
+    <p class="{{ content_typography_class('home.hero.subtitle') }}" style="{{ content_typography_vars('home.hero.subtitle') }}">{!! content_text_html('home.hero.subtitle', "SkelApp is Tanzania's simplest way to run a shop — every sale, every expense, every debt tracked from your phone. Nothing missing, nothing guessed.") !!}</p>
     <div class="hero-cta">
       <a href="{{ content('home.hero.cta_url', '#') }}" class="btn-download">{{ content('home.hero.cta_label', 'Start for free') }}</a>
-      <a href="{{ content('home.hero.cta2_url', '#') }}" class="btn-demo">{{ content('home.hero.cta2_label', 'Get Demo') }}</a>
+      <a href="{{ content('home.hero.cta2_url', '#') }}" class="btn-demo">{{ content('home.hero.cta2_label', 'See it work') }}</a>
     </div>
   </div>
 
@@ -195,9 +234,9 @@
         <img src="{{ content_image('home.hero.testimonial_stars_image', asset('assets/Stars.svg')) }}" alt="5 star rating">
       </div>
       <blockquote class="{{ content_typography_class('home.hero.testimonial_quote') }}" style="{{ content_typography_vars('home.hero.testimonial_quote') }}">
-        {{ content_text('home.hero.testimonial_quote') }}
+        {!! content_text_html('home.hero.testimonial_quote', 'Anyone can record a sale. SkelApp shows your real profit.') !!}
       </blockquote>
-      <cite class="{{ content_typography_class('home.hero.testimonial_attribution') }}" style="{{ content_typography_vars('home.hero.testimonial_attribution') }}">{{ content_text('home.hero.testimonial_attribution') }}</cite>
+      <cite class="{{ content_typography_class('home.hero.testimonial_attribution') }}" style="{{ content_typography_vars('home.hero.testimonial_attribution') }}">{!! content_text_html('home.hero.testimonial_attribution', 'Profit, debts, and every payment — one screen, no guesswork.') !!}</cite>
     </div>
   </div>
 </div>
@@ -206,8 +245,8 @@
 <section class="whyus-section afford-section" id="whyus">
   <div class="container">
     <div class="afford-head products-header">
-      <h2 class="afford-title products-title {{ content_typography_class('home.affordable.title') }}" style="{{ content_typography_vars('home.affordable.title') }}">{{ content_text('home.affordable.title', 'The most affordable way to run your business.') }}</h2>
-      <p class="afford-subtitle products-subtitle {{ content_typography_class('home.affordable.subtitle') }}" style="{{ content_typography_vars('home.affordable.subtitle') }}">{{ content_text('home.affordable.subtitle', content_text('home.affordable.eyebrow', 'Built for Tanzania')) }}</p>
+      <h2 class="afford-title products-title {{ content_typography_class('home.affordable.title') }}" style="{{ content_typography_vars('home.affordable.title') }}">{!! content_text_html('home.affordable.title', "You handle today's queue. SkelApp handles the next decade.") !!}</h2>
+      <p class="afford-subtitle products-subtitle {{ content_typography_class('home.affordable.subtitle') }}" style="{{ content_typography_vars('home.affordable.subtitle') }}">{!! content_text_html('home.affordable.subtitle', content_text('home.affordable.eyebrow', "Today's records build a strong business — for the next ten years.")) !!}</p>
     </div>
 
     <div class="afford-grid" data-afford-reveal>
@@ -221,7 +260,7 @@
         @if ($variant === 'photo')
           <article class="afford-card afford-card--photo" style="background-image: linear-gradient(180deg, rgba(8,14,11,0.12) 0%, rgba(8,14,11,0.80) 100%), url('{{ $img }}');">
             <div class="afford-card-top">
-              <h3 class="afford-card-title">{{ content_text($titleKey, $card['title'] ?? '') }}</h3>
+              <h3 class="afford-card-title">{!! content_text_html($titleKey, $card['title'] ?? '') !!}</h3>
               @if (! empty($card['copy']))<p class="afford-card-copy">{{ $card['copy'] }}</p>@endif
               <a href="{{ $card['link_url'] ?? '#' }}" class="afford-card-link">{{ $card['link_label'] ?? 'Learn more' }}{!! $arrowSvg !!}</a>
             </div>
@@ -236,7 +275,7 @@
         @else
           <article class="afford-card afford-card--{{ $variant }}">
             <div class="afford-card-top">
-              <h3 class="afford-card-title">{{ content_text($titleKey, $card['title'] ?? '') }}</h3>
+              <h3 class="afford-card-title">{!! content_text_html($titleKey, $card['title'] ?? '') !!}</h3>
               @if (! empty($card['copy']))<p class="afford-card-copy">{{ $card['copy'] }}</p>@endif
               <a href="{{ $card['link_url'] ?? '#' }}" class="afford-card-link">{{ $card['link_label'] ?? 'Learn more' }}{!! $arrowSvg !!}</a>
             </div>
@@ -256,15 +295,15 @@
   <div class="showcase-container">
     <div class="showcase-card">
       <div class="showcase-header">
-        <h2 class="showcase-title {{ content_typography_class('home.showcase.title') }}" style="{{ content_typography_vars('home.showcase.title') }}">{{ content_text('home.showcase.title', 'POS, But 1% Better') }}</h2>
+        <h2 class="showcase-title {{ content_typography_class('home.showcase.title') }}" style="{{ content_typography_vars('home.showcase.title') }}">{!! content_text_html('home.showcase.title', 'POS System, But Actually Simple') !!}</h2>
         <p class="showcase-subtitle showcase-subtitle-primary {{ content_typography_class('home.showcase.subtitle_primary') }}" style="{{ content_typography_vars('home.showcase.subtitle_primary') }}">
-          {{ content_text('home.showcase.subtitle_primary') }}
+          {!! content_text_html('home.showcase.subtitle_primary', 'SkelApp is the point of sale and inventory management app for small businesses in Tanzania — every sale, expense, and stock item in real time.') !!}
         </p>
         <p class="showcase-subtitle showcase-subtitle-secondary {{ content_typography_class('home.showcase.subtitle_secondary') }}" style="{{ content_typography_vars('home.showcase.subtitle_secondary') }}">
-          {{ content_text('home.showcase.subtitle_secondary') }}
+          {!! content_text_html('home.showcase.subtitle_secondary', 'No accountant needed. No complexity. Honest tools for real shops.') !!}
         </p>
         <p class="showcase-subtitle showcase-subtitle-mobile {{ content_typography_class('home.showcase.subtitle_mobile') }}" style="{{ content_typography_vars('home.showcase.subtitle_mobile') }}">
-          {{ content_text('home.showcase.subtitle_mobile') }}
+          {!! content_text_html('home.showcase.subtitle_mobile', 'SkelApp is the point of sale and inventory management app for small businesses in Tanzania — every sale, expense, and stock item in real time. No accountant needed. No complexity. Honest tools for real shops.') !!}
         </p>
 
         <div class="app-buttons">
@@ -293,9 +332,9 @@
         <article class="showcase-point">
           <div class="showcase-point-heading">
             <img src="{{ cms_image($point['icon'] ?? null, asset('assets/speed.svg')) }}" alt="" class="showcase-point-icon" aria-hidden="true">
-            <h3 class="{{ content_typography_class($titleKey) }}" style="{{ content_typography_vars($titleKey) }}">{{ content_text($titleKey, $point['title'] ?? '') }}</h3>
+            <h3 class="{{ content_typography_class($titleKey) }}" style="{{ content_typography_vars($titleKey) }}">{!! content_text_html($titleKey, $point['title'] ?? '') !!}</h3>
           </div>
-          <p class="{{ content_typography_class($bodyKey) }}" style="{{ content_typography_vars($bodyKey) }}">{{ content_text($bodyKey, $point['body'] ?? '') }}</p>
+          <p class="{{ content_typography_class($bodyKey) }}" style="{{ content_typography_vars($bodyKey) }}">{!! content_text_html($bodyKey, $point['body'] ?? '') !!}</p>
         </article>
       @endforeach
     </div>
@@ -305,8 +344,8 @@
 <section class="products-section" id="products">
   <div class="container">
     <div class="products-header">
-      <h2 class="products-title {{ content_typography_class('home.products.title') }}" style="{{ content_typography_vars('home.products.title') }}">{{ content_text('home.products.title', 'Smart, reliable point of sale systems.') }}</h2>
-      <p class="products-subtitle {{ content_typography_class('home.products.subtitle') }}" style="{{ content_typography_vars('home.products.subtitle') }}">{{ content_text('home.products.subtitle', 'Everything you need to run and grow your business — in one place.') }}</p>
+      <h2 class="products-title {{ content_typography_class('home.products.title') }}" style="{{ content_typography_vars('home.products.title') }}">{!! content_text_html('home.products.title', 'One system. Two ways to run it.') !!}</h2>
+      <p class="products-subtitle {{ content_typography_class('home.products.subtitle') }}" style="{{ content_typography_vars('home.products.subtitle') }}">{!! content_text_html('home.products.subtitle', "At the counter or on the move — your shop's numbers stay with you.") !!}</p>
     </div>
 
     <div class="products-grid">
@@ -319,11 +358,11 @@
         @endphp
         <article class="product-card">
           <div class="product-card-body">
-            <span class="product-card-eyebrow {{ content_typography_class($eyebrowKey) }}" style="{{ content_typography_vars($eyebrowKey) }}">{{ content_text($eyebrowKey, $card['eyebrow'] ?? '') }}</span>
-            <h3 class="product-card-title {{ content_typography_class($titleKey) }}" style="{{ content_typography_vars($titleKey) }}">{{ content_text($titleKey, $card['title'] ?? '') }}</h3>
-            <p class="product-card-copy {{ content_typography_class($bodyKey) }}" style="{{ content_typography_vars($bodyKey) }}">{{ content_text($bodyKey, $card['body'] ?? '') }}</p>
+            <span class="product-card-eyebrow {{ content_typography_class($eyebrowKey) }}" style="{{ content_typography_vars($eyebrowKey) }}">{!! content_text_html($eyebrowKey, $card['eyebrow'] ?? '') !!}</span>
+            <h3 class="product-card-title {{ content_typography_class($titleKey) }}" style="{{ content_typography_vars($titleKey) }}">{!! content_text_html($titleKey, $card['title'] ?? '') !!}</h3>
+            <p class="product-card-copy {{ content_typography_class($bodyKey) }}" style="{{ content_typography_vars($bodyKey) }}">{!! content_text_html($bodyKey, $card['body'] ?? '') !!}</p>
             <a href="{{ content("home.products.cards.{$idx}.link_url", $card['link_url'] ?? '#') }}" class="product-card-link">
-              {{ content_text($linkLabelKey, $card['link_label'] ?? 'See how it works') }}
+              {!! content_text_html($linkLabelKey, $card['link_label'] ?? 'See how it works') !!}
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
@@ -345,9 +384,9 @@
   @endphp
   <div class="allfeatures-container">
     <div class="allfeatures-head">
-      <h2 class="allfeatures-head-title {{ content_typography_class('home.allfeatures.title_line_1') }}" style="{{ content_typography_vars('home.allfeatures.title_line_1') }}">{{ content_text('home.allfeatures.title_line_1', 'Sell much Better with') }} {{ content_text('home.allfeatures.title_line_2', 'Modern Retail POS') }}</h2>
-      <p class="allfeatures-head-copy {{ content_typography_class('home.allfeatures.copy') }}" style="{{ content_typography_vars('home.allfeatures.copy') }}">{{ content_text('home.allfeatures.copy', 'Powerful tools designed to help you sell faster and manage smarter.') }}</p>
-      <a href="{{ $allFeaturesCtaUrl }}" class="btn-allfeatures-cta">{{ content('home.allfeatures.cta_label', 'See how it works') }}</a>
+      <h2 class="allfeatures-head-title {{ content_typography_class('home.allfeatures.title_line_1') }}" style="{{ content_typography_vars('home.allfeatures.title_line_1') }}">{!! content_text_html('home.allfeatures.title_line_1', 'Run Your Shop') !!} {!! content_text_html('home.allfeatures.title_line_2', 'the Way It Actually Works') !!}</h2>
+      <p class="allfeatures-head-copy {{ content_typography_class('home.allfeatures.copy') }}" style="{{ content_typography_vars('home.allfeatures.copy') }}">{!! content_text_html('home.allfeatures.copy', 'Five jobs every shop owner does daily. One app that does them all in shillings, not spreadsheets.') !!}</p>
+      <a href="{{ $allFeaturesCtaUrl }}" class="btn-allfeatures-cta">{{ content('home.allfeatures.cta_label', 'Download Now') }}</a>
     </div>
 
     <div class="allfeatures-gallery" data-af-gallery>
@@ -368,9 +407,9 @@
                 <img src="{{ cms_image($featureCard['image'] ?? null, asset('assets/crm.webp')) }}" alt="{{ $afLabel }}" loading="lazy" decoding="async">
               </div>
               <div class="af-content">
-                <span class="af-label {{ content_typography_class($labelKey) }}" style="{{ content_typography_vars($labelKey) }}">{{ $afLabel }}</span>
+                <h3 class="af-label {{ content_typography_class($labelKey) }}" style="{{ content_typography_vars($labelKey) }}">{!! cms_text_html($afLabel) !!}</h3>
                 @if ($afDesc !== '')
-                  <span class="af-desc">{{ $afDesc }}</span>
+                  <span class="af-desc">{!! cms_text_html($afDesc) !!}</span>
                 @endif
                 <span class="af-learn">
                   <span>Learn more</span>
@@ -390,9 +429,9 @@
             </div>
             @php $featureDesc = content_text('home.allfeatures.feature_desc'); @endphp
             <div class="af-content">
-              <span class="af-label {{ content_typography_class('home.allfeatures.feature_label') }}" style="{{ content_typography_vars('home.allfeatures.feature_label') }}">{{ content_text('home.allfeatures.feature_label', 'Point of sale') }}</span>
+              <h3 class="af-label {{ content_typography_class('home.allfeatures.feature_label') }}" style="{{ content_typography_vars('home.allfeatures.feature_label') }}">{!! content_text_html('home.allfeatures.feature_label', 'Point of sale') !!}</h3>
               @if ($featureDesc !== '')
-                <span class="af-desc">{{ $featureDesc }}</span>
+                <span class="af-desc">{!! cms_text_html($featureDesc) !!}</span>
               @endif
               <span class="af-learn">
                 <span>Learn more</span>
@@ -400,7 +439,7 @@
               </span>
             </div>
           </a>
-          <p class="af-tagline {{ content_typography_class('home.allfeatures.tagline') }}" style="{{ content_typography_vars('home.allfeatures.tagline') }}">{{ content_text('home.allfeatures.tagline', 'Seamless products. Connected team. Higher margins.') }}</p>
+          <p class="af-tagline {{ content_typography_class('home.allfeatures.tagline') }}" style="{{ content_typography_vars('home.allfeatures.tagline') }}">{!! content_text_html('home.allfeatures.tagline', 'Everything above, in one app. Nothing above, in a notebook.') !!}</p>
         </div>
       </div>
 
@@ -421,9 +460,9 @@
                 <img src="{{ cms_image($featureCard['image'] ?? null, asset('assets/crm.webp')) }}" alt="{{ $afLabel }}" loading="lazy" decoding="async">
               </div>
               <div class="af-content">
-                <span class="af-label {{ content_typography_class($labelKey) }}" style="{{ content_typography_vars($labelKey) }}">{{ $afLabel }}</span>
+                <h3 class="af-label {{ content_typography_class($labelKey) }}" style="{{ content_typography_vars($labelKey) }}">{!! cms_text_html($afLabel) !!}</h3>
                 @if ($afDesc !== '')
-                  <span class="af-desc">{{ $afDesc }}</span>
+                  <span class="af-desc">{!! cms_text_html($afDesc) !!}</span>
                 @endif
                 <span class="af-learn">
                   <span>Learn more</span>
@@ -442,8 +481,8 @@
   <div class="container">
     <div class="retailer-head">
       <div class="section-header retailer-head-copy">
-        <h2 class="{{ content_typography_class('home.retailers.title') }}" style="{{ content_typography_vars('home.retailers.title') }}">{{ content_text('home.retailers.title', 'Powering Retailers for Every Type') }}</h2>
-        <p class="{{ content_typography_class('home.retailers.subtitle') }}" style="{{ content_typography_vars('home.retailers.subtitle') }}">{{ content_text('home.retailers.subtitle', 'From small shops to large chains — SkelApp scales with your business.') }}</p>
+        <h2 class="{{ content_typography_class('home.retailers.title') }}" style="{{ content_typography_vars('home.retailers.title') }}">{!! content_text_html('home.retailers.title', 'Built for Every Kind of Shop') !!}</h2>
+        <p class="{{ content_typography_class('home.retailers.subtitle') }}" style="{{ content_typography_vars('home.retailers.subtitle') }}">{!! content_text_html('home.retailers.subtitle', 'From boutiques in Dar es Salaam to hardware shops in Arusha — SkelApp is built for how Tanzanian retailers actually work.') !!}</p>
       </div>
 
       <div class="carousel-slider" aria-label="Retailer carousel controls">
@@ -488,10 +527,10 @@
             <div class="card-image">
               <img src="{{ cms_image($card['image'] ?? null, asset('assets/boutique.webp')) }}" alt="{{ content_text($titleKey, $card['title'] ?? '') }}" draggable="false" loading="lazy" decoding="async">
               @if ($cat !== '')
-                <span class="retailer-card-pill {{ content_typography_class($catKey) }}" style="{{ content_typography_vars($catKey) }}">{{ $cat }}</span>
+                <span class="retailer-card-pill {{ content_typography_class($catKey) }}" style="{{ content_typography_vars($catKey) }}">{!! cms_text_html($cat) !!}</span>
               @endif
               <div class="card-overlay">
-                <h3 class="{{ content_typography_class($titleKey) }}" style="{{ content_typography_vars($titleKey) }}">{{ content_text($titleKey, $card['title'] ?? '') }}</h3>
+                <h3 class="{{ content_typography_class($titleKey) }}" style="{{ content_typography_vars($titleKey) }}">{!! content_text_html($titleKey, $card['title'] ?? '') !!}</h3>
               </div>
               <a href="{{ content("home.retailers.cards.{$idx}.link_url", $card['link_url'] ?? '#') }}" class="retailer-card-link" aria-label="{{ content_text($titleKey, $card['title'] ?? '') }}"></a>
             </div>
@@ -507,8 +546,8 @@
 <!-- Retailers bottom (kept separate to preserve layout) -->
 <div class="section-bottom retailers-section-bottom">
   <div class="container">
-    <h2 class="{{ content_typography_class('home.retailers.bottom_title') }}" style="{{ content_typography_vars('home.retailers.bottom_title') }}">{{ content_text('home.retailers.bottom_title', 'One app. Every number in your business — tracked.') }}</h2>
-    <p class="{{ content_typography_class('home.retailers.bottom_copy') }}" style="{{ content_typography_vars('home.retailers.bottom_copy') }}">{{ content_text('home.retailers.bottom_copy') }}</p>
+    <h2 class="{{ content_typography_class('home.retailers.bottom_title') }}" style="{{ content_typography_vars('home.retailers.bottom_title') }}">{!! content_text_html('home.retailers.bottom_title', 'One app. Every number in your business — tracked.') !!}</h2>
+    <p class="{{ content_typography_class('home.retailers.bottom_copy') }}" style="{{ content_typography_vars('home.retailers.bottom_copy') }}">{!! content_text_html('home.retailers.bottom_copy') !!}</p>
   </div>
 </div>
 
@@ -518,8 +557,8 @@
     <div class="features-row">
       <div class="feature-card feature-square feature-light feature-square-catalogue">
         <div class="feature-content-top">
-          <h2 class="{{ content_typography_class('home.features.top_left.title') }}" style="{{ content_typography_vars('home.features.top_left.title') }}">{{ content_text('home.features.top_left.title', 'Record every sale in seconds') }}</h2>
-          <p class="{{ content_typography_class('home.features.top_left.body') }}" style="{{ content_typography_vars('home.features.top_left.body') }}">{{ content_text('home.features.top_left.body') }}</p>
+          <h3 class="feature-card-heading {{ content_typography_class('home.features.top_left.title') }}" style="{{ content_typography_vars('home.features.top_left.title') }}">{!! content_text_html('home.features.top_left.title', 'Record every sale in seconds') !!}</h3>
+          <p class="{{ content_typography_class('home.features.top_left.body') }}" style="{{ content_typography_vars('home.features.top_left.body') }}">{!! content_text_html('home.features.top_left.body', 'Your full catalogue — searchable, priced, always current. Tap the product, take the payment, done.') !!}</p>
         </div>
         <div class="feature-content-bottom">
           <img src="{{ content_image('home.features.top_left.image', asset('assets/Moc-tab.webp')) }}" alt="SkelApp tablet catalogue" class="feature-tab-mockup" loading="lazy" decoding="async">
@@ -528,8 +567,8 @@
 
       <div class="feature-card feature-rectangle feature-green feature-rectangle-pos">
         <div class="feature-content-left">
-          <h2 class="{{ content_typography_class('home.features.top_right.title') }}" style="{{ content_typography_vars('home.features.top_right.title') }}">{{ content_text('home.features.top_right.title', 'Mobile Application') }}<br>{{ content('home.features.top_right.title_line_2', 'Ready for Both Apple & Android') }}</h2>
-          <p class="{{ content_typography_class('home.features.top_right.body') }}" style="{{ content_typography_vars('home.features.top_right.body') }}">{{ content_text('home.features.top_right.body') }}</p>
+          <h3 class="feature-card-heading {{ content_typography_class('home.features.top_right.title') }}" style="{{ content_typography_vars('home.features.top_right.title') }}">{!! content_text_html('home.features.top_right.title', 'Any phone. Any tablet.') !!}<br>{!! cms_text_html(content('home.features.top_right.title_line_2', 'No hardware bill.')) !!}</h3>
+          <p class="{{ content_typography_class('home.features.top_right.body') }}" style="{{ content_typography_vars('home.features.top_right.body') }}">{!! content_text_html('home.features.top_right.body', 'iPhone or Android — SkelApp runs on the device already in your pocket. Add a printer or terminal only when you want one.') !!}</p>
         </div>
         <div class="feature-content-right">
           <img src="{{ content_image('home.features.top_right.image', asset('assets/PosSystem.webp')) }}" alt="SkelApp POS system" loading="lazy" decoding="async">
@@ -541,8 +580,8 @@
     <div class="features-row">
       <div class="feature-card feature-rectangle feature-dark feature-rectangle-handheld">
         <div class="feature-content-left">
-          <h2 class="{{ content_typography_class('home.features.bottom_left.title') }}" style="{{ content_typography_vars('home.features.bottom_left.title') }}">{{ content_text('home.features.bottom_left.title', 'Works on mobile, tablet or POS terminal') }}</h2>
-          <p class="{{ content_typography_class('home.features.bottom_left.body') }}" style="{{ content_typography_vars('home.features.bottom_left.body') }}">{{ content_text('home.features.bottom_left.body') }}</p>
+          <h3 class="feature-card-heading {{ content_typography_class('home.features.bottom_left.title') }}" style="{{ content_typography_vars('home.features.bottom_left.title') }}">{!! content_text_html('home.features.bottom_left.title', 'Your whole team, always in sync.') !!}</h3>
+          <p class="{{ content_typography_class('home.features.bottom_left.body') }}" style="{{ content_typography_vars('home.features.bottom_left.body') }}">{!! content_text_html('home.features.bottom_left.body', "Every attendant's sales land in the same record, live. You see everything, from anywhere.") !!}</p>
         </div>
         <div class="feature-content-right">
           <img src="{{ content_image('home.features.bottom_left.image', asset('assets/poswithtab.webp')) }}" alt="SkelApp handheld POS with tablet" class="feature-handheld-pos" loading="lazy" decoding="async">
@@ -551,8 +590,8 @@
 
       <div class="feature-card feature-square feature-light feature-square-reporting">
         <div class="feature-content-top">
-          <h2 class="{{ content_typography_class('home.features.bottom_right.title') }}" style="{{ content_typography_vars('home.features.bottom_right.title') }}">{!! nl2br(e(content_text('home.features.bottom_right.title', 'Smarter sales & staff reporting'))) !!}</h2>
-          <p class="{{ content_typography_class('home.features.bottom_right.body') }}" style="{{ content_typography_vars('home.features.bottom_right.body') }}">{{ content_text('home.features.bottom_right.body') }}</p>
+          <h3 class="feature-card-heading {{ content_typography_class('home.features.bottom_right.title') }}" style="{{ content_typography_vars('home.features.bottom_right.title') }}">{!! content_text_html('home.features.bottom_right.title', 'Know where you stand, every morning.') !!}</h3>
+          <p class="{{ content_typography_class('home.features.bottom_right.body') }}" style="{{ content_typography_vars('home.features.bottom_right.body') }}">{!! content_text_html('home.features.bottom_right.body', "Yesterday's sales, today's stock, this month's profit — before you've had your chai.") !!}</p>
         </div>
         <div class="feature-content-bottom">
           <img src="{{ content_image('home.features.bottom_right.image', asset('assets/Moc-lap-phone-02.webp')) }}" alt="SkelApp reporting dashboard on laptop and phone" class="feature-reporting-mockup" loading="lazy" decoding="async">
@@ -567,8 +606,8 @@
     <div class="how-it-works-stage">
       <div class="section-headerr">
         <div class="section-headerr-copy">
-          <h2 class="{{ content_typography_class('home.howitworks.title') }}" style="{{ content_typography_vars('home.howitworks.title') }}">{{ content_text('home.howitworks.title', 'Up and running in under 5 minutes.') }}</h2>
-          <p class="{{ content_typography_class('home.howitworks.copy') }}" style="{{ content_typography_vars('home.howitworks.copy') }}">{{ content_text('home.howitworks.copy') }}</p>
+          <h2 class="{{ content_typography_class('home.howitworks.title') }}" style="{{ content_typography_vars('home.howitworks.title') }}">{!! content_text_html('home.howitworks.title', 'If they can WhatsApp, they can SkelApp.') !!}</h2>
+          <p class="{{ content_typography_class('home.howitworks.copy') }}" style="{{ content_typography_vars('home.howitworks.copy') }}">{!! content_text_html('home.howitworks.copy', "Download, add your products, start selling — you're running today, not next week.") !!}</p>
         </div>
         <div class="section-headerr-action">
           <a href="{{ content('home.howitworks.cta_url', '#') }}" class="btn-download">{{ content('home.howitworks.cta_label', 'Download Now') }}</a>
@@ -593,8 +632,8 @@
                 <div class="step-number-box">{{ $loop->iteration }}</div>
               </div>
               <div class="step-content">
-                <h3 class="{{ content_typography_class($titleKey) }}" style="{{ content_typography_vars($titleKey) }}">{{ content_text($titleKey, $step['title'] ?? '') }}</h3>
-                <p class="{{ content_typography_class($copyKey) }}" style="{{ content_typography_vars($copyKey) }}">{{ content_text($copyKey, $step['copy'] ?? '') }}</p>
+                <h3 class="{{ content_typography_class($titleKey) }}" style="{{ content_typography_vars($titleKey) }}">{!! content_text_html($titleKey, $step['title'] ?? '') !!}</h3>
+                <p class="{{ content_typography_class($copyKey) }}" style="{{ content_typography_vars($copyKey) }}">{!! content_text_html($copyKey, $step['copy'] ?? '') !!}</p>
               </div>
             </article>
           @endforeach
@@ -609,11 +648,11 @@
   <div class="container">
     <div class="hardware-card">
       <div class="hardware-content">
-        <h2 class="{{ content_typography_class('home.hardware.title') }}" style="{{ content_typography_vars('home.hardware.title') }}">{{ content_text('home.hardware.title', 'Complete your shop setup with Skel hardware.') }}</h2>
-        <p class="{{ content_typography_class('home.hardware.copy') }}" style="{{ content_typography_vars('home.hardware.copy') }}">{{ content_text('home.hardware.copy') }}</p>
+        <h2 class="{{ content_typography_class('home.hardware.title') }}" style="{{ content_typography_vars('home.hardware.title') }}">{!! content_text_html('home.hardware.title', 'Ready for the counter? Meet the Skel Register.') !!}</h2>
+        <p class="{{ content_typography_class('home.hardware.copy') }}" style="{{ content_typography_vars('home.hardware.copy') }}">{!! content_text_html('home.hardware.copy', 'A full point-of-sale station — screen, printer, cash drawer — running the same SkelApp your phone does. Upgrade when the queue gets longer.') !!}</p>
 
-        <a href="{{ content('home.hardware.cta_url', route('hardware.show')) }}" class="btn-hardware">
-          {{ content('home.hardware.cta_label', 'Explore SkelHardware') }}
+        <a href="{{ content('home.hardware.cta_url', route('hardware.product', 'skel-register')) }}" class="btn-hardware">
+          {{ content('home.hardware.cta_label', 'See the Skel Register') }}
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
@@ -653,12 +692,12 @@
 
       <!-- Right Side - Pricing Details -->
       <div class="pricing-details">
-        <p class="pricing-intro {{ content_typography_class('home.pricing_summary.intro') }}" style="{{ content_typography_vars('home.pricing_summary.intro') }}">{{ content_text('home.pricing_summary.intro') }}</p>
+        <p class="pricing-intro {{ content_typography_class('home.pricing_summary.intro') }}" style="{{ content_typography_vars('home.pricing_summary.intro') }}">{!! content_text_html('home.pricing_summary.intro', 'Untracked stock costs millions a year. SkelApp? Jero kwa siku.') !!}</p>
 
-        <h2 class="{{ content_typography_class('home.pricing_summary.title_line_1') }}" style="{{ content_typography_vars('home.pricing_summary.title_line_1') }}">{{ content_text('home.pricing_summary.title_line_1', 'SkelApp') }} <br>{{ content('home.pricing_summary.title_line_2', 'Subscription') }}</h2>
+        <h2 class="{{ content_typography_class('home.pricing_summary.title_line_1') }}" style="{{ content_typography_vars('home.pricing_summary.title_line_1') }}">{!! content_text_html('home.pricing_summary.title_line_1', 'One price.') !!} <br>{!! cms_text_html(content('home.pricing_summary.title_line_2', 'Everything included.')) !!}</h2>
 
         <p class="pricing-description {{ content_typography_class('home.pricing_summary.description') }}" style="{{ content_typography_vars('home.pricing_summary.description') }}">
-          {{ content_text('home.pricing_summary.description') }}
+          {!! content_text_html('home.pricing_summary.description', 'Point of sale, inventory, debt tracking, reports — the whole app, every feature, one subscription. No tiers, no locked features, no surprises.') !!}
         </p>
 
         <ul class="pricing-features">
@@ -676,9 +715,9 @@
         <div class="pricing-price">
           <div class="price-figure">
             <span class="currency">{{ content('home.pricing_summary.currency', 'TZS') }}</span>
-            <span class="price-main">{{ content('home.pricing_summary.price_main', '15,000') }}</span>
+            <span class="price-main">{{ content('home.pricing_summary.price_main', '150,000/year') }}</span>
           </div>
-          <span class="price-period">{{ content('home.pricing_summary.price_period', '/month · billed annually') }}</span>
+          <span class="price-period">{{ content('home.pricing_summary.price_period', '— two months free · or TZS 15,000 month-to-month. Cancel anytime.') }}</span>
         </div>
 
         <div class="payment-row">
@@ -688,8 +727,8 @@
           </div>
         </div>
 
-        <a href="{{ content('home.pricing_summary.cta_url', '#') }}" class="btn-pricing">
-          {{ content('home.pricing_summary.cta_label', 'Talk to SkelTeam') }}
+        <a href="{{ content('home.pricing_summary.cta_url', route('contact.show')) }}" class="btn-pricing">
+          {{ content('home.pricing_summary.cta_label', 'Start for free') }}
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
@@ -736,7 +775,7 @@
   </div>
   <div class="cta-content-wrapper">
     <div class="cta-content">
-      <h2 class="{{ content_typography_class('home.image_cta.heading') }}" style="{{ content_typography_vars('home.image_cta.heading') }}">{{ content_text('home.image_cta.heading', 'Building momentum to move your business 1% better every day.') }}</h2>
+      <h2 class="{{ content_typography_class('home.image_cta.heading') }}" style="{{ content_typography_vars('home.image_cta.heading') }}">{!! content_text_html('home.image_cta.heading', 'Simple tools. Real people. Businesses that grow.') !!}</h2>
       <a href="{{ content('home.image_cta.cta_url', '#') }}" class="btn-cta">
         {{ content('home.image_cta.cta_label', 'Download SkelApp Today') }}
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
