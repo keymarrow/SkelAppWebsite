@@ -55,7 +55,15 @@
 
         <footer class="cms-form-actions">
           <button type="submit" name="publish" value="0" class="cms-btn cms-btn-ghost">Save draft</button>
-          <button type="submit" name="publish" value="1" class="cms-btn cms-btn-primary">Save & publish</button>
+          <button
+            type="submit"
+            name="publish"
+            value="1"
+            formaction="{{ route('admin.pages.update', ['slug' => $slug, 'publish' => 1]) }}"
+            class="cms-btn cms-btn-primary"
+          >
+            Save & publish
+          </button>
         </footer>
       </form>
 

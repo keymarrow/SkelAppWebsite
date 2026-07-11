@@ -7,7 +7,7 @@
     {{-- Featured card --}}
     <a class="nav-mega-feature" href="{{ route('retailers.index') }}" style="background-image: linear-gradient(180deg, rgba(10,16,20,0.15) 0%, rgba(10,16,20,0.72) 100%), url('{{ content_image('global.nav.mega_image', asset('assets/techshop.webp')) }}');">
       <span class="nav-mega-feature-eyebrow">{{ content('global.nav.mega_eyebrow', 'Built for Tanzania') }}</span>
-      <h3 class="nav-mega-feature-title">{{ content('global.nav.mega_title', 'Run your whole shop, 1% better') }}</h3>
+      <p class="nav-mega-feature-title">{{ content('global.nav.mega_title', 'Run your whole shop, 1% better') }}</p>
       <div class="nav-mega-feature-tags">
         @foreach ($megaTags as $tag)
           <span>{{ is_array($tag) ? ($tag['value'] ?? '') : $tag }}</span>

@@ -2,6 +2,7 @@
 
 use App\Models\Page;
 use Illuminate\Support\Arr;
+use Illuminate\Support\HtmlString;
 
 if (! function_exists('cms_preview_content')) {
     function cms_preview_content(string $slug): ?array
@@ -97,6 +98,37 @@ if (! function_exists('content_text')) {
         }
         $fromFallback = $normalize($fallback);
         return $fromFallback ?? '';
+    }
+}
+
+if (! function_exists('cms_text_html')) {
+    /**
+     * Escape arbitrary text, but allow admins to force line breaks with
+     * literal <br> tags or actual newline characters.
+     */
+    function cms_text_html(mixed $value): HtmlString
+    {
+        if (is_array($value)) {
+            $value = $value['text'] ?? '';
+        }
+
+        $text = is_scalar($value) ? (string) $value : '';
+        $html = e($text);
+        $html = preg_replace('/&lt;br\s*\/?&gt;/i', '<br>', $html) ?? $html;
+        $html = nl2br($html);
+
+        return new HtmlString($html);
+    }
+}
+
+if (! function_exists('content_text_html')) {
+    /**
+     * Same as content_text(), but returns safe HTML with support for <br> and
+     * newline characters in CMS-managed text.
+     */
+    function content_text_html(string $key, mixed $fallback = null): HtmlString
+    {
+        return cms_text_html(content_text($key, $fallback));
     }
 }
 

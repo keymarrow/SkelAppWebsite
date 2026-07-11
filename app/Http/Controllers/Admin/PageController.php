@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
 use App\Support\CmsPreview;
+use App\Support\CmsRequestPayload;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -164,7 +165,7 @@ class PageController extends Controller
         $content = $page->effectiveDraft();
 
         // Plain text/textarea/repeater fields submitted as content[*]
-        foreach ((array) $request->input('content', []) as $path => $value) {
+        foreach (CmsRequestPayload::content($request) as $path => $value) {
             $value = $this->normaliseValue($value);
             Arr::set($content, $path, $value);
         }
@@ -181,7 +182,7 @@ class PageController extends Controller
         }
 
         // Image removals: remove_image[]= dot.path
-        foreach ((array) $request->input('remove_image', []) as $path) {
+        foreach (CmsRequestPayload::removeImagePaths($request) as $path) {
             Arr::forget($content, (string) $path);
         }
 

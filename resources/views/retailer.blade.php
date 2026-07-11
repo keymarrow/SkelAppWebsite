@@ -93,16 +93,16 @@
     <section id="features" class="features-section">
       <div class="container">
         <div class="section-bottom retailers-section-bottom" style="margin-bottom:2.5rem;">
-          <h2 class="{{ content_typography_class('home.retailers.bottom_title') }}" style="{{ content_typography_vars('home.retailers.bottom_title') }}">{{ content_text('home.retailers.bottom_title', 'One app. Every number in your business — tracked.') }}</h2>
-          <p class="{{ content_typography_class('home.retailers.bottom_copy') }}" style="{{ content_typography_vars('home.retailers.bottom_copy') }}">{{ content_text('home.retailers.bottom_copy') }}</p>
+          <h2 class="{{ content_typography_class('home.retailers.bottom_title') }}" style="{{ content_typography_vars('home.retailers.bottom_title') }}">{!! content_text_html('home.retailers.bottom_title', 'One app. Every number in your business — tracked.') !!}</h2>
+          <p class="{{ content_typography_class('home.retailers.bottom_copy') }}" style="{{ content_typography_vars('home.retailers.bottom_copy') }}">{!! content_text_html('home.retailers.bottom_copy') !!}</p>
         </div>
 
         <!-- Top Row -->
         <div class="features-row">
           <div class="feature-card feature-square feature-light feature-square-catalogue">
             <div class="feature-content-top">
-              <h2 class="{{ content_typography_class('home.features.top_left.title') }}" style="{{ content_typography_vars('home.features.top_left.title') }}">{{ content_text('home.features.top_left.title') }}</h2>
-              <p class="{{ content_typography_class('home.features.top_left.body') }}" style="{{ content_typography_vars('home.features.top_left.body') }}">{{ content_text('home.features.top_left.body') }}</p>
+              <h2 class="{{ content_typography_class('home.features.top_left.title') }}" style="{{ content_typography_vars('home.features.top_left.title') }}">{!! content_text_html('home.features.top_left.title') !!}</h2>
+              <p class="{{ content_typography_class('home.features.top_left.body') }}" style="{{ content_typography_vars('home.features.top_left.body') }}">{!! content_text_html('home.features.top_left.body') !!}</p>
             </div>
             <div class="feature-content-bottom">
               <img src="{{ content_image('home.features.top_left.image', asset('assets/Moc-tab.webp')) }}" alt="{{ content_text('home.features.top_left.title') }}" class="feature-tab-mockup" loading="lazy" decoding="async">
@@ -111,8 +111,8 @@
 
           <div class="feature-card feature-rectangle feature-green feature-rectangle-pos">
             <div class="feature-content-left">
-              <h2 class="{{ content_typography_class('home.features.top_right.title') }}" style="{{ content_typography_vars('home.features.top_right.title') }}">{{ content_text('home.features.top_right.title') }}<br>{{ content('home.features.top_right.title_line_2', 'Ready for Both Apple & Android') }}</h2>
-              <p class="{{ content_typography_class('home.features.top_right.body') }}" style="{{ content_typography_vars('home.features.top_right.body') }}">{{ content_text('home.features.top_right.body') }}</p>
+              <h2 class="{{ content_typography_class('home.features.top_right.title') }}" style="{{ content_typography_vars('home.features.top_right.title') }}">{!! content_text_html('home.features.top_right.title') !!}<br>{!! cms_text_html(content('home.features.top_right.title_line_2', 'Ready for Both Apple & Android')) !!}</h2>
+              <p class="{{ content_typography_class('home.features.top_right.body') }}" style="{{ content_typography_vars('home.features.top_right.body') }}">{!! content_text_html('home.features.top_right.body') !!}</p>
             </div>
             <div class="feature-content-right">
               <img src="{{ content_image('home.features.top_right.image', asset('assets/PosSystem.webp')) }}" alt="{{ content_text('home.features.top_right.title') }}" loading="lazy" decoding="async">
@@ -124,8 +124,8 @@
         <div class="features-row">
           <div class="feature-card feature-rectangle feature-dark feature-rectangle-handheld">
             <div class="feature-content-left">
-              <h2 class="{{ content_typography_class('home.features.bottom_left.title') }}" style="{{ content_typography_vars('home.features.bottom_left.title') }}">{{ content_text('home.features.bottom_left.title') }}</h2>
-              <p class="{{ content_typography_class('home.features.bottom_left.body') }}" style="{{ content_typography_vars('home.features.bottom_left.body') }}">{{ content_text('home.features.bottom_left.body') }}</p>
+              <h2 class="{{ content_typography_class('home.features.bottom_left.title') }}" style="{{ content_typography_vars('home.features.bottom_left.title') }}">{!! content_text_html('home.features.bottom_left.title') !!}</h2>
+              <p class="{{ content_typography_class('home.features.bottom_left.body') }}" style="{{ content_typography_vars('home.features.bottom_left.body') }}">{!! content_text_html('home.features.bottom_left.body') !!}</p>
             </div>
             <div class="feature-content-right">
               <img src="{{ content_image('home.features.bottom_left.image', asset('assets/poswithtab.webp')) }}" alt="{{ content_text('home.features.bottom_left.title') }}" class="feature-handheld-pos" loading="lazy" decoding="async">
@@ -134,8 +134,8 @@
 
           <div class="feature-card feature-square feature-light feature-square-reporting">
             <div class="feature-content-top">
-              <h2 class="{{ content_typography_class('home.features.bottom_right.title') }}" style="{{ content_typography_vars('home.features.bottom_right.title') }}">{!! nl2br(e(content_text('home.features.bottom_right.title'))) !!}</h2>
-              <p class="{{ content_typography_class('home.features.bottom_right.body') }}" style="{{ content_typography_vars('home.features.bottom_right.body') }}">{{ content_text('home.features.bottom_right.body') }}</p>
+              <h2 class="{{ content_typography_class('home.features.bottom_right.title') }}" style="{{ content_typography_vars('home.features.bottom_right.title') }}">{!! content_text_html('home.features.bottom_right.title') !!}</h2>
+              <p class="{{ content_typography_class('home.features.bottom_right.body') }}" style="{{ content_typography_vars('home.features.bottom_right.body') }}">{!! content_text_html('home.features.bottom_right.body') !!}</p>
             </div>
             <div class="feature-content-bottom">
               <img src="{{ content_image('home.features.bottom_right.image', asset('assets/Moc-lap-phone-02.webp')) }}" alt="{{ content_text('home.features.bottom_right.title') }}" class="feature-reporting-mockup" loading="lazy" decoding="async">

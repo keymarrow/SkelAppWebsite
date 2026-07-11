@@ -89,6 +89,90 @@ class PageCmsCompletenessTest extends TestCase
         }
     }
 
+    public function test_admin_can_save_and_publish_a_page_in_one_request(): void
+    {
+        $this->seed(PagesSeeder::class);
+
+        $admin = Admin::query()->create([
+            'name' => 'CMS Owner',
+            'email' => 'owner@example.com',
+            'password' => 'StrongPassword!2026',
+        ]);
+
+        $this->actingAs($admin, 'admin')
+            ->post('/admin/pages/home?publish=1', [
+                'content_payload' => json_encode([
+                    'affordable.title' => "You handle today's queue. SkelApp handles the next decade.",
+                ]),
+            ])
+            ->assertRedirect('/admin/pages/home');
+
+        $page = Page::query()->where('slug', 'home')->firstOrFail();
+
+        $this->assertSame(
+            "You handle today's queue. SkelApp handles the next decade.",
+            data_get($page->draft_content, 'affordable.title')
+        );
+        $this->assertSame(
+            "You handle today's queue. SkelApp handles the next decade.",
+            data_get($page->published_content, 'affordable.title')
+        );
+        $this->assertNotNull($page->published_at);
+        $this->assertFalse($page->hasUnpublishedChanges());
+    }
+
+    public function test_home_preview_sync_updates_retailers_bottom_strip_typography_fields(): void
+    {
+        $this->seed(PagesSeeder::class);
+
+        $admin = Admin::query()->create([
+            'name' => 'CMS Owner',
+            'email' => 'owner@example.com',
+            'password' => 'StrongPassword!2026',
+        ]);
+
+        $this->actingAs($admin, 'admin')
+            ->post('/admin/pages/home/preview-sync', [
+                'content_payload' => json_encode([
+                    'retailers.bottom_title.text' => 'Preview strip heading',
+                    'retailers.bottom_copy.text' => 'Preview strip copy',
+                ]),
+            ])
+            ->assertOk();
+
+        $this->actingAs($admin, 'admin')
+            ->get('/admin/pages/home/preview?target=home')
+            ->assertOk()
+            ->assertSeeText('Preview strip heading')
+            ->assertSeeText('Preview strip copy');
+    }
+
+    public function test_home_preview_renders_literal_br_tags_as_line_breaks(): void
+    {
+        $this->seed(PagesSeeder::class);
+
+        $admin = Admin::query()->create([
+            'name' => 'CMS Owner',
+            'email' => 'owner@example.com',
+            'password' => 'StrongPassword!2026',
+        ]);
+
+        $this->actingAs($admin, 'admin')
+            ->post('/admin/pages/home/preview-sync', [
+                'content_payload' => json_encode([
+                    'retailers.bottom_title.text' => 'Line one<br>Line two',
+                ]),
+            ])
+            ->assertOk();
+
+        $response = $this->actingAs($admin, 'admin')
+            ->get('/admin/pages/home/preview?target=home')
+            ->assertOk();
+
+        $this->assertStringContainsString('Line one<br>Line two', $response->getContent());
+        $this->assertStringNotContainsString('Line one&lt;br&gt;Line two', $response->getContent());
+    }
+
     public function test_no_public_text_is_missing_from_the_cms(): void
     {
         $this->seed(PagesSeeder::class);

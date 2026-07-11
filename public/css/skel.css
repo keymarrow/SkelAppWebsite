@@ -742,7 +742,7 @@ body {
     padding: 28px 24px 20px;
   }
 
-  .feature-square .feature-content-top h2 {
+  .feature-square .feature-content-top .feature-card-heading {
     font-size: 18px;
     margin-bottom: 10px;
   }
@@ -752,7 +752,7 @@ body {
     max-width: none;
   }
 
-  .feature-rectangle .feature-content-left h2 {
+  .feature-rectangle .feature-content-left .feature-card-heading {
     font-size: 18px;
   }
 
@@ -2172,7 +2172,7 @@ html:not([data-theme="dark"]) .hardware-card {
   flex: 1;
 }
 
-.feature-square .feature-content-top h2 {
+.feature-square .feature-content-top .feature-card-heading {
   font-family: 'Satoshi', sans-serif;
   font-size: 24px;
   font-weight: 500;
@@ -2274,7 +2274,7 @@ html:not([data-theme="dark"]) .hardware-card {
   justify-content: center;
 }
 
-.feature-rectangle .feature-content-left h2 {
+.feature-rectangle .feature-content-left .feature-card-heading {
   font-family: 'Satoshi', sans-serif;
   font-size: 24px;
   font-weight: 500;
@@ -2308,7 +2308,7 @@ html:not([data-theme="dark"]) .hardware-card {
 }
 
 .feature-rectangle-pos .feature-content-left {
-  padding: 46px 40px;
+  padding: 46px 0px 46px 40px;
   flex: 0 0 320px;
   max-width: 320px;
   justify-content: flex-start;
@@ -2316,7 +2316,7 @@ html:not([data-theme="dark"]) .hardware-card {
   z-index: 1;
 }
 
-.feature-rectangle-pos .feature-content-left h2 {
+.feature-rectangle-pos .feature-content-left .feature-card-heading {
   font-size: 24px;
   font-weight: 500;
   line-height: 1.28;
@@ -2433,11 +2433,11 @@ html:not([data-theme="dark"]) .hardware-card {
   .feature-square, .feature-rectangle { min-height: auto; }
   .feature-square { width: 100%; height: auto; aspect-ratio: 1 / 1; }
   .feature-square .feature-content-top { padding: 35px 40px 30px; }
-  .feature-square .feature-content-top h2 { font-size: 1.5rem; }
+  .feature-square .feature-content-top .feature-card-heading { font-size: 1.5rem; }
   .feature-square .feature-content-top p  { font-size: 0.95rem; }
   .feature-square .feature-content-bottom { padding: 0 25px 30px; }
   .feature-rectangle .feature-content-left { padding: 35px 25px; }
-  .feature-rectangle .feature-content-left h2 { font-size: 1.5rem; }
+  .feature-rectangle .feature-content-left .feature-card-heading { font-size: 1.5rem; }
   .feature-rectangle .feature-content-left p  { font-size: 0.95rem; }
 }
 
@@ -5547,7 +5547,7 @@ body.news-page {
     padding: 28px 24px 14px;
   }
 
-  .feature-rectangle .feature-content-left h2 {
+  .feature-rectangle .feature-content-left .feature-card-heading {
     font-size: 22px;
     line-height: 1.15;
     margin-bottom: 10px;
@@ -5824,7 +5824,7 @@ body.news-page {
     padding: 31.59px 27.08px 15.79px;
   }
 
-  .feature-rectangle .feature-content-left h2 {
+  .feature-rectangle .feature-content-left .feature-card-heading {
     font-size: 24.82px;
     line-height: 1.15;
     margin-bottom: 11.28px;
@@ -6364,8 +6364,8 @@ body.error-404-page::before {
     padding: 34px 30px 20px;
   }
 
-  .feature-square .feature-content-top h2,
-  .feature-rectangle .feature-content-left h2 {
+  .feature-square .feature-content-top .feature-card-heading,
+  .feature-rectangle .feature-content-left .feature-card-heading {
     margin-bottom: 12px;
     font-size: clamp(28px, 3vw, 36px);
     line-height: 1.18;
@@ -7025,7 +7025,7 @@ body.error-404-page::before {
     padding: 28px 24px 14px;
   }
 
-  .feature-rectangle .feature-content-left h2 {
+  .feature-rectangle .feature-content-left .feature-card-heading {
     font-size: 22px;
     line-height: 1.15;
     margin-bottom: 10px;
@@ -8469,8 +8469,8 @@ nav {
 
   /* Slight bump-up for feature card text on wide desktops so it
      reads comfortably against the larger card width. */
-  .feature-square .feature-content-top h2,
-  .feature-rectangle .feature-content-left h2 {
+  .feature-square .feature-content-top .feature-card-heading,
+  .feature-rectangle .feature-content-left .feature-card-heading {
     font-size: 28px;
     line-height: 1.25;
     margin-bottom: 20px;
@@ -8725,8 +8725,8 @@ nav {
     justify-content: center;
   }
 
-  .feature-square .feature-content-top h2,
-  .feature-rectangle .feature-content-left h2 {
+  .feature-square .feature-content-top .feature-card-heading,
+  .feature-rectangle .feature-content-left .feature-card-heading {
     font-size: 26px;
     line-height: 1.22;
     margin-bottom: 12px;
@@ -8847,8 +8847,8 @@ nav {
   }
 
   /* Same h2 size and styling on rectangles AND squares */
-  .feature-rectangle .feature-content-left h2,
-  .feature-square .feature-content-top h2 {
+  .feature-rectangle .feature-content-left .feature-card-heading,
+  .feature-square .feature-content-top .feature-card-heading {
     font-size: clamp(24.82px, 3.29vw + 10.31px, 34.75px);
     line-height: 1.15;
     margin-bottom: clamp(11.28px, 1.27vw + 5.68px, 15.79px);
@@ -13171,7 +13171,7 @@ html[data-theme="dark"] .feature-dark {
     linear-gradient(160deg, var(--dm-surface-alt) 0%, var(--dm-surface) 100%);
   border: 1px solid var(--dm-border);
 }
-html[data-theme="dark"] .feature-square .feature-content-top h2 { color: #ffffff; }
+html[data-theme="dark"] .feature-square .feature-content-top .feature-card-heading { color: #ffffff; }
 html[data-theme="dark"] .feature-square .feature-content-top p { color: rgba(255,255,255,0.62); }
 html[data-theme="dark"] .feature-square .feature-content-bottom img { box-shadow: 0 14px 34px rgba(0,0,0,0.45); }
 

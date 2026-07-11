@@ -113,9 +113,14 @@
     const openLink = editor.querySelector('[data-cms-preview-open]');
     const statusEl = editor.querySelector('[data-cms-preview-status]');
     const csrfToken = form.querySelector('input[name="_token"]')?.value || '';
+    const contentFieldSelector = '[name^="content["], [name="remove_image[]"]';
 
     let syncTimer = null;
     let requestCounter = 0;
+    let previewAbortController = null;
+    let lastTypingAt = 0;
+    const TYPING_IDLE_DELAY = 2000;
+    let nativeSubmitPrepared = false;
 
     const setStatus = (message, state) => {
       if (!statusEl) return;
@@ -151,16 +156,102 @@
       syncOpenLink();
     };
 
-    const syncPreview = async () => {
+    const collectContentPayload = () => {
+      const payload = {};
+      const removeImage = [];
+      const sourceData = new FormData(form);
+
+      sourceData.forEach((value, name) => {
+        if (typeof value !== 'string') {
+          return;
+        }
+
+        const contentMatch = name.match(/^content\[(.+)\]$/);
+        if (contentMatch) {
+          payload[contentMatch[1]] = value;
+          return;
+        }
+
+        if (name === 'remove_image[]' && value !== '') {
+          removeImage.push(value);
+        }
+      });
+
+      return { payload, removeImage };
+    };
+
+    const ensureSerializedField = (key, attr) => {
+      let input = form.querySelector(`input[data-${attr}]`);
+      if (!input) {
+        input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.setAttribute(`data-${attr}`, '1');
+        form.appendChild(input);
+      }
+
+      return input;
+    };
+
+    const syncSerializedFields = () => {
+      const { payload, removeImage } = collectContentPayload();
+      ensureSerializedField('content_payload', 'cms-content-payload').value = JSON.stringify(payload);
+      ensureSerializedField('remove_image_payload', 'cms-remove-image-payload').value = JSON.stringify(removeImage);
+
+      return { payload, removeImage };
+    };
+
+    const disableExpandedContentFields = () => {
+      form.querySelectorAll(contentFieldSelector).forEach((field) => {
+        field.disabled = true;
+      });
+    };
+
+    const mirrorSubmitter = (submitter) => {
+      if (!submitter?.name) {
+        return;
+      }
+
+      let mirror = form.querySelector('input[data-cms-submitter-mirror]');
+      if (!mirror) {
+        mirror = document.createElement('input');
+        mirror.type = 'hidden';
+        mirror.setAttribute('data-cms-submitter-mirror', '1');
+        form.appendChild(mirror);
+      }
+
+      mirror.name = submitter.name;
+      mirror.value = submitter.value;
+    };
+
+    const isTextEntryTarget = (target) => {
+      return target instanceof HTMLTextAreaElement
+        || (target instanceof HTMLInputElement && !['file', 'checkbox', 'radio', 'range', 'color', 'date', 'datetime-local', 'month', 'time', 'week'].includes(target.type || 'text'));
+    };
+
+    const syncPreview = async ({ force = false } = {}) => {
       if (!syncUrl) return;
+
+      if (!force) {
+        const typingAge = Date.now() - lastTypingAt;
+        if (typingAge < TYPING_IDLE_DELAY) {
+          queueSync(TYPING_IDLE_DELAY - typingAge);
+          return;
+        }
+      }
 
       requestCounter += 1;
       const requestId = requestCounter;
-      const formData = new FormData(form);
+      const { payload, removeImage } = syncSerializedFields();
+      const formData = new FormData();
+      formData.append('_token', csrfToken);
+      formData.append('content_payload', JSON.stringify(payload));
+      formData.append('remove_image_payload', JSON.stringify(removeImage));
 
-      form.querySelectorAll('input[type="file"][name]').forEach((input) => {
-        formData.delete(input.name);
-      });
+      if (previewAbortController) {
+        previewAbortController.abort();
+      }
+      previewAbortController = new AbortController();
 
       setStatus('Updating preview…', 'loading');
 
@@ -168,6 +259,7 @@
         const response = await fetch(syncUrl, {
           method: 'POST',
           body: formData,
+          signal: previewAbortController.signal,
           credentials: 'same-origin',
           headers: {
             'Accept': 'application/json',
@@ -186,6 +278,10 @@
 
         reloadPreview();
       } catch (error) {
+        if (error?.name === 'AbortError') {
+          return;
+        }
+
         if (requestId !== requestCounter) {
           return;
         }
@@ -195,9 +291,9 @@
       }
     };
 
-    const queueSync = (delay = 450) => {
+    const queueSync = (delay = 450, { force = false } = {}) => {
       window.clearTimeout(syncTimer);
-      syncTimer = window.setTimeout(syncPreview, delay);
+      syncTimer = window.setTimeout(() => syncPreview({ force }), delay);
     };
 
     form.addEventListener('input', (event) => {
@@ -205,7 +301,14 @@
         return;
       }
 
-      queueSync();
+      if (isTextEntryTarget(event.target)) {
+        lastTypingAt = Date.now();
+        setStatus('Typing… preview updates when you pause.', 'idle');
+        queueSync(TYPING_IDLE_DELAY);
+        return;
+      }
+
+      queueSync(220);
     });
 
     form.addEventListener('change', (event) => {
@@ -214,21 +317,52 @@
         return;
       }
 
-      queueSync(160);
+      queueSync(0, { force: true });
+    });
+
+    form.addEventListener('focusout', (event) => {
+      if (!isTextEntryTarget(event.target)) {
+        return;
+      }
+
+      queueSync(0, { force: true });
     });
 
     form.addEventListener('cms:preview-sync-needed', () => {
-      queueSync(80);
+      queueSync(80, { force: true });
     });
 
     targetSelect?.addEventListener('change', () => {
       syncOpenLink();
-      queueSync(50);
+      queueSync(0, { force: true });
     });
 
     refreshBtn?.addEventListener('click', () => {
       window.clearTimeout(syncTimer);
-      syncPreview();
+      syncPreview({ force: true });
+    });
+
+    form.addEventListener('submit', (event) => {
+      if (nativeSubmitPrepared) {
+        return;
+      }
+
+      nativeSubmitPrepared = true;
+      event.preventDefault();
+
+      syncSerializedFields();
+      disableExpandedContentFields();
+      mirrorSubmitter(event.submitter || null);
+
+      if (event.submitter?.formAction) {
+        form.action = event.submitter.formAction;
+      }
+
+      if (event.submitter?.formMethod) {
+        form.method = event.submitter.formMethod;
+      }
+
+      form.submit();
     });
 
     frame.addEventListener('load', () => {
@@ -349,6 +483,9 @@
 
     let syncTimer = null;
     let requestCounter = 0;
+    let previewAbortController = null;
+    let lastTypingAt = 0;
+    const TYPING_IDLE_DELAY = 2000;
 
     const setStatus = (message, state) => {
       if (!statusEl) return;
@@ -377,8 +514,21 @@
       syncOpenLink();
     };
 
-    const syncPreview = async () => {
+    const isTextEntryTarget = (target) => {
+      return target instanceof HTMLTextAreaElement
+        || (target instanceof HTMLInputElement && !['file', 'checkbox', 'radio', 'range', 'color', 'date', 'datetime-local', 'month', 'time', 'week'].includes(target.type || 'text'));
+    };
+
+    const syncPreview = async ({ force = false } = {}) => {
       if (!syncUrl) return;
+
+      if (!force) {
+        const typingAge = Date.now() - lastTypingAt;
+        if (typingAge < TYPING_IDLE_DELAY) {
+          queueSync(TYPING_IDLE_DELAY - typingAge);
+          return;
+        }
+      }
 
       requestCounter += 1;
       const requestId = requestCounter;
@@ -388,12 +538,18 @@
         formData.delete(input.name);
       });
 
+      if (previewAbortController) {
+        previewAbortController.abort();
+      }
+      previewAbortController = new AbortController();
+
       setStatus('Updating preview…', 'loading');
 
       try {
         const response = await fetch(syncUrl, {
           method: 'POST',
           body: formData,
+          signal: previewAbortController.signal,
           credentials: 'same-origin',
           headers: {
             'Accept': 'application/json',
@@ -412,6 +568,10 @@
 
         reloadPreview();
       } catch (error) {
+        if (error?.name === 'AbortError') {
+          return;
+        }
+
         if (requestId !== requestCounter) {
           return;
         }
@@ -421,9 +581,9 @@
       }
     };
 
-    const queueSync = (delay = 450) => {
+    const queueSync = (delay = 450, { force = false } = {}) => {
       window.clearTimeout(syncTimer);
-      syncTimer = window.setTimeout(syncPreview, delay);
+      syncTimer = window.setTimeout(() => syncPreview({ force }), delay);
     };
 
     form.addEventListener('input', (event) => {
@@ -431,7 +591,14 @@
         return;
       }
 
-      queueSync();
+      if (isTextEntryTarget(event.target)) {
+        lastTypingAt = Date.now();
+        setStatus('Typing… preview updates when you pause.', 'idle');
+        queueSync(TYPING_IDLE_DELAY);
+        return;
+      }
+
+      queueSync(220);
     });
 
     form.addEventListener('change', (event) => {
@@ -440,16 +607,24 @@
         return;
       }
 
-      queueSync(160);
+      queueSync(0, { force: true });
+    });
+
+    form.addEventListener('focusout', (event) => {
+      if (!isTextEntryTarget(event.target)) {
+        return;
+      }
+
+      queueSync(0, { force: true });
     });
 
     form.addEventListener('news:preview-sync-needed', () => {
-      queueSync(80);
+      queueSync(80, { force: true });
     });
 
     refreshBtn?.addEventListener('click', () => {
       window.clearTimeout(syncTimer);
-      syncPreview();
+      syncPreview({ force: true });
     });
 
     frame.addEventListener('load', () => {
