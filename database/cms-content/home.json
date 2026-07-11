@@ -1,0 +1,3701 @@
+{
+    "slug": "home",
+    "title": "Home",
+    "content": {
+        "meta": {
+            "title": "SkelApp — Point Of Sale in Tanzania",
+            "description": "SkelApp is the point of sale and inventory management app for small businesses in Tanzania — every sale, expense, and stock item is tracked in real time."
+        },
+        "hero": {
+            "title": {
+                "text": "Run your business <br>like you mean it.",
+                "typography": {
+                    "desktop": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "tablet": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "mobile": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    }
+                }
+            },
+            "subtitle": {
+                "text": "SkelApp is Tanzania's simplest way to run a shop <br> Every sale, every expense, every debt tracked from your phone. Nothing missing, nothing guessed.",
+                "typography": {
+                    "desktop": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "tablet": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "mobile": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    }
+                }
+            },
+            "cta_label": "Start for free",
+            "cta_url": "#",
+            "testimonial_quote": {
+                "text": "Anyone can record a sale. SkelApp shows your real profit.",
+                "typography": {
+                    "desktop": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "tablet": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "mobile": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    }
+                }
+            },
+            "testimonial_attribution": {
+                "text": "Profit, debts, and every payment — one screen, no guesswork.",
+                "typography": {
+                    "desktop": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "tablet": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "mobile": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    }
+                }
+            },
+            "background_image_desktop": "assets/HeroImage.webp",
+            "background_image_mobile": "assets/HeroImage.jpg",
+            "testimonial_stars_image": "assets/Stars.svg",
+            "cta2_label": "See it work",
+            "cta2_url": "/contact"
+        },
+        "showcase": {
+            "title": {
+                "text": "Point Of Sale, But Simple",
+                "typography": {
+                    "desktop": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "tablet": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "mobile": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    }
+                }
+            },
+            "subtitle_primary": {
+                "text": "SkelApp is the point of sale and inventory management app for small businesses in Tanzania",
+                "typography": {
+                    "desktop": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "tablet": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "mobile": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    }
+                }
+            },
+            "subtitle_secondary": {
+                "text": "Every sale, every expense, every debt. Tracked. Nothing missing, nothing guessed.",
+                "typography": {
+                    "desktop": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "tablet": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "mobile": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    }
+                }
+            },
+            "subtitle_mobile": {
+                "text": "SkelApp is the point of sale and inventory management app for small businesses in Tanzania",
+                "typography": {
+                    "desktop": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "tablet": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "mobile": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    }
+                }
+            },
+            "points": [
+                {
+                    "icon": "assets/speed.svg",
+                    "title": {
+                        "text": "Ready in Minutes",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "body": {
+                        "text": "Set up and selling — same day",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    }
+                },
+                {
+                    "icon": "assets/retail.svg",
+                    "title": {
+                        "text": "Made for Retail Business",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "body": {
+                        "text": "Sales, stock, expenses — in shillings.",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    }
+                },
+                {
+                    "icon": "assets/scale.svg",
+                    "title": {
+                        "text": "Grows & Scale With You",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "body": {
+                        "text": "One duka today, five branches tomorrow.",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    }
+                }
+            ],
+            "device_image_desktop": "assets/devicemockup.webp",
+            "device_image_mobile": "assets/Mobilehomeview.png"
+        },
+        "retailers": {
+            "title": {
+                "text": "Built for Every Kind of Shop",
+                "typography": {
+                    "desktop": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "tablet": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "mobile": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    }
+                }
+            },
+            "subtitle": {
+                "text": "From boutiques in Dar es Salaam to hardware shops in Arusha — SkelApp is built for how Tanzanian retailers actually work.",
+                "typography": {
+                    "desktop": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "tablet": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "mobile": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    }
+                }
+            },
+            "cta_label": "Talk to our Team",
+            "bottom_title": {
+                "text": "The all-in-one Point Of Sale that Fuels your business growth.",
+                "typography": {
+                    "desktop": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "tablet": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "mobile": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    }
+                }
+            },
+            "bottom_copy": {
+                "text": "Set up in minutes. Easy to run. Built for growing businesses in Tanzania.",
+                "typography": {
+                    "desktop": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "tablet": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "mobile": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    }
+                }
+            },
+            "cards": [
+                {
+                    "image": "assets/boutique.webp",
+                    "title": {
+                        "text": "Boutique",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "copy": {
+                        "text": "Simple inventory management",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "category": {
+                        "text": "Fashion",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "link_url": "#"
+                },
+                {
+                    "image": "assets/cosmetics.webp",
+                    "title": {
+                        "text": "Cosmetics",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "copy": {
+                        "text": "Track stock with ease",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "category": {
+                        "text": "Beauty",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "link_url": "#"
+                },
+                {
+                    "image": "assets/grocery.webp",
+                    "title": {
+                        "text": "Grocery",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "copy": {
+                        "text": "Fresh inventory management",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "category": {
+                        "text": "Food",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "link_url": "#"
+                },
+                {
+                    "image": "assets/hardware.webp",
+                    "title": {
+                        "text": "Hardware",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "copy": {
+                        "text": "Track stock, suppliers, and bulk sales",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "category": {
+                        "text": "Hardware",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "link_url": "#"
+                },
+                {
+                    "image": "assets/kitchenware.webp",
+                    "title": {
+                        "text": "Kitchenware",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "copy": {
+                        "text": "Organise products neatly",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "category": {
+                        "text": "Homeware",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "link_url": "#"
+                },
+                {
+                    "image": "assets/autospare.webp",
+                    "title": {
+                        "text": "Auto Spare Shop",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "copy": {
+                        "text": "Manage fast-moving parts",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "category": {
+                        "text": "Automotive",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "link_url": "#"
+                },
+                {
+                    "image": "assets/techshop.webp",
+                    "title": {
+                        "text": "Tech Shop",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "copy": {
+                        "text": "Built for modern retail",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "category": {
+                        "text": "Electronics",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "link_url": "#"
+                }
+            ]
+        },
+        "features": {
+            "top_left": {
+                "title": {
+                    "text": "Record every sale in seconds",
+                    "typography": {
+                        "desktop": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        },
+                        "tablet": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        },
+                        "mobile": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        }
+                    }
+                },
+                "body": {
+                    "text": "Your full catalogue — searchable, priced, always current. Tap the product, take the payment, done.",
+                    "typography": {
+                        "desktop": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        },
+                        "tablet": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        },
+                        "mobile": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        }
+                    }
+                },
+                "image": "assets/Moc-tab.webp"
+            },
+            "top_right": {
+                "title": {
+                    "text": "Any phone. Any tablet.",
+                    "typography": {
+                        "desktop": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        },
+                        "tablet": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        },
+                        "mobile": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        }
+                    }
+                },
+                "title_line_2": "No hardware bill.",
+                "body": {
+                    "text": "iPhone or Android — SkelApp runs on the device already in your pocket. Add a printer or terminal only when you want one.",
+                    "typography": {
+                        "desktop": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        },
+                        "tablet": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        },
+                        "mobile": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        }
+                    }
+                },
+                "image": "assets/PosSystem.webp"
+            },
+            "bottom_left": {
+                "title": {
+                    "text": "Your whole team, always in sync.",
+                    "typography": {
+                        "desktop": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        },
+                        "tablet": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        },
+                        "mobile": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        }
+                    }
+                },
+                "body": {
+                    "text": "Every attendant's sales land in the same record, live. You see everything, from anywhere.",
+                    "typography": {
+                        "desktop": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        },
+                        "tablet": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        },
+                        "mobile": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        }
+                    }
+                },
+                "image": "assets/poswithtab.webp"
+            },
+            "bottom_right": {
+                "title": {
+                    "text": "Know where you stand, every morning.",
+                    "typography": {
+                        "desktop": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        },
+                        "tablet": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        },
+                        "mobile": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        }
+                    }
+                },
+                "body": {
+                    "text": "Yesterday's sales, today's stock, this month's profit — before you've had your chai.",
+                    "typography": {
+                        "desktop": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        },
+                        "tablet": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        },
+                        "mobile": {
+                            "font_size": "",
+                            "font_weight": "",
+                            "font_style": "",
+                            "line_height": "",
+                            "letter_spacing": "",
+                            "text_align": "",
+                            "color": "",
+                            "font_family": ""
+                        }
+                    }
+                },
+                "image": "assets/Moc-lap-phone-02.webp"
+            }
+        },
+        "allfeatures": {
+            "title_line_1": {
+                "text": "Run Your Shop",
+                "typography": {
+                    "desktop": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "tablet": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "mobile": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    }
+                }
+            },
+            "title_line_2": "the Way It Actually Works",
+            "copy": {
+                "text": "Everything you already do daily — one app on top of it all.",
+                "typography": {
+                    "desktop": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "tablet": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "mobile": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    }
+                }
+            },
+            "cta_label": "Download Now",
+            "cta_url": "/features#features-detail",
+            "cards": [
+                {
+                    "image": "assets/crm.webp",
+                    "title": {
+                        "text": "See who buys most, who's gone quiet, and who's worth a call.",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "copy": {
+                        "text": "See who buys most, who's gone quiet, and who's worth a call.",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "tablet": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            },
+                            "mobile": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": "",
+                                "font_family": ""
+                            }
+                        }
+                    },
+                    "label": {
+                        "text": "Customers",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "link_url": "/features#customers-and-loyalty"
+                },
+                {
+                    "image": "assets/fastbill.webp",
+                    "title": {
+                        "text": "Record a sale and print a receipt in under 30 seconds.",
+                        "typography": {
+                            "desktop": {
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_family": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "copy": {
+                        "text": "Record a sale and print a receipt in under 30 seconds.",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "label": {
+                        "text": "Fast checkout",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "link_url": "/features#point-of-sale"
+                },
+                {
+                    "image": "assets/catalog.webp",
+                    "title": {
+                        "text": "Organise products, pricing and categories for faster checkout.",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "copy": {
+                        "text": "Organise products, pricing and categories for faster checkout.",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "label": {
+                        "text": "Catalog",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "link_url": "/features#catalog-and-products"
+                },
+                {
+                    "image": "assets/inventorytrack.webp",
+                    "title": {
+                        "text": "Low-stock alerts before you run out, not after the customer walks out.",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "copy": {
+                        "text": "Low-stock alerts before you run out, not after the customer walks out.",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "label": {
+                        "text": "Inventory",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "link_url": "/features#inventory-and-stock"
+                },
+                {
+                    "image": "assets/report.webp",
+                    "title": {
+                        "text": "What you made, what you spent, which products carry the shop.",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "copy": {
+                        "text": "What you made, what you spent, which products carry the shop.",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "label": {
+                        "text": "Profits",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "link_url": "/features#reports-and-profits"
+                },
+                {
+                    "image": "assets/attendants.webp",
+                    "title": {
+                        "text": "Give each staff member the right access and track who sold what.",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "copy": {
+                        "text": "Give each staff member the right access and track who sold what.",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "label": {
+                        "text": "Team control",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "link_url": "/features#staff-and-branches"
+                }
+            ],
+            "feature_image": "assets/techshop.webp",
+            "feature_label": {
+                "text": "Point of sale",
+                "typography": {
+                    "desktop": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "tablet": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "mobile": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    }
+                }
+            },
+            "tagline": {
+                "text": "Everything above, in one app — telling you what's going on in your Business",
+                "typography": {
+                    "desktop": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "tablet": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "mobile": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    }
+                }
+            },
+            "feature_desc": {
+                "text": "Sales, stock, and daily reports from one screen. Open the app, you're at work.",
+                "typography": {
+                    "desktop": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "tablet": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "mobile": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    }
+                }
+            },
+            "feature_link_url": "/features#point-of-sale"
+        },
+        "howitworks": {
+            "title": {
+                "text": "Starting is the easiest part.",
+                "typography": {
+                    "desktop": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "tablet": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "mobile": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    }
+                }
+            },
+            "copy": {
+                "text": "If your staff can use WhatsApp, they can run SkelApp.",
+                "typography": {
+                    "desktop": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "tablet": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "mobile": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    }
+                }
+            },
+            "cta_label": "Download Now",
+            "cta_url": "/features#features-detail",
+            "steps": [
+                {
+                    "image": "assets/rw.jpeg",
+                    "title": {
+                        "text": "Add your products",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "copy": {
+                        "text": "Enter your items, set your prices, and organise by category. Most shops have their catalogue ready the same day they download.",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    }
+                },
+                {
+                    "image": "assets/pix.jpeg",
+                    "title": {
+                        "text": "Start selling",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "copy": {
+                        "text": "Tap the product, take the payment, and the receipt is done. Every sale lands in your records automatically — nothing written twice.",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    }
+                },
+                {
+                    "image": "assets/sto.jpeg",
+                    "title": {
+                        "text": "Watch the numbers",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "copy": {
+                        "text": "Sales, stock, and profit update themselves as you sell. Open the app, and you'll know exactly where the business stands.",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "hardware": {
+            "label": {
+                "text": "Multi-location tools",
+                "typography": {
+                    "desktop": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "tablet": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "mobile": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    }
+                }
+            },
+            "title": {
+                "text": "Ready for the counter? Meet the Skel Register.",
+                "typography": {
+                    "desktop": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "tablet": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "mobile": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    }
+                }
+            },
+            "copy": {
+                "text": "A full point-of-sale station — screen, printer, cash drawer — running the same SkelApp your phone does. Upgrade when the queue gets longer.",
+                "typography": {
+                    "desktop": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "tablet": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "mobile": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    }
+                }
+            },
+            "cta_label": "See the Skel Register",
+            "cta_url": "/hardware/skel-register",
+            "image": "assets/PosSystemRegister.webp"
+        },
+        "pricing_summary": {
+            "intro": {
+                "text": "Losing stock costs millions. SkelApp? Ni sawa na jero kwa siku.",
+                "typography": {
+                    "desktop": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "tablet": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "mobile": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    }
+                }
+            },
+            "title_line_1": {
+                "text": "One price.",
+                "typography": {
+                    "desktop": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "tablet": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "mobile": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    }
+                }
+            },
+            "title_line_2": "Everything included.",
+            "description": {
+                "text": "Point of sale, inventory, debt tracking, reports — the whole app, every feature, one subscription. No tiers, no locked features, no surprises.",
+                "typography": {
+                    "desktop": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "tablet": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "mobile": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    }
+                }
+            },
+            "features": [
+                "Products, pricing, purchases, and restocking — one app",
+                "Every branch and every staff account included",
+                "Daily reports: sales, expenses, profit",
+                "Customer and supplier debts, tracked automatically"
+            ],
+            "currency": "TZS",
+            "price_main": "150,000/year",
+            "price_period": "",
+            "payment_label": "Flexible payment options",
+            "cta_label": "Start for free",
+            "cta_url": "/contact",
+            "benefits": [
+                "Cancel anytime",
+                "Works on mobile & tablet",
+                "Setup in minutes"
+            ],
+            "benefit_mobile_2": "Works on mobile & tablet",
+            "payment_methods_image": "assets/paymentmethod.png",
+            "card_image": "assets/card.webp",
+            "thumbnails": [
+                {
+                    "image": "assets/card.webp",
+                    "alt": "SkelApp Subscription Card"
+                },
+                {
+                    "image": "assets/Moc-tab.webp",
+                    "alt": "Products"
+                },
+                {
+                    "image": "assets/Pos System 04.png",
+                    "alt": "Mobile"
+                },
+                {
+                    "image": "assets/Moc-tab-02.webp",
+                    "alt": "Reports"
+                }
+            ]
+        },
+        "image_cta": {
+            "heading": {
+                "text": "Enough talk. <br>See for yourself.",
+                "typography": {
+                    "desktop": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "tablet": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "mobile": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    }
+                }
+            },
+            "cta_label": "Download SkelApp Today",
+            "cta_url": "#",
+            "background_image": "assets/client.webp"
+        },
+        "products": {
+            "eyebrow": {
+                "text": "Hardware",
+                "typography": {
+                    "desktop": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "tablet": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "mobile": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    }
+                }
+            },
+            "title": {
+                "text": "One App. Multiple ways to run it.",
+                "typography": {
+                    "desktop": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "tablet": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    },
+                    "mobile": {
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": "",
+                        "font_family": ""
+                    }
+                }
+            },
+            "subtitle": {
+                "text": "At the counter or on the move — your shop's numbers stay with you.",
+                "typography": {
+                    "desktop": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "tablet": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "mobile": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    }
+                }
+            },
+            "cards": [
+                {
+                    "eyebrow": {
+                        "text": "SkelApp Counter",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "title": {
+                        "text": "Your shop, at the counter.",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "body": {
+                        "text": "Sales, purchases, stock, and debts — the full picture from one screen at the counter.",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "link_label": {
+                        "text": "See how it works",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "link_url": "#",
+                    "image": "assets/Moc-lap-phone-02.webp"
+                },
+                {
+                    "eyebrow": {
+                        "text": "SkelApp Terminal",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "title": {
+                        "text": "Your shop, in your pocket.",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "body": {
+                        "text": "Record sales, check stock, and chase debts from your phone — at the market, at the supplier, anywhere.",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "link_label": {
+                        "text": "See how it works",
+                        "typography": {
+                            "desktop": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "tablet": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            },
+                            "mobile": {
+                                "font_family": "",
+                                "font_size": "",
+                                "font_weight": "",
+                                "font_style": "",
+                                "line_height": "",
+                                "letter_spacing": "",
+                                "text_align": "",
+                                "color": ""
+                            }
+                        }
+                    },
+                    "link_url": "#",
+                    "image": "assets/Mobilehomeview.png"
+                }
+            ]
+        },
+        "affordable": {
+            "eyebrow": {
+                "text": "Today's records build a strong business — for the next ten years.",
+                "typography": {
+                    "desktop": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "tablet": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "mobile": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    }
+                }
+            },
+            "title": {
+                "text": "You handle today's queue. SkelApp handles the next decade.",
+                "typography": {
+                    "desktop": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "tablet": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "mobile": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    }
+                }
+            },
+            "subtitle": {
+                "text": "Today's records build a strong business — for the next ten years.",
+                "typography": {
+                    "desktop": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "tablet": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    },
+                    "mobile": {
+                        "font_family": "",
+                        "font_size": "",
+                        "font_weight": "",
+                        "font_style": "",
+                        "line_height": "",
+                        "letter_spacing": "",
+                        "text_align": "",
+                        "color": ""
+                    }
+                }
+            },
+            "cards": [
+                {
+                    "variant": "light",
+                    "title": "Know your profit, not just your sales.",
+                    "copy": "SkelApp does the profit math live — so busy days become paid days.",
+                    "link_label": "See pricing",
+                    "link_url": "/pricing",
+                    "image": "assets/poswithtab.webp",
+                    "overlay_big": "",
+                    "overlay_small": "",
+                    "price_label": "",
+                    "price": "",
+                    "badge": ""
+                },
+                {
+                    "variant": "photo",
+                    "title": "Get your debts out of the notebook.",
+                    "copy": "Who owes you, how much, since when — tracked, not scribbled and forgotten.",
+                    "link_label": "Learn more",
+                    "link_url": "/features",
+                    "image": "assets/attendants.webp",
+                    "price_label": "",
+                    "price": "",
+                    "badge": "",
+                    "overlay_big": "",
+                    "overlay_small": ""
+                },
+                {
+                    "variant": "tint",
+                    "title": "However they pay, it counts.",
+                    "copy": "Cash, mobile money, or bank transfer — every payment lands in one record.",
+                    "link_label": "Learn more",
+                    "link_url": "/features",
+                    "image": "assets/Mobilehomeview.png",
+                    "overlay_big": "",
+                    "overlay_small": "",
+                    "price_label": "",
+                    "price": "",
+                    "badge": ""
+                }
+            ]
+        }
+    }
+}

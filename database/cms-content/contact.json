@@ -1,0 +1,71 @@
+{
+    "slug": "contact",
+    "title": "Contact",
+    "content": {
+        "meta": {
+            "title": "Contact – SkelApp",
+            "description": "Get in touch with SkelApp."
+        },
+        "hero": {
+            "heading": "Ready to get started? We're just a message away!"
+        },
+        "info": {
+            "heading": "Contact Us:",
+            "intro": "To get more information about us, you can reach us using the following:",
+            "social_heading": "Learn More about us through our social media channels:"
+        },
+        "cards": [
+            {
+                "type": "email",
+                "label": "Email Us",
+                "value": "pos@skelapp.tz"
+            },
+            {
+                "type": "tel",
+                "label": "Talk or chat with PK",
+                "value": "+255 658 962 000"
+            },
+            {
+                "type": "tel",
+                "label": "Talk or chat with JP",
+                "value": "+255 659 310 909"
+            }
+        ],
+        "socials": [
+            {
+                "platform": "tiktok",
+                "url": "#"
+            },
+            {
+                "platform": "facebook",
+                "url": "#"
+            },
+            {
+                "platform": "instagram",
+                "url": "#"
+            },
+            {
+                "platform": "linkedin",
+                "url": "#"
+            }
+        ],
+        "form": {
+            "heading": "Book a Demo",
+            "first_name_label": "First Name",
+            "first_name_placeholder": "Enter your first name",
+            "last_name_label": "Last Name",
+            "last_name_placeholder": "Enter your last name",
+            "email_label": "Email",
+            "email_placeholder": "Enter your email address",
+            "phone_label": "Phone Number",
+            "phone_placeholder": "Enter your phone number",
+            "company_label": "Company Name",
+            "company_placeholder": "Enter your company name",
+            "cancel_label": "Cancel",
+            "submit_label": "Submit",
+            "recipient_email": "pos@skelapp.tz",
+            "subject_prefix": "Demo Request",
+            "success_message": "Thank you! We've received your request and will be in touch shortly."
+        }
+    }
+}

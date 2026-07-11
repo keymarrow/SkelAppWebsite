@@ -1,0 +1,235 @@
+{
+    "slug": "terms",
+    "title": "Terms of Service",
+    "content": {
+        "meta": {
+            "title": "Terms of Service – SkelApp",
+            "description": "SkelApp terms of service."
+        },
+        "hero": {
+            "heading": "Terms of Service",
+            "last_updated": "Last Updated: 28th January 2026"
+        },
+        "intro_paragraphs": [
+            "These Terms of Service (\"Terms\") govern your access to and use of the SkelApp platform (\"SkelApp\" or \"the Service\"), including the dashboard, mobile applications, POS interfaces, APIs, hardware integrations, and related tools made available by SkelApp.",
+            "By creating an account, accessing the Platform, purchasing a subscription or device, or using any part of the Service, you agree to be bound by these Terms. If you do not agree, you must not use the Service."
+        ],
+        "sections": [
+            {
+                "title": "1. Definitions",
+                "intro": "",
+                "bullets": [
+                    {
+                        "label": "Platform",
+                        "text": "The SkelApp dashboard, mobile applications, POS interfaces, APIs, documentation, devices, and all related digital tools and services we make available."
+                    },
+                    {
+                        "label": "User",
+                        "text": "Any individual, company, employee, contractor, or organisation accessing or using the Service."
+                    },
+                    {
+                        "label": "Account",
+                        "text": "The registered profile and credentials used to access SkelApp."
+                    },
+                    {
+                        "label": "Content",
+                        "text": "Any transaction data, product data, customer data, reports, messages, files, or other material submitted to or generated through the Platform."
+                    },
+                    {
+                        "label": "Subscription",
+                        "text": "Any paid plan, module, hardware bundle, or recurring billing arrangement that grants access to the Service."
+                    },
+                    {
+                        "label": "Enterprise Client",
+                        "text": "A customer operating under a separate commercial agreement, master services agreement, or negotiated order form with SkelApp."
+                    }
+                ]
+            },
+            {
+                "title": "2. Eligibility & Account Registration",
+                "intro": "To access the Service, you must:",
+                "bullets": [
+                    {
+                        "label": "",
+                        "text": "Be legally capable of entering into contracts under Tanzanian law."
+                    },
+                    {
+                        "label": "",
+                        "text": "Provide accurate, complete, and truthful registration and business information."
+                    },
+                    {
+                        "label": "",
+                        "text": "Keep your login credentials, device access, and API keys secure and confidential."
+                    },
+                    {
+                        "label": "",
+                        "text": "Ensure all activity carried out under your account complies with these Terms and all applicable laws."
+                    },
+                    {
+                        "label": "",
+                        "text": "Promptly update your details if your business information, billing details, or authorised users change."
+                    }
+                ]
+            },
+            {
+                "title": "3. Use of the Service",
+                "intro": "SkelApp grants you a limited, non-exclusive, non-transferable, and revocable right to use the Service for your internal business operations, subject to these Terms. You agree that you will not:",
+                "bullets": [
+                    {
+                        "label": "",
+                        "text": "Copy, reproduce, reverse engineer, or attempt to extract the source code of any part of the Platform except where the law expressly allows it."
+                    },
+                    {
+                        "label": "",
+                        "text": "Resell, sublicense, lease, or make the Service available to unauthorised third parties without our written approval."
+                    },
+                    {
+                        "label": "",
+                        "text": "Use the Service for unlawful, misleading, fraudulent, or abusive activity."
+                    },
+                    {
+                        "label": "",
+                        "text": "Interfere with the normal operation, security, or performance of the Platform or related infrastructure."
+                    }
+                ]
+            },
+            {
+                "title": "4. Fees, Billing & Taxes",
+                "intro": "Some parts of the Service are paid. By purchasing a subscription, plan, hardware, or add-on, you agree that:",
+                "bullets": [
+                    {
+                        "label": "",
+                        "text": "All fees are payable in the currency and billing cycle communicated to you at the time of purchase or in your quotation, invoice, or agreement."
+                    },
+                    {
+                        "label": "",
+                        "text": "Recurring subscriptions may renew automatically unless cancelled before the next billing period."
+                    },
+                    {
+                        "label": "",
+                        "text": "You are responsible for applicable taxes, duties, levies, or regulatory charges unless we explicitly state otherwise."
+                    },
+                    {
+                        "label": "",
+                        "text": "Late, failed, or disputed payments may result in restricted access, suspension, or termination of some or all of the Service."
+                    },
+                    {
+                        "label": "",
+                        "text": "Third-party payment gateway fees, mobile money fees, banking fees, or connectivity charges may apply separately."
+                    }
+                ]
+            },
+            {
+                "title": "5. Data, Privacy & Security",
+                "intro": "Your business data remains your responsibility. By using the Service, you acknowledge that:",
+                "bullets": [
+                    {
+                        "label": "",
+                        "text": "You retain ownership of the data, records, and content you submit to the Platform."
+                    },
+                    {
+                        "label": "",
+                        "text": "You authorise SkelApp to process and store that data as necessary to provide, maintain, support, secure, and improve the Service."
+                    },
+                    {
+                        "label": "",
+                        "text": "You are responsible for ensuring you have a lawful basis to collect, upload, and process customer, employee, or transaction data through the Platform."
+                    },
+                    {
+                        "label": "",
+                        "text": "We use reasonable administrative, technical, and organisational safeguards, but no system can be guaranteed to be completely uninterrupted or perfectly secure."
+                    },
+                    {
+                        "label": "",
+                        "text": "You should keep your own backups and operational safeguards where your business requires them."
+                    }
+                ]
+            },
+            {
+                "title": "6. Acceptable Use",
+                "intro": "You must use the Service responsibly. You may not:",
+                "bullets": [
+                    {
+                        "label": "",
+                        "text": "Upload, transmit, or store unlawful, harmful, defamatory, infringing, or fraudulent content."
+                    },
+                    {
+                        "label": "",
+                        "text": "Attempt to gain unauthorised access to other accounts, devices, networks, or backend systems."
+                    },
+                    {
+                        "label": "",
+                        "text": "Use the Platform to send spam, distribute malware, or interfere with other users."
+                    },
+                    {
+                        "label": "",
+                        "text": "Reuse, repackage, or redistribute SkelApp content, branding, or documentation without authorisation."
+                    }
+                ]
+            },
+            {
+                "title": "7. Intellectual Property",
+                "intro": "SkelApp, its brand, software, design, documentation, code, and all related intellectual property remain the property of SkelApp and its licensors. Nothing in these Terms transfers ownership or grants you rights beyond the limited usage rights described above.",
+                "bullets": []
+            },
+            {
+                "title": "8. Suspension & Termination",
+                "intro": "We may suspend or terminate your access to the Service at any time if:",
+                "bullets": [
+                    {
+                        "label": "",
+                        "text": "You breach these Terms or any related policies."
+                    },
+                    {
+                        "label": "",
+                        "text": "Required by law, regulation, or a competent authority."
+                    },
+                    {
+                        "label": "",
+                        "text": "There is suspected fraud, misuse, or risk to other users or to our infrastructure."
+                    },
+                    {
+                        "label": "",
+                        "text": "Required for maintenance, security, or operational reasons."
+                    }
+                ]
+            },
+            {
+                "title": "9. Disclaimers & Limitation of Liability",
+                "intro": "The Service is provided \"as is\" and \"as available.\" To the maximum extent permitted by law:",
+                "bullets": [
+                    {
+                        "label": "",
+                        "text": "We disclaim all implied warranties, including merchantability, fitness for a particular purpose, and non-infringement."
+                    },
+                    {
+                        "label": "",
+                        "text": "We are not liable for indirect, incidental, special, consequential, or punitive damages, including lost profits, lost data, or business interruption."
+                    },
+                    {
+                        "label": "",
+                        "text": "Our total cumulative liability shall not exceed the amount you paid us for the Service in the twelve (12) months preceding the event giving rise to the claim."
+                    }
+                ]
+            },
+            {
+                "title": "10. Governing Law, Changes & Contact",
+                "intro": "These Terms are governed by the laws of the United Republic of Tanzania.",
+                "bullets": [
+                    {
+                        "label": "",
+                        "text": "Material updates will take effect when posted on this page unless a different effective date is stated."
+                    },
+                    {
+                        "label": "",
+                        "text": "Your continued use of the Service after updated Terms take effect means you accept the revised Terms."
+                    },
+                    {
+                        "label": "",
+                        "text": "If you have questions about these Terms, contact us at pos@skelapp.tz, call +255 658 962 000, or visit us in Dar Es Salaam, Tanzania."
+                    }
+                ]
+            }
+        ]
+    }
+}

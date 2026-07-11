@@ -1,0 +1,152 @@
+{
+    "slug": "integrations",
+    "title": "Integrations",
+    "content": {
+        "meta": {
+            "title": "Integrations - SkelApp",
+            "description": "Connect SkelApp with Zoho Books, Xero, QuickBooks, Sage, WhatsApp and Notify Africa BulkSMS."
+        },
+        "hero": {
+            "eyebrow": "SkelApp integrations",
+            "title": "Connect SkelApp\nto the tools you already use",
+            "subtitle": "Sync accounting, customer messaging, receipts, alerts and bulk SMS from one connected POS workflow.",
+            "image": "assets/HeroImage.webp",
+            "primary_label": "Explore integrations",
+            "secondary_label": "Talk to an expert"
+        },
+        "categories": [
+            {
+                "title": "Accounting & finance",
+                "subtitle": "Keep sales, taxes, payments and business reports aligned with your accounting stack.",
+                "slugs": [
+                    "zoho-books",
+                    "xero",
+                    "quickbooks",
+                    "sage"
+                ],
+                "slugs_text": "zoho-books\nxero\nquickbooks\nsage"
+            },
+            {
+                "title": "Messaging & notifications",
+                "subtitle": "Reach customers where they already are with WhatsApp, SMS alerts and campaign messaging.",
+                "slugs": [
+                    "whatsapp",
+                    "notify-africa-bulksms"
+                ],
+                "slugs_text": "whatsapp\nnotify-africa-bulksms"
+            }
+        ],
+        "strip": {
+            "label": "Also integrates with"
+        },
+        "faq": {
+            "heading": "Integration questions, answered",
+            "subtitle": "Integrations FAQ",
+            "read_more_label": "Read more",
+            "items": [
+                {
+                    "q": "Can SkelApp connect to my accounting software?",
+                    "a": "Yes. SkelApp can connect with accounting platforms such as Zoho Books, Xero, QuickBooks and Sage so sales and payment records stay easier to reconcile."
+                },
+                {
+                    "q": "Do integrations need custom development?",
+                    "a": "Some integrations can be configured directly, while others may need a short setup with our team depending on your workflow, branch setup and data fields."
+                },
+                {
+                    "q": "Can I use more than one integration at the same time?",
+                    "a": "Yes. You can connect accounting, messaging and SMS tools together so different parts of your business stay in sync."
+                },
+                {
+                    "q": "Will historical data be imported?",
+                    "a": "We can help review your current data and advise what can be imported or synced before setup."
+                }
+            ]
+        },
+        "items": [
+            {
+                "slug": "zoho-books",
+                "name": "Zoho Books",
+                "category": "Accounting",
+                "logo": "assets/zoho.png",
+                "color": "#e4443f",
+                "summary": "Send daily sales, tax totals, invoices and customer records from SkelApp into Zoho Books.",
+                "detail_title": "Accounting that stays close to every sale",
+                "detail_copy": "SkelApp connects with Zoho Books so your sales, payments, expenses and tax records move into accounting without rebuilding reports by hand.",
+                "website_url": "https://www.zoho.com/books/",
+                "hero_image": "assets/Moc-lap-phone-02.webp",
+                "features_text": "Daily sales sync | Push sales summaries, payment totals and branch activity into Zoho Books for faster reconciliation.\nCleaner invoices | Create invoice-ready records from sales and customer data captured at the POS.\nTax-ready records | Keep VAT and sales tax data organised so month-end work is easier to review.\nCustomer visibility | Connect buyers, receipts and account activity for a more complete financial view.\nLess manual entry | Reduce spreadsheet copying between your POS and accounting platform.\nBranch reporting | Separate sales by shop, register or team so accounting reports are easier to understand.",
+                "faq_text": "Can Zoho Books receive daily summaries? | Yes. We can configure SkelApp to prepare sales and payment summaries for Zoho Books workflows.\nCan customer data sync too? | Customer details can be mapped during setup depending on your preferred Zoho Books structure."
+            },
+            {
+                "slug": "xero",
+                "name": "Xero",
+                "category": "Accounting",
+                "logo": "assets/xero-logo.png",
+                "color": "#13b5ea",
+                "summary": "Keep sales, settlements and reporting aligned between SkelApp and Xero.",
+                "detail_title": "Connect shop sales to Xero reporting",
+                "detail_copy": "Use SkelApp with Xero to reduce double entry, keep payment totals visible and prepare cleaner sales records for your finance team.",
+                "website_url": "https://www.xero.com/",
+                "hero_image": "assets/devicemockup.webp",
+                "features_text": "Sales summaries | Send structured daily or branch-level sales summaries for review in Xero.\nPayment matching | Connect cash, card and mobile-money totals to make reconciliation more predictable.\nProduct-level context | Use POS data to understand what drove your accounting numbers.\nMulti-branch clarity | Keep location-level activity organised before it reaches finance.\nAudit-friendly records | Maintain clearer source records for checks, corrections and tax review.\nMonth-end speed | Spend less time collecting sales files from different shops and devices.",
+                "faq_text": "Does SkelApp replace Xero? | No. SkelApp runs your POS operations, while Xero remains your accounting system.\nCan we choose what data goes to Xero? | Yes. Data mapping is reviewed during setup so the sync fits your accounting process."
+            },
+            {
+                "slug": "quickbooks",
+                "name": "QuickBooks",
+                "category": "Accounting",
+                "logo": "assets/quickbooks.png",
+                "color": "#2ca01c",
+                "summary": "Connect POS sales and payment records with QuickBooks for cleaner books.",
+                "detail_title": "QuickBooks records powered by live POS activity",
+                "detail_copy": "Bring SkelApp sales and payment data into QuickBooks workflows so your finance records stay closer to what happened at the counter.",
+                "website_url": "https://quickbooks.intuit.com/",
+                "hero_image": "assets/Moc-tab.webp",
+                "features_text": "Sales to books | Move POS sales records toward QuickBooks without waiting for manual reports.\nPayment visibility | Track cash, cards and mobile-money payment totals from the POS.\nExpense context | Keep sales and cost activity easier to compare across the business.\nReceipts and invoices | Use transaction data to support cleaner receipt and invoice records.\nReporting support | Give your accountant more reliable data from the point of sale.\nFlexible setup | Map fields based on your chart of accounts and operating model.",
+                "faq_text": "Can this work with an accountant-managed QuickBooks account? | Yes. We can coordinate the setup with whoever manages your books.\nDoes every sale become a separate entry? | That depends on your preferred setup. Many businesses choose summaries to keep accounts clean."
+            },
+            {
+                "slug": "sage",
+                "name": "Sage",
+                "category": "Accounting",
+                "logo": "assets/sage.png",
+                "color": "#00d639",
+                "summary": "Link SkelApp sales and retail reports with Sage accounting workflows.",
+                "detail_title": "Sage-ready sales from every shop",
+                "detail_copy": "SkelApp helps prepare your retail data for Sage so finance teams can review activity from branches, payment channels and product categories.",
+                "website_url": "https://www.sage.com/",
+                "hero_image": "assets/PosSystemRegister.webp",
+                "features_text": "Branch summaries | Group sales by shop or register before sending records into accounting.\nPayment breakdowns | Separate cash, card and mobile-money activity for easier checks.\nInventory context | Use POS stock and sales data to support operational reporting.\nTax support | Keep tax-sensitive sales information structured from the start.\nFinance handoff | Give finance cleaner exports and mapped fields instead of raw POS notes.\nOperational control | Use SkelApp for sales and Sage for accounting without disconnecting the two.",
+                "faq_text": "Can Sage integration support multiple shops? | Yes. Branch and register mapping can be planned during setup.\nCan SkelApp export data for Sage? | Yes. Export and sync options depend on your Sage version and workflow."
+            },
+            {
+                "slug": "whatsapp",
+                "name": "WhatsApp",
+                "category": "Messaging",
+                "logo": "assets/whatsapp-logo.png",
+                "color": "#25d366",
+                "summary": "Send order updates, receipts, support messages and customer follow-ups through WhatsApp.",
+                "detail_title": "Customer conversations connected to your POS",
+                "detail_copy": "Use WhatsApp with SkelApp to keep customers updated after purchases, send receipts, follow up on orders and support repeat business.",
+                "website_url": "https://www.whatsapp.com/",
+                "hero_image": "assets/Mobilehomeview.png",
+                "features_text": "Digital receipts | Send customers receipts and purchase confirmations through WhatsApp.\nOrder updates | Keep customers informed when an order is created, prepared or ready.\nSupport follow-up | Move from sale to customer support without losing context.\nRepeat sales | Use customer history to support better follow-up and re-engagement.\nTeam visibility | Give staff a clearer view of customer requests linked to POS activity.\nLocal-first messaging | Use the channel your customers already understand and check every day.",
+                "faq_text": "Can SkelApp send receipts through WhatsApp? | Yes. WhatsApp can be used for receipt and order communication workflows.\nCan customers message us back? | Yes, depending on the WhatsApp setup and support process you choose."
+            },
+            {
+                "slug": "notify-africa-bulksms",
+                "name": "Notify Africa BulkSMS",
+                "category": "Bulk SMS",
+                "logo": "assets/notify-logo-bulksms.png",
+                "color": "#1e67ff",
+                "summary": "Send SMS alerts, promotions, payment reminders and customer updates using Notify Africa BulkSMS.",
+                "detail_title": "Bulk SMS campaigns from real POS data",
+                "detail_copy": "Connect SkelApp with Notify Africa BulkSMS to send targeted customer updates, promotions and transactional alerts based on activity in your shop.",
+                "website_url": "https://notify.africa/",
+                "hero_image": "assets/CRM-phone-feature.png",
+                "features_text": "Customer campaigns | Send promotions to customers based on purchase history and loyalty activity.\nTransactional alerts | Notify customers about orders, payments or account updates by SMS.\nBulk reach | Reach customers even when they are offline or not using smartphone apps.\nSegmented lists | Build smarter groups from POS customer data for more relevant messaging.\nPerformance tracking | Review campaign activity alongside sales outcomes.\nLocal delivery | Use a messaging provider built for African markets and phone networks.",
+                "faq_text": "Can SMS campaigns use SkelApp customer data? | Yes. Customer segments can be prepared from SkelApp data before sending campaigns.\nCan SMS be used for order alerts? | Yes. Transactional alerts can be configured as part of the integration workflow."
+            }
+        ]
+    }
+}

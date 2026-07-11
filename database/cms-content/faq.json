@@ -1,0 +1,182 @@
+{
+    "slug": "faq",
+    "title": "FAQ",
+    "content": {
+        "meta": {
+            "title": "FAQ – SkelApp",
+            "description": "Frequently asked questions about SkelApp."
+        },
+        "home_preview": {
+            "heading": "Frequently Asked Questions",
+            "subtitle": "How it works",
+            "read_more_label": "Read more",
+            "items": [
+                {
+                    "question": "What exactly does SkelApp do?",
+                    "answer": "SkelApp is a retail business management app for Tanzanian shop owners. It records your sales, purchases, and expenses, tracks who owes you and who you owe, monitors your stock levels, and shows you profit reports — all from your phone or tablet. SkelApp does not process payments itself; it works alongside however your customers already pay you — cash, mobile money, bank transfer, or invoice — and simply keeps an accurate record of it."
+                },
+                {
+                    "question": "Does SkelApp support inventory management?",
+                    "answer": "Yes, SkelApp includes advanced inventory management. Track stock levels in real-time, manage product variants, set low-stock alerts, and monitor inventory across multiple locations from one dashboard."
+                },
+                {
+                    "question": "Can I use SkelApp on mobile and POS terminals?",
+                    "answer": "Absolutely! SkelApp works seamlessly on mobile devices (iOS and Android) and tablets. Your data syncs across all devices in real-time, so you can manage your business from anywhere."
+                },
+                {
+                    "question": "Is SkelApp suitable for boutiques and medium-sized shops?",
+                    "answer": "Yes — SkelApp is designed specifically for small and medium retail businesses and boutiques in Tanzania. Whether you have one location or several branches, SkelApp gives you full visibility of your business without needing an accountant."
+                },
+                {
+                    "question": "Do I need training to use SkelApp?",
+                    "answer": "No training needed. If you can use a smartphone, you can use SkelApp. Most users are fully set up and recording their first sale within 5 minutes of downloading."
+                },
+                {
+                    "question": "Is SkelApp available across Tanzania?",
+                    "answer": "Yes. SkelApp works for retail businesses in Dar es Salaam, Arusha, Zanzibar, Moshi, Dodoma, Mwanza, and everywhere else in Tanzania. It works on any Android or iOS device with or without a stable internet connection."
+                },
+                {
+                    "question": "Does the POS work offline?",
+                    "answer": "Yes, SkelApp can record sales offline. When your internet connection is restored, all transactions automatically sync to the cloud. This ensures you never miss a sale, even during internet outages."
+                }
+            ]
+        },
+        "page": {
+            "title": "FAQs",
+            "groups": [
+                {
+                    "id": "getting-started",
+                    "label": "Getting Started",
+                    "questions": [
+                        {
+                            "question": "How quickly can I start using SkelApp in my shop?",
+                            "answer": "Most retailers can get started the same day. Once your products, prices, users, and payment setup are ready, your team can begin selling immediately."
+                        },
+                        {
+                            "question": "Do I need a POS machine before signing up?",
+                            "answer": "No. You can start with the devices you already have and then decide whether you want a dedicated SkelApp POS machine, receipt printer, or barcode scanner."
+                        },
+                        {
+                            "question": "Can SkelApp work for one store and multiple branches?",
+                            "answer": "Yes. SkelApp is built for both single-location shops and growing retail operations. You can track each branch independently while keeping reporting in one place."
+                        },
+                        {
+                            "question": "Will you help me move from my current POS or manual books?",
+                            "answer": "Yes. Our team can guide you through product setup, opening stock, price lists, and the best way to move your operation into SkelApp without disrupting sales."
+                        },
+                        {
+                            "question": "Can I keep selling when the internet is unstable?",
+                            "answer": "Yes. SkelApp is designed for real store conditions and supports smooth selling workflows even when connectivity is not perfect."
+                        },
+                        {
+                            "question": "What training do cashiers and managers receive?",
+                            "answer": "We provide practical onboarding for the people who will use the system every day, from cashiers handling sales to managers reviewing stock and reports."
+                        }
+                    ]
+                },
+                {
+                    "id": "inventory-catalog",
+                    "label": "Inventory & Catalog",
+                    "questions": [
+                        {
+                            "question": "How do I add products, variants, and selling prices?",
+                            "answer": "You can create products with SKUs, categories, sizes, and price levels directly inside SkelApp, then keep them organised in a way that matches how your store operates."
+                        },
+                        {
+                            "question": "Can I track stock across categories and branches?",
+                            "answer": "Yes. SkelApp helps you monitor stock movement by product, category, and branch so you always know what is selling and what needs replenishment."
+                        },
+                        {
+                            "question": "Will SkelApp warn me when stock is running low?",
+                            "answer": "Yes. Low-stock visibility is built into the inventory workflow so you can restock before items go out of stock."
+                        },
+                        {
+                            "question": "Can I update multiple prices at once?",
+                            "answer": "Yes. Bulk updates make it easier to adjust prices, margins, or product details without editing items one by one."
+                        }
+                    ]
+                },
+                {
+                    "id": "staff-branches",
+                    "label": "Staff & Branches",
+                    "questions": [
+                        {
+                            "question": "Can I create different roles for cashiers, managers, and owners?",
+                            "answer": "Yes. Access can be structured around responsibilities, so each user only sees the tools and settings they need for their role."
+                        },
+                        {
+                            "question": "How many staff accounts can I add to my business?",
+                            "answer": "That depends on your plan and setup, but SkelApp is designed to support growing teams without forcing you into awkward workarounds."
+                        },
+                        {
+                            "question": "Can I view sales and stock for each branch separately?",
+                            "answer": "Yes. Branch-level visibility is built into the platform, which makes it easier to compare performance and manage operations across locations."
+                        }
+                    ]
+                },
+                {
+                    "id": "payments",
+                    "label": "Payments",
+                    "questions": [
+                        {
+                            "question": "Which payment methods can I record in SkelApp?",
+                            "answer": "You can manage common retail payment flows such as cash, bank transfers, card payments, and mobile money, while keeping each sale clearly recorded."
+                        },
+                        {
+                            "question": "Does SkelApp support split payments or partial payments?",
+                            "answer": "Yes. When a customer pays using more than one method or completes part of a balance first, SkelApp can help you keep that transaction accurate."
+                        },
+                        {
+                            "question": "Can I separate cash, bank, and mobile money totals in reports?",
+                            "answer": "Yes. Payment method reporting is available so you can reconcile daily totals faster and see how customers prefer to pay."
+                        },
+                        {
+                            "question": "How are refunds and voids handled?",
+                            "answer": "Refunds and voids are tracked inside the system so you maintain a clear audit trail and reduce confusion at the end of the day."
+                        }
+                    ]
+                },
+                {
+                    "id": "devices-printing",
+                    "label": "Devices & Printing",
+                    "questions": [
+                        {
+                            "question": "Which POS machines, printers, and scanners work with SkelApp?",
+                            "answer": "SkelApp works best with our recommended hardware setup, and we can advise you on printers, barcode scanners, and POS devices that fit your store."
+                        },
+                        {
+                            "question": "Can I print receipts and kitchen or order tickets?",
+                            "answer": "Yes. Depending on your setup, SkelApp can support receipt printing and other operational print flows needed at checkout or in-store fulfilment."
+                        },
+                        {
+                            "question": "Does SkelApp work on both phone and desktop?",
+                            "answer": "Yes. Teams can manage the business across supported devices while keeping sales, stock, and reporting synced inside the same platform."
+                        },
+                        {
+                            "question": "What happens if a device is lost or damaged?",
+                            "answer": "Because your data lives in your SkelApp account, you can regain access from another supported device and continue operating with minimal disruption."
+                        }
+                    ]
+                },
+                {
+                    "id": "privacy-security",
+                    "label": "Privacy & Security",
+                    "questions": [
+                        {
+                            "question": "Is my business data secure on SkelApp?",
+                            "answer": "We take security seriously and use practical safeguards to help protect your account, your team access, and your business records."
+                        },
+                        {
+                            "question": "Can I control who sees reports or sensitive settings?",
+                            "answer": "Yes. Permissions can be assigned so that only the right people have access to sensitive business information and critical controls."
+                        },
+                        {
+                            "question": "Does SkelApp back up my data?",
+                            "answer": "Yes. Data protection and continuity are part of how the platform is managed, so your records are not tied to a single device in your shop."
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

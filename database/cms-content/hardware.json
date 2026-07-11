@@ -1,0 +1,346 @@
+{
+    "slug": "hardware",
+    "title": "Hardware",
+    "content": {
+        "meta": {
+            "title": "Hardware & Accessories – SkelApp",
+            "description": "SkelApp hardware and accessories — terminals, registers, printers, scanners and complete kits built for Tanzanian retail."
+        },
+        "hero": {
+            "eyebrow": "Hardware lineup",
+            "title": "Hardware built for\nhow Tanzania sells.",
+            "subtitle": "Terminals, registers, printers, scanners and everything in between — chosen, tested and supported to run SkelApp from day one.",
+            "image": "assets/PosSystemRegister.webp",
+            "primary_label": "Talk to our team",
+            "primary_url": "/contact",
+            "secondary_label": "See the lineup",
+            "stat1_value": "5 min",
+            "stat1_label": "to set up",
+            "stat2_value": "100%",
+            "stat2_label": "offline-ready",
+            "stat3_value": "1 yr",
+            "stat3_label": "warranty"
+        },
+        "lineup": {
+            "title": "Everything your counter needs",
+            "subtitle": "Mix and match the devices that fit your shop — every one of them speaks SkelApp natively.",
+            "items": [
+                {
+                    "name": "Skel Terminal",
+                    "tag": "Handheld POS",
+                    "copy": "Take orders and payments anywhere in your shop — pocket-sized, all-day battery.",
+                    "image": "assets/Pos System 04.png",
+                    "url": "/hardware/skel-terminal"
+                },
+                {
+                    "name": "Skel Register",
+                    "tag": "Countertop POS",
+                    "copy": "A full checkout station for busy counters — big screen, fast and reliable.",
+                    "image": "assets/PosSystemRegister.webp",
+                    "url": "/hardware/skel-register"
+                },
+                {
+                    "name": "Skel Tab",
+                    "tag": "Tablet POS",
+                    "copy": "Turn a tablet into a complete point of sale with the SkelApp stand.",
+                    "image": "assets/Moc-tab.webp",
+                    "url": "/hardware/skel-tab"
+                },
+                {
+                    "name": "Skel Phone",
+                    "tag": "POS on your phone",
+                    "copy": "Run your whole shop from the phone in your pocket — scan, sell and print.",
+                    "image": "assets/Mobilehomeview.png",
+                    "url": "/hardware/skel-phone"
+                }
+            ]
+        },
+        "spotlights": {
+            "items": [
+                {
+                    "eyebrow": "Flagship countertop",
+                    "name": "SkelApp Register",
+                    "copy": "The complete checkout for your counter. A bright, tilting touchscreen, built-in receipt printing and room for a drawer and scanner — all running SkelApp out of the box.",
+                    "image": "assets/PosSystemRegister.webp",
+                    "points": [
+                        "Bright tilting touchscreen",
+                        "Built-in thermal printer",
+                        "Plug-and-play with SkelApp",
+                        "Works offline, syncs later"
+                    ],
+                    "url": "/hardware/skel-register",
+                    "points_text": "Bright tilting touchscreen\nBuilt-in thermal printer\nPlug-and-play with SkelApp\nWorks offline, syncs later"
+                },
+                {
+                    "eyebrow": "Sell anywhere",
+                    "name": "SkelApp Terminal",
+                    "copy": "Your whole shop in one hand. Scan, sell, take mobile money and print a receipt from the aisle, the table or the doorway — all-day battery included.",
+                    "image": "assets/Mobilehomeview.png",
+                    "points": [
+                        "All-day battery life",
+                        "Built for one-hand use",
+                        "M-Pesa, Airtel & Tigo ready",
+                        "Rugged, dust-resistant body"
+                    ],
+                    "url": "/hardware/skel-terminal",
+                    "points_text": "All-day battery life\nBuilt for one-hand use\nM-Pesa, Airtel & Tigo ready\nRugged, dust-resistant body"
+                }
+            ]
+        },
+        "why": {
+            "title": "Made to be switched on and forgotten about",
+            "subtitle": "Reliable, locally supported hardware that just works — set it up once and get on with selling.",
+            "items": [
+                {
+                    "title": "Plug-and-play",
+                    "copy": "Open the box, sign in to SkelApp, and start selling in minutes — no IT person required."
+                },
+                {
+                    "title": "Offline-ready",
+                    "copy": "Power cut or weak network? Keep ringing up sales. Everything syncs the moment you reconnect."
+                },
+                {
+                    "title": "Built for here",
+                    "copy": "Chosen and tested for Tanzanian retail — dust, heat, voltage swings and long days."
+                },
+                {
+                    "title": "Local support",
+                    "copy": "On-the-ground help in Dar es Salaam, WhatsApp support and a warranty on every device."
+                }
+            ]
+        },
+        "accessories": {
+            "title": "The little things that finish the setup",
+            "subtitle": "Stands, printers, scanners and more — everything you need to complete your counter.",
+            "items": [
+                {
+                    "name": "Tablet stand",
+                    "copy": "Sturdy, swivelling stand for counter checkout.",
+                    "image": "assets/Moc-tab.webp"
+                },
+                {
+                    "name": "Charging dock",
+                    "copy": "Keep every Terminal topped up and ready.",
+                    "image": "assets/hardware.webp"
+                },
+                {
+                    "name": "Receipt paper",
+                    "copy": "80mm thermal rolls, sold by the box.",
+                    "image": "assets/Pos System 04.png"
+                },
+                {
+                    "name": "Barcode Scanner",
+                    "copy": "Ring up items in a tap — wired or wireless.",
+                    "image": "assets/inventorytrack.webp"
+                },
+                {
+                    "name": "Cash Drawer",
+                    "copy": "Secure cash, opens automatically on each sale.",
+                    "image": "assets/PosSystem.webp"
+                }
+            ]
+        },
+        "cta": {
+            "title": "Let's build your setup.",
+            "subtitle": "Tell us about your shop and we’ll recommend the right hardware — and have you selling on SkelApp in no time.",
+            "secondary_label": "See pricing",
+            "secondary_url": "/pricing",
+            "primary_label": "Talk to our team",
+            "primary_url": "/contact"
+        },
+        "products": [
+            {
+                "slug": "skel-register",
+                "name": "Skel Register",
+                "meta_title": "Skel Register – SkelApp Hardware",
+                "meta_description": "Built for busy counters, Skel Register delivers a big, bright screen and fast, reliable checkout that keeps every queue moving.",
+                "hero_badge": "NEW",
+                "hero_primary_label": "Get a demo",
+                "hero_secondary_label": "Learn more",
+                "hero_subtitle": "Built for busy counters, Skel Register delivers a big, bright screen and fast, reliable checkout that keeps every queue moving.",
+                "hero_image": "assets/PosSystemRegister.webp",
+                "intro_title": "A POS station made for",
+                "intro_title_accent": "high-volume retail",
+                "detail_title_prefix": "Skel Register,",
+                "detail_title_accent": "up close",
+                "detail_subtitle": "Everything the busiest counters need, built into one reliable station that keeps queues moving all day.",
+                "specs_title_prefix": "Skel Register",
+                "specs_title_accent": "specifications",
+                "specs_subtitle": "Every detail that matters — screen, power, payments and connectivity, all in one place.",
+                "feature_1_title": "Responsive touchscreen",
+                "feature_1_body": "A bright, tilting touchscreen shows more of your menu at a glance, so staff find items and ring up orders in seconds. The display is built for all-day use behind a busy counter — fast, smooth and easy to read even under bright shop lighting, with a second customer-facing view so shoppers can follow every line as it is added.",
+                "feature_1_image": "assets/CHECKOUTPOS.png",
+                "feature_2_title": "Built-in receipt printing",
+                "feature_2_body": "A fast thermal printer is built right into the station, so there are no extra boxes, power bricks or cables cluttering your counter. Receipts print crisp and clear every time — the moment a sale ends — and you can switch to digital receipts over SMS or email whenever a customer prefers to skip the paper.",
+                "feature_2_image": "assets/Pos System 04.png",
+                "feature_3_title": "Takes every payment",
+                "feature_3_body": "Cash, mobile money and cards all run through one tidy station — tap, chip and PIN, plus M-Pesa, Airtel Money and Tigo Pesa. Every payment is captured automatically against the right sale and reconciled for you, so the day balances at closing without anyone keying figures in by hand.",
+                "feature_3_image": "assets/card.webp",
+                "feature_4_title": "Keeps selling offline",
+                "feature_4_body": "Power cut or weak network? Skel Register keeps ringing up sales without missing a beat, holding everything safely on the device. The moment you reconnect, every order, payment and stock change syncs automatically to the cloud and your other branches — so you never lose a sale or a number to a dropped connection.",
+                "feature_4_image": "assets/CASHFLOW.png",
+                "spec_1_label": "Display",
+                "spec_1_rows_text": "Size | 15.6\" Full HD\nTouch | 10-point multi-touch\nBrightness | 350 nits",
+                "spec_2_label": "Processor & memory",
+                "spec_2_rows_text": "CPU | Octa-core\nRAM | 4 GB\nStorage | 64 GB",
+                "spec_3_label": "Connectivity",
+                "spec_3_rows_text": "Wi-Fi | Dual-band\nCellular | 4G LTE (optional)\nBluetooth | 5.0",
+                "spec_4_label": "Payments",
+                "spec_4_rows_text": "Methods | Tap · Chip · PIN\nMobile money | M-Pesa, Airtel, Tigo",
+                "spec_5_label": "Operating environment",
+                "spec_5_rows_text": "Temperature | 0–40 °C\nPower | 100–240V, surge-tolerant"
+            },
+            {
+                "slug": "skel-terminal",
+                "name": "Skel Terminal",
+                "meta_title": "Skel Terminal – SkelApp Hardware",
+                "meta_description": "Your whole shop in one hand. Scan, sell, take mobile money and print a receipt from the aisle, the doorway or anywhere on the floor.",
+                "hero_badge": "NEW",
+                "hero_primary_label": "Get a demo",
+                "hero_secondary_label": "Learn more",
+                "hero_subtitle": "Your whole shop in one hand. Scan, sell, take mobile money and print a receipt from the aisle, the doorway or anywhere on the floor.",
+                "hero_image": "assets/Pos System 04.png",
+                "intro_title": "A handheld POS made for",
+                "intro_title_accent": "selling anywhere",
+                "detail_title_prefix": "Skel Terminal,",
+                "detail_title_accent": "up close",
+                "detail_subtitle": "A complete shop that fits in one hand and goes wherever the sale does — aisle, doorway or out on the floor.",
+                "specs_title_prefix": "Skel Terminal",
+                "specs_title_accent": "specifications",
+                "specs_subtitle": "Every detail that matters — screen, power, payments and connectivity, all in one place.",
+                "feature_1_title": "All-day battery",
+                "feature_1_body": "A full shift on a single charge means Skel Terminal keeps selling from open to close without anyone hunting for a power point. The battery is sized for real trading days — long queues, deliveries and market runs included — and tops up fast between sessions, so it is always ready when the next customer walks up.",
+                "feature_1_image": "assets/Mobilehomeview.png",
+                "feature_2_title": "Scan & sell in one hand",
+                "feature_2_body": "Built for comfortable one-handed use, Skel Terminal pairs a fast barcode scanner with a responsive screen so you can ring up items, take payment and print a receipt without ever setting it down. Serve customers in the aisle, at the door or out on the floor — wherever the sale happens, the whole checkout travels with you.",
+                "feature_2_image": "assets/CHECKOUTPOS.png",
+                "feature_3_title": "Mobile money ready",
+                "feature_3_body": "M-Pesa, Airtel Money and Tigo Pesa are built right in, alongside card payments, so customers pay however they like from a single handheld. Each payment is matched to its sale and recorded automatically, giving you a clean record of every shilling that comes in — no manual logging, no end-of-day guesswork.",
+                "feature_3_image": "assets/card.webp",
+                "feature_4_title": "Live stock in your hand",
+                "feature_4_body": "Check prices and stock levels right where you are standing, then watch every sale update your inventory the instant it is rung up. Low-stock alerts reach you before shelves run empty, and because the count is shared across all your devices, what you see on the Terminal always matches the rest of your business.",
+                "feature_4_image": "assets/STOCKLIST.png",
+                "spec_1_label": "Display",
+                "spec_1_rows_text": "Size | 6\" HD touchscreen\nGlass | Toughened, glove-friendly",
+                "spec_2_label": "Battery",
+                "spec_2_rows_text": "Capacity | 5,000 mAh\nLife | Full-shift, all-day",
+                "spec_3_label": "Scanner",
+                "spec_3_rows_text": "Type | 1D / 2D imager\nSpeed | Instant focus",
+                "spec_4_label": "Connectivity",
+                "spec_4_rows_text": "Wi-Fi | Dual-band\nCellular | 4G LTE\nBluetooth | 5.0",
+                "spec_5_label": "Durability",
+                "spec_5_rows_text": "Body | Rugged, dust-resistant\nDrop | 1.2 m to concrete"
+            },
+            {
+                "slug": "skel-tab",
+                "name": "Skel Tab",
+                "meta_title": "Skel Tab – SkelApp Hardware",
+                "meta_description": "Turn a tablet into a complete point of sale. Skel Tab drops into a sturdy stand and runs your whole counter with room to grow.",
+                "hero_badge": "NEW",
+                "hero_primary_label": "Get a demo",
+                "hero_secondary_label": "Learn more",
+                "hero_subtitle": "Turn a tablet into a complete point of sale. Skel Tab drops into a sturdy stand and runs your whole counter with room to grow.",
+                "hero_image": "assets/Moc-tab.webp",
+                "intro_title": "A tablet POS made for",
+                "intro_title_accent": "flexible counters",
+                "detail_title_prefix": "Skel Tab,",
+                "detail_title_accent": "up close",
+                "detail_subtitle": "One adaptable tablet that runs the till today and grows with your shop tomorrow.",
+                "specs_title_prefix": "Skel Tab",
+                "specs_title_accent": "specifications",
+                "specs_subtitle": "Every detail that matters — screen, power, payments and connectivity, all in one place.",
+                "feature_1_title": "Big, flexible screen",
+                "feature_1_body": "A roomy, high-resolution display gives you space to work and swivels smoothly between staff and customer when it is time to confirm an order or capture a signature. It suits boutiques, pharmacies and service counters alike — big enough to browse a full catalogue, yet light enough to turn, tilt and share across the counter all day.",
+                "feature_1_image": "assets/Moc-tab-02.webp",
+                "feature_2_title": "Counter or handheld",
+                "feature_2_body": "Dock Skel Tab on its stand for a tidy fixed checkout, then lift it off in one motion to count stock, line-bust a queue or sell out on the floor. It is the same screen doing two jobs, so your team learns one tool and uses it everywhere — from the till to the stockroom to the pavement outside.",
+                "feature_2_image": "assets/poswithtab.webp",
+                "feature_3_title": "Grows with your shop",
+                "feature_3_body": "Start simple and add a receipt printer, barcode scanner, cash drawer or card reader whenever you are ready — each one connects in minutes. SkelApp ties the whole setup together behind the scenes, so the tablet you buy today keeps pace as your shop adds lines, staff and branches tomorrow.",
+                "feature_3_image": "assets/DASHBOARD.png",
+                "feature_4_title": "Takes every payment",
+                "feature_4_body": "Cash, mobile money and cards all flow through one tablet, with M-Pesa, Airtel Money and Tigo Pesa alongside tap, chip and PIN. Every payment is recorded automatically against the sale and printed on a single, clear receipt — one device handling the whole transaction from first scan to final change.",
+                "feature_4_image": "assets/card.webp",
+                "spec_1_label": "Display",
+                "spec_1_rows_text": "Size | 10.1\" Full HD\nTouch | 10-point multi-touch",
+                "spec_2_label": "Processor & memory",
+                "spec_2_rows_text": "CPU | Octa-core\nRAM | 4 GB\nStorage | 64 GB",
+                "spec_3_label": "Mounting",
+                "spec_3_rows_text": "Stand | Swivel + tilt\nRelease | Quick-detach",
+                "spec_4_label": "Connectivity",
+                "spec_4_rows_text": "Wi-Fi | Dual-band\nBluetooth | 5.0\nCellular | 4G (optional)",
+                "spec_5_label": "Operating environment",
+                "spec_5_rows_text": "Temperature | 0–40 °C\nBattery | All-day on a charge"
+            },
+            {
+                "slug": "skel-phone",
+                "name": "Skel Phone",
+                "meta_title": "Skel Phone – SkelApp Hardware",
+                "meta_description": "Run your whole shop from the phone in your pocket. Scan, sell and print with SkelApp — no extra hardware needed to get started.",
+                "hero_badge": "NEW",
+                "hero_primary_label": "Get a demo",
+                "hero_secondary_label": "Learn more",
+                "hero_subtitle": "Run your whole shop from the phone in your pocket. Scan, sell and print with SkelApp — no extra hardware needed to get started.",
+                "hero_image": "assets/Mobilehomeview.png",
+                "intro_title": "A pocket POS made for",
+                "intro_title_accent": "getting started fast",
+                "detail_title_prefix": "Skel Phone,",
+                "detail_title_accent": "up close",
+                "detail_subtitle": "Turn the phone in your pocket into a full point of sale — no extra kit required to start selling.",
+                "specs_title_prefix": "Skel Phone",
+                "specs_title_accent": "specifications",
+                "specs_subtitle": "Every detail that matters — screen, power, payments and connectivity, all in one place.",
+                "feature_1_title": "Start with what you have",
+                "feature_1_body": "There is no new box to buy to get going — download SkelApp on the Android or iPhone already in your pocket and you can start selling the same day. It is the lowest-risk way to bring your shop online, and as business grows you can add a printer, scanner or full station whenever the time is right.",
+                "feature_1_image": "assets/Mobilehomeview.png",
+                "feature_2_title": "Sell from anywhere",
+                "feature_2_body": "Markets, deliveries, pop-up stalls or the shop floor — take a sale and collect payment wherever your customer happens to be. Your prices, products and stock travel with you on the phone, so a sale made on the road is treated exactly like one rung up at the counter, with nothing to re-enter later.",
+                "feature_2_image": "assets/CHECKOUTPOS.png",
+                "feature_3_title": "Everything in sync",
+                "feature_3_body": "A sale made on your phone shows up instantly across every other device and branch, giving you one live view of the whole business. Stock, takings and customer records stay current everywhere at once — so whether you check from the counter or from home, the numbers you see are always up to the minute.",
+                "feature_3_image": "assets/CASHFLOW.png",
+                "feature_4_title": "Print receipts anywhere",
+                "feature_4_body": "Pair a pocket Bluetooth thermal printer and hand over a proper printed receipt on the spot — at the market, the doorway or the table. When paper is not needed, send the same receipt by SMS or email in a tap, so every customer leaves with a clear record however they prefer to receive it.",
+                "feature_4_image": "assets/possd.png",
+                "spec_1_label": "Compatibility",
+                "spec_1_rows_text": "Android | 9.0 and newer\niOS | 14 and newer",
+                "spec_2_label": "Payments",
+                "spec_2_rows_text": "Mobile money | M-Pesa, Airtel, Tigo\nCards | With Skel card reader",
+                "spec_3_label": "Printing",
+                "spec_3_rows_text": "Receipts | Bluetooth thermal\nFormat | 58mm / 80mm",
+                "spec_4_label": "Offline",
+                "spec_4_rows_text": "Mode | Full offline selling\nSync | Automatic on reconnect",
+                "spec_5_label": "",
+                "spec_5_rows_text": ""
+            }
+        ],
+        "product_faq": {
+            "title": "Questions,",
+            "title_accent": "answered.",
+            "items": [
+                {
+                    "q": "Does the hardware work offline?",
+                    "a": "Yes. Every SkelApp device keeps selling during power cuts or weak network — sales, stock and payments sync automatically the moment you reconnect."
+                },
+                {
+                    "q": "How long does setup take?",
+                    "a": "Most shops are live the same day. Unbox it, sign in to SkelApp, add your products and prices, and start selling — usually in under five minutes."
+                },
+                {
+                    "q": "Which payments can it take?",
+                    "a": "Cash, M-Pesa, Airtel Money, Tigo Pesa, cards (tap, chip and PIN) and bank transfer — all recorded automatically and printed on one receipt."
+                },
+                {
+                    "q": "Can I manage more than one branch?",
+                    "a": "Absolutely. Run every branch from one dashboard — monitor sales and stock by location and give each shop its own logins and permissions."
+                },
+                {
+                    "q": "Is there a warranty and local support?",
+                    "a": "Every device ships with a one-year warranty. Our team in Dar es Salaam supports you on WhatsApp, by phone and on-site when you need it."
+                }
+            ],
+            "subtitle": "Hardware FAQ",
+            "read_more_label": "Read more"
+        }
+    }
+}

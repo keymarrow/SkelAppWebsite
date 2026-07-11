@@ -1,0 +1,91 @@
+{
+    "slug": "why",
+    "title": "Why SkelApp",
+    "content": {
+        "meta": {
+            "title": "Why SkelApp – About Us",
+            "description": "SkelApp is on a mission to transform Tanzanian small businesses — built by people who show up, with products and support that just work."
+        },
+        "hero": {
+            "eyebrow": "About SkelApp",
+            "title": "Transforming Tanzania's small businesses to grow — and communities to thrive.",
+            "subtitle": "We put powerful, affordable tools in the hands of every shop — so businesses grow stronger and the people around them thrive.",
+            "image": "assets/HeroImage.webp",
+            "primary_label": "Talk to us",
+            "primary_url": "/contact",
+            "secondary_label": "Explore SkelApp",
+            "secondary_url": "/features"
+        },
+        "gallery": {
+            "eyebrow": "Why SkelApp?",
+            "title": "We genuinely<br><span class=\"af-accent\">care</span>"
+        },
+        "people": {
+            "title": "People who\nshow up",
+            "copy": "We take the time to understand what really matters to you. From the first discussion, we've got your back — and we see it through until it's right."
+        },
+        "story": {
+            "cards": [
+                {
+                    "num": "01",
+                    "title": "The problem",
+                    "body": "It's too hard for small shops to track sales, stock and cash — and grow without the numbers they need.",
+                    "image": "assets/techshop.webp"
+                },
+                {
+                    "num": "02",
+                    "title": "The idea",
+                    "body": "Put a simple, reliable point of sale in every shop — one that works offline and fits how Tanzania sells.",
+                    "image": "assets/client.webp"
+                },
+                {
+                    "num": "03",
+                    "title": "The outcome",
+                    "body": "Thousands of businesses now run on SkelApp — selling faster, wasting less and growing with confidence.",
+                    "image": "assets/HeroImage.webp"
+                }
+            ]
+        },
+        "product": {
+            "image": "assets/PosSystemRegister.webp",
+            "title": "Products that fuel\nefficiency",
+            "subtitle": "We build products that make your job easier and more profitable. From taking orders and payments to managing stock and staff — everything works together so you can focus on your customers.",
+            "cta_label": "Get a demo",
+            "cta_url": "/contact"
+        },
+        "support": {
+            "title": "Support",
+            "title_accent": "that's always there",
+            "subtitle": "When something matters, you reach a real person who knows your business — fast, local and on your side.",
+            "features": [
+                {
+                    "name": "Always-on help",
+                    "body": "Reach us on WhatsApp, phone or email — real people who know retail, ready the moment you need them.",
+                    "image": "assets/CRM-phone-feature.png"
+                },
+                {
+                    "name": "Set up in minutes",
+                    "body": "Hands-on onboarding and training so your whole team is selling confidently from the very first day.",
+                    "image": "assets/CHECKOUTPOS.png"
+                },
+                {
+                    "name": "On the ground",
+                    "body": "A local team in Dar es Salaam for setup, repairs and advice — not a call centre on the other side of the world.",
+                    "image": "assets/techshop.webp"
+                },
+                {
+                    "name": "Warranty & care",
+                    "body": "Every device is covered, and we keep you running with fast repairs and replacements when you need them.",
+                    "image": "assets/hardware.webp"
+                }
+            ]
+        },
+        "culture": {
+            "title": "A culture that",
+            "title_accent": "shows up",
+            "link_label": "Work with us",
+            "link_url": "/contact",
+            "note": "We're builders, problem-solvers and people who care. We move fast, stay close to our customers, and take pride in work that lasts — kazi safi, kila siku."
+        }
+    }
+}

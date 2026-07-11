@@ -1,0 +1,135 @@
+{
+    "slug": "affiliate",
+    "title": "Affiliate Program",
+    "content": {
+        "meta": {
+            "title": "Affiliate Program | SkelApp",
+            "description": "Join the SkelApp affiliate program and earn bonuses for referring growing retailers and modern businesses."
+        },
+        "hero": {
+            "eyebrow": "SkelApp affiliate program",
+            "title_lead": "SkelApp",
+            "title_accent": "Affiliate",
+            "title_trail": "Partner Program",
+            "copy": "Earn bonuses by referring businesses to SkelApp. If your audience trusts your recommendations, you can turn that trust into a practical revenue stream with a point-of-sale system built for modern commerce.",
+            "note": "Approved partners receive portal access and referral support from our team.",
+            "image": "assets/attendants.webp",
+            "image_alt": "SkelApp merchants using a tablet together",
+            "primary_label": "Get started",
+            "secondary_label": "Login"
+        },
+        "steps": [
+            {
+                "label": "Step 1",
+                "title": "Share your contact details",
+                "copy": "Start with your name, company, and the best way for us to reach you."
+            },
+            {
+                "label": "Step 2",
+                "title": "Tell us about your audience",
+                "copy": "Show us how you support business owners, operators, or merchants in your network."
+            },
+            {
+                "label": "Step 3",
+                "title": "Get approved and onboarded",
+                "copy": "We review the fit, align on the program, and share your affiliate setup details."
+            },
+            {
+                "label": "Step 4",
+                "title": "Refer businesses and earn",
+                "copy": "Send qualified referrals, help them discover SkelApp, and earn bonuses as they get started."
+            }
+        ],
+        "referrals": {
+            "eyebrow": "Earn bonuses for referring",
+            "title_rest": "every type of retailer",
+            "copy": "From boutiques and beauty stores to grocery, hardware, and specialty retail, SkelApp helps businesses sell faster, stay in control of stock, and grow with confidence.",
+            "cards": [
+                {
+                    "slug": "boutique",
+                    "title": "Boutique",
+                    "category": "Fashion retail",
+                    "image": "assets/boutique.webp"
+                },
+                {
+                    "slug": "cosmetics",
+                    "title": "Cosmetics Store",
+                    "category": "Beauty retail",
+                    "image": "assets/cosmetics.webp"
+                },
+                {
+                    "slug": "grocery",
+                    "title": "Grocery Store",
+                    "category": "Daily essentials",
+                    "image": "assets/grocery.webp"
+                },
+                {
+                    "slug": "hardware-shop",
+                    "title": "Hardware Shop",
+                    "category": "Building supplies",
+                    "image": "assets/hardware.webp"
+                },
+                {
+                    "slug": "kitchenware",
+                    "title": "Kitchenware Store",
+                    "category": "Home goods",
+                    "image": "assets/kitchenware.webp"
+                },
+                {
+                    "slug": "autospare",
+                    "title": "AutoSpare Shop",
+                    "category": "Parts and service",
+                    "image": "assets/autospare.webp"
+                },
+                {
+                    "slug": "tech-shop",
+                    "title": "Tech Shop",
+                    "category": "Devices and electronics",
+                    "image": "assets/techshop.webp"
+                }
+            ]
+        },
+        "partners": {
+            "eyebrow": "Who can be an affiliate?",
+            "title": "Built for partners who already influence commerce.",
+            "copy": "If you teach, publish, advise, or supply tools to business owners, the SkelApp affiliate program gives you a clear way to recommend software people can actually put to work.",
+            "cards": [
+                {
+                    "title": "Creators",
+                    "category": "Audience builders",
+                    "copy": "Share SkelApp in your videos, demos, communities, and social content.",
+                    "image": "assets/client.webp"
+                },
+                {
+                    "title": "Course Makers",
+                    "category": "Educators",
+                    "copy": "Include SkelApp in workshops, training programs, and business tutorials.",
+                    "image": "assets/local.jpeg"
+                },
+                {
+                    "title": "Content Publishers",
+                    "category": "Writers and reviewers",
+                    "copy": "Publish buying guides, comparisons, newsletters, and practical business explainers.",
+                    "image": "assets/sto.jpeg"
+                },
+                {
+                    "title": "Commerce Experts",
+                    "category": "Consultants",
+                    "copy": "Recommend SkelApp during advisory work, implementation support, or digital transformation projects.",
+                    "image": "assets/rw.jpeg"
+                },
+                {
+                    "title": "Hardware Vendors",
+                    "category": "Retail tech sellers",
+                    "copy": "Pair SkelApp with devices, setup services, and the retail hardware you already provide.",
+                    "image": "assets/IMG_0624.jpg"
+                }
+            ]
+        },
+        "cta": {
+            "title": "Become a SkelApp affiliate partner",
+            "copy": "Help retailers in your network sell better, stay on top of inventory, and run with more confidence. We will help you get set up and ready to refer.",
+            "button_label": "Get started"
+        }
+    }
+}

@@ -1,0 +1,154 @@
+{
+    "slug": "pos",
+    "title": "Point of Sale",
+    "content": {
+        "meta": {
+            "title": "Point of Sale – SkelApp",
+            "description": "SkelApp Point of Sale — fast checkout, every payment, works offline. The POS built for how Tanzania sells."
+        },
+        "hero": {
+            "eyebrow": "Point of sale",
+            "title": "A point of sale made for",
+            "title_accent": "how Tanzania sells",
+            "subtitle": "Ring up any sale in seconds, take any payment, and keep selling even when the power or network drops — all from one simple app your team learns in minutes.",
+            "image": "assets/HeroImage.webp",
+            "primary_label": "Get a demo",
+            "primary_url": "/contact",
+            "secondary_label": "See pricing",
+            "secondary_url": "/pricing"
+        },
+        "detail": {
+            "title": "Everything a busy counter needs",
+            "subtitle": "One app for checkout, payments and receipts — fast, reliable and built for real trading days."
+        },
+        "features": [
+            {
+                "name": "Lightning-fast checkout",
+                "body": "Ring up any sale in seconds on a screen your team learns in minutes. Search, scan or tap a favourite, take payment and move on — so queues keep moving even at your busiest.",
+                "image": "assets/CHECKOUTPOS.png"
+            },
+            {
+                "name": "Takes every payment",
+                "body": "Cash, M-Pesa, Airtel Money, Tigo Pesa and cards — all from one screen and reconciled automatically, so the day balances at closing without anyone keying figures by hand.",
+                "image": "assets/card.webp"
+            },
+            {
+                "name": "Keeps selling offline",
+                "body": "Power cut or weak network? SkelApp keeps ringing up sales on the device and syncs every order, payment and stock change the moment you reconnect — you never lose a sale.",
+                "image": "assets/CASHFLOW.png"
+            },
+            {
+                "name": "Receipts your way",
+                "body": "Print a crisp thermal receipt or send it by SMS or email in a tap — every customer leaves with a clear record, however they prefer to receive it.",
+                "image": "assets/Pos System 04.png"
+            }
+        ],
+        "ecosystem": {
+            "title": "Connected tools.",
+            "title_accent": "Better profit.",
+            "subtitle": "Every part of SkelApp works together, so your sales, stock and customers stay in sync across the whole business.",
+            "features": [
+                {
+                    "name": "Point of sale",
+                    "body": "A fast, friendly till that is easy to learn and keeps selling through power cuts and weak networks. Ring up any sale, take any payment and print a receipt in seconds — the dependable core every SkelApp device is built around.",
+                    "image": "assets/CHECKOUTPOS.png",
+                    "link_label": "Explore SkelApp POS",
+                    "link_url": "#"
+                },
+                {
+                    "name": "Hardware",
+                    "body": "Terminals, registers and tablets that all run the same SkelApp — pick the device that fits your counter today and add more as you grow. Reliable, locally supported and ready to sell straight out of the box.",
+                    "image": "assets/PosSystemRegister.webp",
+                    "link_label": "Explore hardware",
+                    "link_url": "#"
+                },
+                {
+                    "name": "Integration",
+                    "body": "Connect the tools you already use — mobile money, cards, bank settlement and accounting — so payments and records flow into one place automatically, with no double entry at the end of the day.",
+                    "image": "assets/card.webp",
+                    "link_label": "Explore integrations",
+                    "link_url": "#"
+                },
+                {
+                    "name": "Features",
+                    "body": "Inventory, customers and reports all work together in one app. Track stock across branches, keep your regulars coming back and see exactly where your business stands every single morning.",
+                    "image": "assets/DASHBOARD.png",
+                    "link_label": "Explore features",
+                    "link_url": "#"
+                }
+            ]
+        },
+        "testimonial": {
+            "quote_lead": "Setup was painless and the team was up and selling the same afternoon. The hardware just works — even when the power goes, with",
+            "quote_brand": "SkelApp.",
+            "support": "Amina runs three branches across Dar es Salaam. Reliable hardware and SkelApp running offline mean her counters never stop — every sale, stock count and payment tracked in one place.",
+            "author": "Amina Hassan",
+            "role": "Owner, Bloom Retail · Tanzania",
+            "image": "assets/client.webp",
+            "primary_label": "Start for free",
+            "secondary_label": "Book a demo",
+            "stats": [
+                {
+                    "value": "5 min",
+                    "label": "To set up"
+                },
+                {
+                    "value": "3 shops",
+                    "label": "One dashboard"
+                },
+                {
+                    "value": "100%",
+                    "label": "Offline-ready"
+                }
+            ]
+        },
+        "pricing": {
+            "title": "Run your whole shop for",
+            "title_accent": "nearly nothing a day",
+            "link_label": "Explore all pricing plans",
+            "card_name": "SkelApp",
+            "card_name_accent": "POS",
+            "price_was": "1,000 TZS",
+            "price_was_suffix": "/day",
+            "price_now": "500 TZS",
+            "price_now_suffix": "/day",
+            "note": "Karibu sifuri kwa siku — about 500 TZS a day runs your entire shop, less than a cup of chai."
+        },
+        "faq": {
+            "title": "Questions,",
+            "title_accent": "answered.",
+            "items": [
+                {
+                    "q": "Does the hardware work offline?",
+                    "a": "Yes. Every SkelApp device keeps selling during power cuts or weak network — sales, stock and payments sync automatically the moment you reconnect."
+                },
+                {
+                    "q": "How long does setup take?",
+                    "a": "Most shops are live the same day. Unbox it, sign in to SkelApp, add your products and prices, and start selling — usually in under five minutes."
+                },
+                {
+                    "q": "Which payments can it take?",
+                    "a": "Cash, M-Pesa, Airtel Money, Tigo Pesa, cards (tap, chip and PIN) and bank transfer — all recorded automatically and printed on one receipt."
+                },
+                {
+                    "q": "Can I manage more than one branch?",
+                    "a": "Absolutely. Run every branch from one dashboard — monitor sales and stock by location and give each shop its own logins and permissions."
+                },
+                {
+                    "q": "Is there a warranty and local support?",
+                    "a": "Every device ships with a one-year warranty. Our team in Dar es Salaam supports you on WhatsApp, by phone and on-site when you need it."
+                }
+            ],
+            "subtitle": "POS FAQ",
+            "read_more_label": "Read more"
+        },
+        "cta": {
+            "title": "Ready to ring up your",
+            "title_accent": "first sale?",
+            "link_label": "See the hardware",
+            "note": "Download SkelApp and start selling today — add hardware whenever you’re ready.",
+            "primary_label": "Start for free",
+            "primary_url": "/contact"
+        }
+    }
+}

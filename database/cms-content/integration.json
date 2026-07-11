@@ -1,0 +1,65 @@
+{
+    "slug": "integration",
+    "title": "Integration Detail",
+    "content": {
+        "meta": {
+            "title_suffix": "integration - SkelApp",
+            "description_fallback": "SkelApp integration details."
+        },
+        "hero": {
+            "kicker_suffix": "integration",
+            "primary_label": "Talk to an expert",
+            "secondary_label": "Visit website"
+        },
+        "features": {
+            "kicker": "Key features",
+            "title_prefix": "What you can expect from"
+        },
+        "interest": {
+            "kicker": "Coming soon",
+            "title_prefix": "Join the waitlist for",
+            "copy": "Share your details and we’ll let you know as soon as this integration becomes available for your team.",
+            "avatars": [
+                {
+                    "src": "assets/client.png",
+                    "alt": "SkelApp merchant profile 1",
+                    "position": "50% 26%"
+                },
+                {
+                    "src": "assets/pix.jpeg",
+                    "alt": "SkelApp merchant profile 2",
+                    "position": "48% 24%"
+                },
+                {
+                    "src": "assets/attendants.png",
+                    "alt": "SkelApp merchant profile 3",
+                    "position": "50% 22%"
+                },
+                {
+                    "src": "assets/sto.jpeg",
+                    "alt": "SkelApp merchant profile 4",
+                    "position": "58% 18%"
+                },
+                {
+                    "src": "assets/local.jpeg",
+                    "alt": "SkelApp merchant profile 5",
+                    "position": "72% 20%"
+                }
+            ]
+        },
+        "form": {
+            "full_name_label": "Full name",
+            "full_name_placeholder": "Provide your full name",
+            "email_label": "Email",
+            "email_placeholder": "Provide your email address",
+            "submit_label": "Join waitlist",
+            "note_prefix": "We’ll only use these details to contact you about"
+        },
+        "faq": {
+            "title_suffix": "questions",
+            "subtitle_suffix": "FAQ",
+            "read_more_label": "Read more"
+        },
+        "back_label": "Back to integration page"
+    }
+}
