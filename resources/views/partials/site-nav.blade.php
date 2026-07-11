@@ -22,14 +22,13 @@
     'tech-shop'     => 'Tech Shop',
   ];
 @endphp
-{{-- Theme: default to the visitor's device setting (dark unless they prefer light),
-     with an explicit saved choice always winning. Applied early to avoid a flash. --}}
+{{-- Theme: light is the default for everyone. Dark mode applies only when the
+     visitor has explicitly chosen it via the toggle (a saved preference).
+     Applied early to avoid a flash of the wrong theme. --}}
 <script>
   (function () {
     try {
-      var saved = localStorage.getItem('skel-theme');
-      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (saved === 'dark' || (saved !== 'light' && prefersDark)) {
+      if (localStorage.getItem('skel-theme') === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
       }
     } catch (e) {}
@@ -80,7 +79,9 @@
   @include('partials.nav-mega', ['megaBusiness' => $megaBusiness])
 
   <div class="nav-actions">
-    <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode" title="Toggle dark mode">{!! $themeToggleSvg !!}</button>
+    {{-- Theme toggle hidden for now — the site is locked to light mode.
+         Restore dark-mode switching by uncommenting the button below (and its mobile twin). --}}
+    {{-- <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode" title="Toggle dark mode">{!! $themeToggleSvg !!}</button> --}}
     <a href="{{ route('contact.show') }}" class="btn-login" @if (request()->routeIs('contact.show')) aria-current="page" @endif>
       {{ content('global.nav.contact_label', 'Contact Us') }}
     </a>
@@ -114,7 +115,8 @@
       @endforeach
     </ul>
     <div class="nav-actions mobile-only">
-      <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode">{!! $themeToggleSvg !!}<span class="theme-toggle-label">Dark mode</span></button>
+      {{-- Theme toggle hidden for now — the site is locked to light mode (see desktop note above). --}}
+      {{-- <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode">{!! $themeToggleSvg !!}<span class="theme-toggle-label">Dark mode</span></button> --}}
       <a href="{{ route('contact.show') }}" class="btn-login" @if (request()->routeIs('contact.show')) aria-current="page" @endif>
         {{ content('global.nav.contact_label', 'Contact Us') }}
       </a>
