@@ -360,10 +360,7 @@
         JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
     );
 @endphp
-<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-<link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
-<link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicon-96x96.png') }}" />
-<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}" />
+<link rel="icon" href="{{ asset('favicon.ico') }}" />
 <link rel="canonical" href="{{ $canonical }}" />
 <meta property="og:type" content="{{ $ogType }}" />
 <meta property="og:site_name" content="{{ $siteName }}" />
