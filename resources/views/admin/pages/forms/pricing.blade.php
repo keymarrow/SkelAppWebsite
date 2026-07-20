@@ -17,12 +17,6 @@
   @include('admin.pages.fields.text', ['name' => 'hero.alt_url', 'label' => 'Footer line — link URL'])
 @endcomponent
 
-@component('admin.pages.fields.section', ['title' => 'Billing toggle', 'subtitle' => 'The Monthly / Yearly switch above the tier cards. Yearly is selected by default.'])
-  @include('admin.pages.fields.text', ['name' => 'billing.monthly_label', 'label' => 'Monthly button label'])
-  @include('admin.pages.fields.text', ['name' => 'billing.yearly_label', 'label' => 'Yearly button label'])
-  @include('admin.pages.fields.text', ['name' => 'billing.yearly_hint', 'label' => 'Yearly badge (e.g. "Save 17%") — leave blank to hide'])
-@endcomponent
-
 @component('admin.pages.fields.section', ['title' => 'Pricing tiers', 'subtitle' => 'The three plan cards. Add a row per tier — they render left to right in this order.'])
   @include('admin.pages.fields.text', ['name' => 'tiers_features_heading', 'label' => 'Heading above each feature list (e.g. "What you get")'])
 
@@ -32,11 +26,9 @@
     'fields' => [
       ['key' => 'name', 'label' => 'Tier name'],
       ['key' => 'description', 'label' => 'Short description under the name', 'type' => 'textarea', 'rows' => 2],
-      ['key' => 'price', 'label' => 'Yearly price — shown by default (e.g. "Free", "TZS 12,500", "Custom pricing")'],
-      ['key' => 'price_monthly', 'label' => 'Monthly price — leave blank to reuse the yearly price (Free / Custom)'],
+      ['key' => 'price', 'label' => 'Price (e.g. "Free", "TZS 15,000", "Custom pricing")'],
       ['key' => 'price_suffix', 'label' => 'Price suffix (e.g. "/month") — leave blank to hide'],
-      ['key' => 'price_note', 'label' => 'Yearly small print under the price — leave blank to hide'],
-      ['key' => 'price_note_monthly', 'label' => 'Monthly small print — leave blank to reuse the yearly note'],
+      ['key' => 'price_note', 'label' => 'Small print under the price (e.g. "billed annually") — leave blank to hide'],
       ['key' => 'cta_label', 'label' => 'Button label'],
       ['key' => 'cta_url', 'label' => 'Button URL (blank = Contact page)'],
       ['key' => 'features', 'label' => 'Features — ONE PER LINE', 'type' => 'textarea', 'rows' => 10],

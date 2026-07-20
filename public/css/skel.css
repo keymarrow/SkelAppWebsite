@@ -8967,14 +8967,6 @@ nav {
   align-items: center;
 }
 .pricing-hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
-/* Scroll-driven zoom — mirrors the home hero (.hero): the banner scales in/out
-   as it scrolls, driven by the pricing hero script. Scoped to .pricing-page so
-   the shared why / retailers / integrations heroes are left untouched. */
-.pricing-page .pricing-hero-banner {
-  transform-origin: center top;
-  will-change: transform;
-  transition: transform 0.15s ease-out;
-}
 .pricing-hero-banner::before {
   content: '';
   position: absolute; inset: 0; z-index: 1;
@@ -9132,63 +9124,9 @@ nav {
   }
 }
 
-/* ── Billing toggle (monthly / yearly) ── */
-.pricing-billing {
-  display: inline-flex;
-  align-items: stretch;
-  gap: 4px;
-  margin: 0 auto clamp(24px, 3vw, 38px);
-  padding: 5px;
-  border-radius: 999px;
-  border: 1px solid rgba(31, 48, 40, 0.10);
-  background: rgba(255, 255, 255, 0.86);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 26px rgba(18, 28, 23, 0.06);
-}
-/* The section is a block, so centre the inline-flex pill. */
+/* The plan section is a block; the grid resets to left-aligned card text. */
 .pricing-plan-section { text-align: center; }
 .pricing-tier-grid { text-align: left; }
-
-.pricing-billing-opt {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0 clamp(16px, 1.6vw, 24px);
-  height: 42px;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
-  color: #5b6d63;
-  font-family: 'Satoshi', sans-serif;
-  font-size: 14.5px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-.pricing-billing-opt:hover { color: #101316; }
-.pricing-billing-opt.is-active {
-  background: var(--green);
-  color: #ffffff;
-}
-.pricing-billing-hint {
-  padding: 3px 8px;
-  border-radius: 999px;
-  background: rgba(74, 173, 119, 0.14);
-  color: var(--green-dark);
-  font-size: 11.5px;
-  font-weight: 700;
-}
-.pricing-billing-opt.is-active .pricing-billing-hint {
-  background: rgba(255, 255, 255, 0.22);
-  color: #ffffff;
-}
-
-/* Only one of the two price/note spans is shown, driven by the grid's mode. */
-.pricing-tier-grid[data-billing="yearly"] [data-billing-show="monthly"],
-.pricing-tier-grid[data-billing="monthly"] [data-billing-show="yearly"] {
-  display: none;
-}
 
 /* ── Three-tier plan cards ───────────────────────────────────────────────
    Replaces the old features-checklist + billing-radio pair. One equal-height
@@ -9214,7 +9152,6 @@ nav {
 
 .pricing-tier--featured {
   border-color: rgba(74, 173, 119, 0.55);
-  box-shadow: 0 22px 54px -26px rgba(74, 173, 119, 0.45);
 }
 
 .pricing-tier-badge {

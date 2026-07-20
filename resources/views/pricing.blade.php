@@ -2,9 +2,6 @@
   $heroBenefits = content_list('pricing.hero.benefits', []);
   $tiers = content_list('pricing.tiers', []);
   $featuresHeading = content_text('pricing.tiers_features_heading', 'What you get');
-  $monthlyLabel = content_text('pricing.billing.monthly_label', 'Monthly');
-  $yearlyLabel = content_text('pricing.billing.yearly_label', 'Yearly');
-  $yearlyHint = content_text('pricing.billing.yearly_hint', 'Save 17%');
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -45,41 +42,10 @@
           </p>
         </div>
       </div>
-      <script>
-        // Scroll-driven zoom: match the home hero — the banner scales as it
-        // scrolls away and scales back in toward the top. Respects reduced motion.
-        (function () {
-          var banner = document.querySelector('.pricing-hero-banner');
-          if (!banner) return;
-          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-          var ticking = false;
-          var update = function () {
-            var h = banner.offsetHeight || 1;
-            var progress = Math.min(Math.max(window.scrollY / h, 0), 1);
-            banner.style.transform = 'scale(' + (1 - progress * 0.18).toFixed(4) + ')';
-            ticking = false;
-          };
-          var onScroll = function () {
-            if (!ticking) { window.requestAnimationFrame(update); ticking = true; }
-          };
-          update();
-          window.addEventListener('scroll', onScroll, { passive: true });
-        })();
-      </script>
     </section>
 
     <section class="pricing-plan-section" id="pricing-plans" aria-label="Pricing plans">
-      {{-- Billing switch. Yearly is the default; without JS the yearly prices
-           still render, since the mode lives on the grid's data-billing. --}}
-      <div class="pricing-billing" data-billing-group role="group" aria-label="Billing period">
-        <button type="button" class="pricing-billing-opt" data-billing-opt="monthly" aria-pressed="false">{{ $monthlyLabel }}</button>
-        <button type="button" class="pricing-billing-opt is-active" data-billing-opt="yearly" aria-pressed="true">
-          {{ $yearlyLabel }}
-          @if ($yearlyHint !== '')<span class="pricing-billing-hint">{{ $yearlyHint }}</span>@endif
-        </button>
-      </div>
-
-      <div class="pricing-tier-grid" data-billing="yearly">
+      <div class="pricing-tier-grid">
         @foreach ($tiers as $tier)
           @php
             // Features are stored one-per-line in a textarea (the CMS repeater
@@ -89,12 +55,8 @@
               fn ($line) => $line !== ''
             ));
             $isFeatured = !empty($tier['is_featured']);
-            // Tiers with no separate monthly figure (Free, Custom pricing) reuse
-            // the yearly value, so the toggle simply doesn't change them.
-            $priceYearly = $tier['price'] ?? '';
-            $priceMonthly = ($tier['price_monthly'] ?? '') ?: $priceYearly;
-            $noteYearly = $tier['price_note'] ?? '';
-            $noteMonthly = ($tier['price_note_monthly'] ?? '') ?: $noteYearly;
+            $price = $tier['price'] ?? '';
+            $priceNote = $tier['price_note'] ?? '';
           @endphp
           <article class="pricing-tier {{ $isFeatured ? 'pricing-tier--featured' : '' }}">
             @if (!empty($tier['badge']))
@@ -110,18 +72,14 @@
             <hr class="pricing-tier-rule">
 
             <p class="pricing-tier-price">
-              <span class="pricing-tier-amount">
-                <span data-billing-show="yearly">{{ $priceYearly }}</span><span data-billing-show="monthly">{{ $priceMonthly }}</span>
-              </span>
+              <span class="pricing-tier-amount">{{ $price }}</span>
               @if (!empty($tier['price_suffix']))
                 <span class="pricing-tier-suffix">{{ $tier['price_suffix'] }}</span>
               @endif
             </p>
             {{-- Always rendered, even when blank: it reserves its line so the CTAs
                  stay on one baseline across all three cards. --}}
-            <p class="pricing-tier-note">
-              <span data-billing-show="yearly">{{ $noteYearly }}</span><span data-billing-show="monthly">{{ $noteMonthly }}</span>
-            </p>
+            <p class="pricing-tier-note">{{ $priceNote }}</p>
 
             <a href="{{ ($tier['cta_url'] ?? '') ?: route('contact.show') }}" class="pricing-tier-cta">{{ $tier['cta_label'] ?? 'Get started' }}</a>
 
@@ -180,28 +138,6 @@
   </main>
 
   @include('partials.site-footer')
-
-  <script>
-    (function () {
-      var group = document.querySelector('[data-billing-group]');
-      var grid = document.querySelector('[data-billing]');
-      if (!group || !grid) return;
-
-      var opts = Array.prototype.slice.call(group.querySelectorAll('[data-billing-opt]'));
-
-      opts.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          // CSS shows/hides the two price spans off this one attribute.
-          grid.setAttribute('data-billing', btn.dataset.billingOpt);
-          opts.forEach(function (other) {
-            var on = other === btn;
-            other.classList.toggle('is-active', on);
-            other.setAttribute('aria-pressed', on ? 'true' : 'false');
-          });
-        });
-      });
-    })();
-  </script>
 
   <script src="{{ asset('js/skel.js') }}?v={{ @filemtime(public_path('js/skel.js')) }}" defer></script>
 </body>

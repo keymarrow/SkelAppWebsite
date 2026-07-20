@@ -1135,7 +1135,7 @@ class PagesSeeder extends Seeder
         return [
             'meta' => [
                 'title' => 'Pricing – SkelApp',
-                'description' => 'SkelApp pricing — start free, or TZS 12,500 per location per month billed annually. Every plan sells offline. No hidden costs.',
+                'description' => 'SkelApp pricing — start free, or TZS 15,000 per month billed annually. Every plan sells offline. No hidden costs.',
             ],
             'hero' => [
                 'image' => 'assets/HeroImage.webp',
@@ -1185,10 +1185,10 @@ class PagesSeeder extends Seeder
                 [
                     'name' => 'BiasharaPlus',
                     'description' => 'Key features for businesses that are getting started',
-                    'price' => 'TZS 12,500',
+                    'price' => 'TZS 15,000',
                     'price_monthly' => 'TZS 15,000',
                     'price_suffix' => '/month',
-                    'price_note' => '/location/month billed annually',
+                    'price_note' => 'billed annually',
                     'price_note_monthly' => '/location/month billed monthly',
                     'cta_label' => 'Start 30 Days Free',
                     'cta_url' => '',
