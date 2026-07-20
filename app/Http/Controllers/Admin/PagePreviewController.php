@@ -35,10 +35,14 @@ class PagePreviewController extends Controller
         $page = Page::query()->where('slug', $slug)->firstOrFail();
         $content = $page->effectiveDraft();
 
-        foreach (CmsRequestPayload::content($request) as $path => $value) {
+        $payload = CmsRequestPayload::content($request);
+        foreach ($payload as $path => $value) {
             $value = $this->normaliseValue($value);
             Arr::set($content, (string) $path, $value);
         }
+
+        // Drop repeater rows removed in the form so the live preview mirrors it.
+        $content = CmsRequestPayload::pruneRemovedRepeaterRows($content, array_keys($payload));
 
         foreach (CmsRequestPayload::removeImagePaths($request) as $path) {
             Arr::forget($content, (string) $path);

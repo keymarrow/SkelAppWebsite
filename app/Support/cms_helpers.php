@@ -21,6 +21,77 @@ if (! function_exists('cms_preview_content')) {
     }
 }
 
+if (! function_exists('cms_url')) {
+    /**
+     * Resolve CMS-managed URLs, including auth shortcuts editors can type as
+     * short relative paths from any URL field.
+     */
+    function cms_url(mixed $value, ?string $fallback = null): string
+    {
+        $url = is_string($value) ? trim($value) : '';
+
+        if ($url === '') {
+            $url = $fallback ?? '';
+        }
+
+        if ($url === '') {
+            return '';
+        }
+
+        if (preg_match('~^/login(?P<suffix>(?:[/?#].*)?)$~i', $url, $matches)) {
+            return 'https://web.skelapp.tz/login'.($matches['suffix'] ?? '');
+        }
+
+        if (preg_match('~^/signup(?P<suffix>(?:[/?#].*)?)$~i', $url, $matches)) {
+            return 'https://web.skelapp.tz/register'.($matches['suffix'] ?? '');
+        }
+
+        return $url;
+    }
+}
+
+if (! function_exists('cms_key_uses_url_rules')) {
+    function cms_key_uses_url_rules(string $path): bool
+    {
+        if ($path === '') {
+            return false;
+        }
+
+        $leaf = strtolower((string) preg_replace('/^.*\./', '', $path));
+
+        return $leaf === 'url' || str_ends_with($leaf, '_url');
+    }
+}
+
+if (! function_exists('cms_normalize_content_value')) {
+    /**
+     * Recursively normalize CMS values so nested repeater URL fields get the
+     * same handling as standalone URL inputs.
+     */
+    function cms_normalize_content_value(mixed $value, string $path = ''): mixed
+    {
+        if (is_array($value)) {
+            $normalized = [];
+
+            foreach ($value as $key => $item) {
+                $childPath = is_string($key)
+                    ? ($path === '' ? $key : $path.'.'.$key)
+                    : $path;
+
+                $normalized[$key] = cms_normalize_content_value($item, $childPath);
+            }
+
+            return $normalized;
+        }
+
+        if (is_string($value) && cms_key_uses_url_rules($path)) {
+            return cms_url($value);
+        }
+
+        return $value;
+    }
+}
+
 if (! function_exists('content')) {
     /**
      * Get a published content value from the CMS.
@@ -39,10 +110,10 @@ if (! function_exists('content')) {
         $previewContent = cms_preview_content($slug);
 
         if ($previewContent !== null) {
-            return Arr::get($previewContent, $path, $default);
+            return cms_normalize_content_value(Arr::get($previewContent, $path, $default), $path);
         }
 
-        return Page::getValue($slug, $path, $default);
+        return cms_normalize_content_value(Page::getValue($slug, $path, $default), $path);
     }
 }
 

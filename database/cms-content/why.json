@@ -8,7 +8,7 @@
         },
         "hero": {
             "eyebrow": "About SkelApp",
-            "title": "Transforming Tanzania's small businesses to grow — and communities to thrive.",
+            "title": "About SkelApp<br>and why we built",
             "subtitle": "We put powerful, affordable tools in the hands of every shop — so businesses grow stronger and the people around them thrive.",
             "image": "assets/HeroImage.webp",
             "primary_label": "Talk to us",
@@ -17,8 +17,8 @@
             "secondary_url": "/features"
         },
         "gallery": {
-            "eyebrow": "Why SkelApp?",
-            "title": "We genuinely<br><span class=\"af-accent\">care</span>"
+            "title": "We genuinely<br><span class=\"af-accent\">care</span>",
+            "subtitle": "A look inside the shops we serve — and the people who make every day worth showing up for."
         },
         "people": {
             "title": "People who\nshow up",

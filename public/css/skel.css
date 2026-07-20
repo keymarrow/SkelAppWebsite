@@ -8944,9 +8944,13 @@ nav {
 }
 
 .pricing-page {
+  /* Exposed as variables so the full-bleed hero can cancel this padding exactly
+     at every breakpoint instead of hardcoding a matching negative margin. */
+  --pp-pad-top: 110px;
+  --pp-pad-x: 40px;
   position: relative;
   overflow: visible;
-  padding: 110px 40px 0;
+  padding: var(--pp-pad-top) var(--pp-pad-x) 0;
   background:
     radial-gradient(circle at 50% -10%, rgba(74, 173, 119, 0.08), transparent 38%),
     linear-gradient(180deg, #f7fbf9 0%, #ffffff 28%);
@@ -8963,6 +8967,14 @@ nav {
   align-items: center;
 }
 .pricing-hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+/* Scroll-driven zoom — mirrors the home hero (.hero): the banner scales in/out
+   as it scrolls, driven by the pricing hero script. Scoped to .pricing-page so
+   the shared why / retailers / integrations heroes are left untouched. */
+.pricing-page .pricing-hero-banner {
+  transform-origin: center top;
+  will-change: transform;
+  transition: transform 0.15s ease-out;
+}
 .pricing-hero-banner::before {
   content: '';
   position: absolute; inset: 0; z-index: 1;
@@ -9010,6 +9022,53 @@ nav {
   }
   .pricing-hero-content { max-width: none; padding: 150px 24px 34px; }
   .pricing-hero-actions .pricing-hero-btn--solid { width: 100%; }
+}
+
+/* ── Pricing hero → benefit row + footer link ─────────────────────────────
+   New classes only, so nothing here collides with the shared .pricing-hero-*
+   rules used by the retailers / why / integrations heroes. The pricing hero's
+   centred layout is set further down, in the `.pricing-page` block that owns
+   this page's hero (searching "pricing-page .pricing-hero-content" finds it). ── */
+.pricing-hero-benefits {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(14px, 2.2vw, 32px);
+  list-style: none;
+  margin: clamp(22px, 2.6vw, 34px) 0 0;
+  padding: 0;
+}
+.pricing-hero-benefit {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.92);
+}
+.pricing-hero-benefit svg { flex: 0 0 auto; color: #5fce92; }
+
+.pricing-hero-altlink {
+  margin: clamp(22px, 2.6vw, 34px) auto 0;
+  padding-top: clamp(18px, 2vw, 26px);
+  border-top: 1px solid rgba(255,255,255,0.18);
+  max-width: 640px;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14.5px;
+  color: rgba(255,255,255,0.82);
+}
+.pricing-hero-altlink a {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.pricing-hero-altlink a:hover { color: #5fce92; }
+
+@media (max-width: 640px) {
+  .pricing-hero-benefits { gap: 10px 18px; }
+  .pricing-hero-benefit { font-size: 13.5px; }
 }
 
 /* ── Section header ── */
@@ -9073,221 +9132,235 @@ nav {
   }
 }
 
-/* ── Two-box grid ── */
-.pricing-plan-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 24px;
-  align-items: start;
-}
-
-.pricing-box {
-  border-radius: 24px;
-  padding: 32px;
-  border: 1px solid rgba(15, 17, 22, 0.08);
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-  box-shadow: 0 12px 32px rgba(20, 20, 20, 0.04);
-}
-
-.pricing-box--features {
-  background: #f1f8e9;
-  border-color: rgba(74, 173, 119, 0.18);
-}
-
-.pricing-box--plans {
-  background: #ffffff;
-}
-
-.pricing-box-header {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.pricing-box-title {
-  font-family: 'Satoshi', sans-serif;
-  font-size: 1.35rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  color: #0f1116;
-}
-
-.pricing-box-subtitle {
-  font-size: 0.92rem;
-  color: #6b7380;
-}
-
-/* ── Features list ── */
-.pricing-feature-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.pricing-feature-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  padding: 13px 0;
-  border-bottom: 1px solid rgba(74, 173, 119, 0.16);
-  font-size: 0.96rem;
-  font-weight: 500;
-  color: #1a1d23;
-}
-
-.pricing-feature-item:last-child {
-  border-bottom: none;
-}
-
-.pricing-feature-check {
-  flex-shrink: 0;
+/* ── Billing toggle (monthly / yearly) ── */
+.pricing-billing {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--green);
-  color: #ffffff;
-}
-
-/* ── Plan options (radio cards) ── */
-.plan-option-list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.plan-option {
-  position: relative;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 16px;
-  align-items: center;
-  padding: 18px 22px;
-  border-radius: 14px;
-  border: 1.5px solid rgba(15, 17, 22, 0.10);
-  background: #ffffff;
-  cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.plan-option:hover {
-  border-color: rgba(74, 173, 119, 0.5);
-}
-
-.plan-option.is-active {
-  border-color: var(--green);
-  border-width: 2px;
-  padding: 17px 21px;
-  box-shadow: 0 8px 20px rgba(74, 173, 119, 0.12);
-}
-
-.plan-option input[type="radio"] {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  cursor: pointer;
-  margin: 0;
-}
-
-.plan-option-radio {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  border: 1.5px solid #d4d7dc;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: transparent;
-  background: #ffffff;
-  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-  flex-shrink: 0;
-}
-
-.plan-option.is-active .plan-option-radio {
-  background: var(--green);
-  border-color: var(--green);
-  color: #ffffff;
-}
-
-.plan-option-body {
-  display: flex;
-  flex-direction: column;
+  align-items: stretch;
   gap: 4px;
-  min-width: 0;
+  margin: 0 auto clamp(24px, 3vw, 38px);
+  padding: 5px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 48, 40, 0.10);
+  background: rgba(255, 255, 255, 0.86);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 26px rgba(18, 28, 23, 0.06);
 }
+/* The section is a block, so centre the inline-flex pill. */
+.pricing-plan-section { text-align: center; }
+.pricing-tier-grid { text-align: left; }
 
-.plan-option-head {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
+.pricing-billing-opt {
+  display: inline-flex;
+  align-items: center;
   gap: 8px;
-}
-
-.plan-option-label {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #0f1116;
-}
-
-.plan-option-note {
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: #6b7380;
-}
-
-.plan-option.is-active .plan-option-note {
-  color: var(--green);
-}
-
-.plan-option-price {
+  padding: 0 clamp(16px, 1.6vw, 24px);
+  height: 42px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #5b6d63;
   font-family: 'Satoshi', sans-serif;
-  font-size: 1.15rem;
+  font-size: 14.5px;
   font-weight: 700;
-  letter-spacing: -0.01em;
-  color: #0f1116;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.pricing-billing-opt:hover { color: #101316; }
+.pricing-billing-opt.is-active {
+  background: var(--green);
+  color: #ffffff;
+}
+.pricing-billing-hint {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(74, 173, 119, 0.14);
+  color: var(--green-dark);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+.pricing-billing-opt.is-active .pricing-billing-hint {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+/* Only one of the two price/note spans is shown, driven by the grid's mode. */
+.pricing-tier-grid[data-billing="yearly"] [data-billing-show="monthly"],
+.pricing-tier-grid[data-billing="monthly"] [data-billing-show="yearly"] {
+  display: none;
+}
+
+/* ── Three-tier plan cards ───────────────────────────────────────────────
+   Replaces the old features-checklist + billing-radio pair. One equal-height
+   card per tier: name → description → price → CTA → feature list, with a
+   single tier promoted via .pricing-tier--featured. ── */
+.pricing-tier-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 1.6vw, 24px);
+}
+
+/* Same card recipe as the page's other light-mode surfaces. */
+.pricing-tier {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid rgba(31, 48, 40, 0.08);
+  border-radius: 26px;
+  padding: clamp(24px, 2.2vw, 34px);
+  box-shadow: 0 14px 34px rgba(18, 28, 23, 0.04);
+}
+
+.pricing-tier--featured {
+  border-color: rgba(74, 173, 119, 0.55);
+  box-shadow: 0 22px 54px -26px rgba(74, 173, 119, 0.45);
+}
+
+.pricing-tier-badge {
+  position: absolute;
+  top: clamp(16px, 1.6vw, 22px);
+  right: clamp(16px, 1.6vw, 22px);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(74, 173, 119, 0.12);
+  color: var(--green-dark);
+  font-family: 'Satoshi', sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.pricing-tier-badge svg { flex: 0 0 auto; }
+
+.pricing-tier-name {
+  font-family: 'Satoshi', sans-serif;
+  font-size: clamp(22px, 1vw + 17px, 28px);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  color: #1a1a1a;
+  margin: 0;
+}
+/* Only reserve room for the badge on tiers that actually have one — otherwise
+   an unbadged name (e.g. "Build Your Own") wraps for no reason. */
+.pricing-tier:has(.pricing-tier-badge) .pricing-tier-name {
+  padding-right: 104px;
+}
+
+.pricing-tier-desc {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #5e6066;
+  margin: 10px 0 0;
+  min-height: 3em; /* holds the price rule on one line across all three cards */
+}
+
+.pricing-tier-rule {
+  border: 0;
+  border-top: 1px solid rgba(20, 40, 30, 0.10);
+  margin: clamp(18px, 2vw, 24px) 0;
+}
+
+.pricing-tier-price {
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
+  margin: 0;
+}
+.pricing-tier-amount {
+  font-family: 'Satoshi', sans-serif;
+  /* Capped so a worded price ("Custom pricing") still fits on one line and
+     doesn't shove that card's CTA out of line with the others. */
+  font-size: clamp(26px, 1.4vw + 16px, 36px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: #1a1a1a;
+  text-wrap: balance;
+}
+.pricing-tier-suffix {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #5e6066;
+}
+.pricing-tier-note {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #7a7d83;
+  margin: 8px 0 0;
+  min-height: 1.45em; /* holds its line when a tier has no note, keeping CTAs level */
 }
 
-.plan-option-price small {
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: #8a8f99;
-}
-
-/* ── CTA ── */
-.plan-cta {
-  margin-top: 6px;
+.pricing-tier-cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
   width: 100%;
-  height: 56px;
-  border-radius: 14px;
+  height: 52px;
+  margin-top: clamp(18px, 2vw, 24px);
+  border-radius: 999px;
   background: var(--green);
-  color: #ffffff;
+  color: #fff;
   font-family: 'Satoshi', sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 700;
   text-decoration: none;
-  box-shadow: 0 12px 30px rgba(74, 173, 119, 0.22);
-  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
-
-.plan-cta:hover {
+.pricing-tier-cta:hover {
   background: var(--green-dark);
   transform: translateY(-2px);
-  box-shadow: 0 16px 38px rgba(74, 173, 119, 0.30);
+  box-shadow: 0 16px 38px -12px rgba(74, 173, 119, 0.55);
+}
+/* Only the promoted tier gets a solid button; the rest stay outlined. */
+.pricing-tier:not(.pricing-tier--featured) .pricing-tier-cta {
+  background: transparent;
+  color: var(--green-dark);
+  border: 1.5px solid rgba(74, 173, 119, 0.45);
+}
+.pricing-tier:not(.pricing-tier--featured) .pricing-tier-cta:hover {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
+}
+
+.pricing-tier-features-heading {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 2px;
+}
+.pricing-tier-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.pricing-tier-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(20, 40, 30, 0.07);
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: #3f4147;
+}
+.pricing-tier-feature:last-child { border-bottom: 0; }
+.pricing-tier-feature svg { flex: 0 0 auto; margin-top: 3px; color: var(--green); }
+
+@media (max-width: 980px) {
+  /* Three cards never fit two-up without orphaning one — go straight to a stack. */
+  .pricing-tier-grid { grid-template-columns: 1fr; max-width: 560px; margin: 0 auto; }
+  .pricing-tier-desc { min-height: 0; }
 }
 
 /* ── Get Started block ── */
@@ -9351,7 +9424,8 @@ nav {
 /* ── Responsive ── */
 @media (max-width: 1024px) {
   .pricing-page {
-    padding: 132px 28px 0;
+    --pp-pad-top: 132px;
+    --pp-pad-x: 28px;
   }
 
   .pricing-plan-section {
@@ -9364,15 +9438,6 @@ nav {
 
   .pricing-plan-title {
     margin-bottom: 20px;
-  }
-
-  .pricing-plan-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .pricing-box {
-    padding: 28px 24px;
   }
 
   .getstarted-shell {
@@ -9408,7 +9473,8 @@ nav {
 
 @media (max-width: 640px) {
   .pricing-page {
-    padding: 112px 20px 0;
+    --pp-pad-top: 112px;
+    --pp-pad-x: 20px;
   }
 
   .pricing-plan-section {
@@ -9431,43 +9497,6 @@ nav {
   .pricing-plan-subtitle {
     font-size: 0.95rem;
     line-height: 1.6;
-  }
-
-  .pricing-plan-grid {
-    gap: 14px;
-  }
-
-  .pricing-box {
-    padding: 22px 18px;
-    border-radius: 18px;
-    gap: 18px;
-  }
-
-  .pricing-box-title {
-    font-size: 1.2rem;
-  }
-
-  .pricing-feature-item {
-    padding: 11px 0;
-    font-size: 0.92rem;
-  }
-
-  .plan-option {
-    padding: 14px 16px;
-    gap: 12px;
-  }
-
-  .plan-option.is-active {
-    padding: 13px 15px;
-  }
-
-  .plan-option-price {
-    font-size: 1rem;
-  }
-
-  .plan-cta {
-    height: 52px;
-    font-size: 0.95rem;
   }
 
   .getstarted-shell {
@@ -9497,6 +9526,36 @@ nav {
    ===================================================================== */
 html:not([data-theme="dark"]) .pricing-page {
   background: #ffffff;
+  isolation: isolate;
+}
+
+html:not([data-theme="dark"]) .pricing-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 560px at 50% 760px, rgba(74, 173, 119, 0.18) 0, rgba(74, 173, 119, 0.10) 40%, rgba(74, 173, 119, 0) 76%),
+    linear-gradient(
+      180deg,
+      #040806 0,
+      #040806 120px,
+      #07110c 240px,
+      #10261b 460px,
+      #29503b 760px,
+      #5d816d 1010px,
+      #dce6df 1260px,
+      #ffffff 1460px
+    );
+}
+
+html:not([data-theme="dark"]) .pricing-page > * {
+  position: relative;
+  z-index: 1;
 }
 
 html:not([data-theme="dark"]) .pricing-hero {
@@ -9593,6 +9652,56 @@ html:not([data-theme="dark"]) .pricing-plan-section {
   padding: 8px 0 108px;
 }
 
+/* Carries the hero photo's fade on down behind the tier cards as a green wash,
+   clearing exactly at the bottom of this section — so the photo dissolves into
+   the page's green tint rather than stopping against flat white. Anchored to the
+   section (not a fixed height) so it always ends where the cards do. */
+html:not([data-theme="dark"]) .pricing-page .pricing-plan-section {
+  position: relative;
+  z-index: 1;
+  /* Higher specificity than the stale `.pricing-plan-section` block below, so it
+     wins the width back to 1240 (that block regressed it to 1080). */
+  max-width: 1240px;
+  margin-top: calc(-1 * clamp(96px, 10vw, 144px));
+  padding-top: clamp(28px, 3vw, 40px);
+}
+/* Full-bleed backdrop that continues the hero's black down through the tier
+   cards: black (top, meeting the hero) → SkelApp green (behind the cards) →
+   transparent, revealing the white page exactly where the section ends. */
+html:not([data-theme="dark"]) .pricing-page .pricing-plan-section::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  width: 100vw;
+  max-width: 100vw;
+  transform: translateX(-50%);
+  top: 0;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  /* Starts TRANSPARENT so it never cuts a hard edge across the still-fading
+     photo — the hero's black shows through here and the photo dissolves into it.
+     It then ramps to opaque black (covering the white page below the hero) and
+     on through SkelApp's own greens to transparent at the section's end.
+     Colours are the brand tokens: #0b120e (near-black), #0d3b23 (deep brand
+     green, as used in the testimonial), --green-dark and --green. */
+  /* Reaches full opacity by 1% — the section is much taller on mobile (stacked
+     cards), so a larger % would still be semi-transparent at the banner bottom
+     and let the white page glow through as a band. 1% clears it on every
+     viewport because the photo is already fully faded above the section top. */
+  background: linear-gradient(
+    to bottom,
+    rgba(11, 18, 14, 0) 0%,
+    #0b120e 1%,
+    #0b120e 7%,
+    #0d3b23 18%,
+    var(--green-dark) 40%,
+    rgba(74, 173, 119, 0.40) 60%,
+    rgba(74, 173, 119, 0.12) 82%,
+    rgba(74, 173, 119, 0) 100%
+  );
+}
+
 html:not([data-theme="dark"]) .pricing-plan-section .hwp-section-header {
   max-width: 760px;
   margin: 0 0 clamp(34px, 5vw, 52px);
@@ -9624,158 +9733,17 @@ html:not([data-theme="dark"]) .pricing-plan-section .hwp-section-subtitle {
   color: #5b6d63;
 }
 
-html:not([data-theme="dark"]) .pricing-plan-grid {
-  grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
-  gap: 28px;
-  align-items: start;
-}
-
-html:not([data-theme="dark"]) .pricing-box {
-  position: relative;
-  overflow: hidden;
-  padding: 34px;
-  border-radius: 30px;
-  border: 1px solid rgba(31, 48, 40, 0.08);
-  background: #ffffff;
-  box-shadow: 0 14px 34px rgba(18, 28, 23, 0.04);
-}
-
-html:not([data-theme="dark"]) .pricing-box::before {
-  content: '';
-  position: absolute;
-  right: -48px;
-  bottom: -56px;
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(74, 173, 119, 0.05) 0%, rgba(74, 173, 119, 0) 72%);
-  pointer-events: none;
-}
-
-html:not([data-theme="dark"]) .pricing-box--features {
-  background: #ffffff;
-  border-color: rgba(74, 173, 119, 0.10);
-}
-
-html:not([data-theme="dark"]) .pricing-box--plans {
-  position: sticky;
-  top: 104px;
-  background: #ffffff;
-}
-
-html:not([data-theme="dark"]) .pricing-box-header {
-  position: relative;
-  z-index: 1;
-  gap: 8px;
-}
-
-html:not([data-theme="dark"]) .pricing-box-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-html:not([data-theme="dark"]) .pricing-box-subtitle {
-  max-width: 34ch;
-  font-size: 0.98rem;
-  line-height: 1.6;
-  color: #69796f;
-}
-
-html:not([data-theme="dark"]) .pricing-feature-list {
-  gap: 14px;
-}
-
-html:not([data-theme="dark"]) .pricing-feature-item {
-  padding: 16px 18px;
-  border: 1px solid rgba(74, 173, 119, 0.10);
-  border-radius: 18px;
-  background: #ffffff;
-  box-shadow: 0 4px 12px rgba(18, 28, 23, 0.025);
-}
-
-html:not([data-theme="dark"]) .pricing-feature-label {
-  max-width: 32ch;
-  font-size: 0.98rem;
-  line-height: 1.5;
-}
-
-html:not([data-theme="dark"]) .pricing-feature-check {
-  width: 28px;
-  height: 28px;
-  box-shadow: 0 8px 14px rgba(74, 173, 119, 0.12);
-}
-
-html:not([data-theme="dark"]) .plan-option-list {
-  gap: 16px;
-}
-
-html:not([data-theme="dark"]) .plan-option {
-  padding: 20px;
-  border-radius: 18px;
-  border: 1px solid rgba(21, 27, 24, 0.08);
-  background: #ffffff;
-  box-shadow: 0 6px 16px rgba(18, 28, 23, 0.022);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, background 0.2s ease;
-}
-
-html:not([data-theme="dark"]) .plan-option:hover {
-  transform: translateY(-1px);
-  border-color: rgba(74, 173, 119, 0.42);
-  box-shadow: 0 12px 22px rgba(18, 28, 23, 0.04);
-}
-
-html:not([data-theme="dark"]) .plan-option.is-active {
-  padding: 20px;
-  border-width: 1px;
-  border-color: rgba(74, 173, 119, 0.36);
-  background: #ffffff;
-  box-shadow: 0 14px 28px rgba(74, 173, 119, 0.10);
-}
-
-html:not([data-theme="dark"]) .plan-option-radio {
-  width: 24px;
-  height: 24px;
-  border-color: #cad5ce;
-}
-
-html:not([data-theme="dark"]) .plan-option-label {
-  font-size: 1.05rem;
-}
-
-html:not([data-theme="dark"]) .plan-option-note {
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: rgba(74, 173, 119, 0.08);
-  color: #2f7d52;
-}
-
-html:not([data-theme="dark"]) .plan-option-price {
-  font-size: 1.35rem;
-}
-
-html:not([data-theme="dark"]) .plan-option-price small {
-  font-size: 0.82rem;
-}
-
-html:not([data-theme="dark"]) .plan-cta {
-  height: 60px;
-  border-radius: 18px;
-  background: linear-gradient(135deg, #57ba84 0%, #3e9068 100%);
-  font-weight: 700;
-  box-shadow: 0 14px 28px rgba(74, 173, 119, 0.18);
-}
-
-html:not([data-theme="dark"]) .plan-cta:hover {
-  box-shadow: 0 18px 34px rgba(74, 173, 119, 0.22);
-}
-
 html:not([data-theme="dark"]) .pricing-getstarted .hwp-hero-panel {
-  border: 1px solid rgba(74, 173, 119, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.72);
   background:
-    radial-gradient(78% 92% at 88% 24%, rgba(74, 173, 119, 0.08) 0%, rgba(74, 173, 119, 0) 60%),
-    #ffffff;
-  box-shadow: 0 18px 42px rgba(18, 28, 23, 0.04);
+    radial-gradient(118% 128% at 92% 12%, rgba(95, 206, 146, 0.22) 0%, rgba(95, 206, 146, 0) 54%),
+    radial-gradient(92% 110% at 10% 100%, rgba(255, 255, 255, 0.52) 0%, rgba(255, 255, 255, 0) 42%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.68), rgba(244, 246, 248, 0.50));
+  -webkit-backdrop-filter: blur(22px) saturate(155%);
+  backdrop-filter: blur(22px) saturate(155%);
+  box-shadow:
+    0 24px 56px rgba(18, 28, 23, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
 }
 
 @media (max-width: 1024px) {
@@ -9788,21 +9756,12 @@ html:not([data-theme="dark"]) .pricing-getstarted .hwp-hero-panel {
     max-width: none;
     font-size: clamp(38px, 7vw, 62px);
   }
-
-  html:not([data-theme="dark"]) .pricing-plan-grid {
-    grid-template-columns: 1fr;
-    gap: 22px;
-  }
-
-  html:not([data-theme="dark"]) .pricing-box--plans {
-    position: relative;
-    top: auto;
-  }
 }
 
 @media (max-width: 640px) {
   html:not([data-theme="dark"]) .pricing-page {
-    padding: 104px 20px 0;
+    --pp-pad-top: 104px;
+    --pp-pad-x: 20px;
   }
 
   html:not([data-theme="dark"]) .pricing-hero-banner {
@@ -9850,32 +9809,7 @@ html:not([data-theme="dark"]) .pricing-getstarted .hwp-hero-panel {
 
   html:not([data-theme="dark"]) .pricing-plan-section .hwp-section-subtitle {
     font-size: 15px;
-  }
-
-  html:not([data-theme="dark"]) .pricing-box {
-    padding: 24px 18px;
-    border-radius: 22px;
-  }
-
-  html:not([data-theme="dark"]) .pricing-feature-item,
-  html:not([data-theme="dark"]) .plan-option {
-    padding: 15px 14px;
-    border-radius: 16px;
-  }
-
-  html:not([data-theme="dark"]) .plan-option.is-active {
-    padding: 15px 14px;
-  }
-
-  html:not([data-theme="dark"]) .plan-option-price {
-    font-size: 1.1rem;
-  }
-
-  html:not([data-theme="dark"]) .plan-cta {
-    height: 54px;
-    border-radius: 16px;
-  }
-}
+  }}
 
 /* Keep the original pricing arrangement; light mode below should only affect color. */
 html:not([data-theme="dark"]) .pricing-hero {
@@ -9942,124 +9876,20 @@ html:not([data-theme="dark"]) .pricing-plan-section .hwp-section-subtitle {
   line-height: 1.5;
 }
 
-html:not([data-theme="dark"]) .pricing-plan-grid {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 24px;
-  align-items: start;
-}
-
-html:not([data-theme="dark"]) .pricing-box {
-  position: static;
-  overflow: visible;
-  padding: 32px;
-  border-radius: 24px;
-}
-
-html:not([data-theme="dark"]) .pricing-box--plans {
-  position: static;
-  top: auto;
-}
-
-html:not([data-theme="dark"]) .pricing-box-header {
-  position: static;
-  z-index: auto;
-  gap: 6px;
-}
-
-html:not([data-theme="dark"]) .pricing-box-title {
-  font-size: 1.35rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-
-html:not([data-theme="dark"]) .pricing-box-subtitle {
-  max-width: none;
-  font-size: 0.92rem;
-}
-
-html:not([data-theme="dark"]) .pricing-feature-list {
-  gap: 0;
-}
-
-html:not([data-theme="dark"]) .pricing-feature-item {
-  padding: 13px 0;
-  border: 0;
-  border-bottom: 1px solid rgba(74, 173, 119, 0.16);
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-}
-
-html:not([data-theme="dark"]) .pricing-feature-check {
-  width: 22px;
-  height: 22px;
-}
-
-html:not([data-theme="dark"]) .plan-option-list {
-  gap: 14px;
-}
-
-html:not([data-theme="dark"]) .plan-option {
-  padding: 18px 22px;
-  border-radius: 14px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-html:not([data-theme="dark"]) .plan-option:hover {
-  transform: none;
-}
-
-html:not([data-theme="dark"]) .plan-option.is-active {
-  padding: 17px 21px;
-  border-width: 2px;
-}
-
-html:not([data-theme="dark"]) .plan-option-radio {
-  width: 22px;
-  height: 22px;
-}
-
-html:not([data-theme="dark"]) .plan-option-note {
-  padding: 0;
-  border-radius: 0;
-}
-
-html:not([data-theme="dark"]) .plan-option-price {
-  font-size: 1.15rem;
-}
-
-html:not([data-theme="dark"]) .plan-option-price small {
-  font-size: 0.78rem;
-}
-
-html:not([data-theme="dark"]) .plan-cta {
-  height: 56px;
-  border-radius: 14px;
-  font-weight: 600;
-}
-
 @media (max-width: 1024px) {
   html:not([data-theme="dark"]) .pricing-page {
-    padding: 132px 28px 0;
+    --pp-pad-top: 132px;
+    --pp-pad-x: 28px;
   }
 
   html:not([data-theme="dark"]) .pricing-plan-section {
     padding: 16px 0 72px;
-  }
-
-  html:not([data-theme="dark"]) .pricing-plan-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  html:not([data-theme="dark"]) .pricing-box {
-    padding: 28px 24px;
-  }
-}
+  }}
 
 @media (max-width: 640px) {
   html:not([data-theme="dark"]) .pricing-page {
-    padding: 112px 20px 0;
+    --pp-pad-top: 112px;
+    --pp-pad-x: 20px;
   }
 
   html:not([data-theme="dark"]) .pricing-hero-banner {
@@ -10085,86 +9915,87 @@ html:not([data-theme="dark"]) .plan-cta {
 
   html:not([data-theme="dark"]) .pricing-plan-section {
     padding: 8px 0 48px;
-  }
-
-  html:not([data-theme="dark"]) .pricing-box {
-    padding: 22px 18px;
-    border-radius: 18px;
-  }
-
-  html:not([data-theme="dark"]) .pricing-feature-item {
-    padding: 11px 0;
-  }
-
-  html:not([data-theme="dark"]) .plan-option {
-    padding: 14px 16px;
-    gap: 12px;
-    border-radius: 14px;
-  }
-
-  html:not([data-theme="dark"]) .plan-option.is-active {
-    padding: 13px 15px;
-  }
-
-  html:not([data-theme="dark"]) .plan-option-price {
-    font-size: 1rem;
-  }
-
-  html:not([data-theme="dark"]) .plan-cta {
-    height: 52px;
-  }
-}
+  }}
 
 /* Pricing page keeps the original shared hero treatment in light mode. */
+/* Full-bleed hero photo: cancel .pricing-page's own padding so the image runs to
+   both screen edges and up under the floating nav, rather than sitting in an
+   inset rounded card. Driven by the same variables that set that padding, so it
+   stays exact at every breakpoint. */
 html:not([data-theme="dark"]) .pricing-page .pricing-hero {
   max-width: none;
-  margin: 0 0 clamp(40px, 5vw, 72px);
+  margin: calc(var(--pp-pad-top) * -1) calc(var(--pp-pad-x) * -1) clamp(40px, 5vw, 72px);
 }
 
 html:not([data-theme="dark"]) .pricing-page .pricing-hero-banner {
-  min-height: clamp(440px, 44vw, 580px);
+  min-height: clamp(560px, 52vw, 760px);
   padding: 0;
   border: 0;
-  background: transparent;
+  border-radius: 0;
+  /* Near-black backdrop so the masked photo dissolves into black (not the white
+     page). The plan-section backdrop below then carries black → green → white. */
+  background: #0b120e;
   box-shadow: none;
 }
 
+/* Overlay darkens the top for legibility and clears to nothing across the same
+   bottom band as the mask, so it can't paint a grey haze over the faded photo.
+   Measured from the BOTTOM in px (not %) so it tracks the fade whatever height
+   the copy grows to. */
 html:not([data-theme="dark"]) .pricing-page .pricing-hero-banner::before {
-  background: linear-gradient(90deg, rgba(11, 18, 14, 0.82) 0%, rgba(11, 18, 14, 0.55) 34%, rgba(11, 18, 14, 0.12) 68%, rgba(11, 18, 14, 0) 100%);
+  background: linear-gradient(to top, rgba(11, 18, 14, 0) 0, rgba(11, 18, 14, 0.22) 180px, rgba(11, 18, 14, 0.58) 60%, rgba(11, 18, 14, 0.80) 100%);
 }
 
 html:not([data-theme="dark"]) .pricing-page .pricing-hero-banner::after {
   content: none;
 }
 
+/* Fade the photo itself into the page. Masking (rather than layering a fixed
+   colour on top) means it dissolves into whatever the page background is. */
 html:not([data-theme="dark"]) .pricing-page .pricing-hero-bg {
   border-radius: 0;
+  /* HeroImage.webp is a heavily-compressed 115KB source; upscaled full-bleed and
+     darkened, its WebP blocking reads as "pixelation". A hair of blur softens the
+     block edges below perceptible-blur, and muting + darkening turns it into an
+     intentional moody backdrop rather than a scrutinised photo. */
   transform: none;
   transform-origin: center;
-  filter: none;
+  filter: blur(0.6px) saturate(0.9) brightness(0.86);
+  /* Photo fully faded ~110px ABOVE the banner bottom, so it is already gone by
+     where the section's opaque black begins — nothing left for that black to cut
+     against, which is what left a faint line at the banner edge. */
+  -webkit-mask-image: linear-gradient(to top, transparent 0, transparent 110px, rgba(0, 0, 0, 0.5) 190px, #000 300px);
+  mask-image: linear-gradient(to top, transparent 0, transparent 110px, rgba(0, 0, 0, 0.5) 190px, #000 300px);
 }
 
 html:not([data-theme="dark"]) .pricing-page .pricing-hero-content {
   display: block;
-  max-width: 700px;
-  margin-left: 0;
-  padding: clamp(28px, 5vw, 76px);
+  max-width: 1180px; /* wide enough to keep the four benefits on one row */
+  margin: 0 auto;
+  /* Keep enough room for the image fade, but not so much that the pricing
+     section feels detached from the hero. */
+  padding: clamp(150px, 15vw, 210px) clamp(20px, 5vw, 76px) clamp(118px, 11vw, 156px);
   border: 0;
   border-radius: 0;
   background: transparent;
   box-shadow: none;
   color: #ffffff;
+  text-align: center;
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
 }
 
 html:not([data-theme="dark"]) .pricing-page .pricing-hero-eyebrow {
-  color: rgba(255, 255, 255, 0.92);
+  justify-content: center;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.78);
 }
 
 html:not([data-theme="dark"]) .pricing-page .pricing-hero-title {
   max-width: none;
   color: #ffffff;
+  font-size: clamp(32px, 3.1vw + 16px, 58px);
 }
 
 html:not([data-theme="dark"]) .pricing-page .pricing-hero-sub {
@@ -10196,19 +10027,26 @@ html:not([data-theme="dark"]) .pricing-page .pricing-hero-btn--text:hover {
 }
 
 @media (max-width: 640px) {
+  html:not([data-theme="dark"]) .pricing-page .pricing-plan-section {
+    margin-top: -88px;
+    padding-top: 20px;
+  }
+
   html:not([data-theme="dark"]) .pricing-page .pricing-hero-banner {
-    min-height: 0;
+    min-height: clamp(520px, 118vw, 660px);
     padding: 0;
   }
 
+  /* Must clear to transparent like the desktop overlay — the old gradient got
+     DARKER toward the bottom, which painted a band over the faded photo. */
   html:not([data-theme="dark"]) .pricing-page .pricing-hero-banner::before {
-    background: linear-gradient(180deg, rgba(11, 18, 14, 0.28) 0%, rgba(11, 18, 14, 0.55) 42%, rgba(11, 18, 14, 0.86) 100%);
+    background: linear-gradient(180deg, rgba(11, 18, 14, 0.60) 0%, rgba(11, 18, 14, 0.52) 44%, rgba(11, 18, 14, 0.10) 78%, rgba(11, 18, 14, 0) 92%);
   }
 
   html:not([data-theme="dark"]) .pricing-page .pricing-hero-content {
     max-width: none;
     margin: 0;
-    padding: 150px 24px 34px;
+    padding: 128px 24px 120px;
   }
 
   html:not([data-theme="dark"]) .pricing-page .pricing-hero-title {
@@ -12251,10 +12089,18 @@ html[data-theme="dark"] .afford-card--tint .afford-card-copy { color: rgba(255,2
 .hwp-feature-media img.is-active { opacity: 1; z-index: 2; }
 /* Keyframes always play from an explicit start, so direction stays correct
    even when the scroll direction flips. */
-@keyframes hwpFromBottom { from { opacity: 0; filter: blur(10px); transform: translateY(34%); } to { opacity: 1; filter: blur(0); transform: translateY(0); } }
-@keyframes hwpFromTop    { from { opacity: 0; filter: blur(10px); transform: translateY(-34%); } to { opacity: 1; filter: blur(0); transform: translateY(0); } }
-@keyframes hwpToTop      { from { opacity: 1; filter: blur(0); transform: translateY(0); } to { opacity: 0; filter: blur(10px); transform: translateY(-34%); } }
-@keyframes hwpToBottom   { from { opacity: 1; filter: blur(0); transform: translateY(0); } to { opacity: 0; filter: blur(10px); transform: translateY(34%); } }
+@keyframes hwpFromBottom { from { opacity: 0; filter: blur(10px); transform: translateY(34%); }
+
+ to { opacity: 1; filter: blur(0); transform: translateY(0); } }
+@keyframes hwpFromTop    { from { opacity: 0; filter: blur(10px); transform: translateY(-34%); }
+
+ to { opacity: 1; filter: blur(0); transform: translateY(0); } }
+@keyframes hwpToTop      { from { opacity: 1; filter: blur(0); transform: translateY(0); }
+
+ to { opacity: 0; filter: blur(10px); transform: translateY(-34%); } }
+@keyframes hwpToBottom   { from { opacity: 1; filter: blur(0); transform: translateY(0); }
+
+ to { opacity: 0; filter: blur(10px); transform: translateY(34%); } }
 /* Scroll down → new image rises up from below (fast, into focus), old one blurs out up. */
 .hwp-feature-media[data-dir="down"] img.is-active  { animation: hwpFromBottom 0.4s cubic-bezier(0.16, 0.84, 0.44, 1) forwards; }
 .hwp-feature-media[data-dir="down"] img.is-leaving { z-index: 1; animation: hwpToTop 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) forwards; }
@@ -12455,85 +12301,9 @@ html[data-theme="dark"] .afford-card--tint .afford-card-copy { color: rgba(255,2
 .why-page .hwp-feature-tab.is-active .hwp-feature-tab-name { color: #fff; }
 .why-page .hwp-feature-tab-body { color: rgba(255,255,255,0.72); }
 
-/* Hero banner (reuses .pricing-hero-banner internals) — spans the same width
-   as the floating nav (40px gutters, full-bleed, no max-width cap). */
-.why-hero {
-  margin: 0 0 clamp(48px, 6vw, 84px);
-  padding: clamp(104px, 13vh, 132px) clamp(16px, 4vw, 40px) 0;
-}
-
-/* Why page keeps the original shared hero treatment in light mode. */
-html:not([data-theme="dark"]) .why-page .why-hero .pricing-hero-banner {
-  min-height: clamp(440px, 44vw, 580px);
-  padding: 0;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-}
-
-html:not([data-theme="dark"]) .why-page .why-hero .pricing-hero-banner::before {
-  background: linear-gradient(90deg, rgba(11, 18, 14, 0.82) 0%, rgba(11, 18, 14, 0.55) 34%, rgba(11, 18, 14, 0.12) 68%, rgba(11, 18, 14, 0) 100%);
-}
-
-html:not([data-theme="dark"]) .why-page .why-hero .pricing-hero-banner::after {
-  content: none;
-}
-
-html:not([data-theme="dark"]) .why-page .why-hero .pricing-hero-bg {
-  border-radius: 0;
-  transform: none;
-  transform-origin: center;
-  filter: none;
-}
-
-html:not([data-theme="dark"]) .why-page .why-hero .pricing-hero-content {
-  display: block;
-  margin-left: 0;
-  padding: clamp(28px, 5vw, 76px);
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-  color: #ffffff;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-}
-
-html:not([data-theme="dark"]) .why-page .why-hero .pricing-hero-eyebrow {
-  color: rgba(255, 255, 255, 0.92);
-}
-
-html:not([data-theme="dark"]) .why-page .why-hero .pricing-hero-title {
-  max-width: none;
-  color: #ffffff;
-}
-
-html:not([data-theme="dark"]) .why-page .why-hero .pricing-hero-sub {
-  color: rgba(255, 255, 255, 0.88);
-  font-size: clamp(16px, 0.5vw + 14px, 20px);
-}
-
-html:not([data-theme="dark"]) .why-page .why-hero .pricing-hero-btn--solid,
-html:not([data-theme="dark"]) .why-page .why-hero .pricing-hero-btn--solid:hover {
-  box-shadow: none;
-}
-
-html:not([data-theme="dark"]) .why-page .why-hero .pricing-hero-btn--text {
-  padding: 0 6px;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: #ffffff;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-html:not([data-theme="dark"]) .why-page .why-hero .pricing-hero-btn--text:hover {
-  background: transparent;
-  color: #5fce92;
-}
+/* The About hero now reuses the home hero markup (.hero / .hero-bg /
+   .hero-overlay / .hero-content) verbatim, so it inherits the home hero styles
+   directly — no per-page hero rules needed here. */
 
 /* Visual-only gallery: hide all the card copy/CTA + the legibility scrim,
    keep just the pictures. */
@@ -12557,61 +12327,25 @@ html:not([data-theme="dark"]) .why-page .why-hero .pricing-hero-btn--text:hover 
 .allfeatures--plain .af-media img { transition: none; }
 .allfeatures--plain .af-card:hover .af-media img { transform: none; }
 .why-page .allfeatures { margin-top: 0; }
-
-/* Gallery head — small centered eyebrow over a big bold headline + green accent */
-.why-gallery-eyebrow {
-  display: block; color: rgba(255,255,255,0.72); font-family: 'Satoshi', sans-serif;
-  font-size: clamp(15px, 0.3vw + 13px, 18px); font-weight: 600; letter-spacing: 0.01em;
-  margin-bottom: clamp(18px, 2vw, 30px);
+html:not([data-theme="dark"]) .why-page .allfeatures--plain .allfeatures-container {
+  position: static;
+  overflow: visible;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
 }
+
+/* Gallery headline — big bold with a green accent */
 .allfeatures--plain .allfeatures-head-title {
   font-family: 'Satoshi', sans-serif; font-size: clamp(38px, 4.5vw, 66px);
   font-weight: 700; letter-spacing: -0.025em; line-height: 1.05; color: #fff;
   margin: 0 auto;
 }
 .allfeatures--plain .af-accent { color: #5fce92; }
-
-/* Longer hero headline than pricing — give the copy more room, scale the title */
-.why-hero .pricing-hero-content { max-width: 680px; }
-.why-hero .pricing-hero-title { font-size: clamp(34px, 3vw + 16px, 58px); }
-.why-hero .pricing-hero-sub { max-width: 30em; }
-
-@media (max-width: 640px) {
-  html:not([data-theme="dark"]) .why-page .why-hero .pricing-hero-banner {
-    min-height: 0;
-    padding: 0;
-  }
-
-  html:not([data-theme="dark"]) .why-page .why-hero .pricing-hero-banner::before {
-    background: linear-gradient(180deg, rgba(11, 18, 14, 0.28) 0%, rgba(11, 18, 14, 0.55) 42%, rgba(11, 18, 14, 0.86) 100%);
-  }
-
-  html:not([data-theme="dark"]) .why-page .why-hero .pricing-hero-content {
-    max-width: none;
-    margin: 0;
-    padding: 150px 24px 34px;
-  }
-
-  html:not([data-theme="dark"]) .why-page .why-hero .pricing-hero-title {
-    max-width: none;
-  }
-
-  html:not([data-theme="dark"]) .why-page .why-hero .pricing-hero-sub {
-    font-size: clamp(16px, 0.5vw + 14px, 20px);
-  }
-
-  html:not([data-theme="dark"]) .why-page .why-hero .pricing-hero-actions {
-    gap: 18px;
-  }
-
-  html:not([data-theme="dark"]) .why-page .why-hero .pricing-hero-actions .pricing-hero-btn--solid {
-    width: 100%;
-  }
-
-  html:not([data-theme="dark"]) .why-page .why-hero .pricing-hero-btn--text {
-    width: auto;
-  }
-}
 
 /* People who show up — transparent, sits on the page background */
 .why-people {
@@ -12681,55 +12415,191 @@ html:not([data-theme="dark"]) .why-page .why-hero .pricing-hero-btn--text:hover 
    Both pages render dark by default (.why-page). In light mode every section
    flips to SkelApp's light identity: white surfaces, #1a1a1a ink and
    --green (#4AAD77) accents — matching the hardware / integrations pages.
-   Heroes keep their layout (the why-hero photo banner is handled above; the
+   Heroes keep their layout (the About hero reuses the home hero markup/CSS; the
    pos-hero is recoloured below). Text over images (.why-story-*) and the
    self-contained dark testimonial card are intentionally left unchanged.
    ════════════════════════════════════════════════════════════════════ */
 
 /* Page canvas: white with a faint on-brand green glow at the top,
    mirroring the dark page's radial glow in a light key. */
-html:not([data-theme="dark"]) .why-page-body { background: #ffffff; }
-html:not([data-theme="dark"]) .why-page {
+html:not([data-theme="dark"]) .why-page-body {
   background:
-    radial-gradient(100% 52% at 80% 0%, rgba(74,173,119,0.10) 0%, rgba(74,173,119,0) 52%),
-    #ffffff;
+    radial-gradient(70% 55% at 50% -5%, rgba(74, 173, 119, 0.22) 0%, rgba(74, 173, 119, 0) 60%),
+    linear-gradient(180deg, #eef4f0 0%, #e7f0eb 56%, #f6f9f7 100%);
+  background-attachment: fixed;
+}
+html:not([data-theme="dark"]) .why-page {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(70% 44% at 16% 10%, rgba(95, 206, 146, 0.16) 0%, rgba(95, 206, 146, 0) 58%),
+    radial-gradient(64% 42% at 84% 32%, rgba(74, 173, 119, 0.12) 0%, rgba(74, 173, 119, 0) 62%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 420px);
   color: #1a1a1a;
 }
 
 /* All-features intro */
 html:not([data-theme="dark"]) .why-page .allfeatures-head-title { color: #1a1a1a; }
 html:not([data-theme="dark"]) .why-page .allfeatures--plain .af-accent { color: var(--green); }
+html:not([data-theme="dark"]) .why-page .allfeatures--plain .allfeatures-head-title { color: #183126; }
 
 /* Shared feature-tab showcase — restore the base light treatment */
 html:not([data-theme="dark"]) .why-page .hwp-section-title { color: #1a1a1a; }
 html:not([data-theme="dark"]) .why-page .hwp-section-title strong { color: var(--green); }
 html:not([data-theme="dark"]) .why-page .hwp-section-subtitle { color: #666; }
-html:not([data-theme="dark"]) .why-page .hwp-feature-tab { border-left-color: rgba(0,0,0,0.08); }
-html:not([data-theme="dark"]) .why-page .hwp-feature-tab-name { color: #b3b7bc; }
-html:not([data-theme="dark"]) .why-page .hwp-feature-tab.is-active .hwp-feature-tab-name { color: #1a1a1a; }
-html:not([data-theme="dark"]) .why-page .hwp-feature-tab-body { color: #5e6066; }
+html:not([data-theme="dark"]) .why-page .hwp-feature-tab { border-left-color: rgba(74, 173, 119, 0.18); }
+html:not([data-theme="dark"]) .why-page .hwp-feature-tab-name { color: #93a29a; }
+html:not([data-theme="dark"]) .why-page .hwp-feature-tab.is-active .hwp-feature-tab-name { color: #163126; }
+html:not([data-theme="dark"]) .why-page .hwp-feature-tab-body { color: #53675d; }
+html:not([data-theme="dark"]) .why-page .hwp-showcase--pinned,
+html:not([data-theme="dark"]) .why-page .why-product,
+html:not([data-theme="dark"]) .why-page .why-people {
+  background: transparent;
+}
+/* Pinned support showcase sits flat on the page — no frosted-glass card. */
+html:not([data-theme="dark"]) .why-page .hwp-showcase--pinned .hwp-shell {
+  position: relative;
+  overflow: visible;
+  padding-top: clamp(30px, 4vw, 48px);
+  padding-bottom: clamp(30px, 4vw, 48px);
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+/* Flat media panel (no green glass) to match the un-glassed showcase. The active
+   image covers it; the neutral fill only shows as a placeholder while it loads. */
+html:not([data-theme="dark"]) .why-page .hwp-feature-media {
+  background: #eef1f0;
+  border: 0;
+  box-shadow: 0 30px 60px -44px rgba(20, 40, 30, 0.28);
+}
+
+/* "Why we build SkelApp" — numbered reason cards (reuses .hw-why-* cards). */
+.why-page .why-build { padding: clamp(48px, 6vw, 92px) 0; }
+html:not([data-theme="dark"]) .why-page .why-build .hwp-section-title { color: #183126; }
+html:not([data-theme="dark"]) .why-page .why-build .hwp-section-subtitle { color: #53675d; }
+
+/* Photo grid — one large image over two, from the reference layout. */
+.why-photo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(12px, 1.4vw, 20px);
+  max-width: 1120px;
+  margin: 0 auto;
+}
+.why-photo {
+  margin: 0;
+  border-radius: clamp(16px, 1.6vw, 24px);
+  overflow: hidden;
+  background: #eef1f0;
+}
+.why-photo--main {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 7;
+}
+.why-photo:not(.why-photo--main) { aspect-ratio: 4 / 3; }
+.why-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+@media (max-width: 620px) {
+  .why-photo-grid { grid-template-columns: 1fr; }
+  .why-photo--main { aspect-ratio: 3 / 2; }
+  .why-photo:not(.why-photo--main) { aspect-ratio: 16 / 10; }
+}
 
 /* People / stories — subtle off-white band for rhythm (why page) */
-html:not([data-theme="dark"]) .why-page .why-people { background: #f6f8f7; color: #1a1a1a; }
-html:not([data-theme="dark"]) .why-page .why-people-copy { color: #555; }
+html:not([data-theme="dark"]) .why-page .why-people { color: #1a1a1a; }
+html:not([data-theme="dark"]) .why-page .why-people .why-shell {
+  position: static;
+  overflow: visible;
+  padding: 0 clamp(20px, 5vw, 64px);
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+html:not([data-theme="dark"]) .why-page .why-people-title { color: #173023; }
+html:not([data-theme="dark"]) .why-page .why-people-copy { color: #53675d; }
+html:not([data-theme="dark"]) .why-page .why-story-card {
+  border: 1px solid rgba(95, 206, 146, 0.16);
+  box-shadow: 0 28px 56px -38px rgba(27, 62, 42, 0.30);
+}
+html:not([data-theme="dark"]) .why-page .why-story-card::after {
+  background:
+    linear-gradient(180deg, rgba(10, 20, 15, 0.70) 0%, rgba(10, 20, 15, 0.24) 44%, rgba(10, 20, 15, 0.78) 100%),
+    radial-gradient(100% 100% at 16% 100%, rgba(74, 173, 119, 0.24) 0%, rgba(74, 173, 119, 0) 58%);
+}
+html:not([data-theme="dark"]) .why-page .why-story-num { color: rgba(212, 247, 225, 0.92); }
 
 /* Product section (why page) */
 html:not([data-theme="dark"]) .why-page .why-product { color: #1a1a1a; }
-html:not([data-theme="dark"]) .why-page .why-product-sub { color: #555; }
+html:not([data-theme="dark"]) .why-page .why-product-grid {
+  position: static;
+  overflow: visible;
+  padding: 0 clamp(20px, 5vw, 64px);
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+html:not([data-theme="dark"]) .why-page .why-product-media {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+html:not([data-theme="dark"]) .why-page .why-product-title { color: #173023; }
+html:not([data-theme="dark"]) .why-page .why-product-sub { color: #4e6358; }
+html:not([data-theme="dark"]) .why-page .why-product-btn {
+  box-shadow: 0 16px 32px rgba(74, 173, 119, 0.22);
+}
 
 /* FAQ — subtle off-white band, base light ink (point-of-sale) */
-html:not([data-theme="dark"]) .why-page .faq-section { background: #f6f8f7; }
+html:not([data-theme="dark"]) .why-page .faq-section { background: transparent; }
 html:not([data-theme="dark"]) .why-page .faq-header h2,
 html:not([data-theme="dark"]) .why-page .faq-subtitle,
 html:not([data-theme="dark"]) .why-page .faq-question span { color: #1a1a1a; }
 html:not([data-theme="dark"]) .why-page .faq-answer p { color: #303030; }
-html:not([data-theme="dark"]) .why-page .faq-item { border-bottom-color: #e3e3e3; }
+html:not([data-theme="dark"]) .why-page .faq-list {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+html:not([data-theme="dark"]) .why-page .faq-item { border-bottom-color: rgba(74, 173, 119, 0.16); }
 html:not([data-theme="dark"]) .why-page .faq-icon { color: #8b8b8b; }
 html:not([data-theme="dark"]) .why-page .faq-read-more {
-  background: #ffffff; color: #1a1a1a; border-color: #d8ddda;
+  background: rgba(255, 255, 255, 0.74); color: #1a1a1a; border-color: rgba(74, 173, 119, 0.18);
 }
 html:not([data-theme="dark"]) .why-page .faq-read-more:hover {
-  background: #f3f5f4; border-color: var(--green);
+  background: #f3f7f4; border-color: var(--green);
+}
+html:not([data-theme="dark"]) .why-page .hwp-pricing-shell {
+  background:
+    radial-gradient(120% 130% at 82% 0%, rgba(95, 206, 146, 0.45) 0%, rgba(95, 206, 146, 0) 55%),
+    linear-gradient(160deg, rgba(74, 173, 119, 0.94), rgba(30, 125, 81, 0.90) 55%, rgba(23, 96, 63, 0.92));
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  box-shadow: 0 44px 90px -44px rgba(18, 60, 40, 0.55);
+}
+html:not([data-theme="dark"]) .why-page .hwp-pricing-note {
+  color: rgba(255, 255, 255, 0.80);
+}
+
+@media (max-width: 900px) {
+  html:not([data-theme="dark"]) .why-page .hwp-showcase--pinned .hwp-shell,
+  html:not([data-theme="dark"]) .why-page .hwp-showcase--pinned .hwp-shell {
+    padding: 24px 20px;
+    border-radius: 28px;
+  }
 }
 
 /* Point-of-sale hero — genuine light, keeps its centred layout */
@@ -12802,9 +12672,9 @@ html[data-theme="dark"] .pricing-plan-section { background: transparent; }
 html[data-theme="dark"] .product-card,
 html[data-theme="dark"] .features-card,
 html[data-theme="dark"] .hw-acc-card,
+html[data-theme="dark"] .pos-sync-card,
 html[data-theme="dark"] .whyus-card,
-html[data-theme="dark"] .pricing-box,
-html[data-theme="dark"] .pricing-box--features,
+html[data-theme="dark"] .pricing-tier,
 html[data-theme="dark"] .news-card,
 html[data-theme="dark"] .contact-card {
   background: #111c15; border-color: rgba(255,255,255,0.09);
@@ -12956,7 +12826,9 @@ html[data-theme="dark"] .affiliate-form-actions .btn-cancel:hover {
   background: rgba(18, 20, 18, 0.55); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
 }
 .dl-modal.is-open { display: flex; animation: dlFade 0.2s ease; }
-@keyframes dlFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes dlFade { from { opacity: 0; }
+
+ to { opacity: 1; } }
 .dl-modal-card {
   position: relative; width: min(500px, 100%); min-height: 530px;
   display: flex; flex-direction: column; justify-content: center;
@@ -12965,7 +12837,9 @@ html[data-theme="dark"] .affiliate-form-actions .btn-cancel:hover {
   text-align: center; box-shadow: 0 40px 90px rgba(0, 0, 0, 0.4);
   animation: dlPop 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
-@keyframes dlPop { from { transform: translateY(10px) scale(0.98); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes dlPop { from { transform: translateY(10px) scale(0.98); opacity: 0; }
+
+ to { transform: none; opacity: 1; } }
 .dl-modal-close {
   position: absolute; top: 16px; right: 16px; width: 34px; height: 34px;
   display: inline-flex; align-items: center; justify-content: center;
@@ -13237,7 +13111,9 @@ html[data-theme="dark"] .nav-mega-item.is-current { background: rgba(255,255,255
 .nav-mega-dynamic { position: relative; }
 .nav-mega-panel { display: none; }
 .nav-mega-panel.is-active { display: block; animation: navMegaFade 0.22s ease; }
-@keyframes navMegaFade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@keyframes navMegaFade { from { opacity: 0; transform: translateY(4px); }
+
+ to { opacity: 1; transform: none; } }
 
 /* Featured card */
 .nav-mega-feature {
@@ -13741,10 +13617,12 @@ html:not([data-theme="dark"]) .retailer-hero .pricing-hero-btn--text:hover {
 
 .integrations-card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 320px));
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(260px, 1fr);
   gap: 20px;
   align-items: stretch;
   justify-content: center;
+  overflow-x: auto;
 }
 
 .integration-card {
@@ -13762,11 +13640,9 @@ html:not([data-theme="dark"]) .retailer-hero .pricing-hero-btn--text:hover {
   color: #101316;
   text-decoration: none;
   overflow: hidden;
-  transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
 }
 
 .integration-card:hover {
-  transform: translateY(-4px);
   border-color: rgba(74, 173, 119, 0.45);
   background: #eef7f2;
 }
@@ -14394,8 +14270,7 @@ html:not([data-theme="dark"]) .retailer-hero .pricing-hero-btn--text:hover {
     padding-right: 24px;
   }
 
-  .retailer-hero,
-  .why-hero {
+  .retailer-hero {
     padding-left: 24px;
     padding-right: 24px;
   }
@@ -14544,8 +14419,7 @@ html:not([data-theme="dark"]) .retailer-hero .pricing-hero-btn--text:hover {
     padding-right: 16px;
   }
 
-  .retailer-hero,
-  .why-hero {
+  .retailer-hero {
     padding-left: 16px;
     padding-right: 16px;
   }
@@ -14688,14 +14562,6 @@ html:not([data-theme="dark"]) .retailer-hero .pricing-hero-btn--text:hover {
     margin: 18px 0 24px;
   }
 
-  .why-hero {
-    margin-bottom: clamp(36px, 7vw, 56px);
-  }
-
-  .why-gallery-eyebrow {
-    margin-bottom: 14px;
-  }
-
   .allfeatures--plain .allfeatures-head-title {
     font-size: clamp(30px, 10vw, 44px);
   }
@@ -14803,8 +14669,11 @@ html:not([data-theme="dark"]) .retailer-hero .pricing-hero-btn--text:hover {
   }
 
   .integrations-card-grid {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
     grid-template-columns: 1fr;
     gap: 16px;
+    overflow-x: visible;
   }
 
   .integration-card {
@@ -15717,13 +15586,7 @@ html[data-theme="dark"] .terms-list strong { color: var(--dm-text); }
 /* Contact: info-card label/value + form field labels hardcode dark text */
 html[data-theme="dark"] .contact-card-label { color: var(--dm-text); }
 html[data-theme="dark"] .contact-card-value { color: var(--dm-muted); }
-html[data-theme="dark"] .contact-page label { color: var(--dm-text); }
-
-/* Pricing: the feature list items hardcode #1a1d23 (the old dark rule targeted
-   the wrong class), so they were invisible on dark */
-html[data-theme="dark"] .pricing-feature-item { color: var(--dm-text); }
-
-/* Home FAQ stays transparent so it blends seamlessly with the pricing section
+html[data-theme="dark"] .contact-page label { color: var(--dm-text); }/* Home FAQ stays transparent so it blends seamlessly with the pricing section
    above (no colour seam); the rounded bottom is carried by the footer's
    rounded top edge tucking under it. */
 
@@ -15991,9 +15854,9 @@ html[data-theme="dark"] .integration-detail-copy > p:last-of-type {
 html[data-theme="dark"] .product-card,
 html[data-theme="dark"] .features-card,
 html[data-theme="dark"] .hw-acc-card,
+html[data-theme="dark"] .pos-sync-card,
 html[data-theme="dark"] .whyus-card,
-html[data-theme="dark"] .pricing-box,
-html[data-theme="dark"] .pricing-box--features,
+html[data-theme="dark"] .pricing-tier,
 html[data-theme="dark"] .news-card,
 html[data-theme="dark"] .contact-card,
 html[data-theme="dark"] .contact-form-card,
@@ -16399,3 +16262,969 @@ body :where(
     margin-right: 0;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   POS PAGE — reused-section tweaks + new bands (offline / online + sync)
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* The reused afford header forces nowrap on the home page; let it wrap here. */
+.pos-afford .afford-title,
+.pos-afford .afford-title.products-title,
+.pos-afford .afford-subtitle,
+.pos-afford .afford-subtitle.products-subtitle { white-space: normal; }
+
+/* ── What SkelApp can do — tabbed accordion + media explorer ── */
+.pos-feature-showcase {
+  padding: clamp(14px, 2vw, 24px) 0 clamp(44px, 5vw, 64px);
+}
+
+.pos-page-body .pos-feature-showcase > .hwp-shell {
+  width: min(1400px, calc(100% - clamp(20px, 4vw + 10px, 80px)));
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.pos-feature-header {
+  margin-bottom: clamp(32px, 4vw, 52px);
+}
+
+.pos-feature-header .hwp-section-title {
+  max-width: none;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 50px;
+  font-weight: 500;
+  line-height: 1.12;
+  margin-bottom: 10px;
+  white-space: nowrap;
+}
+
+.pos-feature-header .hwp-section-subtitle {
+  max-width: none;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 16.8px;
+  line-height: 1.45;
+  white-space: nowrap;
+}
+
+.pos-feature-explorer {
+  display: grid;
+  grid-template-columns: minmax(0, 0.97fr) minmax(0, 1.03fr);
+  gap: clamp(18px, 1.8vw, 24px);
+  align-items: stretch;
+  padding-inline: clamp(10px, 1.2vw, 16px);
+}
+
+.pos-feature-surface,
+.pos-feature-media-surface {
+  position: relative;
+  border-radius: clamp(24px, 2vw, 34px);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(244, 246, 248, 0.52));
+  -webkit-backdrop-filter: blur(22px) saturate(155%);
+  backdrop-filter: blur(22px) saturate(155%);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow:
+    0 24px 60px rgba(20, 40, 30, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.pos-feature-surface {
+  padding: clamp(18px, 2vw, 28px);
+}
+
+.pos-feature-tablist {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(20, 24, 26, 0.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82);
+}
+
+.pos-feature-tab {
+  flex: 1 1 0;
+  min-width: 124px;
+  height: 52px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(74, 173, 119, 0.32);
+  background: transparent;
+  color: var(--green);
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pos-feature-tab.is-active,
+.pos-feature-tab[aria-selected="true"] {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+  box-shadow: 0 12px 30px rgba(74, 173, 119, 0.24);
+}
+
+.pos-feature-panel {
+  margin-top: clamp(20px, 2.2vw, 28px);
+}
+
+.pos-feature-accordion {
+  margin-top: 0;
+  border-top: 1px solid rgba(20, 24, 26, 0.08);
+}
+
+.pos-feature-item {
+  border-bottom: 1px solid rgba(20, 24, 26, 0.08);
+}
+
+.pos-feature-item-head {
+  list-style: none;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  cursor: pointer;
+  padding: 22px 0;
+}
+
+.pos-feature-item-head::-webkit-details-marker {
+  display: none;
+}
+
+.pos-feature-item-title {
+  font-family: 'Satoshi', sans-serif;
+  font-size: clamp(17px, 0.28vw + 16px, 21px);
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  color: #101316;
+}
+
+.pos-feature-item-icon {
+  position: relative;
+  flex: 0 0 22px;
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+}
+
+.pos-feature-item-icon::before,
+.pos-feature-item-icon::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: #101316;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.pos-feature-item-icon::before {
+  width: 18px;
+  height: 2px;
+}
+
+.pos-feature-item-icon::after {
+  width: 2px;
+  height: 18px;
+}
+
+.pos-feature-item.is-open .pos-feature-item-icon::after,
+.pos-feature-item[open] .pos-feature-item-icon::after {
+  opacity: 0;
+}
+
+.pos-feature-item-copy {
+  padding: 0 0 18px;
+}
+
+.pos-feature-item-copy p {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14.5px;
+  line-height: 1.52;
+  color: #5a635e;
+  margin: 0;
+  max-width: 46ch;
+}
+
+.pos-feature-media-surface {
+  padding: clamp(14px, 1.6vw, 20px);
+  overflow: hidden;
+  background:
+    radial-gradient(110% 100% at 50% 10%, rgba(74, 173, 119, 0.18) 0%, rgba(74, 173, 119, 0.03) 52%, rgba(255, 255, 255, 0.58) 100%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.76), rgba(241, 244, 246, 0.58));
+}
+
+.pos-feature-media-stage {
+  position: relative;
+  min-height: clamp(430px, 42vw, 620px);
+  height: 100%;
+}
+
+.pos-feature-media-stage::before {
+  content: '';
+  position: absolute;
+  inset: clamp(14px, 1.6vw, 22px);
+  border-radius: clamp(22px, 1.8vw, 28px);
+  background:
+    radial-gradient(88% 80% at 50% 12%, rgba(74, 173, 119, 0.08), transparent 70%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(235, 240, 236, 0.78));
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.88);
+}
+
+.pos-feature-media-stage img {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: min(84%, 620px);
+  max-height: 80%;
+  object-fit: contain;
+  opacity: 0;
+  transform: none;
+  transition: none;
+  filter: drop-shadow(0 26px 38px rgba(20, 40, 30, 0.16));
+}
+
+.pos-feature-media-stage img.is-active {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 1080px) {
+  .pos-page-body .pos-feature-showcase > .hwp-shell {
+    width: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .pos-feature-header .hwp-section-title {
+    font-size: clamp(34px, 4.4vw, 50px);
+  }
+
+  .pos-feature-header .hwp-section-subtitle {
+    font-size: clamp(15px, 1.1vw, 16.8px);
+  }
+
+  .pos-feature-header .hwp-section-title,
+  .pos-feature-header .hwp-section-subtitle {
+    white-space: normal;
+  }
+
+  .pos-feature-explorer {
+    grid-template-columns: 1fr;
+  }
+
+  .pos-feature-media-surface {
+    order: -1;
+  }
+
+  .pos-feature-media-stage {
+    min-height: clamp(320px, 56vw, 500px);
+  }
+}
+
+@media (max-width: 640px) {
+  .pos-page-body .pos-feature-showcase > .hwp-shell {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .pos-feature-surface,
+  .pos-feature-media-surface {
+    border-radius: 24px;
+  }
+
+  .pos-feature-surface {
+    padding: 18px;
+  }
+
+  .pos-feature-explorer {
+    padding-inline: 0;
+  }
+
+  .pos-feature-tablist {
+    gap: 8px;
+    padding: 6px;
+    border-radius: 24px;
+  }
+
+  .pos-feature-tab {
+    min-width: calc(50% - 8px);
+    height: 50px;
+    padding: 0 14px;
+    font-size: 14px;
+  }
+
+  .pos-feature-item-head {
+    padding: 18px 0;
+  }
+
+  .pos-feature-item-copy p {
+    font-size: 14px;
+  }
+
+  .pos-feature-media-stage {
+    min-height: 280px;
+  }
+}
+
+html[data-theme="dark"] .pos-feature-surface,
+html[data-theme="dark"] .pos-feature-media-surface {
+  background: linear-gradient(135deg, rgba(20, 30, 24, 0.9), rgba(11, 17, 14, 0.8));
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 28px 66px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+html[data-theme="dark"] .pos-feature-tablist {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+}
+
+html[data-theme="dark"] .pos-feature-tab {
+  border-color: rgba(95, 206, 146, 0.3);
+  color: #5fce92;
+}
+
+html[data-theme="dark"] .pos-feature-item-title {
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .pos-feature-item-copy p {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+html[data-theme="dark"] .pos-feature-accordion,
+html[data-theme="dark"] .pos-feature-item {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="dark"] .pos-feature-item-icon::before,
+html[data-theme="dark"] .pos-feature-item-icon::after {
+  background: #ffffff;
+}
+
+html[data-theme="dark"] .pos-feature-media-stage::before {
+  background:
+    radial-gradient(88% 80% at 50% 12%, rgba(95, 206, 146, 0.12), transparent 70%),
+    linear-gradient(180deg, rgba(23, 35, 28, 0.88), rgba(14, 22, 18, 0.78));
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* ── Steps + media band (offline mode / online ordering) ── */
+.pos-steps {
+  padding: clamp(56px, 6vw, 92px) 20px;
+  background: #ffffff;
+  overflow: hidden;
+}
+.pos-steps--offline,
+.pos-steps--online { background: #f7f9f8; }
+
+.pos-steps-head {
+  max-width: 900px;
+  margin: 0 auto clamp(30px, 3.4vw, 48px);
+  text-align: center;
+}
+.pos-steps-title {
+  font-family: 'NewBlack', 'Satoshi', sans-serif;
+  font-weight: 400;
+  font-size: clamp(22px, 3vw, 40px);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  color: #14181a;
+  margin: 0 0 14px;
+  white-space: nowrap;
+}
+.pos-steps-title strong { font-weight: inherit; color: inherit; }
+/* Never let the single line overflow on small screens. */
+@media (max-width: 560px) {
+  .pos-steps-title { white-space: normal; }
+}
+.pos-steps-sub {
+  font-family: 'Satoshi', sans-serif;
+  font-size: clamp(15px, 1.4vw, 18px);
+  color: #6a6f6c;
+  margin: 0;
+}
+
+.pos-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 3vw, 48px);
+  max-width: 1120px;
+  margin: 0 auto clamp(34px, 4vw, 60px);
+}
+.pos-step {
+  position: relative;
+  padding-left: clamp(0px, 2vw, 30px);
+}
+.pos-step + .pos-step { border-left: 1px solid rgba(20, 24, 26, 0.10); }
+.pos-step-icon {
+  display: inline-flex;
+  color: #14181a;
+  margin-bottom: 16px;
+}
+.pos-step-text {
+  font-family: 'Satoshi', sans-serif;
+  font-size: clamp(15px, 1.15vw, 17px);
+  line-height: 1.5;
+  color: #33403a;
+  margin: 0;
+}
+.pos-step-num { font-weight: 700; color: #14181a; }
+
+.pos-steps-media {
+  position: relative;
+  max-width: 1120px;
+  margin: 0 auto;
+  border-radius: clamp(16px, 1.6vw, 26px);
+  overflow: hidden;
+}
+.pos-steps-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 460px;
+  object-fit: cover;
+}
+.pos-steps-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: clamp(30px, 5vw, 60px) clamp(20px, 3vw, 40px) clamp(18px, 2.4vw, 30px);
+  font-family: 'Satoshi', sans-serif;
+  font-size: clamp(20px, 2.4vw, 32px);
+  font-weight: 500;
+  color: #fff;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+@media (max-width: 860px) {
+  .pos-steps-grid { grid-template-columns: 1fr; gap: 0; max-width: 520px; }
+  .pos-step { padding: 22px 0; }
+  .pos-step + .pos-step { border-left: 0; border-top: 1px solid rgba(20, 24, 26, 0.10); }
+  .pos-step-icon { margin-bottom: 10px; }
+}
+
+/* POS steps bands span the same width envelope as the floating nav. */
+.pos-steps--offline,
+.pos-steps--online {
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.pos-steps--offline > .container,
+.pos-steps--online > .container {
+  width: min(1400px, calc(100% - clamp(20px, 4vw + 10px, 80px)));
+  max-width: none;
+}
+
+.pos-steps--offline .pos-steps-grid,
+.pos-steps--offline .pos-steps-media,
+.pos-steps--online .pos-steps-grid,
+.pos-steps--online .pos-steps-media {
+  width: 100%;
+  max-width: none;
+}
+
+.pos-steps--offline .pos-steps-media,
+.pos-steps--online .pos-steps-media {
+  height: clamp(240px, 34vw, 460px);
+}
+
+.pos-steps--offline .pos-steps-media img,
+.pos-steps--online .pos-steps-media img {
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 860px) {
+  .pos-steps--offline .pos-steps-grid,
+  .pos-steps--online .pos-steps-grid {
+    max-width: none;
+  }
+
+  .pos-steps--offline .pos-steps-media,
+  .pos-steps--online .pos-steps-media {
+    height: clamp(220px, 52vw, 340px);
+  }
+}
+
+/* ── "Your shop. Fully in sync." — 3 cards ── */
+.pos-sync {
+  padding: clamp(60px, 6vw, 96px) 20px;
+  background: #ffffff;
+}
+.pos-sync-head {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto clamp(34px, 4vw, 56px);
+}
+.pos-sync-title {
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 500;
+  font-size: clamp(30px, 4.4vw, 52px);
+  line-height: 1.1;
+  color: #14181a;
+  margin: 0 0 12px;
+}
+.pos-sync-title strong { font-weight: inherit; color: inherit; }
+.pos-sync-sub {
+  font-family: 'Satoshi', sans-serif;
+  font-size: clamp(15px, 1.4vw, 18px);
+  color: #6a6f6c;
+  margin: 0;
+}
+.pos-sync-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(18px, 1.8vw, 26px);
+  max-width: 1320px;
+  margin: 0 auto;
+}
+/* Hardware accessory-card style, keeping the POS sync card sizing/layout. */
+.pos-sync-card {
+  display: flex;
+  flex-direction: column;
+  background: #f4f4f5;
+  border-radius: 18px;
+  overflow: hidden;
+  padding: 18px;
+  text-align: left;
+}
+.pos-sync-card-media {
+  height: clamp(170px, 15vw, 220px);
+  border-radius: 12px;
+  background: #e9ebee;
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+.pos-sync-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+.pos-sync-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 0 4px 4px;
+  flex: 1;
+}
+.pos-sync-card-title {
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 600;
+  font-size: clamp(18px, 1.5vw, 22px);
+  color: #14181a;
+  margin: 0;
+}
+.pos-sync-card-copy {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  color: #5a635e;
+  margin: 0;
+  max-width: none;
+}
+.pos-sync-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 700;
+  font-size: 14.5px;
+  color: var(--green);
+  text-decoration: none;
+}
+.pos-sync-card-link svg { transition: transform 0.2s ease; }
+.pos-sync-card-link:hover svg { transform: translateX(4px); }
+
+@media (max-width: 1100px) {
+  .pos-sync-grid { grid-template-columns: 1fr 1fr; max-width: 720px; }
+}
+@media (max-width: 560px) {
+  .pos-sync-grid { grid-template-columns: 1fr; max-width: 460px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   POS PAGE — "skel" tinted canvas + frosted-glass treatment (light mode)
+   Mirrors the home-page look, scoped to .pos-page-body so the hardware /
+   why pages (which share body classes) are left untouched. Dark-mode keeps
+   its own surfaces.
+   ═══════════════════════════════════════════════════════════════════ */
+html:not([data-theme="dark"]) body.pos-page-body {
+  background:
+    radial-gradient(70% 55% at 50% -5%, rgba(74, 173, 119, 0.22) 0%, rgba(74, 173, 119, 0) 60%),
+    linear-gradient(180deg, #eef4f0 0%, #e7f0eb 55%, #e1eae5 100%);
+  background-attachment: fixed;
+}
+
+/* Let the tinted canvas show through the page wrapper and its white/grey
+   sections (the dark-green testimonial + pricing panels keep their own fill). */
+html:not([data-theme="dark"]) .pos-page-body .hwp,
+html:not([data-theme="dark"]) .pos-page-body .pos-steps,
+html:not([data-theme="dark"]) .pos-page-body .pos-steps--offline,
+html:not([data-theme="dark"]) .pos-page-body .pos-steps--online,
+html:not([data-theme="dark"]) .pos-page-body .products-section,
+html:not([data-theme="dark"]) .pos-page-body .pos-sync,
+html:not([data-theme="dark"]) .pos-page-body .retailers-section,
+html:not([data-theme="dark"]) .pos-page-body .faq-section,
+html:not([data-theme="dark"]) .pos-page-body .faq-list {
+  background: transparent;
+}
+
+/* Neutral frosted glass — same recipe as the home showcase / product cards. */
+html:not([data-theme="dark"]) .pos-page-body .afford-card--light,
+html:not([data-theme="dark"]) .pos-page-body .pos-sync-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.65), rgba(244, 246, 248, 0.45));
+  -webkit-backdrop-filter: blur(22px) saturate(155%);
+  backdrop-filter: blur(22px) saturate(155%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 20px 50px rgba(20, 40, 30, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Green-washed glass for the tinted afford card (matches home --tint). */
+html:not([data-theme="dark"]) .pos-page-body .afford-card--tint,
+html:not([data-theme="dark"]) .pos-page-body .afford-grid > .afford-card:nth-child(3) {
+  background:
+    radial-gradient(125% 95% at 82% 100%, rgba(74, 173, 119, 0.28) 0%, rgba(74, 173, 119, 0) 62%),
+    linear-gradient(135deg, rgba(231, 240, 235, 0.58), rgba(213, 231, 221, 0.42));
+  -webkit-backdrop-filter: blur(22px) saturate(165%);
+  backdrop-filter: blur(22px) saturate(165%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 20px 50px rgba(20, 40, 30, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Testimonial card → SkelApp brand-green frosted glass (was dark forest green).
+   Scoped to the POS page; keeps white text and retunes the green accents that
+   would otherwise clash against the green fill. */
+/* The side cards deliberately overhang the viewport; clip them at the section
+   edge so the page itself never gains a horizontal scrollbar. Clip sideways
+   ONLY: `hidden` would also slice the cards' drop shadows off along a hard
+   horizontal line, which reads as a banded "cut" across the page. */
+.pos-page-body .hwp-testimonial {
+  overflow: hidden; /* fallback for browsers without overflow: clip */
+  overflow: clip visible;
+}
+
+.pos-tm-carousel {
+  /* The prev/next cards are offset from the ACTIVE card's edge rather than by a
+     fixed percentage. That keeps the gap between the active card and the screen
+     edge filled at any viewport width — on a wide monitor a fixed percentage
+     would leave white space either side. */
+  --pos-tm-w: min(1180px, calc(100vw - clamp(40px, 12vw, 260px)));
+  --pos-tm-scale: 0.88;
+  --pos-tm-overlap: 40px; /* how far a side card tucks under the active card */
+  --pos-tm-offset: calc((1 + var(--pos-tm-scale)) * var(--pos-tm-w) / 2 - var(--pos-tm-overlap));
+
+  position: relative;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw); /* break out of any inherited container */
+  touch-action: pan-y;
+  cursor: grab;
+  outline: none;
+}
+
+.pos-tm-carousel:active {
+  cursor: grabbing;
+}
+
+.pos-tm-viewport {
+  overflow: hidden; /* fallback for browsers without overflow: clip */
+  overflow: clip visible; /* sideways only — let shadows spill top/bottom */
+}
+
+.pos-tm-track {
+  display: grid;
+  align-items: center;
+}
+
+.pos-tm-slide {
+  grid-area: 1 / 1; /* every slide shares one cell → the active card cannot shift */
+  width: var(--pos-tm-w);
+  justify-self: center;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.34s ease, filter 0.34s ease;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+.pos-tm-slide .hwp-tm-card {
+  min-height: clamp(420px, 41vw, 560px);
+}
+
+.pos-tm-slide.is-active {
+  z-index: 2;
+  opacity: 1;
+  /* `none`, not `blur(0)` — a filter value (even a no-op one) makes the slide a
+     backdrop root and its own compositing layer, which browsers rasterise
+     differently. */
+  filter: none;
+  transform: translateX(0) scale(1);
+  pointer-events: auto;
+}
+
+.pos-tm-slide.is-prev,
+.pos-tm-slide.is-next {
+  z-index: 1;
+  opacity: 0.45;
+  filter: blur(3px) saturate(0.9);
+  pointer-events: auto;
+  cursor: pointer; /* tapping a side card brings it forward */
+}
+
+.pos-tm-slide.is-prev {
+  transform: translateX(calc(var(--pos-tm-offset) * -1)) scale(var(--pos-tm-scale));
+}
+
+.pos-tm-slide.is-next {
+  transform: translateX(var(--pos-tm-offset)) scale(var(--pos-tm-scale));
+}
+
+.pos-tm-slide.is-hidden-left,
+.pos-tm-slide.is-hidden-right {
+  z-index: 0;
+  opacity: 0;
+  filter: blur(12px);
+}
+
+.pos-tm-slide.is-hidden-left {
+  transform: translateX(calc(var(--pos-tm-offset) * -1.6)) scale(0.8);
+}
+
+.pos-tm-slide.is-hidden-right {
+  transform: translateX(calc(var(--pos-tm-offset) * 1.6)) scale(0.8);
+}
+
+/* Opaque fill rather than frosted glass. The two stops below are the exact
+   colours the old translucent glass composited to over this page's background,
+   so the card reads identically — but nothing behind it shows through (the
+   blurred neighbours tuck under it) and there's no backdrop-filter left to
+   rasterise differently from one browser to the next. */
+html:not([data-theme="dark"]) .pos-page-body .hwp-tm-card {
+  background:
+    radial-gradient(120% 110% at 100% 0%, rgba(95, 206, 146, 0.45) 0%, rgba(95, 206, 146, 0) 55%),
+    linear-gradient(135deg, rgb(95, 183, 135), rgb(103, 169, 136));
+  border: 1px solid rgba(255, 255, 255, 0.30);
+  box-shadow:
+    0 24px 60px rgba(30, 80, 55, 0.20),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+html:not([data-theme="dark"]) .pos-page-body .hwp-tm-quotemark { color: rgba(255, 255, 255, 0.92); }
+html:not([data-theme="dark"]) .pos-page-body .hwp-tm-brand { color: #ffffff; font-weight: 700; }
+html:not([data-theme="dark"]) .pos-page-body .hwp-tm-support { border-left-color: rgba(255, 255, 255, 0.5); }
+html:not([data-theme="dark"]) .pos-page-body .hwp-tm-stats strong { color: #ffffff; }
+html:not([data-theme="dark"]) .pos-page-body .hwp-tm-btn--solid { background: #ffffff; color: #0d3b23; }
+html:not([data-theme="dark"]) .pos-page-body .hwp-tm-btn--solid:hover { background: rgba(255, 255, 255, 0.88); color: #0d3b23; }
+html:not([data-theme="dark"]) .pos-page-body .hwp-testimonial { padding-bottom: clamp(32px, 4vw, 64px); }
+html:not([data-theme="dark"]) .pos-page-body .products-section.pos-products { padding-top: clamp(40px, 5vw, 72px); }
+
+/* Tablet → active card claims more width, neighbours show a slimmer sliver. */
+@media (max-width: 1180px) {
+  .pos-tm-carousel {
+    --pos-tm-w: min(1120px, calc(100vw - 96px));
+    --pos-tm-scale: 0.92;
+    --pos-tm-overlap: 28px;
+  }
+}
+
+@media (max-width: 900px) {
+  .pos-tm-carousel {
+    --pos-tm-w: calc(100vw - 72px);
+    --pos-tm-scale: 0.94;
+    --pos-tm-overlap: 22px;
+  }
+
+  .pos-tm-slide.is-prev,
+  .pos-tm-slide.is-next {
+    opacity: 0.36;
+    filter: blur(4px) saturate(0.88);
+  }
+}
+
+/* Mobile → mainly the active card, with only a preview of its neighbours. */
+@media (max-width: 640px) {
+  .pos-tm-carousel {
+    --pos-tm-w: calc(100vw - 44px);
+    --pos-tm-scale: 0.95;
+    --pos-tm-overlap: 14px;
+  }
+
+  .pos-tm-slide.is-prev,
+  .pos-tm-slide.is-next {
+    opacity: 0.3;
+    filter: blur(3px) saturate(0.9);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pos-tm-slide {
+    transition: opacity 0.2s ease;
+  }
+}
+
+/* ── Integrations band — green-glass "Connect and conquer" panel ── */
+.pos-integrations {
+  padding: clamp(40px, 5vw, 72px) clamp(16px, 4vw, 40px);
+  background: transparent;
+}
+.pos-integrations-panel {
+  position: relative;
+  max-width: none;
+  margin: 0;
+  padding: clamp(40px, 5vw, 80px) clamp(22px, 4vw, 64px) clamp(34px, 4vw, 60px);
+  border-radius: clamp(22px, 2.2vw, 36px);
+  text-align: center;
+  color: #fff;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  box-shadow: 0 44px 90px -44px rgba(18, 60, 40, 0.55);
+  /* Green glow → translucent green glass base. */
+  background:
+    radial-gradient(120% 120% at 50% -12%, rgba(95, 206, 146, 0.45) 0%, rgba(95, 206, 146, 0) 55%),
+    linear-gradient(160deg, rgba(74, 173, 119, 0.94), rgba(30, 125, 81, 0.90) 55%, rgba(23, 96, 63, 0.92));
+  -webkit-backdrop-filter: blur(8px) saturate(140%);
+  backdrop-filter: blur(8px) saturate(140%);
+}
+.pos-integrations-eyebrow {
+  display: inline-block;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+  margin-bottom: 16px;
+}
+.pos-integrations-title {
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 700;
+  font-size: clamp(28px, 3.4vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin: 0 0 12px;
+}
+.pos-integrations-body {
+  font-family: 'Satoshi', sans-serif;
+  font-size: clamp(15px, 1.4vw, 19px);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.86);
+  max-width: 640px;
+  margin: 0 auto;
+}
+.pos-integrations-logos-wrap {
+  margin: clamp(32px, 4vw, 52px) auto clamp(28px, 3.4vw, 44px);
+  max-width: 1180px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+}
+.pos-integrations-logos-wrap::-webkit-scrollbar { display: none; }
+.pos-integrations-logos {
+  list-style: none;
+  margin: 0;
+  padding: 0 12px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: clamp(16px, 2.2vw, 34px);
+  min-width: max-content;
+}
+.pos-integrations-logo {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.pos-integrations-logo-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(74px, 8vw, 104px);
+  height: clamp(74px, 8vw, 104px);
+  border-radius: clamp(16px, 1.6vw, 22px);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.74));
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  backdrop-filter: blur(10px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 16px 34px -16px rgba(10, 40, 25, 0.55);
+}
+.pos-integrations-logo-tile img {
+  width: 64%;
+  height: 64%;
+  object-fit: contain;
+}
+.pos-integrations-logo-name {
+  font-family: 'Satoshi', sans-serif;
+  font-size: clamp(12px, 1vw, 14px);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+.pos-integrations-more {
+  display: inline-block;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(255, 255, 255, 0.5);
+  transition: text-decoration-color 0.2s ease;
+}
+.pos-integrations-more:hover { text-decoration-color: #fff; }
+
+/* POS pricing banner (.hwp-cta) → SkelApp brand-green glass, matching the
+   integrations panel (was a near-black #0d130f slab). Light mode, POS page only. */
+/* POS pricing + integrations banners span the same width as the floating nav. */
+.pos-page-body .hwp-cta {
+  padding-left: clamp(16px, 4vw, 40px);
+  padding-right: clamp(16px, 4vw, 40px);
+}
+.pos-page-body .hwp-pricing-shell {
+  max-width: none;
+  margin: 0;
+}
+html:not([data-theme="dark"]) .pos-page-body .hwp-pricing-shell {
+  background:
+    radial-gradient(120% 130% at 82% 0%, rgba(95, 206, 146, 0.45) 0%, rgba(95, 206, 146, 0) 55%),
+    linear-gradient(160deg, rgba(74, 173, 119, 0.94), rgba(30, 125, 81, 0.90) 55%, rgba(23, 96, 63, 0.92));
+  -webkit-backdrop-filter: blur(8px) saturate(140%);
+  backdrop-filter: blur(8px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  box-shadow: 0 44px 90px -44px rgba(18, 60, 40, 0.55);
+}
+html:not([data-theme="dark"]) .pos-page-body .hwp-pricing-card {
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.10));
+  border: 1px solid rgba(255, 255, 255, 0.30);
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  backdrop-filter: blur(10px) saturate(150%);
+}
+html:not([data-theme="dark"]) .pos-page-body .hwp-pricing-card:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+html:not([data-theme="dark"]) .pos-page-body .hwp-pricing-icon {
+  background: rgba(255, 255, 255, 0.20);
+}
+html:not([data-theme="dark"]) .pos-page-body .hwp-pricing-name strong { color: #fff; }

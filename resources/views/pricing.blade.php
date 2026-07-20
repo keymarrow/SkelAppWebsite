@@ -1,8 +1,10 @@
 @php
-  $titleLines = content_list('pricing.header.title_lines', []);
-  $features = content_list('pricing.features', []);
-  $plans = content_list('pricing.plans', []);
-  $defaultPlan = collect($plans)->firstWhere('is_default', true) ?? ($plans[0] ?? null);
+  $heroBenefits = content_list('pricing.hero.benefits', []);
+  $tiers = content_list('pricing.tiers', []);
+  $featuresHeading = content_text('pricing.tiers_features_heading', 'What you get');
+  $monthlyLabel = content_text('pricing.billing.monthly_label', 'Monthly');
+  $yearlyLabel = content_text('pricing.billing.yearly_label', 'Yearly');
+  $yearlyHint = content_text('pricing.billing.yearly_hint', 'Save 17%');
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -23,104 +25,121 @@
       <div class="pricing-hero-banner">
         <img src="{{ content_image('pricing.hero.image', asset('assets/HeroImage.webp')) }}" alt="" class="pricing-hero-bg" loading="eager" decoding="async">
         <div class="pricing-hero-content">
-          <p class="pricing-hero-eyebrow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01z"/></svg>
-            {{ content('pricing.hero.trust_label', 'Trusted by') }} <strong>{{ content('pricing.hero.trust_count', '10,000+') }}</strong> {{ content('pricing.hero.trust_suffix', 'small businesses') }}
+          <p class="pricing-hero-eyebrow">{{ content_text('pricing.hero.eyebrow', 'SkelApp pricing') }}</p>
+          <h1 class="pricing-hero-title">{!! nl2br(e(content_text('pricing.hero.title', "The point of sale built for Tanzania.\nPriced so any shop can start."))) !!}</h1>
+
+          @if (!empty($heroBenefits))
+            <ul class="pricing-hero-benefits">
+              @foreach ($heroBenefits as $benefit)
+                <li class="pricing-hero-benefit">
+                  @include('partials.pricing-icon', ['name' => $benefit['icon'] ?? 'check', 'size' => 17])
+                  <span>{{ $benefit['text'] ?? '' }}</span>
+                </li>
+              @endforeach
+            </ul>
+          @endif
+
+          <p class="pricing-hero-altlink">
+            {{ content_text('pricing.hero.alt_prefix', 'Need the hardware too?') }}
+            <a href="{{ content('pricing.hero.alt_url', '/hardware') }}">{{ content_text('pricing.hero.alt_label', 'Explore SkelApp devices') }}</a>
           </p>
-          <h1 class="pricing-hero-title">{!! nl2br(e(content_text('pricing.hero.title', "Get more value\nfrom every payment"))) !!}</h1>
-          <p class="pricing-hero-sub">{{ content_text('pricing.hero.subtitle', "We’ve got flexible plans to suit any growing business.") }}</p>
-          <div class="pricing-hero-actions">
-            <a href="{{ content('pricing.hero.primary_url', '#pricing-plans') }}" class="pricing-hero-btn pricing-hero-btn--solid">{{ content('pricing.hero.primary_label', 'See plans') }}</a>
-            <a href="{{ content('pricing.hero.secondary_url', route('contact.show')) }}" class="pricing-hero-btn pricing-hero-btn--text">{{ content('pricing.hero.secondary_label', 'Contact sales') }}</a>
-          </div>
         </div>
       </div>
+      <script>
+        // Scroll-driven zoom: match the home hero — the banner scales as it
+        // scrolls away and scales back in toward the top. Respects reduced motion.
+        (function () {
+          var banner = document.querySelector('.pricing-hero-banner');
+          if (!banner) return;
+          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+          var ticking = false;
+          var update = function () {
+            var h = banner.offsetHeight || 1;
+            var progress = Math.min(Math.max(window.scrollY / h, 0), 1);
+            banner.style.transform = 'scale(' + (1 - progress * 0.18).toFixed(4) + ')';
+            ticking = false;
+          };
+          var onScroll = function () {
+            if (!ticking) { window.requestAnimationFrame(update); ticking = true; }
+          };
+          update();
+          window.addEventListener('scroll', onScroll, { passive: true });
+        })();
+      </script>
     </section>
 
     <section class="pricing-plan-section" id="pricing-plans" aria-label="Pricing plans">
-      <div class="hwp-section-header">
-        <h2 class="hwp-section-title">
-          @forelse ($titleLines as $line)
-            @if (!empty($line['accent']))<strong>{{ $line['text'] ?? '' }}</strong>@else{{ $line['text'] ?? '' }}@endif{{ !$loop->last ? ' ' : '' }}
-          @empty
-            Simple, <strong>transparent pricing</strong>
-          @endforelse
-        </h2>
-        <p class="hwp-section-subtitle">{{ content_text('pricing.header.subtitle', 'Clear, affordable plans with no hidden costs — pick what fits your shop today and scale as you grow.') }}</p>
+      {{-- Billing switch. Yearly is the default; without JS the yearly prices
+           still render, since the mode lives on the grid's data-billing. --}}
+      <div class="pricing-billing" data-billing-group role="group" aria-label="Billing period">
+        <button type="button" class="pricing-billing-opt" data-billing-opt="monthly" aria-pressed="false">{{ $monthlyLabel }}</button>
+        <button type="button" class="pricing-billing-opt is-active" data-billing-opt="yearly" aria-pressed="true">
+          {{ $yearlyLabel }}
+          @if ($yearlyHint !== '')<span class="pricing-billing-hint">{{ $yearlyHint }}</span>@endif
+        </button>
       </div>
 
-      <form class="pricing-plan-grid" data-pricing-form>
-        <section class="pricing-box pricing-box--features" aria-labelledby="features-title">
-          <header class="pricing-box-header">
-            <h2 id="features-title" class="pricing-box-title {{ content_typography_class('pricing.features_box.title') }}" style="{{ content_typography_vars('pricing.features_box.title') }}">{{ content_text('pricing.features_box.title', 'Features') }}</h2>
-            <p class="pricing-box-subtitle {{ content_typography_class('pricing.features_box.subtitle') }}" style="{{ content_typography_vars('pricing.features_box.subtitle') }}">{{ content_text('pricing.features_box.subtitle') }}</p>
-          </header>
+      <div class="pricing-tier-grid" data-billing="yearly">
+        @foreach ($tiers as $tier)
+          @php
+            // Features are stored one-per-line in a textarea (the CMS repeater
+            // has no nested-repeater support).
+            $tierFeatures = array_values(array_filter(
+              array_map('trim', preg_split('/\r\n|\r|\n/', (string) ($tier['features'] ?? ''))),
+              fn ($line) => $line !== ''
+            ));
+            $isFeatured = !empty($tier['is_featured']);
+            // Tiers with no separate monthly figure (Free, Custom pricing) reuse
+            // the yearly value, so the toggle simply doesn't change them.
+            $priceYearly = $tier['price'] ?? '';
+            $priceMonthly = ($tier['price_monthly'] ?? '') ?: $priceYearly;
+            $noteYearly = $tier['price_note'] ?? '';
+            $noteMonthly = ($tier['price_note_monthly'] ?? '') ?: $noteYearly;
+          @endphp
+          <article class="pricing-tier {{ $isFeatured ? 'pricing-tier--featured' : '' }}">
+            @if (!empty($tier['badge']))
+              <span class="pricing-tier-badge">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01z"/></svg>
+                {{ $tier['badge'] }}
+              </span>
+            @endif
 
-          <ul class="pricing-feature-list">
-            @foreach ($features as $feature)
-              @php $featureText = is_array($feature) ? ($feature['value'] ?? '') : $feature; @endphp
-              <li class="pricing-feature-item">
-                <span class="pricing-feature-label">{{ $featureText }}</span>
-                <span class="pricing-feature-check" aria-hidden="true">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 6L9 17l-5-5"/>
-                  </svg>
-                </span>
-              </li>
-            @endforeach
-          </ul>
-        </section>
+            <h3 class="pricing-tier-name">{{ $tier['name'] ?? '' }}</h3>
+            <p class="pricing-tier-desc">{{ $tier['description'] ?? '' }}</p>
 
-        <section class="pricing-box pricing-box--plans" aria-labelledby="plans-title">
-          <header class="pricing-box-header">
-            <h2 id="plans-title" class="pricing-box-title {{ content_typography_class('pricing.plans_box.title') }}" style="{{ content_typography_vars('pricing.plans_box.title') }}">{{ content_text('pricing.plans_box.title', 'Pricing Plan') }}</h2>
-            <p class="pricing-box-subtitle {{ content_typography_class('pricing.plans_box.subtitle') }}" style="{{ content_typography_vars('pricing.plans_box.subtitle') }}">{{ content_text('pricing.plans_box.subtitle') }}</p>
-          </header>
+            <hr class="pricing-tier-rule">
 
-          <div class="plan-option-list" role="radiogroup" aria-label="Billing period">
-            @foreach ($plans as $plan)
-              @php $isDefault = !empty($plan['is_default']); @endphp
-              <label class="plan-option {{ $isDefault ? 'is-active' : '' }}" for="plan-{{ $plan['id'] ?? $loop->index }}">
-                <input
-                  type="radio"
-                  name="plan"
-                  id="plan-{{ $plan['id'] ?? $loop->index }}"
-                  value="{{ $plan['id'] ?? $loop->index }}"
-                  data-plan-label="{{ $plan['label'] ?? '' }}"
-                  @checked($isDefault)
-                />
-                <span class="plan-option-radio" aria-hidden="true">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 6L9 17l-5-5"/>
-                  </svg>
-                </span>
+            <p class="pricing-tier-price">
+              <span class="pricing-tier-amount">
+                <span data-billing-show="yearly">{{ $priceYearly }}</span><span data-billing-show="monthly">{{ $priceMonthly }}</span>
+              </span>
+              @if (!empty($tier['price_suffix']))
+                <span class="pricing-tier-suffix">{{ $tier['price_suffix'] }}</span>
+              @endif
+            </p>
+            {{-- Always rendered, even when blank: it reserves its line so the CTAs
+                 stay on one baseline across all three cards. --}}
+            <p class="pricing-tier-note">
+              <span data-billing-show="yearly">{{ $noteYearly }}</span><span data-billing-show="monthly">{{ $noteMonthly }}</span>
+            </p>
 
-                <span class="plan-option-body">
-                  <span class="plan-option-head">
-                    <span class="plan-option-label">{{ $plan['label'] ?? '' }}</span>
-                    @if (!empty($plan['note']))
-                      <span class="plan-option-note">{{ $plan['note'] }}</span>
-                    @endif
-                  </span>
-                  <span class="plan-option-price">
-                    {{ $plan['price'] ?? '' }}
-                    @if (!empty($plan['sub']))<small>· {{ $plan['sub'] }}</small>@endif
-                  </span>
-                </span>
-              </label>
-            @endforeach
-          </div>
+            <a href="{{ ($tier['cta_url'] ?? '') ?: route('contact.show') }}" class="pricing-tier-cta">{{ $tier['cta_label'] ?? 'Get started' }}</a>
 
-          @php $ctaUrl = content('pricing.cta.url') ?: route('contact.show'); @endphp
-          <a href="{{ $ctaUrl }}" class="plan-cta" data-plan-cta>
-            {{ content('pricing.cta.prefix', 'Get started with') }}
-            <span data-plan-cta-label>{{ $defaultPlan['label'] ?? '' }}</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </a>
-        </section>
-      </form>
+            @if (!empty($tierFeatures))
+              <hr class="pricing-tier-rule">
+              <p class="pricing-tier-features-heading">{{ $featuresHeading }}</p>
+              <ul class="pricing-tier-features">
+                @foreach ($tierFeatures as $tierFeature)
+                  <li class="pricing-tier-feature">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+                    <span>{{ $tierFeature }}</span>
+                  </li>
+                @endforeach
+              </ul>
+            @endif
+          </article>
+        @endforeach
+      </div>
     </section>
 
     @php
@@ -164,25 +183,23 @@
 
   <script>
     (function () {
-      const form = document.querySelector('[data-pricing-form]');
-      if (!form) return;
+      var group = document.querySelector('[data-billing-group]');
+      var grid = document.querySelector('[data-billing]');
+      if (!group || !grid) return;
 
-      const radios = form.querySelectorAll('input[name="plan"]');
-      const ctaLabel = form.querySelector('[data-plan-cta-label]');
+      var opts = Array.prototype.slice.call(group.querySelectorAll('[data-billing-opt]'));
 
-      const sync = () => {
-        radios.forEach((radio) => {
-          const option = radio.closest('.plan-option');
-          if (!option) return;
-          option.classList.toggle('is-active', radio.checked);
-          if (radio.checked && ctaLabel) {
-            ctaLabel.textContent = radio.dataset.planLabel || '';
-          }
+      opts.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          // CSS shows/hides the two price spans off this one attribute.
+          grid.setAttribute('data-billing', btn.dataset.billingOpt);
+          opts.forEach(function (other) {
+            var on = other === btn;
+            other.classList.toggle('is-active', on);
+            other.setAttribute('aria-pressed', on ? 'true' : 'false');
+          });
         });
-      };
-
-      radios.forEach((radio) => radio.addEventListener('change', sync));
-      sync();
+      });
     })();
   </script>
 

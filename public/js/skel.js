@@ -1438,7 +1438,11 @@
 
   /* ─── Hero banner zoom (pricing/why/retailer hero banners) ── */
   const initHeroBannerZoom = () => {
-    const banners = Array.from(document.querySelectorAll('.pricing-hero-banner'));
+    const banners = Array.from(document.querySelectorAll('.pricing-hero-banner'))
+      // The pricing hero is a static full-bleed photo: scaling it on scroll would
+      // pull the image in from the screen edges and expose the page behind it.
+      // The why / retailer heroes are inset cards, so they keep the zoom.
+      .filter((banner) => !banner.closest('.pricing-page'));
     if (!banners.length) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     banners.forEach((banner) => {

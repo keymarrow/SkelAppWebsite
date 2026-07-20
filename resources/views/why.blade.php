@@ -1,16 +1,11 @@
 @php
-  // ── Gallery images — reuse the same images as the home All-features gallery
-  $galleryLeft = [
-    content_image('home.allfeatures.cards.0.image', asset('assets/techshop.webp')),
-    content_image('home.allfeatures.cards.1.image', asset('assets/CHECKOUTPOS.png')),
-    content_image('home.allfeatures.cards.2.image', asset('assets/STOCKLIST.png')),
-  ];
-  $galleryCenter = content_image('home.allfeatures.feature_image', asset('assets/techshop.webp'));
-  $galleryRight = [
-    content_image('home.allfeatures.cards.3.image', asset('assets/DASHBOARD.png')),
-    content_image('home.allfeatures.cards.4.image', asset('assets/CRM-phone-feature.png')),
-    content_image('home.allfeatures.cards.5.image', asset('assets/hardware.webp')),
-  ];
+  // ── "Why we build SkelApp" — numbered reason cards ──────────────────
+  $buildReasons = content_list('why.build.reasons', [
+    ['title' => 'Small shops deserve better', 'body' => 'The businesses that hold up their communities were stuck with paper, guesswork and tools built for someone else. We wanted to change that.'],
+    ['title' => 'It has to work offline',       'body' => 'Power and network drop — the counter cannot. SkelApp keeps selling through outages and syncs the moment it is back.'],
+    ['title' => 'Price should never lock you out', 'body' => 'One fair price, every feature included. Whether you run one till or ten, the whole app is yours from day one.'],
+    ['title' => 'Support that shows up',         'body' => 'A local team in Tanzania for setup, training and repairs — real people who know retail, not a call centre far away.'],
+  ]);
 
   // ── Story cards (the problem / idea / outcome) ──────────────────────
   $storyCards = content_list('why.story.cards', [
@@ -18,6 +13,11 @@
     ['num' => '02', 'title' => 'The idea',    'body' => 'Put a simple, reliable point of sale in every shop — one that works offline and fits how Tanzania sells.', 'image' => 'assets/client.webp'],
     ['num' => '03', 'title' => 'The outcome', 'body' => 'Thousands of businesses now run on SkelApp — selling faster, wasting less and growing with confidence.', 'image' => 'assets/HeroImage.webp'],
   ]);
+
+  // ── Photo grid (one large image over two) ───────────────────────────
+  $gridMain = content_image('why.gallery.image_main', asset('assets/client.webp'));
+  $gridA    = content_image('why.gallery.image_a', asset('assets/techshop.webp'));
+  $gridB    = content_image('why.gallery.image_b', asset('assets/grocery.webp'));
 
   // ── Support feature showcase ────────────────────────────────────────
   $supportFeatures = content_list('why.support.features', [
@@ -42,61 +42,75 @@
 
   <main class="hwp why-page">
 
-    {{-- ══════════════ HERO BANNER ══════════════ --}}
-    <section class="why-hero" aria-label="About SkelApp">
-      <div class="pricing-hero-banner">
-        <img src="{{ content_image('why.hero.image', asset('assets/HeroImage.webp')) }}" alt="" class="pricing-hero-bg" loading="eager" decoding="async">
-        <div class="pricing-hero-content">
-          <p class="pricing-hero-eyebrow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01z"/></svg>
-            {{ content('why.hero.eyebrow', 'About SkelApp') }}
-          </p>
-          <h1 {!! content_typography_html('why.hero.title', 'pricing-hero-title') !!}>{!! nl2br(e(content_text('why.hero.title', "Transforming Tanzania's small businesses to grow — and communities to thrive."))) !!}</h1>
-          <p {!! content_typography_html('why.hero.subtitle', 'pricing-hero-sub') !!}>{{ content_text('why.hero.subtitle', "We put powerful, affordable tools in the hands of every shop — so businesses grow stronger and the people around them thrive.") }}</p>
-          <div class="pricing-hero-actions">
-            <a href="{{ content('why.hero.primary_url', route('contact.show')) }}" class="pricing-hero-btn pricing-hero-btn--solid">{{ content('why.hero.primary_label', 'Talk to us') }}</a>
-            <a href="{{ content('why.hero.secondary_url', route('features.show')) }}" class="pricing-hero-btn pricing-hero-btn--text">{{ content('why.hero.secondary_label', 'Explore SkelApp') }}</a>
+    {{-- ══════════════ HERO (identical structure to the home hero) ══════════════ --}}
+    <section class="hero" id="about" aria-label="About SkelApp">
+      <div
+        id="hero-bg"
+        class="hero-bg"
+        data-bg-desktop="{{ content_image('home.hero.background_image_desktop', asset('assets/HeroImage.webp')) }}"
+        data-bg-mobile="{{ content_image('home.hero.background_image_mobile', asset('assets/HeroImage.jpg')) }}"
+      ></div>
+      <div class="hero-overlay"></div>
+      <script>
+        (function () {
+          var el = document.getElementById('hero-bg');
+          if (!el) return;
+          var desktop = el.dataset.bgDesktop || '';
+          var mobile = el.dataset.bgMobile || '';
+          var apply = function () {
+            var url = window.matchMedia('(max-width: 900px)').matches ? (mobile || desktop) : desktop;
+            if (url) el.style.setProperty('background-image', "url('" + url.replace(/'/g, "\\'") + "')", 'important');
+          };
+          apply();
+          window.addEventListener('resize', apply);
+
+          // Scroll-driven zoom: the whole hero section scales as it scrolls away
+          // and scales back in toward the top. Matches the home hero exactly.
+          var hero = el.closest('.hero') || el.parentElement;
+          var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (!reduce && hero) {
+            var ticking = false;
+            var update = function () {
+              var h = hero.offsetHeight || 1;
+              var progress = Math.min(Math.max(window.scrollY / h, 0), 1);
+              hero.style.transform = 'scale(' + (1 - progress * 0.18).toFixed(4) + ')';
+              ticking = false;
+            };
+            var onScroll = function () {
+              if (!ticking) { window.requestAnimationFrame(update); ticking = true; }
+            };
+            update();
+            window.addEventListener('scroll', onScroll, { passive: true });
+          }
+        })();
+      </script>
+      <div class="hero-content">
+        <div class="hero-left">
+          <h1 class="{{ content_typography_class('why.hero.title') }}" style="{{ content_typography_vars('why.hero.title') }}">{!! content_text_html('why.hero.title', 'About SkelApp <br>and why we built') !!}</h1>
+          <p class="{{ content_typography_class('why.hero.subtitle') }}" style="{{ content_typography_vars('why.hero.subtitle') }}">{!! content_text_html('why.hero.subtitle', "We put powerful, affordable tools in the hands of every shop — so businesses grow stronger and the people around them thrive.") !!}</p>
+          <div class="hero-cta">
+            <a href="{{ content('why.hero.primary_url', route('contact.show')) }}" class="btn-download">{{ content('why.hero.primary_label', 'Talk to us') }}</a>
+            <a href="{{ content('why.hero.secondary_url', route('features.show')) }}" class="btn-demo">{{ content('why.hero.secondary_label', 'Explore SkelApp') }}</a>
           </div>
         </div>
       </div>
     </section>
 
-    {{-- ══════════════ GALLERY (visuals only) ══════════════ --}}
-    <section class="allfeatures allfeatures--plain">
-      <div class="allfeatures-container">
-        <div class="allfeatures-head">
-          <span class="why-gallery-eyebrow">{{ content('why.gallery.eyebrow', 'Why SkelApp?') }}</span>
-          <h2 class="allfeatures-head-title">{!! content('why.gallery.title', 'We genuinely<br><span class="af-accent">care</span>') !!}</h2>
+    {{-- ══════════════ WHY WE BUILD SKELAPP (numbered reasons) ══════════════ --}}
+    <section class="hwp-showcase why-build">
+      <div class="hwp-shell">
+        <div class="hwp-section-header">
+          <h2 class="hwp-section-title {{ content_typography_class('why.build.title') }}" style="{{ content_typography_vars('why.build.title') }}">{{ content_text('why.build.title', 'Why we build SkelApp') }}</h2>
+          <p class="hwp-section-subtitle {{ content_typography_class('why.build.subtitle') }}" style="{{ content_typography_vars('why.build.subtitle') }}">{{ content_text('why.build.subtitle', 'A few beliefs shaped everything — from the first line of code to the team that shows up at your shop.') }}</p>
         </div>
-
-        <div class="allfeatures-gallery" data-af-gallery>
-          <div class="af-col af-col--left">
-            @foreach ($galleryLeft as $i => $img)
-              <div class="af-parallax" data-af-parallax>
-                <article class="af-card af-anim" data-af-anim style="--af-delay: {{ $i * 150 }}ms">
-                  <div class="af-media"><img src="{{ $img }}" alt="" loading="lazy" decoding="async"></div>
-                </article>
-              </div>
-            @endforeach
-          </div>
-
-          <div class="af-col af-col--center">
-            <div class="af-center-parallax" data-af-center>
-              <article class="af-card af-feature" data-af-feature>
-                <div class="af-media"><img src="{{ $galleryCenter }}" alt="" loading="lazy" decoding="async"></div>
-              </article>
+        <div class="hw-why-grid">
+          @foreach ($buildReasons as $idx => $reason)
+            <div class="hw-why-card">
+              <span class="hw-why-num">0{{ $idx + 1 }}</span>
+              <h3 class="hw-why-title">{{ $reason['title'] ?? '' }}</h3>
+              <p class="hw-why-copy">{{ $reason['body'] ?? '' }}</p>
             </div>
-          </div>
-
-          <div class="af-col af-col--right">
-            @foreach ($galleryRight as $i => $img)
-              <div class="af-parallax" data-af-parallax>
-                <article class="af-card af-anim" data-af-anim style="--af-delay: {{ $i * 150 }}ms">
-                  <div class="af-media"><img src="{{ $img }}" alt="" loading="lazy" decoding="async"></div>
-                </article>
-              </div>
-            @endforeach
-          </div>
+          @endforeach
         </div>
       </div>
     </section>
@@ -138,7 +152,29 @@
       </div>
     </section>
 
-    {{-- ══════════════ SUPPORT SHOWCASE (scroll-pinned) ══════════════ --}}
+    {{-- ══════════════ PHOTO GRID (one large over two) ══════════════ --}}
+    <section class="allfeatures allfeatures--plain">
+      <div class="allfeatures-container">
+        <div class="hwp-section-header">
+          <h2 class="hwp-section-title {{ content_typography_class('why.gallery.title') }}" style="{{ content_typography_vars('why.gallery.title') }}">{!! content('why.gallery.title', 'We genuinely<br><span class="af-accent">care</span>') !!}</h2>
+          <p class="hwp-section-subtitle {{ content_typography_class('why.gallery.subtitle') }}" style="{{ content_typography_vars('why.gallery.subtitle') }}">{{ content_text('why.gallery.subtitle', 'A look inside the shops we serve — and the people who make every day worth showing up for.') }}</p>
+        </div>
+
+        <div class="why-photo-grid">
+          <figure class="why-photo why-photo--main">
+            <img src="{{ $gridMain }}" alt="" loading="lazy" decoding="async">
+          </figure>
+          <figure class="why-photo">
+            <img src="{{ $gridA }}" alt="" loading="lazy" decoding="async">
+          </figure>
+          <figure class="why-photo">
+            <img src="{{ $gridB }}" alt="" loading="lazy" decoding="async">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    {{-- ══════════════ SUPPORT SHOWCASE (scroll-pinned, flat) ══════════════ --}}
     <section class="hwp-showcase hwp-showcase--pinned" data-feature-scroll>
       <div class="hwp-pin-stage">
         <div class="hwp-pin-inner">

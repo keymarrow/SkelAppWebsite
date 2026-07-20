@@ -165,10 +165,14 @@ class PageController extends Controller
         $content = $page->effectiveDraft();
 
         // Plain text/textarea/repeater fields submitted as content[*]
-        foreach (CmsRequestPayload::content($request) as $path => $value) {
+        $payload = CmsRequestPayload::content($request);
+        foreach ($payload as $path => $value) {
             $value = $this->normaliseValue($value);
-            Arr::set($content, $path, $value);
+            Arr::set($content, (string) $path, $value);
         }
+
+        // Drop repeater rows removed in the form (survivors re-index to 0..N-1).
+        $content = CmsRequestPayload::pruneRemovedRepeaterRows($content, array_keys($payload));
 
         // File uploads: image[dot.path] → store file → Arr::set URL into content
         foreach ($request->allFiles() as $rootKey => $files) {

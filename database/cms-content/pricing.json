@@ -4,73 +4,84 @@
     "content": {
         "meta": {
             "title": "Pricing – SkelApp",
-            "description": "SkelApp pricing — clear, affordable, no hidden costs. Choose Monthly, 6-month, or 12-month plans and save more the longer you commit."
+            "description": "SkelApp pricing — start free, or TZS 12,500 per location per month billed annually. Every plan sells offline. No hidden costs."
         },
-        "header": {
-            "title_lines": [
+        "hero": {
+            "image": "assets/HeroImage.webp",
+            "eyebrow": "SkelApp pricing",
+            "title": "The point of sale built for Tanzania.\nPriced so any shop can start.",
+            "benefits": [
                 {
-                    "text": "One price.",
-                    "accent": "0"
+                    "icon": "tag",
+                    "text": "Plans start at free"
                 },
                 {
-                    "text": "Every feature.",
-                    "accent": "0"
+                    "icon": "bolt",
+                    "text": "Keeps selling through power cuts"
                 },
                 {
-                    "text": "No surprises.",
-                    "accent": "1"
+                    "icon": "setup",
+                    "text": "Setup & staff training included"
+                },
+                {
+                    "icon": "support",
+                    "text": "24/7 support included"
                 }
             ],
-            "subtitle": "SkelApp's pricing is as simple as your business should be — one flat rate, everything included, cancel anytime. No tiers. No hidden fees. No confusion."
+            "alt_prefix": "Need the hardware too?",
+            "alt_label": "Explore SkelApp devices",
+            "alt_url": "/hardware"
         },
-        "features_box": {
-            "title": "Features",
-            "subtitle": "This subscription includes the following features."
+        "billing": {
+            "monthly_label": "Monthly",
+            "yearly_label": "Yearly",
+            "yearly_hint": "Save 17%"
         },
-        "features": [
-            "Sales recording & receipts",
-            "Purchase & expense tracking",
-            "Inventory & stock alerts",
-            "Profit & loss reports",
-            "Split billing",
-            "Staff & cashier management",
-            "Customer relationship tools",
-            "Mobile & tablet access"
-        ],
-        "plans_box": {
-            "title": "Pricing Plan",
-            "subtitle": "Choose the plan that best suits your needs."
-        },
-        "plans": [
+        "tiers_features_heading": "What you get",
+        "tiers": [
             {
-                "id": "monthly",
-                "label": "Monthly",
-                "note": null,
-                "price": "TZS 15,000",
-                "sub": "billed monthly",
-                "is_default": "0"
+                "name": "WingaMode",
+                "description": "Essential features for businesses managed by a single owner",
+                "price": "Free",
+                "price_monthly": "",
+                "price_suffix": "",
+                "price_note": "/location/month billed annually",
+                "price_note_monthly": "/location/month billed monthly",
+                "cta_label": "Start Free",
+                "cta_url": "",
+                "badge": "",
+                "is_featured": false,
+                "features": "1 User\n10 POS transactions/month\n10 Online Store orders/month\n10 Purchase Orders & Bills/month\nInventory Management\nCustomer Management\nSales Management\nPurchase Management\nReal-time Reports and Dashboards"
             },
             {
-                "id": "sixmonth",
-                "label": "Half Year",
-                "note": "Save TZS 15,000",
-                "price": "TZS 75,000",
-                "sub": "TZS 12,500 / month",
-                "is_default": "0"
+                "name": "BiasharaPlus",
+                "description": "Key features for businesses that are getting started",
+                "price": "TZS 12,500",
+                "price_monthly": "TZS 15,000",
+                "price_suffix": "/month",
+                "price_note": "/location/month billed annually",
+                "price_note_monthly": "/location/month billed monthly",
+                "cta_label": "Start 30 Days Free",
+                "cta_url": "",
+                "badge": "Best value",
+                "is_featured": true,
+                "features": "3 Users\nUnlimited POS transactions\n500 Online Store orders\n500 Purchase Orders & Bills\nEverything in Free +\nSerial & Batch Tracking\nMulti-Location Management\nCustomisable & Scheduled Reports\nCustom Views and Custom Fields\nAutomation - E-Mail Alerts, Field Updates\nPrice Management\n24/7 support"
             },
             {
-                "id": "yearly",
-                "label": "Full Year",
-                "note": "Best value · Save TZS 30,000",
-                "price": "TZS 150,000",
-                "sub": "TZS 12,500 / month",
-                "is_default": "1"
+                "name": "Build Your Own",
+                "description": "For multi-branch operations that need SkelApp shaped around how they trade",
+                "price": "Custom pricing",
+                "price_monthly": "",
+                "price_suffix": "",
+                "price_note": "Scoped to your branches and volume",
+                "price_note_monthly": "",
+                "cta_label": "Talk to sales",
+                "cta_url": "",
+                "badge": "",
+                "is_featured": false,
+                "features": "Everything in BiasharaPlus +\nUnlimited users and locations\nCustom integrations and data migration\nDedicated onboarding and staff training\nPriority 24/7 support"
             }
         ],
-        "cta": {
-            "prefix": "Get started with",
-            "url": null
-        },
         "getstarted": {
             "title_top": "Get Started",
             "title_bottom": "with the App",
@@ -78,18 +89,6 @@
             "cta_url": "#",
             "copy": "Using SkelApp is simple and intuitive. Open it, follow the guided steps to set up your shop, and explore every feature. Got questions? Our team has you covered.",
             "phone_image": "assets/Mobilehomeview.png"
-        },
-        "hero": {
-            "image": "assets/HeroImage.webp",
-            "trust_label": "Trusted by",
-            "trust_count": "10,000+",
-            "trust_suffix": "small businesses",
-            "title": "Get more value\nfrom every payment",
-            "subtitle": "We’ve got flexible plans to suit any growing business.",
-            "primary_url": "#pricing-plans",
-            "primary_label": "See plans",
-            "secondary_url": "/contact",
-            "secondary_label": "Contact sales"
         }
     }
 }

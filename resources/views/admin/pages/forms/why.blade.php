@@ -2,16 +2,32 @@
   @include('admin.pages.fields.text', ['name' => 'hero.eyebrow', 'label' => 'Eyebrow label'])
   @include('admin.pages.fields.text_typography', ['name' => 'hero.title', 'label' => 'Hero title', 'preset' => 'h1-hero', 'multiline' => true, 'rows' => 3])
   @include('admin.pages.fields.text_typography', ['name' => 'hero.subtitle', 'label' => 'Hero subtitle', 'preset' => 'body-lead', 'multiline' => true, 'rows' => 3])
-  @include('admin.pages.fields.image', ['name' => 'hero.image', 'label' => 'Hero background image'])
+  {{-- Hero photo mirrors the home page hero; edit it under Home → Hero. --}}
   @include('admin.pages.fields.text', ['name' => 'hero.primary_label', 'label' => 'Primary button label'])
   @include('admin.pages.fields.text', ['name' => 'hero.primary_url', 'label' => 'Primary button URL'])
   @include('admin.pages.fields.text', ['name' => 'hero.secondary_label', 'label' => 'Secondary button label'])
   @include('admin.pages.fields.text', ['name' => 'hero.secondary_url', 'label' => 'Secondary button URL'])
 @endcomponent
 
-@component('admin.pages.fields.section', ['title' => 'Gallery intro'])
-  @include('admin.pages.fields.text', ['name' => 'gallery.eyebrow', 'label' => 'Eyebrow label'])
+@component('admin.pages.fields.section', ['title' => 'Why we build SkelApp', 'subtitle' => 'Heading + the numbered reason cards below it'])
+  @include('admin.pages.fields.text_typography', ['name' => 'build.title', 'label' => 'Section title', 'preset' => 'h2-section'])
+  @include('admin.pages.fields.text_typography', ['name' => 'build.subtitle', 'label' => 'Section subtitle', 'preset' => 'body-lead', 'multiline' => true, 'rows' => 2])
+  @include('admin.pages.fields.repeater', [
+    'name' => 'build.reasons',
+    'label' => 'Reasons (numbered automatically)',
+    'fields' => [
+      ['key' => 'title', 'label' => 'Reason title'],
+      ['key' => 'body', 'label' => 'Reason copy', 'type' => 'textarea', 'rows' => 3],
+    ],
+  ])
+@endcomponent
+
+@component('admin.pages.fields.section', ['title' => 'Photo grid', 'subtitle' => 'Heading + a large photo over two smaller ones'])
   @include('admin.pages.fields.textarea', ['name' => 'gallery.title', 'label' => 'Gallery title HTML', 'rows' => 3])
+  @include('admin.pages.fields.textarea', ['name' => 'gallery.subtitle', 'label' => 'Gallery subtitle', 'rows' => 2])
+  @include('admin.pages.fields.image', ['name' => 'gallery.image_main', 'label' => 'Large photo (top)'])
+  @include('admin.pages.fields.image', ['name' => 'gallery.image_a', 'label' => 'Bottom-left photo'])
+  @include('admin.pages.fields.image', ['name' => 'gallery.image_b', 'label' => 'Bottom-right photo'])
 @endcomponent
 
 @component('admin.pages.fields.section', ['title' => 'People section'])
