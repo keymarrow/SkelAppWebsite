@@ -1,6 +1,15 @@
 @php
   $homeUrl = url('/');
   $faqGroups = content_list('faq.page.groups', []);
+  $seoFaqs = collect($faqGroups)
+    ->flatMap(fn ($group) => $group['questions'] ?? [])
+    ->map(fn ($item) => [
+      'question' => $item['question'] ?? '',
+      'answer' => $item['answer'] ?? '',
+    ])
+    ->filter(fn ($item) => trim((string) $item['question']) !== '' && trim((string) $item['answer']) !== '')
+    ->values()
+    ->all();
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +18,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ content('faq.meta.title', 'FAQ – SkelApp') }}</title>
   <meta name="description" content="{{ content('faq.meta.description') }}">
-  <link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" sizes="any" />
+  @include('partials.seo', [
+    'seoTitle' => content('faq.meta.title', 'FAQ – SkelApp'),
+    'seoDescription' => content('faq.meta.description'),
+    'seoPageType' => 'WebPage',
+    'seoFaqs' => $seoFaqs,
+    'seoBreadcrumbs' => [
+      ['name' => 'Home', 'url' => url('/')],
+      ['name' => 'FAQ', 'url' => route('faq.show')],
+    ],
+  ])
   <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body class="faq-page-body">

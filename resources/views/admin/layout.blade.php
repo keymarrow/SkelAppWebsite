@@ -4,7 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ $title ?? 'SkelApp CMS' }}</title>
-  <link rel="icon" href="{{ asset('assets/skel.png') }}" type="image/png" sizes="any" />
+  <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+  <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+  <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicon-96x96.png') }}" />
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}" />
   <link href="{{ asset('css/admin-news.css') }}?v={{ @filemtime(public_path('css/admin-news.css')) }}" rel="stylesheet" />
 </head>
 @php

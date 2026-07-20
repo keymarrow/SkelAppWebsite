@@ -73,7 +73,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>{{ content('privacy.meta.title', 'Privacy Policy | SkelApp') }}</title>
 <meta name="description" content="{{ content('privacy.meta.description', 'Read SkelApp\'s privacy policy and how we collect, use, and protect personal information.') }}">
-<link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" sizes="any" />
+@include('partials.seo', [
+  'seoTitle' => content('privacy.meta.title', 'Privacy Policy | SkelApp'),
+  'seoDescription' => content('privacy.meta.description', 'Read SkelApp\'s privacy policy and how we collect, use, and protect personal information.'),
+  'seoPageType' => 'WebPage',
+  'seoBreadcrumbs' => [
+    ['name' => 'Home', 'url' => url('/')],
+    ['name' => 'Privacy Policy', 'url' => route('privacy.show')],
+  ],
+])
 <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body class="terms-page privacy-page">

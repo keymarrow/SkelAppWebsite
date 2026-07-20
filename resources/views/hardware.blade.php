@@ -52,7 +52,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ content('hardware.meta.title', 'Hardware & Accessories – SkelApp') }}</title>
   <meta name="description" content="{{ content('hardware.meta.description', 'SkelApp hardware and accessories — terminals, registers, printers, scanners and complete kits built for Tanzanian retail.') }}">
-  <link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" sizes="any" />
+  @include('partials.seo', [
+    'seoTitle' => content('hardware.meta.title', 'Hardware & Accessories – SkelApp'),
+    'seoDescription' => content('hardware.meta.description', 'SkelApp hardware and accessories — terminals, registers, printers, scanners and complete kits built for Tanzanian retail.'),
+    'seoImage' => content_image('hardware.hero.image', asset('assets/PosSystemRegister.webp')),
+    'seoPageType' => 'CollectionPage',
+    'seoBreadcrumbs' => [
+      ['name' => 'Home', 'url' => url('/')],
+      ['name' => 'Hardware', 'url' => route('hardware.show')],
+    ],
+  ])
   <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body class="hardware-page-body">

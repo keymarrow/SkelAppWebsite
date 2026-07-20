@@ -168,9 +168,10 @@
   'seoDescription' => content('home.meta.description', 'SkelApp is the point of sale and inventory management app for small businesses in Tanzania — every sale, expense, and stock item tracked in real time.'),
   'seoType'        => 'website',
   'seoImage'       => content_image('home.hero.background_image_desktop', asset('assets/HeroImage.webp')),
+  'seoPageType'    => 'WebPage',
   'seoSoftware'    => true,
+  'seoFaqs'        => content_list('faq.home_preview.items', []),
 ])
-<link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" sizes="any" />
 <link rel="preload" as="image" href="{{ content_image('home.hero.background_image_desktop', asset('assets/HeroImage.webp')) }}" media="(min-width: 901px)" fetchpriority="high" />
 <link rel="preload" as="image" href="{{ content_image('home.hero.background_image_mobile', asset('assets/HeroImage.jpg')) }}" media="(max-width: 900px)" fetchpriority="high" />
 <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />

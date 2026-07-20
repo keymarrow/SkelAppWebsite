@@ -18,7 +18,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>{{ content('contact.meta.title', 'Contact Us – SkelApp') }}</title>
 <meta name="description" content="{{ content('contact.meta.description') }}">
-<link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" sizes="any" />
+@include('partials.seo', [
+  'seoTitle' => content('contact.meta.title', 'Contact Us – SkelApp'),
+  'seoDescription' => content('contact.meta.description'),
+  'seoPageType' => 'ContactPage',
+  'seoBreadcrumbs' => [
+    ['name' => 'Home', 'url' => url('/')],
+    ['name' => 'Contact', 'url' => route('contact.show')],
+  ],
+])
 <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body class="contact-page">

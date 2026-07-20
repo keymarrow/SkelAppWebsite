@@ -21,7 +21,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ content('integrations.meta.title', 'Integrations - SkelApp') }}</title>
   <meta name="description" content="{{ content('integrations.meta.description', 'Connect SkelApp with Zoho Books, Xero, QuickBooks, Sage, WhatsApp and Notify Africa BulkSMS.') }}">
-  <link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" sizes="any" />
+  @include('partials.seo', [
+    'seoTitle' => content('integrations.meta.title', 'Integrations - SkelApp'),
+    'seoDescription' => content('integrations.meta.description', 'Connect SkelApp with Zoho Books, Xero, QuickBooks, Sage, WhatsApp and Notify Africa BulkSMS.'),
+    'seoImage' => cms_image($hero['image'] ?? null, asset('assets/HeroImage.webp')),
+    'seoPageType' => 'CollectionPage',
+    'seoFaqs' => $faqItems,
+    'seoBreadcrumbs' => [
+      ['name' => 'Home', 'url' => url('/')],
+      ['name' => 'Integrations', 'url' => route('integrations.index')],
+    ],
+  ])
   <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body class="integrations-page-body">

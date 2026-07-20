@@ -35,7 +35,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ ($integration['name'] ?? 'Integration').' '.content('integration.meta.title_suffix', 'integration - SkelApp') }}</title>
   <meta name="description" content="{{ $integration['summary'] ?? content('integration.meta.description_fallback', 'SkelApp integration details.') }}">
-  <link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" sizes="any" />
+  @include('partials.seo', [
+    'seoTitle' => ($integration['name'] ?? 'Integration').' '.content('integration.meta.title_suffix', 'integration - SkelApp'),
+    'seoDescription' => $integration['summary'] ?? content('integration.meta.description_fallback', 'SkelApp integration details.'),
+    'seoImage' => cms_image($integration['hero_image'] ?? null, asset('assets/devicemockup.webp')),
+    'seoPageType' => 'WebPage',
+    'seoAbout' => array_values(array_filter([
+      $integration['name'] ?? null,
+      $integration['category'] ?? 'Integration',
+    ])),
+    'seoFaqs' => $faq,
+    'seoBreadcrumbs' => [
+      ['name' => 'Home', 'url' => url('/')],
+      ['name' => 'Integrations', 'url' => route('integrations.index')],
+      ['name' => $integration['name'] ?? 'Integration', 'url' => route('integrations.show', $slug)],
+    ],
+  ])
   <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body class="integration-detail-body">

@@ -46,6 +46,12 @@
       'subtitle' => 'Hardware FAQ',
       'read_more_label' => 'Read more',
   ]));
+  $seoProductAttributes = collect($specs)
+    ->flatMap(fn ($spec) => collect($spec['rows'] ?? [])
+      ->map(fn ($row) => ['name' => $row['k'] ?? '', 'value' => $row['v'] ?? '']))
+    ->filter(fn ($row) => trim((string) ($row['name'] ?? '')) !== '' && trim((string) ($row['value'] ?? '')) !== '')
+    ->values()
+    ->all();
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +60,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ $product['meta_title'] ?? (($product['name'] ?? 'Hardware').' – SkelApp Hardware') }}</title>
   <meta name="description" content="{{ $product['meta_description'] ?? '' }}">
-  <link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" sizes="any" />
+  @include('partials.seo', [
+    'seoTitle' => $product['meta_title'] ?? (($product['name'] ?? 'Hardware').' – SkelApp Hardware'),
+    'seoDescription' => $product['meta_description'] ?? ($product['hero_subtitle'] ?? 'SkelApp hardware built for Tanzanian retail.'),
+    'seoImage' => cms_image($product['hero_image'] ?? null, asset('assets/PosSystemRegister.webp')),
+    'seoPageType' => 'WebPage',
+    'seoProduct' => [
+      'name' => $product['name'] ?? 'SkelApp Hardware',
+      'description' => $product['meta_description'] ?? ($product['hero_subtitle'] ?? 'SkelApp hardware built for Tanzanian retail.'),
+      'image' => cms_image($product['hero_image'] ?? null, asset('assets/PosSystemRegister.webp')),
+      'category' => 'Point of Sale Hardware',
+      'attributes' => $seoProductAttributes,
+    ],
+    'seoFaqs' => $faq['items'] ?? [],
+    'seoBreadcrumbs' => [
+      ['name' => 'Home', 'url' => url('/')],
+      ['name' => 'Hardware', 'url' => route('hardware.show')],
+      ['name' => $product['name'] ?? 'Hardware', 'url' => route('hardware.product', $slug)],
+    ],
+  ])
   <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body class="hardware-product-body">

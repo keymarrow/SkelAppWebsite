@@ -18,7 +18,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>{{ $meta['title'] ?? 'Affiliate Program | SkelApp' }}</title>
 <meta name="description" content="{{ $meta['description'] ?? 'Join the SkelApp affiliate program and earn bonuses for referring businesses.' }}">
-<link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" sizes="any" />
+@include('partials.seo', [
+  'seoTitle' => $meta['title'] ?? 'Affiliate Program | SkelApp',
+  'seoDescription' => $meta['description'] ?? 'Join the SkelApp affiliate program and earn bonuses for referring businesses.',
+  'seoImage' => cms_image($hero['image'] ?? null, asset('assets/attendants.webp')),
+  'seoPageType' => 'WebPage',
+  'seoBreadcrumbs' => [
+    ['name' => 'Home', 'url' => url('/')],
+    ['name' => 'Affiliate Program', 'url' => route('affiliate.show')],
+  ],
+])
 <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body class="affiliate-page-body">

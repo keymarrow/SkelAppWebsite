@@ -3,6 +3,24 @@
   $bodyClass = 'news-article-page';
   $metaDescription = $metaDescription ?? ($article['meta_description'] ?? $article['summary']);
   $articleSections = $article['sections'] ?? [];
+  $canonicalUrl = route('news.show', $article['slug']);
+  $seoType = 'article';
+  $seoPageType = 'WebPage';
+  $seoImage = $article['featured_image_url'] ?? content_image('home.hero.background_image_desktop', asset('assets/HeroImage.webp'));
+  $seoArticle = [
+    'type' => 'NewsArticle',
+    'headline' => $article['title'],
+    'description' => $metaDescription,
+    'datePublished' => $article['date'] ?? null,
+    'dateModified' => $article['date'] ?? null,
+    'author' => ['type' => 'Organization', 'name' => content('global.brand.name', 'SkelApp')],
+    'image' => $seoImage,
+  ];
+  $seoBreadcrumbs = [
+    ['name' => 'Home', 'url' => url('/')],
+    ['name' => 'News', 'url' => route('news.index')],
+    ['name' => $article['title'], 'url' => $canonicalUrl],
+  ];
 @endphp
 
 @extends('news.layout')

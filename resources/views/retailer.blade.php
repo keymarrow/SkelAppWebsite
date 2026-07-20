@@ -50,7 +50,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ $r['meta_title'] ?? (($r['name'] ?? 'Retailer').' POS – SkelApp') }}</title>
   <meta name="description" content="{{ $r['meta_description'] ?? '' }}">
-  <link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" sizes="any" />
+  @include('partials.seo', [
+    'seoTitle' => $r['meta_title'] ?? (($r['name'] ?? 'Retailer').' POS – SkelApp'),
+    'seoDescription' => $r['meta_description'] ?? ($r['hero_subtitle'] ?? 'SkelApp point of sale for Tanzanian retailers.'),
+    'seoImage' => cms_image($r['hero_image'] ?? null, asset('assets/HeroImage.webp')),
+    'seoPageType' => 'WebPage',
+    'seoAbout' => array_values(array_filter([
+      $r['name'] ?? null,
+      'Point of sale in Tanzania',
+    ])),
+    'seoFaqs' => $faqItems,
+    'seoBreadcrumbs' => [
+      ['name' => 'Home', 'url' => url('/')],
+      ['name' => 'Retailers', 'url' => route('retailers.index')],
+      ['name' => $r['name'] ?? 'Retailer', 'url' => route('retailers.show', $slug)],
+    ],
+  ])
   <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
   <style>
     /* Scoped overrides so retailer feature cards match homepage sizing */

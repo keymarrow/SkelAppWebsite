@@ -270,6 +270,7 @@
     'seoDescription' => content('pos.meta.description', 'SkelApp Point of Sale and Inventory Management, Track every sale, every expense, and every purchase. The POS built for how Tanzania sells.'),
     'seoType'        => 'website',
     'seoImage'       => content_image('pos.hero.image', content_image('home.hero.background_image_desktop', asset('assets/HeroImage.webp'))),
+    'seoPageType'    => 'WebPage',
     'seoSoftware'    => true,
     'seoFaqs'        => $faq['items'] ?? [],
     'seoBreadcrumbs' => [
@@ -277,7 +278,6 @@
       ['name' => 'Point of Sale', 'url' => route('pos.show')],
     ],
   ])
-  <link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" sizes="any" />
   <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body class="hardware-product-body why-page-body pos-page-body">

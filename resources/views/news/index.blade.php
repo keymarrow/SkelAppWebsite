@@ -2,6 +2,12 @@
   $title = 'SkelApp News';
   $bodyClass = 'news-index-page';
   $metaDescription = $metaDescription ?? 'Latest SkelApp news, product updates, retail guides, and company articles.';
+  $canonicalUrl = route('news.index');
+  $seoPageType = 'CollectionPage';
+  $seoBreadcrumbs = [
+    ['name' => 'Home', 'url' => url('/')],
+    ['name' => 'News', 'url' => route('news.index')],
+  ];
 @endphp
 
 @extends('news.layout')

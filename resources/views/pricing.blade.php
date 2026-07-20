@@ -2,6 +2,7 @@
   $heroBenefits = content_list('pricing.hero.benefits', []);
   $tiers = content_list('pricing.tiers', []);
   $featuresHeading = content_text('pricing.tiers_features_heading', 'What you get');
+  $pricingFaqs = content_list('faq.home_preview.items', []);
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +11,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ content('pricing.meta.title', 'Pricing – SkelApp') }}</title>
   <meta name="description" content="{{ content('pricing.meta.description', "SkelApp pricing — clear, affordable, no hidden costs.") }}">
-  <link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" sizes="any" />
+  @include('partials.seo', [
+    'seoTitle' => content('pricing.meta.title', 'Pricing – SkelApp'),
+    'seoDescription' => content('pricing.meta.description', 'SkelApp pricing — clear, affordable, no hidden costs.'),
+    'seoImage' => content_image('pricing.hero.image', asset('assets/HeroImage.webp')),
+    'seoPageType' => 'WebPage',
+    'seoFaqs' => $pricingFaqs,
+    'seoBreadcrumbs' => [
+      ['name' => 'Home', 'url' => url('/')],
+      ['name' => 'Pricing', 'url' => route('pricing.show')],
+    ],
+  ])
   <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body class="pricing-page-body">

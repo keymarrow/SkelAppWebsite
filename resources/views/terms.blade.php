@@ -10,7 +10,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>{{ content('terms.meta.title', 'Terms of Service | SkelApp') }}</title>
 <meta name="description" content="{{ content('terms.meta.description') }}">
-<link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" sizes="any" />
+@include('partials.seo', [
+  'seoTitle' => content('terms.meta.title', 'Terms of Service | SkelApp'),
+  'seoDescription' => content('terms.meta.description'),
+  'seoPageType' => 'WebPage',
+  'seoBreadcrumbs' => [
+    ['name' => 'Home', 'url' => url('/')],
+    ['name' => 'Terms of Service', 'url' => route('terms.show')],
+  ],
+])
 <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body class="terms-page">

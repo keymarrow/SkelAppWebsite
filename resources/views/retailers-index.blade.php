@@ -38,7 +38,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ content('retailers.meta.title', 'Retailers – SkelApp') }}</title>
   <meta name="description" content="{{ content('retailers.meta.description', 'One point of sale for every kind of shop — boutiques, grocery, hardware, cosmetics, kitchenware, auto spares and tech.') }}">
-  <link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" sizes="any" />
+  @include('partials.seo', [
+    'seoTitle' => content('retailers.meta.title', 'Retailers – SkelApp'),
+    'seoDescription' => content('retailers.meta.description', 'One point of sale for every kind of shop — boutiques, grocery, hardware, cosmetics, kitchenware, auto spares and tech.'),
+    'seoImage' => content_image('retailers.hero.image', asset('assets/HeroImage.webp')),
+    'seoPageType' => 'CollectionPage',
+    'seoFaqs' => $rxFaq,
+    'seoBreadcrumbs' => [
+      ['name' => 'Home', 'url' => url('/')],
+      ['name' => 'Retailers', 'url' => route('retailers.index')],
+    ],
+  ])
   <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body class="hardware-page-body">

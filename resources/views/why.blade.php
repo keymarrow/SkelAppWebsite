@@ -34,7 +34,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ content('why.meta.title', 'Why SkelApp – About Us') }}</title>
   <meta name="description" content="{{ content('why.meta.description', 'SkelApp is on a mission to transform Tanzanian small businesses — built by people who show up, with products and support that just work.') }}">
-  <link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" sizes="any" />
+  @include('partials.seo', [
+    'seoTitle' => content('why.meta.title', 'Why SkelApp – About Us'),
+    'seoDescription' => content('why.meta.description', 'SkelApp is on a mission to transform Tanzanian small businesses — built by people who show up, with products and support that just work.'),
+    'seoImage' => content_image('home.hero.background_image_desktop', asset('assets/HeroImage.webp')),
+    'seoPageType' => 'AboutPage',
+    'seoBreadcrumbs' => [
+      ['name' => 'Home', 'url' => url('/')],
+      ['name' => 'Why SkelApp', 'url' => route('why.show')],
+    ],
+  ])
   <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body class="why-page-body">

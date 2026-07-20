@@ -62,7 +62,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>{{ content('affiliate-apply.meta.title', content_text('affiliate-apply.application.title', 'Affiliate Application | SkelApp')) }}</title>
 <meta name="description" content="{{ content('affiliate-apply.meta.description', $affiliatePage['meta']['description'] ?? 'Apply to join the SkelApp affiliate program.') }}">
-<link rel="icon" href="{{ content_image('global.brand.favicon', asset('assets/skel.svg')) }}" sizes="any" />
+@include('partials.seo', [
+  'seoTitle' => content('affiliate-apply.meta.title', content_text('affiliate-apply.application.title', 'Affiliate Application | SkelApp')),
+  'seoDescription' => content('affiliate-apply.meta.description', $affiliatePage['meta']['description'] ?? 'Apply to join the SkelApp affiliate program.'),
+  'seoPageType' => 'WebPage',
+  'seoBreadcrumbs' => [
+    ['name' => 'Home', 'url' => url('/')],
+    ['name' => 'Affiliate Program', 'url' => route('affiliate.show')],
+    ['name' => 'Apply', 'url' => route('affiliate.apply.show')],
+  ],
+])
 <link href="{{ asset('css/skel.css') }}?v={{ @filemtime(public_path('css/skel.css')) }}" rel="stylesheet" />
 </head>
 <body class="contact-page affiliate-application-page">

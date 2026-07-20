@@ -4,7 +4,7 @@
     "content": {
         "meta": {
             "title": "SkelApp POS — Point of Sale System in Tanzania | Works Offline",
-            "description": "SkelApp is the offline-first POS system built for Tanzania. Ring up sales in seconds, record every payment however it's made, and track stock and madeni automatically. From TZS 500 a day."
+            "description": "SkelApp is the business management platform for Tanzanian retailers. Record sales, purchases, expenses, payment methods, stock and reports across iOS, Android and the web."
         },
         "hero": {
             "eyebrow": "Point of sale",
@@ -49,37 +49,37 @@
         },
         "detail": {
             "title": "What SkelApp can do",
-            "subtitle": "Cashflow, inventory, online orders, reports and team control — one retail system, built in Skel style for real trading days."
+            "subtitle": "Sales, branches, inventory, payment tracking, online orders, reports and staff control — one business management platform across iOS, Android and the web."
         },
         "feature_groups": [
             {
-                "tab": "Cashflow",
-                "title": "Cashflow that stays close to every sale.",
-                "body": "Use the same SkelApp on iOS, Android and web, across one shop or many locations, with every money movement recorded in one live system.",
-                "link_label": "Explore cashflow",
-                "link_url": "/features#reports-and-profits",
+                "tab": "Operations",
+                "title": "Manage day-to-day operations from one live system.",
+                "body": "Use SkelApp on iOS, Android and the web to manage sales, purchases, expenses, orders and branch activity from one platform.",
+                "link_label": "Explore operations",
+                "link_url": "/features#point-of-sale",
                 "image": "assets/CASHFLOW.png",
-                "items_text": "Multi-device | Owners, attendants and managers can all work from the device that fits them best while staying inside one synced SkelApp account. | assets/card.webp\nMulti-location | Run one branch or many, then split sales, stock and staff activity by location without losing the full business view. | assets/CHECKOUTPOS.png\nSales ledger | Every shilling in and out is captured the moment it happens, so the day never needs rebuilding from memory. | assets/CASHFLOW.png\nProfit view | Open the dashboard and understand what sold, what moved out and where the money stands right now. | assets/DASHBOARD.png\nDebts & credits | Track both sides of the relationship, from customer balances to supplier credits and the payment accounts that keep them organised. | assets/crm.webp\nPayment accounts | Split cash, bank, card and mobile money into the right accounts so reconciliation is clean at closing time. | assets/paymentmethod.png"
+                "items_text": "Multi-device access | Owners, attendants and managers can all work from iOS, Android or the web while staying inside one synced SkelApp account. | assets/card.webp\nMulti-location management | Manage multiple branches, shops and warehouses from one system and review sales, expenses, stock and performance by location. | assets/CHECKOUTPOS.png\nSales, purchases, expenses and orders | Record daily transactions in one workflow so nothing has to be rebuilt later from memory. | assets/CASHFLOW.png\nProfit and cash flow overview | Open the dashboard and see income, expenses, profit and cash flow clearly before making the next business decision. | assets/DASHBOARD.png\nCustomer and supplier records | Keep transaction history, balances, customer debts and supplier credits organised in one place. | assets/crm.webp\nPayment accounts | Record cash, bank, mobile money, cheque and credit payments against the right sale, purchase or expense, then review them by payment account. | assets/paymentmethod.png"
             },
             {
                 "tab": "Inventory",
-                "title": "Inventory that keeps the whole shop in sync.",
-                "body": "Move beyond simple stock counts with location-aware controls, batch tracking and the daily signals that tell you what needs attention next.",
+                "title": "Advanced inventory control across your whole business.",
+                "body": "Maintain accurate stock records with batch-level visibility, transfers, adjustments and location-based availability.",
                 "link_label": "Explore inventory",
                 "link_url": "/features#inventory-and-stock",
                 "image": "assets/STOCKLIST.png",
-                "items_text": "Advanced stock | Keep day-to-day stock handling inside one workflow instead of spreading it across notebooks, spreadsheets and memory. | assets/STOCKLIST.png\nBatch tracking | Track stock by batch so you know what came in, what sold first and what needs acting on next. | assets/hardware.webp\nTransfers | Move items from one branch to another with a clear record of where stock left, where it landed and who handled it. | assets/grocery.webp\nAdjustments | Correct counts, process returns and keep the stock ledger accurate without hiding what changed. | assets/kitchenware.webp\nStock analysis | Stock analysis helps you spot the products that are moving fastest, running low or nearing expiry before they become a problem. | assets/autospare.webp\nReturns | Handle customer and supplier returns without breaking stock accuracy or losing the paper trail behind each change. | assets/Pos System 04.png"
+                "items_text": "Batch tracking | Track stock by batch so you know what came in, what sold first and what needs action next. | assets/hardware.webp\nStock transfers and transfer orders | Move stock between locations with a clear record of what left, what arrived and what is still in transit. | assets/grocery.webp\nStock adjustments and returns | Process corrections, sales returns and purchase returns without losing the audit trail behind each change. | assets/kitchenware.webp\nExpiry-date tracking | Monitor items approaching expiry so slow-moving stock does not turn into avoidable loss. | assets/autospare.webp\nLow-stock and movement analysis | See low stock, fast movers and slow movers early enough to restock with confidence. | assets/STOCKLIST.png\nStock by location | Check product availability by branch, shop or warehouse from one live view. | assets/Pos System 04.png"
             },
             {
                 "tab": "Reports",
-                "title": "Reports, online orders and your wider retail stack.",
-                "body": "Run the back office from one place, launch online ordering quickly and connect the finance and messaging tools your business already uses.",
+                "title": "Online orders, integrations and reports that stay practical.",
+                "body": "Launch online ordering, connect your accounting and communication tools, and review detailed reports without waiting for manual summaries.",
                 "link_label": "Explore reports",
                 "link_url": "/features#reports-and-profits",
                 "image": "assets/DASHBOARD.png",
-                "items_text": "Online orders | Turn your live stock list into a simple online store, share the link and let customer orders land straight inside SkelApp. | assets/Mobilehomeview.png\nIntegrations | Connect Zoho Books, QuickBooks, Xero, Sage, bulk SMS providers and WhatsApp so records and customer updates stay in sync. | assets/quickbooks.png\nReports | Review P&L, cashflow, sales by item, customer and attendant, plus stock and expense reports without waiting for manual summaries. | assets/DASHBOARD.png\nAttendants | Give every attendant their own login, control access and see who sold what, when and from which location. | assets/attendants.webp\nP&L | See profit and loss without rebuilding the numbers manually at the end of the day or month. | assets/DASHBOARD.png\nSales insights | Break sales down by item, customer, attendant or branch so the next decision is based on real numbers. | assets/CASHFLOW.png"
+                "items_text": "Online order management | Launch an online store quickly, receive customer orders digitally and manage order status inside SkelApp. | assets/Mobilehomeview.png\nAccounting and communication integrations | Connect Zoho Books, QuickBooks, Xero, Sage, bulk SMS providers and WhatsApp to support reporting and customer communication. | assets/quickbooks.png\nAdvanced business reports | Review profit and loss, cash flow, sales, stock, expenses, purchases, customer debt, supplier credit and payment-account reports from one system. | assets/DASHBOARD.png\nAttendants and staff management | Create attendant accounts, assign roles, control access and review performance by user and location. | assets/attendants.webp\nPayment method reporting | Break transactions down by payment type and payment account so reconciliation is clearer. | assets/paymentmethod.png\nSales insights by item, customer and location | See what is selling, who is buying, which branch is performing and where to act next. | assets/CASHFLOW.png"
             }
-        },
+        ],
         "features": [
             {
                 "name": "Lightning-fast checkout",
@@ -122,10 +122,10 @@
                     "body": "Offline mode switches on by itself the moment power or internet goes down. No button, no panic."
                 },
                 {
-                    "body": "Sales, payments and receipts keep working right on the device — your queue never notices."
+                    "body": "Sales, payment records and receipts keep working right on the device — your queue never notices."
                 },
                 {
-                    "body": "The moment you're back online, every sale, payment and stock change syncs — nothing lost, nothing typed twice."
+                    "body": "The moment you're back online, every sale, payment record and stock change syncs — nothing lost, nothing typed twice."
                 }
             ]
         },
@@ -297,7 +297,7 @@
             "features": [
                 {
                     "name": "Point of sale",
-                    "body": "A fast, friendly till that is easy to learn and keeps selling through power cuts and weak networks. Ring up any sale, take any payment and print a receipt in seconds — the dependable core every SkelApp device is built around.",
+                    "body": "A fast, friendly till that is easy to learn and keeps selling through power cuts and weak networks. Ring up any sale, record any payment method and print a receipt in seconds — the dependable core every SkelApp device is built around.",
                     "image": "assets/CHECKOUTPOS.png",
                     "link_label": "Explore SkelApp POS",
                     "link_url": "#"
@@ -347,7 +347,9 @@
                     "value": "Sells through",
                     "label": "every power cut"
                 }
-            ]
+            ],
+            "section_title": "What real business owners say about SkelApp",
+            "section_subtitle": "Shop owners across Tanzania on what changed at their counters — in their own words."
         },
         "testimonials": [
             {
