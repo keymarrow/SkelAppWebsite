@@ -1,8 +1,7 @@
 @php
-  // Only add the brand suffix when the meta title does not already carry it,
-  // otherwise titles render as "… | SkelApp | SkelApp News".
-  $titleBase = $article['meta_title'] ?? $article['title'];
-  $title = str_contains($titleBase, 'SkelApp') ? $titleBase : $titleBase . ' | SkelApp News';
+  // No brand suffix: titles repeat "SkelApp" across every page otherwise, and
+  // Google derives the site name from the domain and Organization schema anyway.
+  $title = $article['meta_title'] ?? $article['title'];
   $bodyClass = 'news-article-page';
   $metaDescription = $metaDescription ?? ($article['meta_description'] ?? $article['summary']);
   $articleSections = $article['sections'] ?? [];

@@ -161,10 +161,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>{{ content('home.meta.title', 'SkelApp — POS System & Inventory Management for Small Businesses in Tanzania') }}</title>
+<title>{{ content('home.meta.title', 'Point of Sale System in Tanzania') }}</title>
 <meta name="description" content="{{ content('home.meta.description', 'SkelApp is the point of sale and inventory management app for small businesses in Tanzania — every sale, expense, and stock item tracked in real time.') }}">
 @include('partials.seo', [
-  'seoTitle'       => content('home.meta.title', 'SkelApp — POS System & Inventory Management for Small Businesses in Tanzania'),
+  'seoTitle'       => content('home.meta.title', 'Point of Sale System in Tanzania'),
   'seoDescription' => content('home.meta.description', 'SkelApp is the point of sale and inventory management app for small businesses in Tanzania — every sale, expense, and stock item tracked in real time.'),
   'seoType'        => 'website',
   'seoImage'       => content_image('home.hero.background_image_desktop', asset('assets/HeroImage.webp')),

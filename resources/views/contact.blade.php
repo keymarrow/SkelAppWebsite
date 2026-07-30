@@ -11,10 +11,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>{{ content('contact.meta.title', 'Contact') }}</title>
+<title>{{ content('contact.meta.title', 'Contact Us') }}</title>
 <meta name="description" content="{{ content('contact.meta.description') }}">
 @include('partials.seo', [
-  'seoTitle' => content('contact.meta.title', 'Contact'),
+  'seoTitle' => content('contact.meta.title', 'Contact Us'),
   'seoDescription' => content('contact.meta.description'),
   'seoPageType' => 'ContactPage',
   'seoBreadcrumbs' => [

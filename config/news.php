@@ -96,7 +96,7 @@ return [
 
         [
             'slug' => 'best-pos-system-tanzania',
-            'title' => 'Best POS System in Tanzania | SkelApp',
+            'title' => 'Best POS System in Tanzania',
             'summary' => 'There is no single best POS system in Tanzania, only the one that fits your shop. Here are the criteria worth checking before you pay for anything.',
             'date' => '2026-05-05',
             'read_time' => '5:45',

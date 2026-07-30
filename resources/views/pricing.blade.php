@@ -9,10 +9,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ content('pricing.meta.title', 'Pricing') }}</title>
+  <title>{{ content('pricing.meta.title', 'POS System Pricing') }}</title>
   <meta name="description" content="{{ content('pricing.meta.description', "SkelApp pricing — clear, affordable, no hidden costs.") }}">
   @include('partials.seo', [
-    'seoTitle' => content('pricing.meta.title', 'Pricing'),
+    'seoTitle' => content('pricing.meta.title', 'POS System Pricing'),
     'seoDescription' => content('pricing.meta.description', 'SkelApp pricing — clear, affordable, no hidden costs.'),
     'seoImage' => content_image('pricing.hero.image', asset('assets/HeroImage.webp')),
     'seoPageType' => 'WebPage',

@@ -143,10 +143,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ content('features.meta.title', 'Features') }}</title>
+  <title>{{ content('features.meta.title', 'Modern POS Features') }}</title>
   <meta name="description" content="{{ content('features.meta.description', 'Every SkelApp feature in one place — sales, inventory, customers, and reports built for Tanzanian retailers.') }}">
   @include('partials.seo', [
-    'seoTitle' => content('features.meta.title', 'Features'),
+    'seoTitle' => content('features.meta.title', 'Modern POS Features'),
     'seoDescription' => content('features.meta.description', 'Every SkelApp feature in one place — sales, inventory, customers, and reports built for Tanzanian retailers.'),
     'seoImage' => content_image('features.hero.image', asset('assets/featureheroimage.webp')),
     'seoPageType' => 'CollectionPage',

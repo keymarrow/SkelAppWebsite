@@ -50,10 +50,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ content('hardware.meta.title', 'Hardware & Accessories') }}</title>
+  <title>{{ content('hardware.meta.title', 'POS Hardware & Accessories in Tanzania') }}</title>
   <meta name="description" content="{{ content('hardware.meta.description', 'SkelApp hardware and accessories — terminals, registers, printers, scanners and complete kits built for Tanzanian retail.') }}">
   @include('partials.seo', [
-    'seoTitle' => content('hardware.meta.title', 'Hardware & Accessories'),
+    'seoTitle' => content('hardware.meta.title', 'POS Hardware & Accessories in Tanzania'),
     'seoDescription' => content('hardware.meta.description', 'SkelApp hardware and accessories — terminals, registers, printers, scanners and complete kits built for Tanzanian retail.'),
     'seoImage' => content_image('hardware.hero.image', asset('assets/PosSystemRegister.webp')),
     'seoPageType' => 'CollectionPage',
