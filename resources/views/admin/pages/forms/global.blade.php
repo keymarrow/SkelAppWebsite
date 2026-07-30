@@ -1,5 +1,12 @@
 @component('admin.pages.fields.section', ['title' => 'Brand'])
   @include('admin.pages.fields.image', ['name' => 'brand.favicon', 'label' => 'Favicon', 'hint' => 'Shown in the browser tab. SVG or PNG recommended.'])
+  @include('admin.pages.fields.repeater', [
+    'name' => 'brand.social',
+    'fields' => [
+      ['key' => 'platform', 'label' => 'Platform — instagram | youtube | linkedin | facebook'],
+      ['key' => 'url', 'label' => 'Profile URL'],
+    ],
+  ])
 @endcomponent
 
 @component('admin.pages.fields.section', ['title' => 'Top navigation'])

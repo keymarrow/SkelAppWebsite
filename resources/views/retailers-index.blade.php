@@ -36,10 +36,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ content('retailers.meta.title', 'Retailers – SkelApp') }}</title>
+  <title>{{ content('retailers.meta.title', 'Retailers') }}</title>
   <meta name="description" content="{{ content('retailers.meta.description', 'One point of sale for every kind of shop — boutiques, grocery, hardware, cosmetics, kitchenware, auto spares and tech.') }}">
   @include('partials.seo', [
-    'seoTitle' => content('retailers.meta.title', 'Retailers – SkelApp'),
+    'seoTitle' => content('retailers.meta.title', 'Retailers'),
     'seoDescription' => content('retailers.meta.description', 'One point of sale for every kind of shop — boutiques, grocery, hardware, cosmetics, kitchenware, auto spares and tech.'),
     'seoImage' => content_image('retailers.hero.image', asset('assets/HeroImage.webp')),
     'seoPageType' => 'CollectionPage',

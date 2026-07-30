@@ -19,8 +19,8 @@
   @include('admin.pages.fields.repeater', [
     'name' => 'socials',
     'fields' => [
-      ['key' => 'platform', 'label' => 'Platform — tiktok | facebook | instagram | linkedin'],
-      ['key' => 'url', 'label' => 'Profile URL'],
+      ['key' => 'platform', 'label' => 'Platform — instagram | youtube | linkedin | facebook (fallback only)'],
+      ['key' => 'url', 'label' => 'Profile URL (used only if Global > Brand social links are empty)'],
     ],
   ])
 @endcomponent

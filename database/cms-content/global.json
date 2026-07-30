@@ -61,13 +61,31 @@
             "logo_dark": "assets/SkelAppLogo-green.svg"
         },
         "brand": {
-            "favicon": "assets/skel.svg"
+            "favicon": "assets/skel.svg",
+            "social": [
+                {
+                    "platform": "instagram",
+                    "url": "https://www.instagram.com/skelapp.tz/"
+                },
+                {
+                    "platform": "youtube",
+                    "url": "https://www.youtube.com/@skelapp_tz"
+                },
+                {
+                    "platform": "linkedin",
+                    "url": "https://www.linkedin.com/company/skelapp/"
+                },
+                {
+                    "platform": "facebook",
+                    "url": "https://www.facebook.com/profile.php?id=61582859600112"
+                }
+            ]
         },
         "app_badges": {
             "apple_image": "assets/applebadge.png",
             "apple_url": "https://apps.apple.com/app/your-app-id",
             "google_image": "assets/googlebadge.png",
-            "google_url": "https://play.google.com/store/apps/details?id=your.app"
+            "google_url": "https://play.google.com/store/apps/details?id=com.skelapp.app&hl=en"
         },
         "download": {
             "title": "Get the SkelApp",

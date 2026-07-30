@@ -19,10 +19,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ content('integrations.meta.title', 'Integrations - SkelApp') }}</title>
+  <title>{{ content('integrations.meta.title', 'Integrations') }}</title>
   <meta name="description" content="{{ content('integrations.meta.description', 'Connect SkelApp with Zoho Books, Xero, QuickBooks, Sage, WhatsApp and Notify Africa BulkSMS.') }}">
   @include('partials.seo', [
-    'seoTitle' => content('integrations.meta.title', 'Integrations - SkelApp'),
+    'seoTitle' => content('integrations.meta.title', 'Integrations'),
     'seoDescription' => content('integrations.meta.description', 'Connect SkelApp with Zoho Books, Xero, QuickBooks, Sage, WhatsApp and Notify Africa BulkSMS.'),
     'seoImage' => cms_image($hero['image'] ?? null, asset('assets/HeroImage.webp')),
     'seoPageType' => 'CollectionPage',

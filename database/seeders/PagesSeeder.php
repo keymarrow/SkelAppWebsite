@@ -117,6 +117,12 @@ class PagesSeeder extends Seeder
         return [
             'brand' => [
                 'favicon' => 'assets/skel.svg',
+                'social' => [
+                    ['platform' => 'instagram', 'url' => 'https://www.instagram.com/skelapp.tz/'],
+                    ['platform' => 'youtube', 'url' => 'https://www.youtube.com/@skelapp_tz'],
+                    ['platform' => 'linkedin', 'url' => 'https://www.linkedin.com/company/skelapp/'],
+                    ['platform' => 'facebook', 'url' => 'https://www.facebook.com/profile.php?id=61582859600112'],
+                ],
             ],
             'nav' => [
                 'login_label' => 'Login',
@@ -139,7 +145,7 @@ class PagesSeeder extends Seeder
                 'apple_image' => 'assets/applebadge.png',
                 'apple_url' => '#',
                 'google_image' => 'assets/googlebadge.png',
-                'google_url' => '#',
+                'google_url' => 'https://play.google.com/store/apps/details?id=com.skelapp.app&hl=en',
             ],
             'footer' => [
                 'tagline' => 'Sell 1% Better',
@@ -394,7 +400,7 @@ class PagesSeeder extends Seeder
     {
         return [
             'meta' => [
-                'title' => 'Features – SkelApp',
+                'title' => 'Features',
                 'description' => 'Every SkelApp feature in one place — sales, inventory, customers, and reports built for Tanzanian retailers.',
             ],
             'hero' => [
@@ -516,7 +522,7 @@ class PagesSeeder extends Seeder
 
         return [
             'meta' => [
-                'title' => 'SkelApp POS — Point of Sale System in Tanzania | Works Offline',
+                'title' => 'Point of Sale',
                 'description' => "SkelApp is the offline-first POS system built for Tanzania. Ring up sales in seconds, record every payment however it's made, and track stock and madeni automatically. From TZS 500 a day.",
             ],
             'hero' => [
@@ -765,7 +771,7 @@ class PagesSeeder extends Seeder
 
         return [
             'meta' => [
-                'title' => 'Hardware & Accessories – SkelApp',
+                'title' => 'Hardware & Accessories',
                 'description' => 'SkelApp hardware and accessories — terminals, registers, printers, scanners and complete kits built for Tanzanian retail.',
             ],
             'hero' => [
@@ -835,7 +841,7 @@ class PagesSeeder extends Seeder
 
         return [
             'meta' => [
-                'title' => 'Retailers – SkelApp',
+                'title' => 'Retailers',
                 'description' => 'One point of sale for every kind of shop — boutiques, grocery, hardware, cosmetics, kitchenware, auto spares and tech.',
             ],
             'hero' => [
@@ -883,7 +889,7 @@ class PagesSeeder extends Seeder
 
         return [
             'meta' => [
-                'title' => 'Integrations - SkelApp',
+                'title' => 'Integrations',
                 'description' => 'Connect SkelApp with Zoho Books, Xero, QuickBooks, Sage, WhatsApp and Notify Africa BulkSMS.',
             ],
             'hero' => $config['hero'] ?? [],
@@ -1061,7 +1067,7 @@ class PagesSeeder extends Seeder
     {
         return [
             'meta' => [
-                'title' => 'Why SkelApp – About Us',
+                'title' => 'Why SkelApp',
                 'description' => 'SkelApp is on a mission to transform Tanzanian small businesses — built by people who show up, with products and support that just work.',
             ],
             'hero' => [
@@ -1134,7 +1140,7 @@ class PagesSeeder extends Seeder
     {
         return [
             'meta' => [
-                'title' => 'Pricing – SkelApp',
+                'title' => 'Pricing',
                 'description' => 'SkelApp pricing — start free, or TZS 15,000 per month billed annually. Every plan sells offline. No hidden costs.',
             ],
             'hero' => [
@@ -1245,7 +1251,7 @@ class PagesSeeder extends Seeder
     {
         return [
             'meta' => [
-                'title' => 'Contact Us – SkelApp',
+                'title' => 'Contact',
                 'description' => 'Get in touch with SkelApp.',
             ],
             'hero' => [
@@ -1262,10 +1268,10 @@ class PagesSeeder extends Seeder
                 ['type' => 'tel', 'label' => 'Talk or chat with JP', 'value' => '+255 659 310 909'],
             ],
             'socials' => [
-                ['platform' => 'tiktok', 'url' => '#'],
-                ['platform' => 'facebook', 'url' => '#'],
-                ['platform' => 'instagram', 'url' => '#'],
-                ['platform' => 'linkedin', 'url' => '#'],
+                ['platform' => 'instagram', 'url' => 'https://www.instagram.com/skelapp.tz/'],
+                ['platform' => 'youtube', 'url' => 'https://www.youtube.com/@skelapp_tz'],
+                ['platform' => 'linkedin', 'url' => 'https://www.linkedin.com/company/skelapp/'],
+                ['platform' => 'facebook', 'url' => 'https://www.facebook.com/profile.php?id=61582859600112'],
             ],
             'form' => [
                 'heading' => 'Book a Demo',
@@ -1292,7 +1298,7 @@ class PagesSeeder extends Seeder
     {
         return [
             'meta' => [
-                'title' => 'FAQ – SkelApp',
+                'title' => 'FAQ',
                 'description' => 'Frequently asked questions about SkelApp.',
             ],
             'page' => [

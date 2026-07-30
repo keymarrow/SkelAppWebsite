@@ -3,7 +3,7 @@
     "title": "Contact",
     "content": {
         "meta": {
-            "title": "Contact – SkelApp",
+            "title": "Contact",
             "description": "Get in touch with SkelApp."
         },
         "hero": {
@@ -33,20 +33,20 @@
         ],
         "socials": [
             {
-                "platform": "tiktok",
-                "url": "#"
-            },
-            {
-                "platform": "facebook",
-                "url": "#"
-            },
-            {
                 "platform": "instagram",
-                "url": "#"
+                "url": "https://www.instagram.com/skelapp.tz/"
+            },
+            {
+                "platform": "youtube",
+                "url": "https://www.youtube.com/@skelapp_tz"
             },
             {
                 "platform": "linkedin",
-                "url": "#"
+                "url": "https://www.linkedin.com/company/skelapp/"
+            },
+            {
+                "platform": "facebook",
+                "url": "https://www.facebook.com/profile.php?id=61582859600112"
             }
         ],
         "form": {

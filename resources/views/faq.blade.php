@@ -16,10 +16,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ content('faq.meta.title', 'FAQ – SkelApp') }}</title>
+  <title>{{ content('faq.meta.title', 'FAQ') }}</title>
   <meta name="description" content="{{ content('faq.meta.description') }}">
   @include('partials.seo', [
-    'seoTitle' => content('faq.meta.title', 'FAQ – SkelApp'),
+    'seoTitle' => content('faq.meta.title', 'FAQ'),
     'seoDescription' => content('faq.meta.description'),
     'seoPageType' => 'WebPage',
     'seoFaqs' => $seoFaqs,

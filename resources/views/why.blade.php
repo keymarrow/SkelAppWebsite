@@ -32,10 +32,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ content('why.meta.title', 'Why SkelApp – About Us') }}</title>
+  <title>{{ content('why.meta.title', 'Why SkelApp') }}</title>
   <meta name="description" content="{{ content('why.meta.description', 'SkelApp is on a mission to transform Tanzanian small businesses — built by people who show up, with products and support that just work.') }}">
   @include('partials.seo', [
-    'seoTitle' => content('why.meta.title', 'Why SkelApp – About Us'),
+    'seoTitle' => content('why.meta.title', 'Why SkelApp'),
     'seoDescription' => content('why.meta.description', 'SkelApp is on a mission to transform Tanzanian small businesses — built by people who show up, with products and support that just work.'),
     'seoImage' => content_image('home.hero.background_image_desktop', asset('assets/HeroImage.webp')),
     'seoPageType' => 'AboutPage',
