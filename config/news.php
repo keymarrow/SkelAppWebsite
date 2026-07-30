@@ -1,296 +1,505 @@
 <?php
 
 return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Legacy News Articles
+    |--------------------------------------------------------------------------
+    |
+    | Source of truth for the legacy news import (App\Services\LegacyNewsImporter).
+    | The importer matches on `slug`, so if a slug changes here it must also be
+    | changed on the corresponding news_posts row, otherwise the import creates a
+    | duplicate post instead of updating the existing one.
+    |
+    */
+
     'articles' => [
+
         [
-            'slug' => 'skelapp-best-pos-in-tanzania',
-            'title' => 'SkelApp: The Best POS in Tanzania for Small Businesses',
-            'summary' => "SkelApp is Tanzania's newest and most affordable POS system, cloud-based, mobile-first, and packed with features built for small and medium retail businesses.",
+            'slug' => 'small-business-pos-tanzania',
+            'title' => 'Small Business POS in Tanzania',
+            'summary' => 'A practical guide to choosing a small business POS in Tanzania: what it should do, what it costs, and how to start selling on a free plan without buying hardware first.',
             'date' => '2026-05-01',
-            'read_time' => '6:14',
+            'read_time' => '5:30',
             'categories' => ['Product', 'Retail Guide'],
-            'card_label' => 'Best POS',
+            'card_label' => 'Small Business',
             'card_colors' => ['#eaf7ff', '#7fc8ff', '#6e82ff'],
             'sections' => [
                 [
                     'heading' => null,
                     'paragraphs' => [
-                        'There is a new name shaking up the Tanzanian point-of-sale market in 2026, and it is called SkelApp. Affordable, beautifully simple to use, cloud-powered, and packed with more features than established players, SkelApp is emerging as the best POS in Tanzania for small and medium retail businesses that are tired of paying too much for too little.',
-                        'If you run a retail shop, a boutique, a minimart, a hardware store, or any small to medium business in Tanzania, this guide explains why SkelApp is built to power your next phase of growth.',
+                        'Most small shops in Tanzania start the same way: a notebook, a calculator, and a very good memory. It works, right up until it does not. A page goes missing. Two people write in the same column. Stock leaves the shelf and nobody records it. By the end of the month you know roughly what came in, but you could not say with confidence which products actually made you money, or which customer still owes you for goods taken on credit in the second week.',
+                        'A point of sale system replaces that notebook with something that remembers on your behalf. This guide covers what a small business POS in Tanzania should actually do, what it reasonably costs in 2026, and how to start without spending anything up front or buying a single piece of equipment.',
                     ],
                 ],
                 [
-                    'heading' => 'What is SkelApp?',
+                    'heading' => 'What a small business POS actually does',
                     'paragraphs' => [
-                        "SkelApp is a next-generation point-of-sale system built specifically for Tanzanian small and medium businesses. Unlike legacy POS solutions that were designed years ago and then adapted for Tanzania, SkelApp was built from the ground up with today's Tanzanian business owner in mind: mobile-first, cloud-ready, easy to use, and priced for the real Tanzanian market.",
-                        'From processing sales and tracking stock to managing customers and generating reports, SkelApp gives retailers everything they need to run a sharper and more profitable business in one simple platform.',
+                        'It helps to be precise, because the term gets used loosely. A point of sale is not simply a digital till that adds up numbers. Its real job is to capture every transaction in enough detail that the rest of your business can be reconstructed from it later.',
+                        'When you record a sale, three things should happen at once. The sale itself is logged with the products, quantities, price and payment method. The stock level for each item drops automatically, so what the system says you have is what is actually on the shelf. And the transaction attaches itself to a customer record where one applies, so history builds up over time instead of evaporating.',
+                        'That third part is what separates a POS from a calculator. After six months, the accumulated history is what tells you which lines sell fastest, which sit dead on the shelf tying up cash, which customers come back, and where your margin is quietly leaking. None of that is available if the only record is a handwritten total.',
+                        '![SkelApp point of sale dashboard showing sales and stock](/storage/news/body/20260517073905-yFsKREzlHtc12gUttlE8.png)',
                     ],
                 ],
                 [
-                    'heading' => 'Why SkelApp stands out in 2026',
+                    'heading' => 'Why cost has been the real barrier',
                     'paragraphs' => [
-                        'SkelApp positions itself around four major strengths: affordability, simplicity, cloud access, and feature depth. It aims to remove the cost barrier that keeps many Tanzanian SMEs from adopting modern POS technology while giving them a system their staff can learn in hours, not days.',
-                        'The product is also built for remote visibility. Because SkelApp lives in the cloud, business owners can monitor sales, stock, and performance from anywhere using a smartphone. That is especially valuable for owners managing multiple locations or travelling frequently.',
-                        'Despite its lower price, the platform is presented as feature-rich, with sales management, real-time inventory tracking, customer history, analytics, role-based access, receipt generation, product catalogues, and low-stock alerts all included.',
+                        'The technology has existed for decades. The reason so many Tanzanian shops still run on paper is that traditional POS software was priced for supermarkets, not for a duka or a boutique with two staff. Licences were sold per terminal, contracts ran annually, and installation was a separate line item that often cost more than the software itself.',
+                        'For a shop turning over modest daily figures, none of that arithmetic worked. Paying a large sum up front to find out whether a system suited you was a risk most owners sensibly declined to take.',
+                        'Three things changed that. Software moved to the cloud, so there is nothing to install and no server to maintain. The phone already in your pocket became a capable terminal, removing the hardware requirement. And pricing shifted to monthly subscriptions with genuine free tiers, so you can test a system with real transactions before committing money to it.',
                     ],
                 ],
                 [
-                    'heading' => 'How it compares to older POS systems',
+                    'heading' => 'What you get without paying',
                     'paragraphs' => [
-                        "The article contrasts SkelApp with more established providers by focusing on SME fit. It presents SkelApp as the most affordable option for small and medium businesses, with a modern interface that is easier to learn, a mobile-first operating model, and a tighter focus on the workflows that matter most to growing retailers.",
-                        "The underlying argument is that many older systems were built for a different era of retail, while SkelApp is designed for the Tanzania of today and tomorrow.",
+                        'SkelApp starts on a free plan called WingaMode, intended for a business run by a single owner. It covers one user and allows ten POS transactions a month, ten online store orders and ten purchase orders or bills.',
+                        'The transaction cap is the limit, not the feature set. Inventory management, customer management, sales management, purchase management, and real time reports and dashboards are all included. That matters, because it means the free plan is a genuine trial of how the system works rather than a stripped shell designed to frustrate you into upgrading.',
+                        'Ten transactions a month will not run a busy shop, and it is not meant to. It is enough to load your product catalogue, process real sales for a few days, see how the reports read, and decide whether the workflow fits how you actually trade before any money changes hands.',
                     ],
                 ],
                 [
-                    'heading' => 'Who should use SkelApp?',
+                    'heading' => 'When it makes sense to move up',
                     'paragraphs' => [
-                        'SkelApp is framed as the best POS in Tanzania for retail shops and dukas, minimarkets, boutiques, hardware and electronics shops, stationery stores, and any small to medium business ready to go digital.',
-                        'Getting started is described as straightforward: sign up, add products, set up the team, and start selling on the same day without expensive hardware, lengthy installation, or complex training.',
+                        'The next tier, BiasharaPlus, costs TZS 15,000 per month billed annually, which works out at a saving of roughly 17 percent against paying month to month. It lifts the ceiling in the places a growing shop hits first.',
+                        'You get three users instead of one, which covers an owner plus two attendants. POS transactions become unlimited. Online store orders and purchase orders each rise to 500 a month. Serial and batch tracking arrives, which matters if you sell anything with an expiry date or a warranty. Multi location management appears, so a second branch does not mean a second system.',
+                        'The plan also adds customisable and scheduled reports, custom views and custom fields, automation such as email alerts and field updates, price management, and 24 hour support. For most shops the trigger to upgrade is simply the transaction limit, and everything else arrives as a bonus alongside it.',
+                        'Businesses running several branches can move to a custom Build Your Own plan, which removes the user and location caps entirely and adds custom integrations, data migration, dedicated onboarding and staff training, and priority support.',
+                    ],
+                ],
+                [
+                    'heading' => 'The features that matter most in a small shop',
+                    'paragraphs' => [
+                        'Feature lists are easy to pad, so it is worth naming the handful that genuinely change day to day work in a small Tanzanian retail business.',
+                        'Inventory control with batch and expiry tracking, stock adjustments, returns and low stock alerts is the first. It is the difference between discovering a shortage during a stock count and being warned before you run out of your best selling line. Transfers and transfer orders extend the same control across branches once you have more than one.',
+                        'Customer and supplier records carrying outstanding balances is the second. Selling on credit is normal practice here, and the moment those balances live in a system rather than in somebody memory, chasing them stops being awkward guesswork.',
+                        'Flexible payment recording is the third. A single sale in Tanzania is frequently settled part in cash and part by mobile money, and a POS that cannot represent that cleanly will quietly corrupt your books. Payment account tracking then shows you what actually landed where.',
+                    ],
+                ],
+                [
+                    'heading' => 'You do not need to buy hardware first',
+                    'paragraphs' => [
+                        'This is the point that surprises owners most often. SkelApp runs on iOS, Android and the web, which means the phone you already own is a working terminal on day one. No counter machine, no cabling, no installation visit.',
+                        'Purpose built hardware exists when you want it, and there is a reasonable case for it once volume grows. Skel Register, Skel Terminal, Skel Tab and Skel Phone cover different counter styles, and accessories such as barcode scanners, cash drawers, tablet stands, charging docks and receipt paper fill in the rest. All of it is designed to be plug and play and offline ready, with local support behind it.',
+                        'The important part is the sequencing. Prove the software suits your shop first, using equipment you already have. Buy hardware afterwards, when you know exactly which parts of the counter it needs to serve.',
+                    ],
+                ],
+                [
+                    'heading' => 'Is your shop ready for one?',
+                    'paragraphs' => [
+                        'A few signs tend to appear together. You are no longer certain what stock you hold without physically counting it. You cannot say which products drive your profit rather than merely your turnover. Credit balances are tracked informally and occasionally forgotten. You have staff selling when you are not present, and you would like to know what happened while you were away.',
+                        'If two or more of those describe your situation, the notebook has reached its limit. Setup and staff training are included, support runs around the clock, and the free plan means the only real cost of finding out whether it works for you is an afternoon of your time.',
                     ],
                 ],
             ],
         ],
+
         [
-            'slug' => 'best-point-of-sale-tanzania-skelapp',
-            'title' => 'Best POS in Tanzania 2026: Why Retailers Choose SkelApp',
-            'summary' => 'Looking for the best point-of-sale in Tanzania? SkelApp is a cloud-based, affordable, and user-friendly POS built for Tanzanian retail shops and SMEs.',
-            'date' => '2026-04-28',
-            'read_time' => '6:08',
+            'slug' => 'best-pos-system-tanzania',
+            'title' => 'Best POS System in Tanzania | SkelApp',
+            'summary' => 'There is no single best POS system in Tanzania, only the one that fits your shop. Here are the criteria worth checking before you pay for anything.',
+            'date' => '2026-05-05',
+            'read_time' => '5:45',
             'categories' => ['Retail Guide', 'Product'],
-            'card_label' => 'POS Review',
-            'card_colors' => ['#f5f8ff', '#a2cfff', '#8fa2ff'],
+            'card_label' => 'Buyer Guide',
+            'card_colors' => ['#fff2e8', '#ffb37f', '#ff7a59'],
             'sections' => [
                 [
                     'heading' => null,
                     'paragraphs' => [
-                        "Finding the best point-of-sale in Tanzania is no longer a luxury decision. In today's competitive retail landscape, businesses without a reliable POS system are losing sales, losing stock, and losing customers to competitors who run tighter and smarter operations.",
-                        'In 2026, SkelApp enters that market with a clear mission: to give every Tanzanian small and medium retail business access to the best point-of-sale in Tanzania without the heavy price tag, the complicated setup, or the frustrating learning curve.',
+                        'Search for the best POS system in Tanzania and you will find a great deal of confident marketing and very little that helps you decide. Every vendor claims the top spot, including this one, which is precisely why the claim carries no information.',
+                        'A more useful question is which system is best for your shop, at your size, given how you actually trade. This guide sets out the criteria that separate systems in practice, so you can judge any option including SkelApp on evidence rather than adjectives.',
                     ],
                 ],
                 [
-                    'heading' => 'The problem with current POS options in Tanzania',
+                    'heading' => 'Start by describing your own shop honestly',
                     'paragraphs' => [
-                        'The article argues that many established POS systems are priced for large enterprises, have clunky interfaces, were not built for mobile use, and often include unnecessary complexity that slows down daily work for smaller businesses.',
-                        'It also highlights slow and impersonal support as another frequent frustration for SME owners evaluating available systems in Tanzania.',
+                        'Before comparing anything, write down four numbers: how many transactions you process on a normal day, how many people need to log in, how many locations you operate, and how many distinct products you carry.',
+                        'These four numbers eliminate most of the market immediately. A system priced per terminal is wrong for a single owner with a phone. A system with no multi location support is wrong if a second branch opens next year. A system built for hospitality is wrong for a hardware shop carrying four thousand line items.',
+                        'Almost every bad POS purchase traces back to skipping this step and buying on a demonstration instead. Demonstrations are designed to look good. Your four numbers are designed to be true.',
                     ],
                 ],
                 [
-                    'heading' => 'Why SkelApp wins for SMEs',
+                    'heading' => 'Offline selling is not a bonus feature',
                     'paragraphs' => [
-                        'SkelApp is positioned as a modern, cloud-based, mobile-first POS designed specifically for the Tanzanian small and medium retailer. It promises tools that help businesses manage operations better, serve customers faster, and grow revenue more intelligently.',
-                        'Its strongest differentiators are described as accessible pricing, a clean and intuitive interface, real-time cloud access from any device, and a feature set that covers sales, stock control, customer history, reporting, product management, role-based permissions, low-stock alerts, and receipt generation.',
+                        'This is the criterion that belongs at the top of any Tanzanian buying list, and it is routinely buried at the bottom of vendor comparison tables written elsewhere.',
+                        'Power cuts happen. Mobile data drops. If your point of sale stops working when connectivity does, then it has not replaced your notebook, it has added a dependency your notebook never had. A queue at the counter does not pause while a router reboots.',
+                        'Ask any vendor directly what happens to a sale during an outage, and whether transactions recorded offline reconcile automatically once the connection returns. SkelApp is built to keep selling through power cuts, and its hardware range is offline ready by design. Whatever you choose, do not accept a vague answer on this point.',
                     ],
                 ],
                 [
-                    'heading' => 'What businesses gain from switching',
+                    'heading' => 'Check the per user and per branch maths',
                     'paragraphs' => [
-                        'The article describes measurable operational gains from using the best point-of-sale in Tanzania: faster checkout times, more accurate stock levels, better business decisions through data, fewer manual errors, and more time for growth because less energy is lost to administrative work.',
-                        "It also presents SkelApp as well aligned with Tanzania's retail future, where mobile commerce is growing, customer expectations are rising, and cloud visibility is becoming essential.",
+                        'Headline pricing is often quoted for a single user at a single location. That is rarely the shape of a real business, and the gap between the advertised figure and your actual monthly cost can be substantial.',
+                        'Work out what you would pay with your real staff count and your real branch count, then compare that number rather than the one on the poster. Ask specifically whether additional users cost extra, whether each location carries its own fee, and whether the price changes when transaction volume grows.',
+                        'For reference, SkelApp publishes three tiers. WingaMode is free and covers one user with ten POS transactions a month. BiasharaPlus is TZS 15,000 per month billed annually and covers three users with unlimited POS transactions, 500 online store orders and 500 purchase orders or bills. Build Your Own is custom priced for multi branch operations and removes the user and location limits entirely.',
                     ],
                 ],
                 [
-                    'heading' => 'Getting started with SkelApp',
+                    'heading' => 'Inventory depth, not just a product list',
                     'paragraphs' => [
-                        'The onboarding message is deliberately simple: no expensive hardware investments, no complicated installation, and no long setup delays. Business owners are encouraged to sign up, load their catalogue, add their team, and begin selling on the same day.',
-                        "The core claim is that SkelApp gives Tanzanian retailers a smarter, simpler, and more affordable path to modern POS operations.",
+                        'Every POS can hold a list of products and prices. The differences appear in what happens to that list under pressure.',
+                        'Look for batch and expiry tracking if you sell food, cosmetics, or anything with a shelf life, because without it you will discover expiry dates by finding them. Look for stock adjustments and returns, because both happen constantly and a system that cannot record them cleanly will drift out of step with reality within weeks.',
+                        'Look for low stock alerts, which turn inventory from a report you must remember to run into a warning that arrives on its own. And if you run or plan to run more than one location, look for transfers and transfer orders, so moving goods between branches is a recorded event rather than a phone call and a hope.',
+                    ],
+                ],
+                [
+                    'heading' => 'Reports you will actually open',
+                    'paragraphs' => [
+                        'Reporting is where buyers are most easily impressed and most often disappointed. A system can generate forty report types and still fail to answer the question you care about, which is usually some version of where did the money go.',
+                        'The reports that earn their place tend to be few: profit by product, cash flow, outstanding customer balances, and performance by payment account. Those four cover the majority of decisions a retail owner makes in a given month.',
+                        'Scheduled reports are worth asking about too. A monthly summary that arrives by email without anyone remembering to produce it is worth more than a dashboard nobody visits. On SkelApp, customisable and scheduled reports arrive with the BiasharaPlus tier.',
+                    ],
+                ],
+                [
+                    'heading' => 'Where your data lives, and whether it can leave',
+                    'paragraphs' => [
+                        'Two questions matter here and both deserve a straight answer. Can you export your own data, and does the system connect to the accounting software your bookkeeper already uses?',
+                        'Export matters because it is your insurance policy. A vendor that makes leaving difficult is telling you something about how it expects to retain customers. Integration matters because manual re-entry between your POS and your accounts is both a recurring cost and a reliable source of errors.',
+                        'SkelApp integrates with Zoho Books, Xero, QuickBooks and Sage on the accounting side, and with WhatsApp and Notify Africa BulkSMS for customer messaging. Whichever system you evaluate, check that the specific package your accountant uses is on the list rather than assuming a general claim of integration covers it.',
+                    ],
+                ],
+                [
+                    'heading' => 'Support, setup and the first two weeks',
+                    'paragraphs' => [
+                        'The hardest period with any new system is the fortnight after you switch. Stock has to be loaded, staff have to be trained, and mistakes get made while everyone is still learning.',
+                        'Ask what setup assistance is included rather than sold separately, whether staff training is provided, and what the support hours actually are. Around the clock support is meaningfully different from business hours support when your busiest trading happens on a Saturday evening.',
+                        'SkelApp includes setup and staff training, with 24 hour support on the paid tiers and dedicated onboarding on custom plans. That is the standard worth measuring other quotes against.',
+                    ],
+                ],
+                [
+                    'heading' => 'Making the decision',
+                    'paragraphs' => [
+                        'Narrow the field to two or three options, then test rather than deliberate. Load fifty of your real products, process a normal day of real transactions, and ask an attendant who was not part of the decision to use it without much explanation. Their reaction after twenty minutes will tell you more than any feature comparison.',
+                        'The best POS system in Tanzania is the one your staff use correctly when you are not standing behind them. Free plans and trials exist so you can establish that before committing. Use them.',
                     ],
                 ],
             ],
         ],
+
         [
-            'slug' => 'most-trusted-point-of-sale-tanzania-skelapp',
-            'title' => 'Tanzania’s Most Trusted POS: How SkelApp Earns Trust',
-            'summary' => "Why is SkelApp becoming Tanzania's most trusted new point-of-sale system? This article explains how an affordable, cloud-based POS earns trust with Tanzanian retail businesses.",
-            'date' => '2026-04-24',
-            'read_time' => '5:52',
+            'slug' => 'cloud-pos-tanzania',
+            'title' => 'Cloud POS in Tanzania',
+            'summary' => 'What a cloud POS is, how it differs from software installed on one counter machine, and why it matters when the power goes out or you are away from the shop.',
+            'date' => '2026-05-08',
+            'read_time' => '5:35',
             'categories' => ['Company', 'Operations'],
-            'card_label' => 'Trusted POS',
-            'card_colors' => ['#eefeff', '#87e4d2', '#86d9ff'],
+            'card_label' => 'Cloud POS',
+            'card_colors' => ['#eef4ff', '#9ab6ff', '#5b6cff'],
             'sections' => [
                 [
                     'heading' => null,
                     'paragraphs' => [
-                        'Trust is the foundation of every great business relationship, and in the POS market it is earned through a system that shows up reliably every single day and genuinely makes business run better.',
-                        "SkelApp may be one of the newest POS systems in Tanzania, but the article positions it as a provider earning trust faster than older competitors because it was built around the daily needs of Tanzanian small and medium retail businesses.",
+                        'The phrase cloud POS gets used so freely that it has almost stopped meaning anything. For a shop owner deciding how to spend money, though, the distinction is concrete and worth understanding, because it determines what happens to your business when a machine fails, when the power goes, and when you are two hundred kilometres from your own counter.',
+                        'This article explains what cloud actually means in this context, what it replaced, and where its genuine limits are.',
                     ],
                 ],
                 [
-                    'heading' => 'Why trust matters when choosing a POS',
+                    'heading' => 'What the word actually means here',
                     'paragraphs' => [
-                        'The article stresses that a POS holds the most sensitive business information a retailer has: every sale, every customer, every shilling, and every product in stock. Because of that, business owners evaluate providers based on reliability, data accuracy, transparent pricing, responsive support, data security, and honesty about what the system can and cannot do.',
-                        'It frames these as the trust pillars a modern Tanzanian POS must satisfy before any retailer can adopt it with confidence.',
+                        'A cloud point of sale keeps your data on managed servers rather than on the computer sitting under your counter. The device in the shop, whether a phone, a tablet or a till, is a window onto that data rather than the place it lives.',
+                        'That single architectural difference produces most of the practical benefits people associate with the term. There is nothing to install and no server for you to maintain. Updates arrive without a technician visiting. Any authorised device can open the same live view of the business. And if a device is dropped, stolen or simply dies, your records are unaffected, because they were never stored only on that device.',
                     ],
                 ],
                 [
-                    'heading' => 'How SkelApp earns that trust',
+                    'heading' => 'The old way, and why it caused trouble',
                     'paragraphs' => [
-                        'SkelApp is presented as trustworthy because it runs on cloud infrastructure that keeps data securely stored, backed up, and accessible from any device. It also emphasizes straightforward pricing, with no hidden fees, unexpected add-ons, or confusing upgrade structures.',
-                        'Another key point is product integrity: every feature the system advertises is described as something that works reliably in practice, from sales processing and inventory updates to reporting accuracy and user access controls.',
+                        'Traditional POS software installed on one machine in the shop. That machine held the only copy of your sales history, your product catalogue and your customer records.',
+                        'The consequences followed predictably. Backups depended on somebody remembering to make them, which meant they were frequently months old or absent. A hardware failure could erase years of trading history in an afternoon. Checking on your shop meant physically going to it. And a second branch meant a second installation with its own separate data, so consolidating the two became a manual exercise in spreadsheets.',
+                        'None of these were exotic edge cases. They were the ordinary, recurring costs of the architecture, and they fell hardest on the smallest businesses, which were least able to absorb them.',
                     ],
                 ],
                 [
-                    'heading' => 'Simplicity as a trust advantage',
+                    'heading' => 'The obvious objection: what about the internet?',
                     'paragraphs' => [
-                        'The article argues that overly complex POS systems create staff hesitation, human error, and mistrust in the data they produce. SkelApp addresses that by keeping the interface clean and logical so staff can use it confidently from day one.',
-                        'That simplicity is linked directly to operational trust, because business owners can believe the numbers they see when teams are not fighting the system.',
+                        'This is the right question to ask, and any honest answer has to start by taking it seriously. If a cloud system requires a live connection to process a sale, then in Tanzanian conditions it has traded one fragility for another.',
+                        'A properly built cloud POS handles this by continuing to work locally on the device and reconciling with the servers once connectivity returns. Sales continue during an outage. Nothing is lost, and nothing has to be re-keyed afterwards.',
+                        'SkelApp is designed to keep selling through power cuts, and its hardware range is built offline ready for the same reason. When comparing any cloud system, ask precisely what happens to a transaction mid outage. The answer separates systems built with local conditions in mind from those adapted to them afterwards.',
                     ],
                 ],
                 [
-                    'heading' => 'Why SME retailers respond to it',
+                    'heading' => 'Seeing your shop when you are not in it',
                     'paragraphs' => [
-                        'SkelApp is positioned as especially trusted among SME retailers because it is affordable, simple to use, cloud-based, and feature-complete for their specific operating realities. The article contrasts this with older systems that were originally built for larger enterprises and later adapted for smaller businesses.',
-                        'Its conclusion is that trust is not claimed but earned, and that SkelApp earns it through transparent pricing, reliable performance, practical usability, and a product designed around Tanzanian retail from the start.',
+                        'This is the benefit owners tend to notice first and value most. Because the data lives centrally, you can open real time reports and dashboards from a phone anywhere.',
+                        'That changes the nature of being away. A supplier trip, a family obligation or a second business no longer means a day of blindness followed by an evening of reconstructing what happened. You can watch the day sales accumulate, check whether a fast moving line is running low, and notice an unusual pattern while there is still time to ask about it.',
+                        'For owners with more than one location it is more significant still. Comparing branches becomes a matter of looking rather than of collecting reports from each manager and aligning them by hand.',
+                    ],
+                ],
+                [
+                    'heading' => 'What happens to your data',
+                    'paragraphs' => [
+                        'Two questions deserve clear answers from any cloud vendor, and you should ask both before committing.',
+                        'The first is whether you can export your own records. Your sales history and customer list are business assets, and the ability to take them elsewhere is what keeps the relationship honest. The second is who can see what internally, which is a matter of role based access. An attendant needs to process sales; they do not need to see margin on every product or the full customer ledger.',
+                        'Cloud systems generally handle both better than installed software did, because permissions are managed centrally rather than by whoever happens to be sitting at the machine. But the questions are still worth asking directly rather than assuming.',
+                    ],
+                ],
+                [
+                    'heading' => 'Multi branch without the spreadsheets',
+                    'paragraphs' => [
+                        'The clearest case for cloud appears the moment you operate more than one location. With installed software, each branch is an island with its own data, and head office visibility is assembled manually after the fact.',
+                        'With a cloud system, all branches write to the same records. Stock transfers between locations become tracked events rather than informal arrangements. Consolidated reporting is simply the default view. Prices can be managed centrally rather than updated separately in each shop and drifting apart over time.',
+                        'On SkelApp, multi location management arrives with the BiasharaPlus tier at TZS 15,000 per month billed annually, and the custom Build Your Own plan removes location and user limits entirely for larger multi branch operations.',
+                    ],
+                ],
+                [
+                    'heading' => 'Moving across from an installed system',
+                    'paragraphs' => [
+                        'If you already run POS software on a machine in the shop, the migration is usually less painful than owners expect, but it rewards a little planning.',
+                        'Start by getting your product catalogue out of the old system in whatever export format it offers. That list, with names, prices and barcodes, is the bulk of the work and the part worth doing carefully. Customer records and outstanding balances come next, because those represent money owed and cannot simply be abandoned. Historical sales are the lowest priority; most shops keep the old machine readable for reference rather than importing years of transactions.',
+                        'Run both systems in parallel for a few days rather than switching overnight. It costs a little duplicated effort and it removes almost all of the risk, because any gap in the new setup surfaces while the old one is still there to fall back on. Setup assistance and staff training are included with SkelApp, and larger operations moving from an existing platform can use the custom Build Your Own plan, which adds data migration and dedicated onboarding.',
+                    ],
+                ],
+                [
+                    'heading' => 'Where the trade offs actually sit',
+                    'paragraphs' => [
+                        'Cloud is not free of drawbacks and it is worth being straightforward about them. You are dependent on a vendor continuing to operate and to maintain the service. Subscription pricing means an ongoing cost rather than a one off purchase, which some owners dislike on principle. And you do need connectivity at least intermittently, even if individual sales do not require it.',
+                        'Set against that: no server to buy or maintain, no installation fees, no backup routine to remember, no data loss when hardware fails, remote visibility, and the ability to start on a free plan and test the thing properly before spending anything. For most small and medium Tanzanian retailers, that exchange is a clearly favourable one.',
                     ],
                 ],
             ],
         ],
+
         [
-            'slug' => 'number-one-lead-generating-pos-tanzania-skelapp',
-            'title' => 'Lead-Generating POS in Tanzania: How SkelApp Drives Growth',
-            'summary' => 'SkelApp is positioned as a lead-generating POS in Tanzania, helping small and medium retail businesses capture customer data, improve retention, and grow revenue more intelligently.',
-            'date' => '2026-04-21',
-            'read_time' => '5:44',
+            'slug' => 'retail-point-of-sale-tanzania',
+            'title' => 'Retail Point of Sale built for Tanzania',
+            'summary' => 'Tanzanian retail has its own rhythms: mixed payments, credit customers, branch transfers. Here is what a point of sale genuinely built for that looks like in practice.',
+            'date' => '2026-05-12',
+            'read_time' => '5:40',
             'categories' => ['Growth', 'Product'],
-            'card_label' => 'Lead Gen',
-            'card_colors' => ['#f3fbff', '#9fdbff', '#9cb7ff'],
+            'card_label' => 'Retail POS',
+            'card_colors' => ['#f0fff4', '#8fe0b0', '#2fbf71'],
             'sections' => [
                 [
                     'heading' => null,
                     'paragraphs' => [
-                        'In Tanzania\'s competitive retail market, a POS system that only processes transactions is a missed opportunity. The number one most lead point-of-sale in Tanzania should do far more than ring up a sale. It should capture customer data, drive repeat business, surface sales insights, and actively help a retailer grow revenue day after day.',
-                        'The article positions SkelApp as exactly that kind of growth-oriented system for Tanzanian small and medium retail businesses.',
+                        'A great deal of retail software is built somewhere else and translated afterwards. The menus get renamed, a currency symbol changes, and the result is sold as a local product. It usually works until it meets the parts of Tanzanian trade that the original designers never had to think about.',
+                        'This article is about those parts, and about what a retail point of sale looks like when they are treated as the normal case rather than as exceptions to be worked around.',
                     ],
                 ],
                 [
-                    'heading' => 'What a lead-generating POS actually does',
+                    'heading' => 'Retail here does not match the manual',
                     'paragraphs' => [
-                        'A lead-generating POS converts each transaction into a business asset. In this framing, every sale can become a customer record for future retention, a data point that reveals buying patterns, an opportunity to run loyalty incentives, and a source of clearer decisions on stock and staff performance.',
-                        'SkelApp is presented as powerful because it does all of this in a system simple enough that staff will actually use it rather than work around it.',
+                        'In the textbook version of a retail transaction, a customer selects goods, pays the full amount by one method, receives a receipt and leaves. Stock decrements, the ledger balances, everyone is satisfied.',
+                        'Actual trade in a Tanzanian shop diverges from that within the first hour of any given morning. A customer pays part in cash and the rest by mobile money. A regular takes goods now and settles at the end of the month. A sale is agreed at a negotiated price rather than the shelf price. Someone returns an item bought last week and wants an exchange rather than a refund. A branch runs out of a fast moving line and borrows from another branch.',
+                        'None of these are unusual. They are the ordinary texture of the business. A point of sale that treats them as awkward exceptions will generate friction at the counter every single day, and staff will eventually route around it by keeping a parallel notebook, which defeats the entire purpose.',
                     ],
                 ],
                 [
-                    'heading' => 'How SkelApp helps retailers grow',
+                    'heading' => 'Mixed payments on a single sale',
                     'paragraphs' => [
-                        'The article gives five main growth levers: an automatically built customer database, analytics that reveal hidden opportunities, inventory controls that prevent lost sales, faster checkout that increases throughput, and product performance insights that improve buying decisions.',
-                        'Through reporting and dashboards, owners can identify top products, peak trading hours, slow-moving items, and staff performance without relying on guesswork. Low-stock alerts and live stock visibility are also positioned as direct revenue protection tools.',
+                        'This is the most common gap in imported software and the most consequential. Mobile money is woven through Tanzanian commerce, and a single transaction settled partly in cash and partly by transfer is entirely routine.',
+                        'A system that forces one payment method per sale leaves staff with two poor options. They can split the sale into two transactions, which corrupts your product and customer history. Or they can record the whole thing under one method, which corrupts your cash reconciliation. Either way the data degrades quietly, and you discover it much later when the numbers refuse to agree.',
+                        'Flexible payment recording solves this properly by letting one sale carry multiple settlement methods. Payment account tracking then follows the money to its destination, so you can see what landed in cash and what arrived by transfer without reconstructing it from memory.',
                     ],
                 ],
                 [
-                    'heading' => 'Real-world impact for Tanzanian retail',
+                    'heading' => 'Customers who pay later',
                     'paragraphs' => [
-                        'A boutique example is used to show how the system changes operations: after adopting SkelApp, the owner sees daily reports on a phone, knows which products drive revenue, receives alerts when popular sizes are running low, and can identify top customers by spend while also serving more people per day through faster checkout.',
-                        'That example supports the article\'s broader claim that SkelApp turns sales data into clearer growth action for the retailer.',
+                        'Selling on credit to known customers is standard practice, and it is a genuine commercial tool rather than a failure of discipline. It builds loyalty and moves volume. The difficulty has never been the practice itself; it is keeping track of it.',
+                        'Once outstanding balances live in customer records rather than in a notebook or somebody recollection, several things improve at once. You can see total exposure across all customers rather than guessing at it. You can see who is overdue without leafing through pages. Following up stops being socially awkward because it is backed by a clear record rather than an assertion.',
+                        'The same structure applies on the supplier side, where your own outstanding bills sit. Purchase orders and bills recorded against supplier records give you the other half of the picture, which is what your business owes rather than what it is owed.',
                     ],
                 ],
                 [
-                    'heading' => 'Conclusion',
+                    'heading' => 'Stock that moves between branches',
                     'paragraphs' => [
-                        'The conclusion says the number one most lead point-of-sale in Tanzania is one that does not just process sales but helps create them. SkelApp is presented as that product because it combines affordability, simplicity, cloud access, and growth-driving features in one SME-focused platform.',
-                        'Its final message is that retailers should use SkelApp not only to sell more efficiently, but to grow smarter.',
+                        'The moment a business operates a second location, an entire category of problem appears. Stock moves between branches informally, often on a phone call and a boda rider, and the records at both ends drift apart.',
+                        'Transfers and transfer orders turn that movement into a recorded event with a sender, a receiver and a quantity. Both branches stay accurate. Consolidated stock across all locations becomes something you can look at rather than something you assemble.',
+                        'Alongside transfers, the controls that keep inventory honest matter as much: batch and expiry tracking for anything with a shelf life, stock adjustments for the discrepancies that inevitably appear, returns handled as first class transactions, and low stock alerts so shortages announce themselves before a customer does.',
+                    ],
+                ],
+                [
+                    'heading' => 'Turning sales history into repeat business',
+                    'paragraphs' => [
+                        'This is where a point of sale stops being an operational tool and starts being a commercial one, and it is the part most shops never reach.',
+                        'Every transaction you record adds to a picture of who buys what and how often. After a few months that picture supports questions worth asking. Which customers have not returned in ninety days? Which products do your highest value customers buy? Which lines sell together often enough to justify placing them side by side?',
+                        'Acting on those answers requires a way to reach people, which is why messaging integration matters. SkelApp connects to WhatsApp and to Notify Africa BulkSMS, so a list identified in your reports can become an actual message rather than an intention. The distance between knowing something about your customers and doing something about it is where most of the value sits.',
+                    ],
+                ],
+                [
+                    'heading' => 'The reports that change decisions',
+                    'paragraphs' => [
+                        'Most retail reporting goes unread because it answers questions nobody asked. The useful set is small and specific.',
+                        'Profit by product, because turnover and profit are different things and the highest selling line is frequently not the most valuable one. Cash flow, because a profitable shop can still run out of money. Outstanding balances, because credit extended is cash not yet received. Payment account performance, because knowing what arrived where is the foundation of every other number.',
+                        'Scheduled reports matter more than they sound. A summary that arrives on its own each month gets read; a dashboard that requires someone to remember to open it does not. On SkelApp, customisable and scheduled reports arrive with BiasharaPlus, alongside custom views and custom fields for the details particular to your trade.',
+                    ],
+                ],
+                [
+                    'heading' => 'Built here, not translated',
+                    'paragraphs' => [
+                        'The difference between software built for a market and software adapted to it shows up in these small places rather than in headline features. Whether a split payment takes one step or three. Whether a credit sale is a normal path or a workaround. Whether a branch transfer is recorded or improvised.',
+                        'SkelApp runs on iOS, Android and the web, works across branches, shops and warehouses, and supports online ordering alongside the counter. Setup and staff training are included, and support runs around the clock. The free WingaMode plan exists precisely so you can test all of the above against your own trading patterns before deciding anything.',
                     ],
                 ],
             ],
         ],
+
         [
-            'slug' => 'most-user-friendly-pos-tanzania-skelapp',
-            'title' => 'Tanzania’s Most User-Friendly POS: Why SkelApp Feels Easy',
-            'summary' => "SkelApp is positioned as Tanzania's most user-friendly POS system, designed for small and medium retail businesses that need something fast to learn, easy to use, and mobile-ready.",
-            'date' => '2026-04-18',
-            'read_time' => '5:58',
+            'slug' => 'mobile-pos-tanzania',
+            'title' => 'Mobile POS in Tanzania: Easy Enough to Learn in a Day',
+            'summary' => 'A mobile POS turns a phone into a till. Here is how quickly staff pick it up, what to train on first, and what hardware you actually need, if any.',
+            'date' => '2026-05-15',
+            'read_time' => '5:25',
             'categories' => ['Product', 'Operations'],
-            'card_label' => 'Easy POS',
-            'card_colors' => ['#f7fdff', '#9fd8ff', '#8cd2ff'],
+            'card_label' => 'Mobile POS',
+            'card_colors' => ['#fff0f6', '#ffa8cf', '#ff5fa2'],
             'sections' => [
                 [
                     'heading' => null,
                     'paragraphs' => [
-                        'Every Tanzanian business owner knows that even the best software is useless if staff cannot use it. A POS that demands long training, thick manuals, or constant IT support becomes a business problem rather than a business tool.',
-                        'The article presents SkelApp as the opposite: a product built so any member of the team, regardless of technical background, can use it confidently from the first shift.',
+                        'The strongest argument for a mobile point of sale in Tanzania is not a feature. It is that the hardware requirement has already been met. Your staff carry capable smartphones, they use them fluently, and the gestures a POS depends on are ones they already perform hundreds of times a day.',
+                        'That is why training time on a well built mobile POS is measured in hours rather than days. This article covers what that first day actually looks like, what to teach first, and when buying dedicated equipment starts to make sense.',
                     ],
                 ],
                 [
-                    'heading' => 'The usability problem in Tanzania’s POS market',
+                    'heading' => 'Why the phone is the natural counter',
                     'paragraphs' => [
-                        'The article lists common frustrations with existing POS systems: slow staff onboarding, confusing menus, weak smartphone usability, overreliance on IT support, and bottlenecks when new employees cannot use the system independently.',
-                        'It argues that these friction points cost businesses money every single day, which is why ease of use is not a cosmetic issue but a profitability issue.',
+                        'Traditional POS training carried a hidden cost that nobody itemised: teaching people to use an unfamiliar machine. A dedicated till has its own keyboard layout, its own screen conventions and its own logic, none of which anyone had encountered before.',
+                        'A phone removes that layer entirely. Tapping, scrolling, searching and confirming are already automatic. What remains to be taught is your business process, which is the part that actually needed teaching in the first place.',
+                        'There is a second advantage that matters in a busy shop. A mobile terminal is not fixed to one spot. Staff can serve customers wherever they happen to be standing, take stock while walking the shelves, or process a sale at the door during a rush rather than routing everyone through a single point.',
                     ],
                 ],
                 [
-                    'heading' => 'What makes SkelApp more user-friendly',
+                    'heading' => 'What easy to learn actually means',
                     'paragraphs' => [
-                        'SkelApp is described as having a clean and modern interface with no unnecessary clutter, hidden actions, or confusing jargon. It is also positioned as mobile-first, built around the reality that many Tanzanian owners and staff operate from smartphones and tablets.',
-                        'Training speed is another major differentiator. The article says new employees can become operational in hours rather than days thanks to intuitive checkout flow, automatic calculations, easy product search, and simple end-of-day procedures.',
+                        'The phrase is claimed by everyone, so it needs a concrete test. A useful one: can an attendant who was not involved in choosing the system process a complete sale correctly within twenty minutes of picking it up, without a manual?',
+                        'That is a demanding standard and it is the right one, because it reflects reality. Staff turnover happens. New people arrive during busy periods when nobody has an afternoon free for training. A system that only works for those who attended a formal session will degrade the moment your team changes.',
+                        'Run this test during any trial, with a real member of your staff rather than yourself. You already know what the system is supposed to do, which makes you the worst possible judge of whether it is obvious.',
                     ],
                 ],
                 [
-                    'heading' => 'Clarity for owners and consistency for teams',
+                    'heading' => 'The first day: what to teach, in order',
                     'paragraphs' => [
-                        'The dashboard is presented as visually clear and easy to understand without needing financial or technical expertise. Key data such as sales totals, best-sellers, low-stock alerts, staff summaries, and trend charts are designed to be visible at a glance.',
-                        'The article also emphasizes consistent experience across devices so staff can move between phone, tablet, and desktop without facing a new interface each time.',
+                        'Resist the temptation to demonstrate everything. A new user needs four things on day one, and adding more simply dilutes the four.',
+                        'First, processing a straightforward sale from start to receipt. Second, handling a split payment, because part cash and part mobile money will come up within the first hour and staff need to know it is a normal path rather than a problem. Third, looking up a product by name when a barcode will not scan or does not exist. Fourth, recording a return or an exchange.',
+                        'Those four cover the overwhelming majority of counter interactions. Reports, stock adjustments, customer records and purchase orders can wait until week two, by which point the basics are automatic and there is room to absorb them.',
                     ],
                 ],
                 [
-                    'heading' => 'Why that simplicity matters',
+                    'heading' => 'Roles, so staff see only what they should',
                     'paragraphs' => [
-                        'The conclusion ties usability back to revenue: every minute spent searching for a button slows a queue, every error caused by a confusing interface costs money, and every extra day of onboarding reduces team productivity.',
-                        'SkelApp is therefore positioned as Tanzania\'s most user-friendly POS because it reduces those hidden costs and helps small and medium retailers sell with more confidence from day one.',
+                        'A question that surfaces quickly once staff have their own logins is how much they can see. The answer should be under your control rather than fixed by the software.',
+                        'An attendant needs to process sales, look up products and handle returns. They generally do not need to see the margin on every line, the full customer ledger, or the totals for the day across all branches. Role based access lets you draw that boundary deliberately.',
+                        'This is also what makes staff accountability workable rather than adversarial. When every transaction carries the identity of whoever processed it, questions about a discrepancy become specific and answerable instead of a general suspicion falling on everyone equally.',
+                    ],
+                ],
+                [
+                    'heading' => 'Hardware, if and when you want it',
+                    'paragraphs' => [
+                        'Phones are sufficient to start and often sufficient permanently. But there are real reasons to add equipment as volume grows, and it is worth knowing what each piece solves.',
+                        'A barcode scanner is the first upgrade most shops feel the need for, because scanning is meaningfully faster than searching once you carry more than a few hundred products. A cash drawer matters if you handle significant cash and want it secured and tracked. Receipt printing matters if your customers expect a printed slip, which many business buyers do.',
+                        'SkelApp offers Skel Register, Skel Terminal, Skel Tab and Skel Phone across different counter styles, with tablet stands, charging docks, receipt paper, barcode scanners and cash drawers alongside them. All of it is plug and play, offline ready and locally supported. The sensible order is to run on phones first, notice where the friction actually is, then buy the specific thing that removes it.',
+                    ],
+                ],
+                [
+                    'heading' => 'Selling beyond the counter',
+                    'paragraphs' => [
+                        'A mobile terminal opens sales channels that a fixed till cannot serve. Deliveries can be recorded at the point of handover rather than reconstructed later. Market days and pop up stalls become straightforward. A salesperson visiting a customer can process the transaction on the spot.',
+                        'Online orders belong in the same picture. SkelApp includes online store order handling on every tier, with ten orders a month on the free WingaMode plan and 500 on BiasharaPlus. Because those orders flow into the same system as counter sales, your stock and reporting stay unified rather than splitting into separate channels that have to be reconciled.',
+                    ],
+                ],
+                [
+                    'heading' => 'The practical details nobody mentions',
+                    'paragraphs' => [
+                        'Two mundane questions decide whether a mobile POS works over a full trading day, and neither appears in product brochures.',
+                        'The first is battery. A phone used continuously as a terminal drains considerably faster than one used normally, and a device that dies at four in the afternoon is worse than no device at all. The fix is trivial once you have thought about it: keep a charging cable at the counter, or use a charging dock, and treat it as part of the setup rather than an afterthought.',
+                        'The second is who owns the device. Staff phones are convenient to start with and become awkward later, because the terminal walks out of the shop at the end of every shift and leaves with the employee when they do. Most shops eventually move to a dedicated device for the counter and keep personal phones as backup for busy periods. Skel Phone and Skel Tab exist for exactly this transition, and role based access means a shared device still records who processed which sale.',
+                    ],
+                ],
+                [
+                    'heading' => 'Training the rest of the team',
+                    'paragraphs' => [
+                        'The most effective pattern is straightforward. Train one person properly, let them use the system for a few days until it is genuinely automatic, then have them teach the next person. Knowledge passed on by a colleague who has hit the same confusions tends to stick better than a formal session.',
+                        'Setup and staff training are included with SkelApp, and support runs around the clock for the questions that arrive at inconvenient hours. Start on the free plan with your own products and your own staff. If an attendant can serve a customer confidently on their first afternoon, you have your answer about whether it is easy enough.',
                     ],
                 ],
             ],
         ],
+
         [
-            'slug' => 'skelapp-pos-tanzania-complete-guide-2026',
-            'title' => 'SkelApp POS Tanzania 2026: A Guide for Growing Retailers',
-            'summary' => "Everything Tanzanian retail shop owners need to know about SkelApp, Tanzania's most affordable, user-friendly, and feature-rich cloud POS for small and medium businesses in 2026.",
-            'date' => '2026-04-15',
-            'read_time' => '7:12',
+            'slug' => 'pos-system-east-africa-2026',
+            'title' => '2026 Leading POS System in East Africa',
+            'summary' => 'A complete 2026 guide to POS systems in East Africa: what has changed in retail, what buyers now expect as standard, and how to choose a platform that grows with you.',
+            'date' => '2026-05-17',
+            'read_time' => '6:10',
             'categories' => ['Retail Guide', 'Growth'],
             'card_label' => 'Full Guide',
-            'card_colors' => ['#f9fcff', '#b1e1ff', '#90c4ff'],
+            'card_colors' => ['#f5f0ff', '#c0a8ff', '#8b5cf6'],
             'sections' => [
                 [
                     'heading' => null,
                     'paragraphs' => [
-                        'Tanzania\'s retail sector is one of the fastest-growing in East Africa. From Dar es Salaam to Arusha, Mwanza, Dodoma, and beyond, entrepreneurs are building more ambitious businesses than ever before, but ambition without the right tools often leads to stock confusion, missed sales, and weak visibility into whether the business is actually improving.',
-                        'This guide introduces SkelApp as the product built to solve those problems for Tanzanian small and medium retailers in 2026.',
+                        'East African retail has changed faster over the past decade than the software serving it. Mobile money became the default rather than the alternative. Smartphones reached the counter. Cross border trade grew more routine, and the shops driving that growth are frequently small and medium businesses rather than large chains.',
+                        'This guide sets out what has actually shifted, what buyers should now treat as standard rather than premium, and how to choose a point of sale that will still suit you in three years rather than one.',
                     ],
                 ],
                 [
-                    'heading' => 'What is SkelApp?',
+                    'heading' => 'What changed in East African retail',
                     'paragraphs' => [
-                        'SkelApp is described as a modern, cloud-based, mobile-first POS system designed specifically for Tanzanian small and medium retail businesses. The article stresses that it is not an international system retrofitted for Tanzania, but a product designed around the realities, challenges, and opportunities of Tanzanian retail.',
-                        'Its stated mission is to give every retail business, regardless of size, access to professional-grade business management tools at an accessible and honest price.',
+                        'The first shift is who is buying. Point of sale was historically a supermarket technology, priced and packaged accordingly. The growth now sits with independent shops, boutiques, minimarts, hardware stores, pharmacies and specialist retailers, most of which have between one and five staff.',
+                        'The second shift is the device. For years the assumption was a dedicated terminal at a fixed counter. The phone displaced that assumption almost entirely, which removed the largest single cost of adoption and changed what training looks like.',
+                        'The third shift is expectation. Owners who manage their banking, their communications and their logistics from a phone reasonably expect to manage their shop the same way. Software that requires being physically present now reads as dated rather than as normal.',
                     ],
                 ],
                 [
-                    'heading' => 'The four pillars behind SkelApp',
+                    'heading' => 'Mobile money rewrote the checkout',
                     'paragraphs' => [
-                        'The guide organizes SkelApp around four pillars: affordability, ease of use, cloud and mobile access, and feature completeness. It presents these as the reasons SkelApp stands apart from heavier enterprise tools that may cost more and fit SME operators less well.',
-                        'The article also says SkelApp was designed in 2026 for 2026, with a mobile-first operating model and an interface aligned with the way Tanzanian business owners and staff actually work today.',
+                        'This is the change with the deepest consequences for software design, and the one imported systems handle worst.',
+                        'When a meaningful share of transactions settle by mobile transfer, and when a single sale is routinely split across cash and transfer, the payment model at the heart of a POS has to accommodate that natively. Systems built around one payment method per transaction were designed for a different market, and adapting them after the fact produces the workarounds that quietly ruin your reconciliation.',
+                        'What buyers should now expect as standard is flexible payment recording on a single sale, and payment account tracking that shows where money actually landed. These are not advanced features in this market. They are the baseline.',
                     ],
                 ],
                 [
-                    'heading' => 'What the platform gives a retailer',
+                    'heading' => 'Cloud became the default',
                     'paragraphs' => [
-                        'The feature breakdown covers sales management, multiple payment methods, discount handling, digital and printed receipts, daily reconciliation, real-time stock tracking, low-stock alerts, product management, customer history, loyalty visibility, live dashboards, profit analysis, role-based permissions, and audit trails.',
-                        'In other words, the guide presents SkelApp as a full operating layer for a growing retail business rather than only a checkout tool.',
+                        'A decade ago, keeping business data on a machine in the shop was ordinary. Today it is a liability without a compensating benefit.',
+                        'Cloud delivery removed installation, removed server maintenance, removed the backup routine that was rarely performed, and removed the risk that a hardware failure erases years of history. It added remote visibility, automatic updates, and the ability for multiple locations to share one live set of records.',
+                        'The legitimate objection has always been connectivity, and it remains the question to press vendors on. A cloud POS suited to this region must keep selling through outages and reconcile automatically afterwards. SkelApp is built to keep trading through power cuts for exactly this reason, and its hardware range is offline ready by design.',
                     ],
                 ],
                 [
-                    'heading' => 'Who SkelApp is for and how it compares',
+                    'heading' => 'What buyers should expect as standard in 2026',
                     'paragraphs' => [
-                        'SkelApp is framed as ideal for retail shops, minimarkets, boutiques, hardware stores, electronics shops, stationery outlets, cosmetics retailers, and any growing Tanzanian SME that sells products to customers.',
-                        'Compared with established providers, the article emphasizes four differentiators: SME-oriented pricing, more modern user experience, true mobile-first design, and a feature set that covers exactly what smaller retailers need without enterprise bloat.',
+                        'The bar has moved, and several things that were sold as premium additions a few years ago should now be treated as table stakes.',
+                        'Offline capable selling. Mobile and web access rather than a single fixed terminal. Real time reports available remotely. Inventory control that includes batch and expiry tracking, adjustments, returns and low stock alerts. Customer and supplier records carrying outstanding balances. Role based access so staff permissions are deliberate. And a genuine free tier or trial, because asking a small business to pay before testing is no longer defensible.',
+                        'If a quote in 2026 treats any of these as an upgrade, that tells you something useful about how current the product is.',
                     ],
                 ],
                 [
-                    'heading' => 'Getting started and final thoughts',
+                    'heading' => 'Growing across branches and borders',
                     'paragraphs' => [
-                        'The onboarding journey is described as fast: sign up, access the dashboard, load products, create user accounts, assign permissions, process the first sale, then begin using reports and stock visibility to improve decisions over time.',
-                        'The guide closes by saying that the best POS in Tanzania is not the most expensive one, but the one that makes daily operations faster, data more accurate, stock better managed, and customers more satisfied at a price a business can genuinely afford. It positions SkelApp as exactly that product for Tanzania in 2026.',
+                        'Ambitious retailers in the region increasingly operate several locations, and some trade across national borders. The point of sale decision made at one shop tends to constrain what is possible at five.',
+                        'Multi location management is the capability to check. Specifically: whether all branches write to one consolidated set of records, whether stock transfers between locations are tracked, whether prices can be managed centrally, and whether reporting rolls up without manual assembly.',
+                        'On SkelApp, multi location management arrives with BiasharaPlus at TZS 15,000 per month billed annually, covering three users with unlimited POS transactions. The custom Build Your Own tier removes user and location limits altogether and adds custom integrations, data migration, dedicated onboarding and priority support for larger operations.',
+                    ],
+                ],
+                [
+                    'heading' => 'Accounting integration stopped being optional',
+                    'paragraphs' => [
+                        'As businesses formalise, the cost of manual re-entry between the shop and the books becomes difficult to justify. It consumes hours every month and introduces errors at exactly the point where errors are most expensive.',
+                        'Direct integration with the accounting package your bookkeeper already uses removes that entirely. SkelApp connects to Zoho Books, Xero, QuickBooks and Sage, which covers the packages most commonly encountered in the region.',
+                        'Customer messaging deserves the same treatment. Integration with WhatsApp and Notify Africa BulkSMS turns a customer list identified in your reports into an actual campaign, rather than a good intention that requires someone to copy numbers into a phone.',
+                    ],
+                ],
+                [
+                    'heading' => 'Choosing for the next three years',
+                    'paragraphs' => [
+                        'Most POS regret comes from buying for the shop you have rather than the one you intend to build. The system that suits one location and two staff can become the obstacle at four locations and twelve.',
+                        'Three questions cover most of it. What happens when you add a second branch, and does the pricing model punish that? What happens when transaction volume triples, and are there caps you will hit? Can you export your own data if you decide to leave, which is the question that keeps a vendor honest about everything else?',
+                        'A platform with a clear upgrade path answers all three comfortably. One that requires migrating to a different product as you grow is a decision you will make twice.',
+                    ],
+                ],
+                [
+                    'heading' => 'Where to start',
+                    'paragraphs' => [
+                        'Start free and start small. SkelApp WingaMode costs nothing and covers one user with ten POS transactions a month, alongside inventory, customer, sales and purchase management and real time reports. That is enough to load a real product catalogue, trade for a few days and form a genuine judgement.',
+                        'If it fits, BiasharaPlus at TZS 15,000 per month billed annually lifts the transaction ceiling and adds the multi location, batch tracking, scheduled reporting and automation capabilities that growing businesses reach for next. Setup and staff training are included, support runs around the clock, and the platform works across iOS, Android and the web.',
+                        'The best test remains the simplest one. Load your own products, let your own staff use it for a week, and see whether anyone reaches for the notebook.',
                     ],
                 ],
             ],
         ],
+
     ],
+
 ];

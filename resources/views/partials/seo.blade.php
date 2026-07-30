@@ -26,6 +26,30 @@
     $pageId      = $canonical.'#webpage';
     $pageType    = trim((string) ($seoPageType ?? 'WebPage')) ?: 'WebPage';
     $pageName    = trim((string) ($seoPageName ?? $title)) ?: $title;
+    $siteSocialLinks = content_list('global.brand.social', []);
+    if ($siteSocialLinks === []) {
+        $siteSocialLinks = content_list('contact.socials', []);
+    }
+    $validExternalUrl = function (mixed $value): ?string {
+        if (! is_string($value)) {
+            return null;
+        }
+
+        $value = trim($value);
+        if ($value === '' || $value === '#') {
+            return null;
+        }
+
+        if (str_contains($value, 'your-app-id') || str_contains($value, 'your.app')) {
+            return null;
+        }
+
+        if (! \Illuminate\Support\Str::startsWith($value, ['http://', 'https://'])) {
+            return null;
+        }
+
+        return $value;
+    };
 
     $normalizeSchemaImage = function (mixed $value) use ($image): array {
         $images = collect(is_array($value) ? $value : [$value])
@@ -114,8 +138,13 @@
             'areaServed'  => 'TZ',
         ];
     }
-    if ($sameAs = content_list('global.brand.social', [])) {
-        $links = collect($sameAs)->pluck('url')->filter()->values()->all();
+    if ($siteSocialLinks !== []) {
+        $links = collect($siteSocialLinks)
+            ->pluck('url')
+            ->map($validExternalUrl)
+            ->filter()
+            ->values()
+            ->all();
         if ($links) {
             $organization['sameAs'] = $links;
         }
@@ -211,6 +240,14 @@
                 'ratingValue' => (string) $ratingValue,
                 'ratingCount' => (string) $ratingCount,
             ];
+        }
+
+        $softwareSameAs = collect([
+            content('global.app_badges.google_url'),
+            content('global.app_badges.apple_url'),
+        ])->map($validExternalUrl)->filter()->values()->all();
+        if ($softwareSameAs) {
+            $software['sameAs'] = $softwareSameAs;
         }
 
         $graph[] = $software;
@@ -362,6 +399,9 @@
 @endphp
 <link rel="icon" href="{{ asset('favicon.ico') }}" />
 <link rel="canonical" href="{{ $canonical }}" />
+@if ($googleSiteVerification = config('services.google.site_verification'))
+<meta name="google-site-verification" content="{{ $googleSiteVerification }}" />
+@endif
 <meta property="og:type" content="{{ $ogType }}" />
 <meta property="og:site_name" content="{{ $siteName }}" />
 <meta property="og:title" content="{{ $title }}" />

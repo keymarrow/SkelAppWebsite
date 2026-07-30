@@ -1,5 +1,8 @@
 @php
-  $title = ($article['meta_title'] ?? $article['title']) . ' | SkelApp News';
+  // Only add the brand suffix when the meta title does not already carry it,
+  // otherwise titles render as "… | SkelApp | SkelApp News".
+  $titleBase = $article['meta_title'] ?? $article['title'];
+  $title = str_contains($titleBase, 'SkelApp') ? $titleBase : $titleBase . ' | SkelApp News';
   $bodyClass = 'news-article-page';
   $metaDescription = $metaDescription ?? ($article['meta_description'] ?? $article['summary']);
   $articleSections = $article['sections'] ?? [];

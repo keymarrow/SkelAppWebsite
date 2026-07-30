@@ -35,6 +35,11 @@ return [
         ],
     ],
 
+    'google' => [
+        // Search Console HTML-tag verification token (content="..." value only).
+        'site_verification' => env('GOOGLE_SITE_VERIFICATION'),
+    ],
+
     'beem' => [
         'send_url' => env('BEEM_SMS_SEND_URL', 'https://apisms.beem.africa/v1/send'),
         'api_key' => env('BEEM_SMS_API_KEY'),
