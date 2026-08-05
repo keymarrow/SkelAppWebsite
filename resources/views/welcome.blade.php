@@ -14,7 +14,7 @@
       'copy' => 'SkelApp does the profit math live — so busy days become paid days.',
       'link_label' => 'See pricing',
       'link_url' => route('pricing.show'),
-      'image' => 'poswithtab.webp',
+      'image' => 'assets/pos-profit-summary.webp',
       'overlay_big' => '',
       'overlay_small' => '',
     ],
@@ -24,7 +24,7 @@
       'copy' => 'Who owes you, how much, since when — tracked, not scribbled and forgotten.',
       'link_label' => 'Learn more',
       'link_url' => route('features.show'),
-      'image' => 'attendants.webp',
+      'image' => 'assets/happy-customer.webp',
       'price_label' => '',
       'price' => '',
       'badge' => '',
@@ -35,7 +35,7 @@
       'copy' => 'Cash, mobile money, or bank transfer — every payment lands in one record.',
       'link_label' => 'Learn more',
       'link_url' => route('features.show'),
-      'image' => 'Mobilehomeview.png',
+      'image' => 'assets/payment-methods.webp',
     ],
   ]);
   $homeProductCards = content_list('home.products.cards', [

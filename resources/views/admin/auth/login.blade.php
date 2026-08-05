@@ -11,6 +11,10 @@
         <p>Use your admin account to publish, update, and manage news posts for the public SkelApp website.</p>
       </div>
 
+      @if (session('error'))
+        <p class="admin-field-error" role="alert">{{ session('error') }}</p>
+      @endif
+
       <form method="POST" action="{{ route('admin.login.store') }}" class="admin-form admin-auth-form">
         @csrf
         <label class="admin-field">

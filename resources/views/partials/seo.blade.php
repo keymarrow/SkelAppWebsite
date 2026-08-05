@@ -311,8 +311,20 @@
                 }
             }
 
-            $graph[] = $product;
-            $pageMainEntityId = $product['@id'];
+            // Google rejects a Product node that carries none of offers /
+            // review / aggregateRating ("Either offers, review, or
+            // aggregateRating should be specified"). Hardware pages publish no
+            // price, so emitting the node only produces invalid items in Search
+            // Console. Drop it unless one of the three is actually present —
+            // the page keeps its WebPage, Breadcrumb and FAQ nodes either way.
+            $hasOfferSignal = isset($product['offers'])
+                || isset($product['review'])
+                || isset($product['aggregateRating']);
+
+            if ($hasOfferSignal) {
+                $graph[] = $product;
+                $pageMainEntityId = $product['@id'];
+            }
         }
     }
 
