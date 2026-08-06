@@ -71,10 +71,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>{{ content('privacy.meta.title', 'Privacy Policy | SkelApp') }}</title>
+<title>{{ content('privacy.meta.title', 'Privacy Policy') }}</title>
 <meta name="description" content="{{ content('privacy.meta.description', 'Read SkelApp\'s privacy policy and how we collect, use, and protect personal information.') }}">
 @include('partials.seo', [
-  'seoTitle' => content('privacy.meta.title', 'Privacy Policy | SkelApp'),
+  'seoTitle' => content('privacy.meta.title', 'Privacy Policy'),
   'seoDescription' => content('privacy.meta.description', 'Read SkelApp\'s privacy policy and how we collect, use, and protect personal information.'),
   'seoPageType' => 'WebPage',
   'seoBreadcrumbs' => [

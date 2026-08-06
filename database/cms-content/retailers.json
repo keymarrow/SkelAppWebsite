@@ -126,7 +126,7 @@
             {
                 "slug": "boutique",
                 "name": "Boutique",
-                "meta_title": "Boutique POS – SkelApp",
+                "meta_title": "Boutique POS",
                 "meta_description": "From the fitting room to the till — ring up sales, track every garment and keep regulars coming back, all from one simple app.",
                 "hero_eyebrow": "Boutique & fashion POS",
                 "hero_title": "The point of sale made for\nyour boutique",
@@ -170,7 +170,7 @@
             {
                 "slug": "cosmetics",
                 "name": "Cosmetics Store",
-                "meta_title": "Cosmetics Store POS – SkelApp",
+                "meta_title": "Cosmetics Store POS",
                 "meta_description": "Ring up products fast, track every shade and SKU, and keep your regulars coming back — all from one simple app.",
                 "hero_eyebrow": "Cosmetics & beauty POS",
                 "hero_title": "The point of sale made for\nyour beauty store",
@@ -214,7 +214,7 @@
             {
                 "slug": "grocery",
                 "name": "Grocery Store",
-                "meta_title": "Grocery Store POS – SkelApp",
+                "meta_title": "Grocery Store POS",
                 "meta_description": "Scan, weigh and ring up fast, keep shelves stocked, and never lose a sale — even when the power or network drops.",
                 "hero_eyebrow": "Grocery & minimart POS",
                 "hero_title": "The point of sale made for\nyour grocery store",
@@ -258,7 +258,7 @@
             {
                 "slug": "hardware-shop",
                 "name": "Hardware Shop",
-                "meta_title": "Hardware Shop POS – SkelApp",
+                "meta_title": "Hardware Shop POS",
                 "meta_description": "Sell from the counter or the aisle, track thousands of parts, and record every payment method clearly — built for the way hardware shops trade.",
                 "hero_eyebrow": "Hardware & building supplies POS",
                 "hero_title": "The point of sale made for\nyour hardware shop",
@@ -302,7 +302,7 @@
             {
                 "slug": "kitchenware",
                 "name": "Kitchenware Store",
-                "meta_title": "Kitchenware Store POS – SkelApp",
+                "meta_title": "Kitchenware Store POS",
                 "meta_description": "Ring up every pot, pan and gadget fast, track your range, and keep customers coming back — all from one simple app.",
                 "hero_eyebrow": "Kitchenware & homeware POS",
                 "hero_title": "The point of sale made for\nyour kitchenware store",
@@ -346,7 +346,7 @@
             {
                 "slug": "autospare",
                 "name": "AutoSpare Shop",
-                "meta_title": "AutoSpare Shop POS – SkelApp",
+                "meta_title": "AutoSpare Shop POS",
                 "meta_description": "Look up parts in seconds, track thousands of SKUs, and record every payment method clearly — built for the way spares shops trade.",
                 "hero_eyebrow": "Auto spares & parts POS",
                 "hero_title": "The point of sale made for\nyour auto spares shop",
@@ -390,7 +390,7 @@
             {
                 "slug": "tech-shop",
                 "name": "Tech Shop",
-                "meta_title": "Tech Shop POS – SkelApp",
+                "meta_title": "Tech Shop POS",
                 "meta_description": "Sell phones, gadgets and accessories fast, track stock and serials, and record every payment method clearly — all from one app.",
                 "hero_eyebrow": "Electronics & tech POS",
                 "hero_title": "The point of sale made for\nyour tech shop",

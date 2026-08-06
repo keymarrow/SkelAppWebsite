@@ -152,7 +152,7 @@
             {
                 "slug": "skel-register",
                 "name": "Skel Register",
-                "meta_title": "Skel Register – SkelApp Hardware",
+                "meta_title": "Skel Register POS Hardware",
                 "meta_description": "Built for busy counters, Skel Register delivers a big, bright screen and fast, reliable checkout that keeps every queue moving.",
                 "hero_badge": "NEW",
                 "hero_primary_label": "Get a demo",
@@ -193,7 +193,7 @@
             {
                 "slug": "skel-terminal",
                 "name": "Skel Terminal",
-                "meta_title": "Skel Terminal – SkelApp Hardware",
+                "meta_title": "Skel Terminal POS Hardware",
                 "meta_description": "Your whole shop in one hand. Scan, sell, record mobile money and print a receipt from the aisle, the doorway or anywhere on the floor.",
                 "hero_badge": "NEW",
                 "hero_primary_label": "Get a demo",
@@ -234,7 +234,7 @@
             {
                 "slug": "skel-tab",
                 "name": "Skel Tab",
-                "meta_title": "Skel Tab – SkelApp Hardware",
+                "meta_title": "Skel Tab POS Hardware",
                 "meta_description": "Turn a tablet into a complete point of sale. Skel Tab drops into a sturdy stand and runs your whole counter with room to grow.",
                 "hero_badge": "NEW",
                 "hero_primary_label": "Get a demo",
@@ -275,7 +275,7 @@
             {
                 "slug": "skel-phone",
                 "name": "Skel Phone",
-                "meta_title": "Skel Phone – SkelApp Hardware",
+                "meta_title": "Skel Phone POS Hardware",
                 "meta_description": "Run your whole shop from the phone in your pocket. Scan, sell and print with SkelApp — no extra hardware needed to get started.",
                 "hero_badge": "NEW",
                 "hero_primary_label": "Get a demo",

@@ -33,10 +33,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ ($integration['name'] ?? 'Integration').' '.content('integration.meta.title_suffix', 'integration - SkelApp') }}</title>
+  <title>{{ ($integration['name'] ?? 'Integration').' '.content('integration.meta.title_suffix', 'POS Integration') }}</title>
   <meta name="description" content="{{ $integration['summary'] ?? content('integration.meta.description_fallback', 'SkelApp integration details.') }}">
   @include('partials.seo', [
-    'seoTitle' => ($integration['name'] ?? 'Integration').' '.content('integration.meta.title_suffix', 'integration - SkelApp'),
+    'seoTitle' => ($integration['name'] ?? 'Integration').' '.content('integration.meta.title_suffix', 'POS Integration'),
     'seoDescription' => $integration['summary'] ?? content('integration.meta.description_fallback', 'SkelApp integration details.'),
     'seoImage' => cms_image($integration['hero_image'] ?? null, asset('assets/devicemockup.webp')),
     'seoPageType' => 'WebPage',

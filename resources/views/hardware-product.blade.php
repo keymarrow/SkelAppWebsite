@@ -58,10 +58,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ $product['meta_title'] ?? (($product['name'] ?? 'Hardware').' – SkelApp Hardware') }}</title>
+  <title>{{ $product['meta_title'] ?? (($product['name'] ?? 'Hardware').' POS Hardware') }}</title>
   <meta name="description" content="{{ $product['meta_description'] ?? '' }}">
   @include('partials.seo', [
-    'seoTitle' => $product['meta_title'] ?? (($product['name'] ?? 'Hardware').' – SkelApp Hardware'),
+    'seoTitle' => $product['meta_title'] ?? (($product['name'] ?? 'Hardware').' POS Hardware'),
     'seoDescription' => $product['meta_description'] ?? ($product['hero_subtitle'] ?? 'SkelApp hardware built for Tanzanian retail.'),
     'seoImage' => cms_image($product['hero_image'] ?? null, asset('assets/PosSystemRegister.webp')),
     'seoPageType' => 'WebPage',

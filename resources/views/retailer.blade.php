@@ -48,10 +48,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ $r['meta_title'] ?? (($r['name'] ?? 'Retailer').' POS – SkelApp') }}</title>
+  <title>{{ $r['meta_title'] ?? (($r['name'] ?? 'Retailer').' POS') }}</title>
   <meta name="description" content="{{ $r['meta_description'] ?? '' }}">
   @include('partials.seo', [
-    'seoTitle' => $r['meta_title'] ?? (($r['name'] ?? 'Retailer').' POS – SkelApp'),
+    'seoTitle' => $r['meta_title'] ?? (($r['name'] ?? 'Retailer').' POS'),
     'seoDescription' => $r['meta_description'] ?? ($r['hero_subtitle'] ?? 'SkelApp point of sale for Tanzanian retailers.'),
     'seoImage' => cms_image($r['hero_image'] ?? null, asset('assets/HeroImage.webp')),
     'seoPageType' => 'WebPage',

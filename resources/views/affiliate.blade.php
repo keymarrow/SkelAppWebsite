@@ -16,10 +16,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>{{ $meta['title'] ?? 'Affiliate Program | SkelApp' }}</title>
+<title>{{ $meta['title'] ?? 'Affiliate Program' }}</title>
 <meta name="description" content="{{ $meta['description'] ?? 'Join the SkelApp affiliate program and earn bonuses for referring businesses.' }}">
 @include('partials.seo', [
-  'seoTitle' => $meta['title'] ?? 'Affiliate Program | SkelApp',
+  'seoTitle' => $meta['title'] ?? 'Affiliate Program',
   'seoDescription' => $meta['description'] ?? 'Join the SkelApp affiliate program and earn bonuses for referring businesses.',
   'seoImage' => cms_image($hero['image'] ?? null, asset('assets/attendants.webp')),
   'seoPageType' => 'WebPage',

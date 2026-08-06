@@ -60,10 +60,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>{{ content('affiliate-apply.meta.title', content_text('affiliate-apply.application.title', 'Affiliate Application | SkelApp')) }}</title>
+<title>{{ content('affiliate-apply.meta.title', content_text('affiliate-apply.application.title', 'Affiliate Application')) }}</title>
 <meta name="description" content="{{ content('affiliate-apply.meta.description', $affiliatePage['meta']['description'] ?? 'Apply to join the SkelApp affiliate program.') }}">
 @include('partials.seo', [
-  'seoTitle' => content('affiliate-apply.meta.title', content_text('affiliate-apply.application.title', 'Affiliate Application | SkelApp')),
+  'seoTitle' => content('affiliate-apply.meta.title', content_text('affiliate-apply.application.title', 'Affiliate Application')),
   'seoDescription' => content('affiliate-apply.meta.description', $affiliatePage['meta']['description'] ?? 'Apply to join the SkelApp affiliate program.'),
   'seoPageType' => 'WebPage',
   'seoBreadcrumbs' => [

@@ -8,10 +8,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>{{ content('terms.meta.title', 'Terms of Service | SkelApp') }}</title>
+<title>{{ content('terms.meta.title', 'Terms of Service') }}</title>
 <meta name="description" content="{{ content('terms.meta.description') }}">
 @include('partials.seo', [
-  'seoTitle' => content('terms.meta.title', 'Terms of Service | SkelApp'),
+  'seoTitle' => content('terms.meta.title', 'Terms of Service'),
   'seoDescription' => content('terms.meta.description'),
   'seoPageType' => 'WebPage',
   'seoBreadcrumbs' => [
