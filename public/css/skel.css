@@ -10747,7 +10747,18 @@ html:not([data-theme="dark"]) .pricing-page .pricing-hero-btn--text:hover {
   width: 100%; height: auto; max-height: 360px; object-fit: contain;
   object-position: bottom center; display: block;
 }
-.afford-card--light .afford-card-media img { max-width: 82%; margin-left: auto; object-position: right bottom; }
+.afford-card--light .afford-card-media img { max-width: 100%; margin-left: auto; object-position: right bottom; }
+
+/* Home only — the POS page reuses these cards with different artwork.
+   Card 1: the rule above pins the image right; centre it and lift it off the
+   card floor. Card 3 no longer needs a downward shift — the "Learn more" link
+   it used to collide with is gone from these two cards on the home page. */
+.welcome-page-body .afford-card-media img { max-height: 376px; }
+.welcome-page-body .afford-card--light .afford-card-media img {
+  margin-right: auto;
+  object-position: bottom center;
+  padding-bottom: 25px;
+}
 
 /* photo card: white text + price + save badge */
 .afford-card--photo .afford-card-title { color: #fff; }

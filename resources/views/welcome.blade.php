@@ -259,7 +259,9 @@
         @endphp
 
         @if ($variant === 'photo')
-          <article class="afford-card afford-card--photo" style="background-image: linear-gradient(180deg, rgba(8,14,11,0.12) 0%, rgba(8,14,11,0.80) 100%), url('{{ $img }}');">
+          {{-- Title/copy sit at the top of this card, so the scrim is darkest at the
+               top and clears the photo below it. --}}
+          <article class="afford-card afford-card--photo" style="background-image: linear-gradient(180deg, rgba(8,14,11,0.86) 0%, rgba(8,14,11,0.62) 30%, rgba(8,14,11,0.18) 62%, rgba(8,14,11,0.10) 100%), url('{{ $img }}');">
             <div class="afford-card-top">
               <h3 class="afford-card-title">{!! content_text_html($titleKey, $card['title'] ?? '') !!}</h3>
               @if (! empty($card['copy']))<p class="afford-card-copy">{{ $card['copy'] }}</p>@endif
@@ -278,7 +280,6 @@
             <div class="afford-card-top">
               <h3 class="afford-card-title">{!! content_text_html($titleKey, $card['title'] ?? '') !!}</h3>
               @if (! empty($card['copy']))<p class="afford-card-copy">{{ $card['copy'] }}</p>@endif
-              <a href="{{ $card['link_url'] ?? '#' }}" class="afford-card-link">{{ $card['link_label'] ?? 'Learn more' }}{!! $arrowSvg !!}</a>
             </div>
             <div class="afford-card-media">
               <img src="{{ $img }}" alt="{{ content_text($titleKey, $card['title'] ?? '') }}" loading="lazy" decoding="async">
