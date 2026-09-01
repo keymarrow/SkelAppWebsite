@@ -10712,7 +10712,10 @@ html:not([data-theme="dark"]) .pricing-page .pricing-hero-btn--text:hover {
     radial-gradient(120% 80% at 80% 100%, rgba(74,173,119,0.18) 0%, rgba(74,173,119,0) 60%),
     linear-gradient(180deg, #eaf5ee 0%, #ddefe2 100%);
 }
-.afford-grid > .afford-card:nth-child(3) {
+/* Third card carries the deepest tint of the row — but only when it is a tinted
+   card. It outranks .afford-card--light on specificity, so a light third card
+   (the POS row) would otherwise still be painted green. */
+.afford-grid > .afford-card:nth-child(3):not(.afford-card--light) {
   background:
     radial-gradient(115% 80% at 100% 100%, rgba(74,173,119,0.28) 0%, rgba(74,173,119,0.08) 58%, rgba(74,173,119,0) 100%),
     linear-gradient(180deg, #dcefe3 0%, #e7f5ec 42%, #cce7d5 100%);
@@ -10748,6 +10751,26 @@ html:not([data-theme="dark"]) .pricing-page .pricing-hero-btn--text:hover {
   object-position: bottom center; display: block;
 }
 .afford-card--light .afford-card-media img { max-width: 100%; margin-left: auto; object-position: right bottom; }
+
+/* POS only — portrait phone renders, where these cards were built around
+   landscape dashboard crops. At the shared 360px cap a portrait render is taller
+   than the space the copy leaves and climbs up behind it, so size it off that
+   space instead and let the surplus bleed past the card floor: the phone stays
+   large enough to read and the card edge clips its base.
+
+   Only above the single-column breakpoint, where .afford-card still has a fixed
+   455px height — the percentage height needs that to resolve against. Below it
+   the card is height:auto and grows to fit, so the shared cap already works. */
+@media (min-width: 981px) {
+  .pos-afford .afford-card-media img {
+    width: auto;
+    max-width: 100%;
+    height: calc(100% + 132px);
+    max-height: none;
+    margin-bottom: -132px;
+  }
+  .pos-afford .afford-card--light .afford-card-media img { margin-left: auto; margin-right: auto; }
+}
 
 /* Home only — the POS page reuses these cards with different artwork.
    Card 1: the rule above pins the image right; centre it and lift it off the
@@ -10788,7 +10811,7 @@ html[data-theme="dark"] .afford-card--tint {
     radial-gradient(120% 80% at 80% 100%, rgba(74,173,119,0.22) 0%, rgba(74,173,119,0) 60%),
     linear-gradient(180deg, #11241a 0%, #0d1c14 100%);
 }
-html[data-theme="dark"] .afford-grid > .afford-card:nth-child(3) {
+html[data-theme="dark"] .afford-grid > .afford-card:nth-child(3):not(.afford-card--light) {
   background:
     radial-gradient(115% 80% at 100% 100%, rgba(74,173,119,0.34) 0%, rgba(74,173,119,0.12) 58%, rgba(74,173,119,0) 100%),
     linear-gradient(180deg, #1b3a29 0%, #14301f 48%, #0e2017 100%);
@@ -10939,15 +10962,38 @@ html[data-theme="dark"] .afford-card--tint .afford-card-copy { color: rgba(255,2
   object-fit: contain;
 }
 
-/* Second card (handheld): crop the image so only the top half shows */
+/* First card (laptop + phone): stand it off the card floor and ground it with a
+   soft shadow. Both renders carry alpha, so drop-shadow follows the device
+   silhouette instead of boxing the image. */
+.product-card:nth-child(1) .product-card-media {
+  margin-bottom: 44px;
+}
+
+.product-card:nth-child(1) .product-card-media img {
+  filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.22));
+}
+
+/* The shared product cards normally crop a tall second device. On the POS page
+   both hardware renders should occupy the same image area. */
 .product-card:nth-child(2) .product-card-media {
-  max-height: 300px;
+  align-items: flex-start;
+  max-height: 315px;
   overflow: hidden;
 }
 
 .product-card:nth-child(2) .product-card-media img {
-  object-fit: cover;
-  object-position: top center;
+  max-width: 200px;
+}
+
+.pos-products .product-card:nth-child(2) .product-card-media {
+  align-items: stretch;
+  max-height: none;
+  margin-bottom: 44px;
+  overflow: visible;
+}
+
+.pos-products .product-card:nth-child(2) .product-card-media img {
+  max-width: 460px;
 }
 
 @media (max-width: 900px) {
@@ -11404,17 +11450,40 @@ html[data-theme="dark"] .afford-card--tint .afford-card-copy { color: rgba(255,2
   aspect-ratio: 3 / 4;
 }
 
+/* Centre feature card holds a cut-out product render rather than a photograph,
+   so it needs its own surface to sit on. The page canvas behind it is already
+   mint (#eef4f0 → #e1eae5), so the tint runs deeper than the affordable cards'
+   and carries a rim and shadow — otherwise the card reads as a hole in the
+   section rather than a card. */
+.allfeatures .af-feature {
+  background:
+    radial-gradient(115% 85% at 100% 0%, rgba(74, 173, 119, 0.38) 0%, rgba(74, 173, 119, 0.12) 58%, rgba(74, 173, 119, 0) 100%),
+    linear-gradient(180deg, #d0e8da 0%, #c6e2d0 55%, #bcdcc9 100%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 22px 54px rgba(20, 40, 30, 0.14);
+}
+
+html[data-theme="dark"] .allfeatures .af-feature {
+  background:
+    radial-gradient(115% 85% at 100% 0%, rgba(74, 173, 119, 0.34) 0%, rgba(74, 173, 119, 0.12) 58%, rgba(74, 173, 119, 0) 100%),
+    linear-gradient(180deg, #16301f 0%, #10251a 55%, #0c1c14 100%);
+  border: 1px solid var(--dm-border);
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.38);
+}
+
 .af-media img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Subtle image zoom on hover for depth */
-.af-card:hover .af-media img {
-  transform: scale(1.06);
+/* The render is taller than the 3:4 card, so anchor it to the top: the crop
+   comes off the wrist, under the label, instead of the phone. Its subject sits
+   left of centre in the frame, so nudge it back toward the middle. */
+.af-feature .af-media img {
+  object-position: center top;
+  transform: translateX(16%);
 }
 
 /* Content stack — sits over the image bottom */
@@ -12267,13 +12336,12 @@ html[data-theme="dark"] .afford-card--tint .afford-card-copy { color: rgba(255,2
 .allfeatures--plain .af-card,
 .allfeatures--plain .af-card * { cursor: default !important; }
 .allfeatures--plain .af-card::after { display: none; }
-/* No hover zoom, no slow fade-in — keep only the scroll parallax drift */
+/* No slow fade-in — keep only the scroll parallax drift (the hover zoom is gone
+   gallery-wide, so there is nothing to cancel here) */
 .allfeatures--plain .af-anim,
 .allfeatures--plain .af-feature {
   opacity: 1 !important; transform: none !important; transition: none !important;
 }
-.allfeatures--plain .af-media img { transition: none; }
-.allfeatures--plain .af-card:hover .af-media img { transform: none; }
 .why-page .allfeatures { margin-top: 0; }
 html:not([data-theme="dark"]) .why-page .allfeatures--plain .allfeatures-container {
   position: static;
@@ -16392,6 +16460,27 @@ body :where(
   padding: 0 0 18px;
 }
 
+/* Two-column layout only: switching items must not resize the card. Only the
+   open item renders its copy, so a two-line body and a three-line one gave the
+   accordion two different heights and the whole explorer — media column
+   included — jumped on every switch. Reserving three lines makes every state
+   the same height. Below the breakpoint the columns stack, so the accordion
+   growing moves nothing above it and the copy can run its natural length. */
+@media (min-width: 1081px) {
+  .pos-feature-item-copy {
+    height: 84px; /* 3 × (14.5px × 1.52) + the 18px bottom padding */
+    box-sizing: border-box;
+  }
+
+  .pos-feature-item-copy p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+  }
+}
+
 .pos-feature-item-copy p {
   font-family: 'Satoshi', sans-serif;
   font-size: 14.5px;
@@ -16848,9 +16937,11 @@ html:not([data-theme="dark"]) .pos-page-body .pos-sync-card {
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-/* Green-washed glass for the tinted afford card (matches home --tint). */
+/* Green-washed glass for the tinted afford card (matches home --tint). The
+   third-card clause is positional and outranks the neutral glass above, so it
+   has to skip a light third card or that card never reads as light. */
 html:not([data-theme="dark"]) .pos-page-body .afford-card--tint,
-html:not([data-theme="dark"]) .pos-page-body .afford-grid > .afford-card:nth-child(3) {
+html:not([data-theme="dark"]) .pos-page-body .afford-grid > .afford-card:nth-child(3):not(.afford-card--light) {
   background:
     radial-gradient(125% 95% at 82% 100%, rgba(74, 173, 119, 0.28) 0%, rgba(74, 173, 119, 0) 62%),
     linear-gradient(135deg, rgba(231, 240, 235, 0.58), rgba(213, 231, 221, 0.42));
@@ -16931,13 +17022,17 @@ html:not([data-theme="dark"]) .pos-page-body .afford-grid > .afford-card:nth-chi
   pointer-events: auto;
 }
 
+/* Only the active story is shown. The neighbours used to peek in blurred at
+   either side; they are now hidden outright and the arrows below drive the
+   carousel, so they keep their offset transform (the slide-in still reads) but
+   nothing of them is visible or clickable. */
 .pos-tm-slide.is-prev,
 .pos-tm-slide.is-next {
   z-index: 1;
-  opacity: 0.45;
-  filter: blur(3px) saturate(0.9);
-  pointer-events: auto;
-  cursor: pointer; /* tapping a side card brings it forward */
+  opacity: 0;
+  filter: blur(8px);
+  pointer-events: none;
+  cursor: default;
 }
 
 .pos-tm-slide.is-prev {
@@ -16953,6 +17048,67 @@ html:not([data-theme="dark"]) .pos-page-body .afford-grid > .afford-card:nth-chi
   z-index: 0;
   opacity: 0;
   filter: blur(12px);
+}
+
+/* Carousel controls — liquid glass pills sitting under the card, aligned to its
+   left and right edges. They are the only affordance now that the neighbouring
+   cards are hidden, so they carry the full width of the card between them. */
+.pos-tm-nav {
+  width: var(--pos-tm-w);
+  margin: clamp(18px, 2vw, 30px) auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pos-tm-nav-btn {
+  width: clamp(48px, 3.6vw, 58px);
+  height: clamp(48px, 3.6vw, 58px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 999px;
+  color: #12301f;
+  cursor: pointer;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.64), rgba(240, 245, 242, 0.42));
+  -webkit-backdrop-filter: blur(22px) saturate(165%);
+  backdrop-filter: blur(22px) saturate(165%);
+  border: 1px solid rgba(255, 255, 255, 0.68);
+  box-shadow:
+    0 18px 40px rgba(20, 40, 30, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pos-tm-nav-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(240, 245, 242, 0.58));
+  box-shadow:
+    0 22px 46px rgba(20, 40, 30, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.pos-tm-nav-btn:active {
+  transform: translateY(0) scale(0.96);
+}
+
+.pos-tm-nav-btn:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
+
+html[data-theme="dark"] .pos-tm-nav-btn {
+  color: #eaf5ee;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
+  border-color: var(--dm-border);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10);
+}
+
+html[data-theme="dark"] .pos-tm-nav-btn:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08));
 }
 
 .pos-tm-slide.is-hidden-left {
@@ -17001,26 +17157,13 @@ html:not([data-theme="dark"]) .pos-page-body .products-section.pos-products { pa
     --pos-tm-scale: 0.94;
     --pos-tm-overlap: 22px;
   }
-
-  .pos-tm-slide.is-prev,
-  .pos-tm-slide.is-next {
-    opacity: 0.36;
-    filter: blur(4px) saturate(0.88);
-  }
 }
 
-/* Mobile → mainly the active card, with only a preview of its neighbours. */
 @media (max-width: 640px) {
   .pos-tm-carousel {
     --pos-tm-w: calc(100vw - 44px);
     --pos-tm-scale: 0.95;
     --pos-tm-overlap: 14px;
-  }
-
-  .pos-tm-slide.is-prev,
-  .pos-tm-slide.is-next {
-    opacity: 0.3;
-    filter: blur(3px) saturate(0.9);
   }
 }
 

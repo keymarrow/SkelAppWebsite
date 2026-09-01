@@ -273,7 +273,7 @@ class PagesSeeder extends Seeder
                         'body' => 'Record sales, check stock, and chase debts from your phone — at the market, at the supplier, anywhere.',
                         'link_label' => 'See how it works',
                         'link_url' => '#',
-                        'image' => 'assets/Mobilehomeview.png',
+                        'image' => 'assets/Pos System 04.png',
                     ],
                 ],
             ],
@@ -322,7 +322,7 @@ class PagesSeeder extends Seeder
                 'copy' => 'Five jobs every shop owner does daily. One app that does them all in shillings, not spreadsheets.',
                 'cta_label' => 'Download Now',
                 'cta_url' => '/features#features-detail',
-                'feature_image' => 'assets/techshop.webp',
+                'feature_image' => 'assets/handfree-pos.webp',
                 'feature_label' => 'Point of sale',
                 'feature_desc' => 'Sales, stock, and daily reports from one screen. Open the app, you\'re at work.',
                 'feature_link_url' => '/features#point-of-sale',
@@ -540,9 +540,9 @@ class PagesSeeder extends Seeder
                 'title' => 'Do it all. And then some.',
                 'subtitle' => "Sales, expenses, purchases, orders — the whole day's money, one record.",
                 'cards' => [
-                    ['variant' => 'light', 'title' => 'Every shilling in, every shilling out.', 'copy' => 'Sales, expenses, purchases and orders — recorded the moment they happen, not at midnight from memory.', 'link_label' => 'See features', 'link_url' => '/features', 'image' => 'assets/CASHFLOW.png'],
-                    ['variant' => 'photo', 'title' => "However they pay, it's on record.", 'copy' => 'Cash, mobile money, bank or card — mark how each customer paid, and payment accounts keep it all reconciled.', 'link_label' => 'Learn more', 'link_url' => '/features', 'image' => 'assets/paymentmethod.png'],
-                    ['variant' => 'tint', 'title' => 'Profit and cashflow, at a glance.', 'copy' => 'Not just what you sold — what you actually made, and where the money stands right now.', 'link_label' => 'Learn more', 'link_url' => '/features#reports-and-profits', 'image' => 'assets/DASHBOARD.png'],
+                    ['variant' => 'light', 'title' => 'Every shilling in, every shilling out.', 'copy' => 'Sales, expenses, purchases and orders — recorded the moment they happen, not at midnight from memory.', 'link_label' => 'See features', 'link_url' => '/features', 'image' => 'assets/payment-account.webp'],
+                    ['variant' => 'tint', 'title' => "However they pay, it's on record.", 'copy' => 'Cash, mobile money, bank or card — mark how each customer paid, and payment accounts keep it all reconciled.', 'link_label' => 'Learn more', 'link_url' => '/features', 'image' => 'assets/customer.webp'],
+                    ['variant' => 'light', 'title' => 'Profit and cashflow, at a glance.', 'copy' => 'Not just what you sold — what you actually made, and where the money stands right now.', 'link_label' => 'Learn more', 'link_url' => '/features#reports-and-profits', 'image' => 'assets/mobile-dashboard.webp'],
                 ],
             ],
             'detail' => [
@@ -575,7 +575,7 @@ class PagesSeeder extends Seeder
                     'link_label' => 'Explore reports',
                     'link_url' => '/features#reports-and-profits',
                     'image' => 'assets/DASHBOARD.png',
-                    'items_text' => "Online orders | Turn your live stock list into a simple online store, share the link and let customer orders land straight inside SkelApp. | assets/Mobilehomeview.png\nIntegrations | Connect Zoho Books, QuickBooks, Xero, Sage, bulk SMS providers and WhatsApp so records and customer updates stay in sync. | assets/quickbooks.png\nReports | Review P&L, cashflow, sales by item, customer and attendant, plus stock and expense reports without waiting for manual summaries. | assets/DASHBOARD.png\nAttendants | Give every attendant their own login, control access and see who sold what, when and from which location. | assets/attendants.webp\nP&L | See profit and loss without rebuilding the numbers manually at the end of the day or month. | assets/DASHBOARD.png\nSales insights | Break sales down by item, customer, attendant or branch so the next decision is based on real numbers. | assets/CASHFLOW.png",
+                    'items_text' => "Online orders | Turn your live stock list into a simple online store, share the link and let customer orders land straight inside SkelApp. | assets/onlinestoreshopper.png\nIntegrations | Connect Zoho Books, QuickBooks, Xero, Sage, bulk SMS providers and WhatsApp so records and customer updates stay in sync. | assets/quickbooks.png\nReports | Review P&L, cashflow, sales by item, customer and attendant, plus stock and expense reports without waiting for manual summaries. | assets/DASHBOARD.png\nAttendants | Give every attendant their own login, control access and see who sold what, when and from which location. | assets/attendants.webp\nP&L | See profit and loss without rebuilding the numbers manually at the end of the day or month. | assets/DASHBOARD.png\nSales insights | Break sales down by item, customer, attendant or branch so the next decision is based on real numbers. | assets/CASHFLOW.png",
                 ],
             ],
             'features' => [
@@ -589,7 +589,7 @@ class PagesSeeder extends Seeder
             'offline' => [
                 'title' => 'Keep selling when the power or network drops',
                 'subtitle' => "SkelApp is an offline-first POS. Here's what happens in a blackout:",
-                'media_image' => 'assets/CASHFLOW.png',
+                'media_image' => 'assets/electric-off.webp',
                 'media_caption' => 'Selling straight through a blackout.',
                 'steps' => [
                     ['body' => 'Offline mode switches on by itself the moment power or internet goes down. No button, no panic.'],
@@ -601,14 +601,14 @@ class PagesSeeder extends Seeder
                 'title' => 'One SkelApp. Every kind of counter.',
                 'subtitle' => 'Pick the device that fits your shop today — add more as you grow.',
                 'cards' => [
-                    ['eyebrow' => 'Skel Register', 'title' => 'The full counter, built to last.', 'body' => 'A desktop cash register with a big, bright screen, built-in receipt printer and cash drawer — running the same SkelApp your phone does.', 'link_label' => 'See the Skel Register', 'link_url' => '/hardware/skel-register', 'image' => 'assets/PosSystemRegister.webp'],
-                    ['eyebrow' => 'Skel Tablet', 'title' => 'Your whole shop on a tablet.', 'body' => 'Turn any tablet or iPad into a fast, friendly mobile POS — light enough to carry around the shop, big enough to see every line at a glance.', 'link_label' => 'See the Skel Tablet', 'link_url' => '/hardware', 'image' => 'assets/poswithtab.webp'],
+                    ['eyebrow' => 'Skel Register', 'title' => 'The full counter, built to last.', 'body' => 'A desktop cash register with a big, bright screen, built-in receipt printer and cash drawer — running the same SkelApp your phone does.', 'link_label' => 'See the Skel Register', 'link_url' => '/hardware/skel-register', 'image' => 'assets/POS Register.png'],
+                    ['eyebrow' => 'Skel Tablet', 'title' => 'Your whole shop on a tablet.', 'body' => 'Turn any tablet or iPad into a fast, friendly mobile POS — light enough to carry around the shop, big enough to see every line at a glance.', 'link_label' => 'See the Skel Tablet', 'link_url' => '/hardware', 'image' => 'assets/Tablet POS.png'],
                 ],
             ],
             'online' => [
                 'title' => 'Turn your shop into an online store in a tap',
                 'subtitle' => 'Your stock becomes your online store — no web designer, no monthly website bill.',
-                'media_image' => 'assets/Mobilehomeview.png',
+                'media_image' => 'assets/onlinestoreshopper.png',
                 'media_caption' => 'Your shop, open online.',
                 'steps' => [
                     ['body' => 'Switch on online ordering and SkelApp builds the store from your stock list — prices and photos included.'],

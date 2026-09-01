@@ -53,7 +53,7 @@
       'body' => 'Record sales, check stock, and chase debts from your phone — at the market, at the supplier, anywhere.',
       'link_label' => 'See how it works',
       'link_url' => '#',
-      'image' => 'Mobilehomeview.png',
+      'image' => 'Pos System 04.png',
     ],
   ]);
   $retailerCards = content_list('home.retailers.cards', [
@@ -427,7 +427,7 @@
         <div class="af-center-parallax" data-af-center>
           <a href="{{ $centerFeatureLink }}" class="af-card af-card-link af-feature" data-af-feature>
             <div class="af-media">
-              <img src="{{ content_image('home.allfeatures.feature_image', asset('assets/techshop.webp')) }}" alt="{{ content_text('home.allfeatures.feature_label', 'Point of sale') }}" loading="lazy" decoding="async">
+              <img src="{{ content_image('home.allfeatures.feature_image', asset('assets/handfree-pos.webp')) }}" alt="{{ content_text('home.allfeatures.feature_label', 'Point of sale') }}" loading="lazy" decoding="async">
             </div>
             @php $featureDesc = content_text('home.allfeatures.feature_desc'); @endphp
             <div class="af-content">

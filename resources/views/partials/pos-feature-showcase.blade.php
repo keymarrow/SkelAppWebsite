@@ -59,6 +59,10 @@
           @endphp
         @endif
         @foreach ($mediaItems as $itemIndex => $item)
+          {{-- Every item's image is stacked here and swapped by toggling .is-active,
+               so it has to be ready to paint the instant the class flips: async
+               decoding hands back a frame with nothing in it and fills it in
+               later, which reads as a fade-in that nobody asked for. --}}
           <img
             class="{{ $i === 0 && $itemIndex === 0 ? 'is-active' : '' }}"
             data-pos-feature-media
@@ -66,8 +70,8 @@
             data-pos-feature-media-item="{{ $itemIndex }}"
             src="{{ cms_image($item['image'] ?? ($group['image'] ?? null), asset('assets/CASHFLOW.png')) }}"
             alt="{{ trim(strip_tags((string) ($item['title'] ?? ($group['tab'] ?? 'SkelApp feature')))) }}"
-            loading="lazy"
-            decoding="async"
+            loading="{{ $i === 0 && $itemIndex === 0 ? 'eager' : 'lazy' }}"
+            decoding="sync"
           >
         @endforeach
       @endforeach

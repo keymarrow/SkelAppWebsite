@@ -2453,7 +2453,7 @@
                     "link_url": "/features#staff-and-branches"
                 }
             ],
-            "feature_image": "assets/techshop.webp",
+            "feature_image": "assets/handfree-pos.webp",
             "feature_label": {
                 "text": "Point of sale",
                 "typography": {
@@ -3545,7 +3545,7 @@
                         }
                     },
                     "link_url": "#",
-                    "image": "assets/Mobilehomeview.png"
+                    "image": "assets/Pos System 04.png"
                 }
             ]
         },

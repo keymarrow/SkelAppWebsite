@@ -27,23 +27,23 @@
                     "copy": "Sales, expenses, purchases and orders — recorded the moment they happen, not at midnight from memory.",
                     "link_label": "See features",
                     "link_url": "/features",
-                    "image": "assets/CASHFLOW.png"
+                    "image": "assets/payment-account.webp"
                 },
                 {
-                    "variant": "photo",
+                    "variant": "tint",
                     "title": "However they pay, it's on record.",
                     "copy": "Cash, mobile money, bank or card — mark how each customer paid, and payment accounts keep it all reconciled.",
                     "link_label": "Learn more",
                     "link_url": "/features",
-                    "image": "assets/paymentmethod.png"
+                    "image": "assets/customer.webp"
                 },
                 {
-                    "variant": "tint",
+                    "variant": "light",
                     "title": "Profit and cashflow, at a glance.",
                     "copy": "Not just what you sold — what you actually made, and where the money stands right now.",
                     "link_label": "Learn more",
                     "link_url": "/features#reports-and-profits",
-                    "image": "assets/DASHBOARD.png"
+                    "image": "assets/mobile-dashboard.webp"
                 }
             ]
         },
@@ -77,7 +77,7 @@
                 "link_label": "Explore reports",
                 "link_url": "/features#reports-and-profits",
                 "image": "assets/DASHBOARD.png",
-                "items_text": "Online order management | Launch an online store quickly, receive customer orders digitally and manage order status inside SkelApp. | assets/Mobilehomeview.png\nAccounting and communication integrations | Connect Zoho Books, QuickBooks, Xero, Sage, bulk SMS providers and WhatsApp to support reporting and customer communication. | assets/quickbooks.png\nAdvanced business reports | Review profit and loss, cash flow, sales, stock, expenses, purchases, customer debt, supplier credit and payment-account reports from one system. | assets/DASHBOARD.png\nAttendants and staff management | Create attendant accounts, assign roles, control access and review performance by user and location. | assets/attendants.webp\nPayment method reporting | Break transactions down by payment type and payment account so reconciliation is clearer. | assets/paymentmethod.png\nSales insights by item, customer and location | See what is selling, who is buying, which branch is performing and where to act next. | assets/CASHFLOW.png"
+                "items_text": "Online order management | Launch an online store quickly, receive customer orders digitally and manage order status inside SkelApp. | assets/onlinestoreshopper.png\nAccounting and communication integrations | Connect Zoho Books, QuickBooks, Xero, Sage, bulk SMS providers and WhatsApp to support reporting and customer communication. | assets/quickbooks.png\nAdvanced business reports | Review profit and loss, cash flow, sales, stock, expenses, purchases, customer debt, supplier credit and payment-account reports from one system. | assets/DASHBOARD.png\nAttendants and staff management | Create attendant accounts, assign roles, control access and review performance by user and location. | assets/attendants.webp\nPayment method reporting | Break transactions down by payment type and payment account so reconciliation is clearer. | assets/paymentmethod.png\nSales insights by item, customer and location | See what is selling, who is buying, which branch is performing and where to act next. | assets/CASHFLOW.png"
             }
         ],
         "features": [
@@ -115,7 +115,7 @@
         "offline": {
             "title": "Keep selling when the power or network drops",
             "subtitle": "SkelApp is an offline-first POS. Here's what happens in a blackout:",
-            "media_image": "assets/CASHFLOW.png",
+            "media_image": "assets/electric-off.webp",
             "media_caption": "Selling straight through a blackout.",
             "steps": [
                 {
@@ -139,7 +139,7 @@
                     "body": "A desktop cash register with a big, bright screen, built-in receipt printer and cash drawer — running the same SkelApp your phone does.",
                     "link_label": "See the Skel Register",
                     "link_url": "/hardware/skel-register",
-                    "image": "assets/PosSystemRegister.webp"
+                    "image": "assets/POS Register.png"
                 },
                 {
                     "eyebrow": "Skel Tablet",
@@ -147,14 +147,14 @@
                     "body": "Turn any tablet or iPad into a fast, friendly mobile POS — light enough to carry around the shop, big enough to see every line at a glance.",
                     "link_label": "See the Skel Tablet",
                     "link_url": "/hardware",
-                    "image": "assets/poswithtab.webp"
+                    "image": "assets/Tablet POS.png"
                 }
             ]
         },
         "online": {
             "title": "Turn your shop into an online store in a tap",
             "subtitle": "Your stock becomes your online store — no web designer, no monthly website bill.",
-            "media_image": "assets/Mobilehomeview.png",
+            "media_image": "assets/onlinestoreshopper.png",
             "media_caption": "Your shop, open online.",
             "steps": [
                 {

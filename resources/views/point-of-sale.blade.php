@@ -7,9 +7,9 @@
 
   // ── "Do it all" money cards (reuses the home "afford" layout) ───────
   $posAffordCards = content_list('pos.affordable.cards', [
-    ['variant' => 'light', 'title' => 'Every shilling in, every shilling out.', 'copy' => 'Sales, expenses, purchases and orders — recorded the moment they happen, not at midnight from memory.', 'link_label' => 'See features', 'link_url' => '/features', 'image' => 'assets/CASHFLOW.png'],
-    ['variant' => 'photo', 'title' => "However they pay, it's on record.", 'copy' => 'Cash, mobile money, bank or card — mark how each customer paid, and payment accounts keep it all reconciled.', 'link_label' => 'Learn more', 'link_url' => '/features', 'image' => 'assets/paymentmethod.png'],
-    ['variant' => 'tint', 'title' => 'Profit and cashflow, at a glance.', 'copy' => 'Not just what you sold — what you actually made, and where the money stands right now.', 'link_label' => 'Learn more', 'link_url' => '/features#reports-and-profits', 'image' => 'assets/DASHBOARD.png'],
+    ['variant' => 'light', 'title' => 'Every shilling in, every shilling out.', 'copy' => 'Sales, expenses, purchases and orders — recorded the moment they happen, not at midnight from memory.', 'link_label' => 'See features', 'link_url' => '/features', 'image' => 'assets/payment-account.webp'],
+    ['variant' => 'tint', 'title' => "However they pay, it's on record.", 'copy' => 'Cash, mobile money, bank or card — mark how each customer paid, and payment accounts keep it all reconciled.', 'link_label' => 'Learn more', 'link_url' => '/features', 'image' => 'assets/customer.webp'],
+    ['variant' => 'light', 'title' => 'Profit and cashflow, at a glance.', 'copy' => 'Not just what you sold — what you actually made, and where the money stands right now.', 'link_label' => 'Learn more', 'link_url' => '/features#reports-and-profits', 'image' => 'assets/mobile-dashboard.webp'],
   ]);
 
   // ── What SkelApp can do (grouped tab + accordion explorer) ─────────
@@ -54,7 +54,7 @@
       'link_url' => '/features#reports-and-profits',
       'image' => 'assets/DASHBOARD.png',
       'items' => [
-        ['title' => 'Online orders', 'body' => 'Turn your live stock list into a simple online store, share the link and let customer orders land straight inside SkelApp.', 'image' => 'assets/Mobilehomeview.png'],
+        ['title' => 'Online orders', 'body' => 'Turn your live stock list into a simple online store, share the link and let customer orders land straight inside SkelApp.', 'image' => 'assets/onlinestoreshopper.png'],
         ['title' => 'Integrations', 'body' => 'Connect Zoho Books, QuickBooks, Xero, Sage, bulk SMS providers and WhatsApp so records and customer updates stay in sync.', 'image' => 'assets/quickbooks.png'],
         ['title' => 'Reports', 'body' => 'Review P&L, cashflow, sales by item, customer and attendant, plus stock and expense reports without waiting for manual summaries.', 'image' => 'assets/DASHBOARD.png'],
         ['title' => 'Attendants', 'body' => 'Give every attendant their own login, control access and see who sold what, when and from which location.', 'image' => 'assets/attendants.webp'],
@@ -123,15 +123,15 @@
 
   // ── Devices (reuses the home "products" layout) ─────────────────────
   $posProductCards = content_list('pos.products.cards', [
-    ['eyebrow' => 'Skel Register', 'title' => 'The full counter, built to last.', 'body' => 'A desktop cash register with a big, bright screen, built-in receipt printer and cash drawer — running the same SkelApp your phone does.', 'link_label' => 'See the Skel Register', 'link_url' => '/hardware/skel-register', 'image' => 'assets/PosSystemRegister.webp'],
-    ['eyebrow' => 'Skel Tablet', 'title' => 'Your whole shop on a tablet.', 'body' => 'Turn any tablet or iPad into a fast, friendly mobile POS — light enough to carry around the shop, big enough to see every line at a glance.', 'link_label' => 'See the Skel Tablet', 'link_url' => '/hardware', 'image' => 'assets/poswithtab.webp'],
+    ['eyebrow' => 'Skel Register', 'title' => 'The full counter, built to last.', 'body' => 'A desktop cash register with a big, bright screen, built-in receipt printer and cash drawer — running the same SkelApp your phone does.', 'link_label' => 'See the Skel Register', 'link_url' => '/hardware/skel-register', 'image' => 'assets/POS Register.png'],
+    ['eyebrow' => 'Skel Tablet', 'title' => 'Your whole shop on a tablet.', 'body' => 'Turn any tablet or iPad into a fast, friendly mobile POS — light enough to carry around the shop, big enough to see every line at a glance.', 'link_label' => 'See the Skel Tablet', 'link_url' => '/hardware', 'image' => 'assets/Tablet POS.png'],
   ]);
 
   // ── Offline-mode "steps + media" band ───────────────────────────────
   $offline = content('pos.offline', [
     'title' => 'Keep selling when the power or network drops',
     'subtitle' => "SkelApp is an offline-first POS. Here's what happens in a blackout:",
-    'media_image' => 'assets/CASHFLOW.png',
+    'media_image' => 'assets/electric-off.webp',
     'media_caption' => 'Selling straight through a blackout.',
   ]);
   $offlineSteps = content_list('pos.offline.steps', [
@@ -144,7 +144,7 @@
   $online = content('pos.online', [
     'title' => 'Turn your shop into an online store in a tap',
     'subtitle' => 'Your stock becomes your online store — no web designer, no monthly website bill.',
-    'media_image' => 'assets/Mobilehomeview.png',
+    'media_image' => 'assets/onlinestoreshopper.png',
     'media_caption' => 'Your shop, open online.',
   ]);
   $onlineSteps = content_list('pos.online.steps', [
@@ -322,7 +322,6 @@
                 <div class="afford-card-top">
                   <h3 class="afford-card-title">{!! content_text_html($titleKey, $card['title'] ?? '') !!}</h3>
                   @if (! empty($card['copy']))<p class="afford-card-copy">{{ $card['copy'] }}</p>@endif
-                  <a href="{{ $card['link_url'] ?? '#' }}" class="afford-card-link">{{ $card['link_label'] ?? 'Learn more' }}{!! $arrowSvg !!}</a>
                 </div>
               </article>
             @else
@@ -330,7 +329,6 @@
                 <div class="afford-card-top">
                   <h3 class="afford-card-title">{!! content_text_html($titleKey, $card['title'] ?? '') !!}</h3>
                   @if (! empty($card['copy']))<p class="afford-card-copy">{{ $card['copy'] }}</p>@endif
-                  <a href="{{ $card['link_url'] ?? '#' }}" class="afford-card-link">{{ $card['link_label'] ?? 'Learn more' }}{!! $arrowSvg !!}</a>
                 </div>
                 <div class="afford-card-media">
                   <img src="{{ $img }}" alt="{{ content_text($titleKey, $card['title'] ?? '') }}" loading="lazy" decoding="async">
@@ -408,6 +406,15 @@
               </article>
             @endforeach
           </div>
+        </div>
+
+        <div class="pos-tm-nav">
+          <button type="button" class="pos-tm-nav-btn" data-pos-tm-prev aria-label="Previous story">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <button type="button" class="pos-tm-nav-btn" data-pos-tm-next aria-label="Next story">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
         </div>
       </div>
     </section>
@@ -718,6 +725,20 @@
           });
         });
 
+        // Fetch and decode every stage image while the explorer is still coming
+        // up the page, so switching an item is a class toggle over a bitmap the
+        // browser already holds — not a load and a decode the user waits for.
+        if (media.length && 'IntersectionObserver' in window) {
+          var warmer = new IntersectionObserver(function (entries, observer) {
+            if (!entries.some(function (entry) { return entry.isIntersecting; })) return;
+            observer.disconnect();
+            media.forEach(function (image) {
+              if (typeof image.decode === 'function') image.decode().catch(function () {});
+            });
+          }, { rootMargin: '800px 0px' });
+          warmer.observe(group);
+        }
+
         activate(0, getActiveItemIndex(panels[0]));
       });
 
@@ -817,6 +838,11 @@
         carousel.addEventListener('pointercancel', function () {
           pointerStart = null;
         });
+
+        var prevBtn = carousel.querySelector('[data-pos-tm-prev]');
+        var nextBtn = carousel.querySelector('[data-pos-tm-next]');
+        if (prevBtn) prevBtn.addEventListener('click', function () { step(-1); });
+        if (nextBtn) nextBtn.addEventListener('click', function () { step(1); });
 
         carousel.addEventListener('keydown', function (event) {
           if (event.key === 'ArrowLeft') {

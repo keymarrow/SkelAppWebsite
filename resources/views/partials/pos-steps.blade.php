@@ -13,7 +13,7 @@
   $variant  = $variant ?? '';
   $icons    = $icons ?? [];
   $caption  = content_text("{$prefix}.media_caption", $data['media_caption'] ?? '');
-  $mediaImg = content_image("{$prefix}.media_image", cms_image($data['media_image'] ?? null, asset('assets/CASHFLOW.png')));
+  $mediaImg = content_image("{$prefix}.media_image", cms_image($data['media_image'] ?? null, asset('assets/electric-off.webp')));
 @endphp
 <section class="pos-steps {{ $variant }}">
   <div class="container">
