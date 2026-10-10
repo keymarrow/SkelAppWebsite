@@ -12892,8 +12892,14 @@ html[data-theme="dark"] .dl-modal-input { background: rgba(255,255,255,0.08); co
 html[data-theme="dark"] .dl-modal-input::placeholder { color: rgba(255,255,255,0.4); }
 
 @media (max-width: 480px) {
+  /* Scanning a QR on the same phone you're viewing it on is useless — drop
+     it and let the shorter card settle instead of keeping the 530px desktop
+     min-height, which would otherwise leave a tall empty gap. */
+  .dl-modal-card { min-height: auto; }
+  .dl-modal-qr { display: none; }
   .dl-modal-close { top: -40px; }
-  .dl-modal-badges { flex-wrap: wrap; }
+  .dl-modal-badges { flex-wrap: nowrap; gap: 10px; }
+  .dl-modal-badge img { height: 40px; }
 }
 
 /* ════════════ RETAILER / INDUSTRY PAGES ════════════ */
