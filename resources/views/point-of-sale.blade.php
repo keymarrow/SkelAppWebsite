@@ -165,12 +165,11 @@
     '<svg '.$stroke.'><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>',
   ];
 
-  // ── "After the sale" back-office band (4 cards) ─────────────────────
+  // ── "After the sale" back-office band (3 editorial cards) ──────────
   $syncCards = content_list('pos.sync.cards', [
     ['title' => 'Inventory that thinks ahead.', 'body' => 'Batch tracking, stock transfers between locations, adjustments and returns — plus analysis that flags fast movers, low stock and items expiring soon.', 'link_label' => 'Explore inventory', 'link_url' => '/features#inventory-and-stock', 'image' => 'assets/STOCKLIST.png'],
     ['title' => 'Reports that write themselves.', 'body' => 'Profit & loss, cashflow, sales by item, customer or attendant, stock and expense reports — the full picture, ready every morning.', 'link_label' => 'Explore reports', 'link_url' => '/features#reports-and-profits', 'image' => 'assets/DASHBOARD.png'],
     ['title' => 'Madeni, both directions.', 'body' => 'What customers owe you and what you owe suppliers — one clear record, updated with every sale and purchase.', 'link_label' => 'Explore customers', 'link_url' => '/features#customers-and-loyalty', 'image' => 'assets/crm.webp'],
-    ['title' => 'Your team, accountable.', 'body' => 'Every attendant gets their own account — see who sold what and when, without standing at the counter.', 'link_label' => 'Explore attendants', 'link_url' => '/features#staff-and-branches', 'image' => 'assets/attendants.webp'],
   ]);
 
   // ── Integrations band logo row ──────────────────────────────────────

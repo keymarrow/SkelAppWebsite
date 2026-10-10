@@ -143,7 +143,7 @@ class PagesSeeder extends Seeder
             ],
             'app_badges' => [
                 'apple_image' => 'assets/applebadge.png',
-                'apple_url' => '#',
+                'apple_url' => 'https://apps.apple.com/app/skelapp-point-of-sale/id6783924476',
                 'google_image' => 'assets/googlebadge.png',
                 'google_url' => 'https://play.google.com/store/apps/details?id=com.skelapp.app&hl=en',
             ],
@@ -623,7 +623,6 @@ class PagesSeeder extends Seeder
                     ['title' => 'Inventory that thinks ahead.', 'body' => 'Batch tracking, stock transfers between locations, adjustments and returns — plus analysis that flags fast movers, low stock and items expiring soon.', 'link_label' => 'Explore inventory', 'link_url' => '/features#inventory-and-stock', 'image' => 'assets/STOCKLIST.png'],
                     ['title' => 'Reports that write themselves.', 'body' => 'Profit & loss, cashflow, sales by item, customer or attendant, stock and expense reports — the full picture, ready every morning.', 'link_label' => 'Explore reports', 'link_url' => '/features#reports-and-profits', 'image' => 'assets/DASHBOARD.png'],
                     ['title' => 'Madeni, both directions.', 'body' => 'What customers owe you and what you owe suppliers — one clear record, updated with every sale and purchase.', 'link_label' => 'Explore customers', 'link_url' => '/features#customers-and-loyalty', 'image' => 'assets/crm.webp'],
-                    ['title' => 'Your team, accountable.', 'body' => 'Every attendant gets their own account — see who sold what and when, without standing at the counter.', 'link_label' => 'Explore attendants', 'link_url' => '/features#staff-and-branches', 'image' => 'assets/attendants.webp'],
                 ],
             ],
             'integrations' => [

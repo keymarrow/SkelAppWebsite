@@ -192,13 +192,6 @@
                     "link_label": "Explore customers",
                     "link_url": "/features#customers-and-loyalty",
                     "image": "assets/crm.webp"
-                },
-                {
-                    "title": "Your team, accountable.",
-                    "body": "Every attendant gets their own account — see who sold what and when, without standing at the counter.",
-                    "link_label": "Explore attendants",
-                    "link_url": "/features#staff-and-branches",
-                    "image": "assets/attendants.webp"
                 }
             ]
         },
