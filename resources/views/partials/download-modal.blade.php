@@ -5,8 +5,8 @@
   $dlCc       = content('global.download.country_code', '+255');
   $dlPhonePlaceholder = content('global.download.phone_placeholder', 'Mobile number');
   $dlQrAlt    = content('global.download.qr_alt', 'Scan to download SkelApp');
-  // Default QR is generated live (points to the site); upload a static one via the CMS to override.
-  $dlQr       = content_image('global.download.qr_image', 'https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=0&data=' . urlencode(url('/')));
+  // Static app-download QR by default; upload a different one via the CMS to override.
+  $dlQr       = content_image('global.download.qr_image', asset('assets/qrcodeappdownload.svg'));
   $dlApple    = content_image('global.app_badges.apple_image', asset('assets/applebadge.png'));
   $dlGoogle   = content_image('global.app_badges.google_image', asset('assets/googlebadge.png'));
   $dlAppleUrl = content('global.app_badges.apple_url', config('services.beem.apple_url', '#'));

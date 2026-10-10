@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AffiliateApplicationController as AdminAffiliateApplicationController;
 use App\Http\Controllers\Admin\Auth\AdminAuthenticatedSessionController;
 use App\Http\Controllers\Admin\ContactSubmissionController as AdminContactSubmissionController;
+use App\Http\Controllers\Admin\DownloadLinkRequestController as AdminDownloadLinkRequestController;
 use App\Http\Controllers\Admin\NewsPostController as AdminNewsPostController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PagePreviewController as AdminPagePreviewController;
@@ -88,6 +89,16 @@ $registerPublicRoutes = function (): void {
             ], 422);
         }
 
+        if (\App\Models\DownloadLinkRequest::isAvailable()) {
+            \App\Models\DownloadLinkRequest::create([
+                'phone' => $data['phone'],
+                'country_code' => $countryCode,
+                'destination' => $destination,
+                'ip_address' => $request->ip(),
+                'user_agent' => \Illuminate\Support\Str::limit((string) $request->userAgent(), 500, ''),
+            ]);
+        }
+
         $appleUrl = trim((string) content('global.app_badges.apple_url', config('services.beem.apple_url', '')));
         $googleUrl = trim((string) content('global.app_badges.google_url', config('services.beem.google_url', '')));
 
@@ -102,6 +113,7 @@ $registerPublicRoutes = function (): void {
                 $destination,
                 implode("\n", [
                     'Download SkelApp:',
+                    '',
                     'iPhone: '.$appleUrl,
                     'Android: '.$googleUrl,
                 ]),
@@ -429,6 +441,9 @@ $registerAdminRoutes = function (): void {
         Route::get('/affiliate-applications', [AdminAffiliateApplicationController::class, 'index'])->name('affiliate-applications.index');
         Route::get('/affiliate-applications/{application}', [AdminAffiliateApplicationController::class, 'show'])->name('affiliate-applications.show');
         Route::delete('/affiliate-applications/{application}', [AdminAffiliateApplicationController::class, 'destroy'])->name('affiliate-applications.destroy');
+
+        Route::get('/download-requests', [AdminDownloadLinkRequestController::class, 'index'])->name('download-requests.index');
+        Route::delete('/download-requests/{downloadRequest}', [AdminDownloadLinkRequestController::class, 'destroy'])->name('download-requests.destroy');
 
         Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
         Route::post('/users', [AdminUserController::class, 'store'])->name('users.store');

@@ -23,6 +23,7 @@
     'collapse' => '<path d="m15 18-6-6 6-6"></path>',
     'team' => '<circle cx="9" cy="8" r="3.2"></circle><path d="M3.5 19.5a5.5 5.5 0 0 1 11 0"></path><path d="M16 5.2a3 3 0 0 1 0 5.8"></path><path d="M17.5 14.2a5.2 5.2 0 0 1 3 4.9"></path>',
     'affiliate' => '<circle cx="6.5" cy="6.5" r="2.5"></circle><circle cx="17.5" cy="17.5" r="2.5"></circle><circle cx="17.5" cy="6.5" r="2.5"></circle><path d="M8.7 7.8 15.3 16.2"></path><path d="M15 6.5H9"></path>',
+    'download' => '<rect x="5" y="2" width="14" height="20" rx="2.5"></rect><path d="M9 18h6"></path><path d="M12 7v6"></path><path d="m9.5 10.5 2.5 2.5 2.5-2.5"></path>',
   ];
   $pageIconMap = [
     'home' => 'home',
@@ -89,6 +90,11 @@
           @if ($affiliatePending > 0)
             <span class="admin-nav-badge" aria-label="{{ $affiliatePending }} pending">{{ $affiliatePending }}</span>
           @endif
+        </a>
+
+        <a href="{{ route('admin.download-requests.index') }}" class="{{ request()->routeIs('admin.download-requests.*') ? 'is-active' : '' }}" title="Download link requests">
+          <span class="admin-nav-icon">{!! $renderAdminIcon('download') !!}</span>
+          <span class="admin-nav-label">Download requests</span>
         </a>
 
         <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') ? 'is-active' : '' }}" title="Team & admins">
