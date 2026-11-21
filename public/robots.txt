@@ -1,7 +1,10 @@
-# SkelApp — robots.txt
+# robots.txt for https://skelapp.tz
+# Last updated: 2026-11-21
 # The full URL list is generated dynamically at /sitemap.xml
 
 User-agent: *
+
+# Allow the whole site by default
 Allow: /
 
 # Keep private / functional areas out of the index
@@ -9,4 +12,9 @@ Disallow: /admin
 Disallow: /login
 Disallow: /storage/
 
+# Block faceted / filtered news URLs to save crawl budget
+# (these are duplicates already consolidated by canonical tags)
+Disallow: /news?
+
+# Point Google to the sitemap
 Sitemap: https://skelapp.tz/sitemap.xml
